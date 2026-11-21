@@ -3,7 +3,7 @@
 > **Un copilote qui lit votre système de sécurité incendie (SSI) sans jamais pouvoir le toucher.**
 > Prototype du challenge *Aero-Entrepreneur* — Tunisian Aeroday 2026, en partenariat avec la Protection Civile.
 
-![Poste de sécurité — feu confirmé](docs/screenshots/A3_fire_confirmed_zone.png)
+![Poste de sécurité — feu confirmé](docs/screenshots/VFX3_smoke_layer.png)
 
 ## Le problème
 Les alarmes incendie des usines sonnent souvent pour rien (aérosols, poussières, échappement…) : arrêts de production, évacuations inutiles, déplacements des secours. Et quand un vrai feu démarre, l'agent de sécurité voit seulement « ALARME ZONE B », sans savoir si c'est grave ni ce qui va se passer.
@@ -71,7 +71,9 @@ docs/               résultats, captures, dossier de sécurité, explications po
 Documents : [rapport du modèle](docs/AI_Model_Report.md) · [dossier de sécurité](docs/safety/Safety_Case.md) · [comment ça marche](docs/COMMENT_CA_MARCHE.md).
 
 ## Données et licences
-- Code : licence MIT (voir `LICENSE`). Three.js r149 : MIT.
+- Code : licence MIT (voir `LICENSE`). Three.js r147 + GLTFLoader : MIT.
+- Modèles et textures 3D réels : **Poly Haven**, licence **CC0** (étagères, cartons, chariot de soudure, extincteurs, fûts, lampes industrielles, sol béton, bardage acier) — liste dans `app/data/ASSETS_CREDITS.md`, reconstruits par `python tools/build_assets.py`.
+- Effets visuels : flammes, braises et fumée en particules, pilotés par la physique (hauteur de flamme de Heskestad à partir de la puissance du modèle de zones, hauteur de nappe du modèle).
 - Données (non redistribuées, téléchargées par `scripts/download_data.py` avec contrôle SHA-256), **CC BY 4.0** :
   *Indoor Fire Dataset with Distributed Multi-Sensor Nodes — Industrial Hall*, Mendeley Data, DOI [10.17632/yghykzm4km.1](https://data.mendeley.com/datasets/yghykzm4km/1) ;
   salle d'essai EN 54, Mendeley Data, DOI [10.17632/npk2zcm85h](https://data.mendeley.com/datasets/npk2zcm85h/1).

@@ -3,6 +3,15 @@
 // Run: node tools/screenshots.js
 const { chromium } = require("playwright-core");
 const path = require("path");
+// Windows may briefly lock files (antivirus / thumbnails): capture to memory, retry the write.
+async function shot(page, file) {
+  const buf = await page.screenshot();
+  for (let k = 0; k < 10; k++) {
+    try { require("fs").writeFileSync(file, buf); return; } catch (e) { await new Promise(r => setTimeout(r, 400)); }
+  }
+  console.log("could not write " + file);
+}
+
 const fs = require("fs");
 const root = path.resolve(__dirname, "..");
 const out = path.join(root, "docs", "screenshots");
@@ -36,21 +45,21 @@ const url = "file:///" + path.join(root, "app", "index.html").replace(/\\/g, "/"
       const A = window.AFDT_APP; A.setScenario(k, false); A.showPage(p, true); A.seekT(t);
     }, { k: s.k, t: s.t, p: s.page });
     await page.waitForTimeout(700);
-    await page.screenshot({ path: path.join(out, s.name + ".png") });
+    await shot(page, path.join(out, s.name + ".png"));
   }
   // results modal
   await page.click("#btn-results"); await page.waitForTimeout(300);
-  await page.screenshot({ path: path.join(out, "R1_results.png") });
+  await shot(page, path.join(out, "R1_results.png"));
   await page.click("#btn-close-results");
   // smaller laptop screen
   await page.setViewportSize({ width: 1366, height: 768 });
   await page.evaluate(() => { const A = window.AFDT_APP; A.setScenario(0, true); A.showPage("forecast", true); A.seekT(660); });
   await page.waitForTimeout(700);
-  await page.screenshot({ path: path.join(out, "L1_laptop_1366.png") });
+  await shot(page, path.join(out, "L1_laptop_1366.png"));
   // video mode runs without errors for a few seconds
   await page.evaluate(() => window.AFDT_APP.runVideo());
   await page.waitForTimeout(9000);
-  await page.screenshot({ path: path.join(out, "V1_video_mode.png") });
+  await shot(page, path.join(out, "V1_video_mode.png"));
   await page.evaluate(() => window.AFDT_APP.stopVideo());
   console.log(errors.length ? "ERRORS:\n" + errors.join("\n") : "No JS errors");
   await browser.close();

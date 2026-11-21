@@ -101,6 +101,17 @@
     const n = NODE[best] || NODE[9];
     return { x: n.x, y: n.y, zone: n.zone };
   }
+  /* the fire starts in the stored goods: snap the origin to the nearest rack face (≤ 3 m) */
+  function nearRack(p) {
+    let best = null, bd = 3;
+    HALL.racks.forEach(r => {
+      const x = Math.min(Math.max(p.x, r.x0 + 0.3), r.x1 - 0.3);
+      const y = p.y < r.y0 ? r.y0 - 0.4 : p.y > r.y1 ? r.y1 + 0.4 : p.y;
+      const d = Math.hypot(x - p.x, y - p.y);
+      if (d < bd) { bd = d; best = { x, y, zone: p.zone }; }
+    });
+    return best || p;
+  }
   function simParams() {
     return { floor_area: HALL.size.width * HALL.size.length, height: HALL.size.height,
       alpha: ZM.ALPHA[st.p.alpha], q_max: st.p.qmax, door_width: st.p.door, door_height: 4,
@@ -226,12 +237,15 @@
     for (const id in s.nodes) nodes[id] = { level: nodeLevel(id, i), dPM: s.nodes[id].dPM[i], excluded: drift && id === "11" };
     const ssiZones = {}; for (const z in s.ssi.zones) ssiZones[z] = s.ssi.zones[z][i];
     const tw = twinState(i);
-    let smokeZ = null, fire = null, smokeHot = false;
+    let smokeZ = null, fire = null, smokeHot = false, smolder = null;
     if (tw && tw.active) {
       smokeZ = tw.z; smokeHot = tw.T > 200;
-      const loc = fireLocation(); fire = { x: loc.x, y: loc.y, q: tw.q };
+      const loc = nearRack(fireLocation()); fire = { x: loc.x, y: loc.y, q: tw.q };
+    } else if (s.kind === "fire" && s.hall.chA[i]) {
+      // incipient real fire: smouldering wisps where the measured particles are highest
+      const loc = nearRack(fireLocation()); smolder = { x: loc.x, y: loc.y, i: Math.max(0, maxOver(i, "dPM", true) - 5) };
     }
-    twin.update({ nodes, ssiZones, smokeZ, fire, smokeHot });
+    twin.update({ nodes, ssiZones, smokeZ, fire, smokeHot, smolder });
     let note = "";
     if (tw && tw.active) note = `Jumeau : hypothèse de développement (${st.p.alpha}) — nappe de fumée simulée à ${tw.z.toFixed(1)} m, ${tw.T.toFixed(0)} °C`;
     else if (tw && !tw.active) note = "Feu naissant (mesures réelles) — la phase de croissance simulée démarre à la pré-alarme IA";
@@ -517,5 +531,5 @@
   setScenario(0, true);
   requestAnimationFrame(tick);
   window.addEventListener("resize", () => render(true));
-  window.AFDT_APP = { st, setScenario, showPage, render, seekT: t => { st.i = Math.max(0, scn().t.findIndex(v => v >= t)); render(false); }, runVideo, stopVideo };
+  window.AFDT_APP = { st, twin, setScenario, showPage, render, seekT: t => { st.i = Math.max(0, scn().t.findIndex(v => v >= t)); render(false); }, runVideo, stopVideo };
 })();

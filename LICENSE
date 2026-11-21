@@ -22,7 +22,9 @@ SOFTWARE.
 
 ---
 Third-party components and data:
-- three.js r149 (app/vendor/three.min.js) — MIT License, Copyright 2010-2023 three.js authors.
+- three.js r147 (app/vendor/three.min.js, app/vendor/GLTFLoader.js) — MIT License, Copyright 2010-2022 three.js authors.
+- 3D models and textures in app/data/assets_data.js — Poly Haven (polyhaven.com), CC0 1.0 public domain;
+  list in app/data/ASSETS_CREDITS.md.
 - Datasets (not redistributed, downloaded by scripts/download_data.py) — CC BY 4.0:
   "Indoor Fire Dataset with Distributed Multi-Sensor Nodes" (Industrial Hall), Mendeley Data,
   DOI 10.17632/yghykzm4km.1, and its EN54 test-room counterpart, DOI 10.17632/npk2zcm85h.
