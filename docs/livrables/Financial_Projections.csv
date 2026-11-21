@@ -4,18 +4,14 @@ Assumption,EUR to TND,rate,1,3.3639,,BCT 12 Nov 2026 (mediaterranee.com)
 Assumption,Landed cost uplift on imported hardware,percent,40,,,"Duties + 19% VAT + freight; range 30-50%, 40% used"
 Assumption,Revenue mix A / B / C,percent,60/30/10,,,Assumption
 Assumption,Subscription ramp for sites installed during the year,factor,0.5,,,Installations spread over the year: new sites billed 6 months on average
-Startup capex,Thermal cameras PureThermal Mini Pro + Lepton 3.5 (demo/bench),unit,2,1122,2244,369.95 USD x 3.0335 (SparkFun) - before duties
-Startup capex,Sensor nodes option 1: ESP32-C3 + SPS30 + SGP30 + SCD40 + Winsen ZE07-CO (bench),unit,10,280,2800,"Parts 70-110 USD = 215-340 TND per node, midpoint used - before duties (docs/MATERIEL.md)"
-Startup capex,Edge gateways Jetson Orin Nano Super with SSD/case,unit,2,900,1800,Estimate 760-1060 TND - before duties
+Startup capex,Note,,,,,"Material only: engineering is done by the team, the pilot site is hosted by a partner factory"
+Startup capex,Sensor nodes option 1: ESP32-C3 + SPS30 + SGP30 + SCD40 + Winsen ZE07-CO (bench + pilot),unit,10,280,2800,"Parts 70-110 USD = 215-340 TND per node, midpoint used - before duties (docs/MATERIEL.md)"
+Startup capex,Edge gateways Raspberry Pi 5 kit (case + storage + power),unit,2,350,700,Estimate - price not verified - before duties
 Startup capex,Opto-isolated DI modules + isolated RS-485 + conventional panel for HIL bench,lot,1,3000,3000,Estimate - to quote locally
-Startup capex,Subtotal imported hardware,,,,9844,2244 + 2800 + 1800 + 3000
-Startup capex,Duties VAT and freight on imported hardware,percent,40,,3938,9844 x 0.40
-Startup capex,Calibrated smoke sources and nuisance campaign kit,lot,1,4000,4000,AC 25-9A-inspired iron bird bench
-Startup capex,Legal INNORPI trademark and Startup Label file,lot,1,6000,6000,Incubator supported
-Startup capex,Pilot site IFC twin integration,site,1,12000,12000,Co-funded with integrator
-Startup capex,Safety case review by control office,lot,1,8000,8000,"FHA / FTA / CCA, ARP4761A-inspired method (no certification)"
-Startup capex,INPDP authorisation file and legal advice (cameras),lot,1,2000,2000,Estimate - Law 2004-63 / Decree 2007-3004
-Startup capex,TOTAL CAPEX,,,,45782,9844 + 3938 + 4000 + 6000 + 12000 + 8000 + 2000
+Startup capex,Subtotal imported hardware,,,,6500,2800 + 700 + 3000
+Startup capex,Duties VAT and freight on imported hardware,percent,40,,2600,6500 x 0.40
+Startup capex,Test consumables (wood cribs candles sprays cables) for fire and nuisance tests,lot,1,600,600,Estimate - bought locally
+Startup capex,TOTAL CAPEX,,,,9700,6500 + 2600 + 600
 Fixed opex year 1,Engineering team 3 x 2500 x 12,month,36,2500,90000,"Engineer net salaries 1700-4200 TND/month (Tanitjobs 2026); social charges covered by Startup Act"
 Fixed opex year 1,Incubator office 1500 x 12,month,12,1500,18000,
 Fixed opex year 1,Cloud and software 800 x 12,month,12,800,9600,"FDS, CFAST, IfcOpenShell are free"
@@ -63,17 +59,17 @@ Projection 3 years,Year 1 revenue,TND,1,208800,208800,10 x 15300 + 5 x 11160
 Projection 3 years,Year 1 setup costs,TND,1,-116800,-116800,10 x 11680
 Projection 3 years,Year 1 variable costs,TND,1,-12000,-12000,5 x 2400
 Projection 3 years,Year 1 operating result before tax,TND,1,-55600,-55600,208800 - 116800 - 12000 - 135600
-Projection 3 years,Year 1 capex,TND,1,-45782,-45782,TOTAL CAPEX
+Projection 3 years,Year 1 capex,TND,1,-9700,-9700,TOTAL CAPEX
 Projection 3 years,Year 1 Startup Act founder grant (inflow),TND,1,36000,36000,"Hypothesis: 2 founders x 1500 DT x 12 (range 1000-5000 DT/month, startup.gov.tn)"
-Projection 3 years,Year 1 net cash flow,TND,1,-65382,-65382,-55600 - 45782 + 36000
+Projection 3 years,Year 1 net cash flow,TND,1,-29300,-29300,-55600 - 9700 + 36000
 Projection 3 years,Year 2 new sites / active sites / billed site-years,sites,20,,,10 new; 20 active; 10 + 10 x 0.5 = 15 billed site-years
 Projection 3 years,Year 2 revenue,TND,1,320400,320400,10 x 15300 + 15 x 11160
 Projection 3 years,Year 2 operating result before tax,TND,1,-30400,-30400,320400 - 10x11680 - 15x2400 - 198000
-Projection 3 years,Cumulative cash end of Year 2 (peak need),TND,1,-95782,-95782,-65382 - 30400 -> to cover by pre-seed / incubator funding
+Projection 3 years,Cumulative cash end of Year 2 (peak need),TND,1,-59700,-59700,-29300 - 30400 -> to cover by pre-seed / incubator funding
 Projection 3 years,Year 3 new sites / active sites / billed site-years,sites,40,,,20 new; 40 active; 20 + 20 x 0.5 = 30 billed site-years
 Projection 3 years,Year 3 revenue,TND,1,640800,640800,20 x 15300 + 30 x 11160
 Projection 3 years,Year 3 operating result before tax,TND,1,66800,66800,640800 - 20x11680 - 30x2400 - 268400 (margin ~10%)
-Projection 3 years,Cumulative cash end of Year 3,TND,1,-28982,-28982,-95782 + 66800; positive during Year 4 on recurring base
+Projection 3 years,Cumulative cash end of Year 3,TND,1,7100,7100,-59700 + 66800; cash positive in Year 3
 Context,Industrial firms with 10+ employees in Tunisia,firms,4519,,,APII via Business News (Sept 2026)
 Context,Fire insurance indemnities Tunisia H1 2026,MDT,47.9,,,+32.6% (Tunisie Numerique); 92 MDT in 2025 (allAfrica)
 Context,UK fire false alarms share of FRS incidents,percent,39,,,"GOV.UK year ending Sept 2025; 169717 due to apparatus; no Tunisian statistic published"
