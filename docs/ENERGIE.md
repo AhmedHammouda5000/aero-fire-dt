@@ -8,23 +8,24 @@
 
 | Élément d'un boîtier capteur | Puissance |
 |---|---|
-| Capteur de particules (ventilateur) | 275 mW — le plus gourmand |
-| Capteur H₂ (élément chauffé) | 161 mW |
-| CO₂ | 50 mW |
-| Microcontrôleur + radio basse consommation | 33 mW |
-| COV | 10 mW |
-| CO électrochimique, température/humidité | ≈ 3 mW |
-| **Total par boîtier (pertes incluses)** | **≈ 0,63 W (15 Wh / jour)** |
+| Capteur de particules SPS30 (ventilateur) | 275 mW — le plus gourmand |
+| Capteur H₂ + COV SGP30 (élément chauffé) | 161 mW |
+| Microcontrôleur ESP32-C3 + radio ESP-NOW | 66 mW |
+| CO₂ + température + humidité SCD40 | 50 mW |
+| CO électrochimique Winsen ZE07-CO | 25 mW |
+| **Total par boîtier (pertes incluses)** | **≈ 0,68 W (16 Wh / jour)** |
 
-Système complet pour le hall de démonstration : 9 boîtiers + passerelle + commutateur + tablette du gardien ≈ **20 W**.
+Kit retenu (« option 1 ») et prix : voir [`MATERIEL.md`](MATERIEL.md).
+
+Système complet pour le hall de démonstration : 9 boîtiers + passerelle + commutateur + tablette du gardien ≈ **21 W**.
 
 ## Deux architectures
 
 | | A — Boîtiers câblés (PoE) + 1 batterie centrale **(recommandé)** | B — Boîtiers sans fil, batterie dans chaque boîtier |
 |---|---|---|
 | Batterie | 1 × LiFePO4 12,8 V 100 Ah (1 280 Wh) | 2 × piles Li-ion 18650 par boîtier |
-| Autonomie | **≈ 57 h** (≈ 76 h écran éteint) | **≈ 29 h** |
-| Coupures STEG de 2 h couvertes | ≈ 28 à la suite | ≈ 14 à la suite |
+| Autonomie | **≈ 55 h** (≈ 73 h écran éteint) | **≈ 27 h** |
+| Coupures STEG de 2 h couvertes | ≈ 27 à la suite | ≈ 13 à la suite |
 | Avantages | une seule batterie à surveiller, réseau aussi secouru, LiFePO4 supporte bien la chaleur | installation sans câbles |
 
 **Option solaire :** un panneau d'environ **150 W** (≈ 5,5 h de plein soleil par jour en Tunisie) suffit à faire tourner le système **sans limite de durée**, même lors d'une longue panne.
@@ -35,5 +36,5 @@ Système complet pour le hall de démonstration : 9 boîtiers + passerelle + com
 Bouton **⚡ COUPURE** dans le tableau de bord : le bandeau passe en orange « SECTEUR COUPÉ · SUR BATTERIE xx % · AUTONOMIE ≈ … h · DÉTECTION ACTIVE », et la détection continue normalement.
 
 ## Limites honnêtes
-- Chiffres issus des fiches techniques (Sensirion SPS30, SGP30, SGP41, SCD41) et d'estimations pour le microcontrôleur et la passerelle : **à mesurer sur le matériel réel** pendant le pilote.
+- Chiffres issus des fiches techniques (Sensirion SPS30, SGP30, SCD40 ; Winsen ZE07-CO) et d'estimations pour le microcontrôleur et la passerelle : **à mesurer sur le matériel réel** pendant le pilote.
 - Un fonctionnement 100 % sur batterie pendant des années est irréaliste avec un capteur de particules à ventilateur et des capteurs chauffés : le système est conçu « secteur + batterie de secours », comme les systèmes d'alarme incendie.

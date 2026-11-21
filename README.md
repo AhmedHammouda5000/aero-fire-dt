@@ -196,9 +196,9 @@ Couleurs des capteurs : 🟢 normal · 🟡 un seul canal actif · 🔴 deux can
 - **Banc d'essai libre (scénario F)** : cigarette, bougies, petit / grand feu de bois, textile, plastiques ; aérosol, soudure, échappement, poussière. La physique transporte fumée et gaz jusqu'aux capteurs (capteurs **synthétiques**), puis la **même IA** décide. Matrice automatique : gros feux confirmés, aucune nuisance confirmée comme feu, bougie/cigarette loin des capteurs non détectées (réaliste). Test qualitatif, pas une validation.
 
 ## 10. Matériel, énergie et coupures de courant
-- **Kit standard identique dans chaque usine** (composants du commerce, nous ne fabriquons pas de capteurs) : particules, CO électrochimique, H₂, COV, CO₂, température/humidité, microcontrôleur basse consommation ; une **passerelle** locale (type Raspberry Pi) ; une tablette pour le gardien.
+- **Kit standard identique dans chaque usine** (composants du commerce, nous ne fabriquons pas de capteurs) : **Sensirion SPS30** (particules), **SGP30** (H₂ + COV), **SCD40** (CO₂ + température + humidité), **Winsen ZE07-CO** (CO électrochimique), microcontrôleur **ESP32-C3** ; **≈ 215–340 TND par boîtier** en pièces (≈ 300–475 TND rendu en Tunisie) — détail et sources : [`docs/MATERIEL.md`](docs/MATERIEL.md) ; une **passerelle** locale (type Raspberry Pi) ; une tablette pour le gardien.
 - **Où tourne quoi** : indices + score dans chaque boîtier (le modèle à arbres est assez léger pour un microcontroller) ; vote, prévision et écran sur la passerelle ; la CFD sur la passerelle/l'écran.
-- **Énergie** (`docs/ENERGIE.md`, `python scripts/energy_budget.py`) : ≈ 0,63 W par boîtier, ≈ **20 W** pour tout le hall. Batterie LiFePO4 100 Ah → **≈ 57 h** (≈ 28 coupures STEG de 2 h) ; panneau solaire 150 W en option = autonomie illimitée. Pas besoin d'Internet.
+- **Énergie** (`docs/ENERGIE.md`, `python scripts/energy_budget.py`) : ≈ 0,68 W par boîtier, ≈ **21 W** pour tout le hall. Batterie LiFePO4 100 Ah → **≈ 55 h** (≈ 27 coupures STEG de 2 h) ; panneau solaire 150 W en option = autonomie illimitée. Pas besoin d'Internet.
 
 ## 11. Sûreté et lien avec l'aéronautique
 | Aéronautique | Dans Aero-Fire DT |
@@ -253,7 +253,7 @@ tools/               captures d'écran et vérifications dans Chrome
 docs/                rapport IA, dossier de sécurité, énergie, explications équipe, résultats, captures, livrables
 scripts/             run_all.py (tout reproduire), énergie, téléchargement des données
 ```
-Documents : [rapport du modèle IA](docs/AI_Model_Report.md) · [comment ça marche (équipe)](docs/COMMENT_CA_MARCHE.md) · [énergie](docs/ENERGIE.md) · [dossier de sécurité](docs/safety/Safety_Case.md) · [apprentissage local](docs/results/site_adaptation.md) · [test NIST](docs/results/nist_fr4019.md) · [audit des données](docs/results/data_audit.md).
+Documents : [rapport du modèle IA](docs/AI_Model_Report.md) · [comment ça marche (équipe)](docs/COMMENT_CA_MARCHE.md) · [énergie](docs/ENERGIE.md) · [matériel et prix](docs/MATERIEL.md) · [dossier de sécurité](docs/safety/Safety_Case.md) · [apprentissage local](docs/results/site_adaptation.md) · [test NIST](docs/results/nist_fr4019.md) · [audit des données](docs/results/data_audit.md).
 
 ## 15. Données, licences, crédits
 - **Code** : licence MIT (`LICENSE`). Three.js r147 + GLTFLoader : MIT.

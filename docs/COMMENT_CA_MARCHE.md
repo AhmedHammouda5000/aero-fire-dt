@@ -68,7 +68,7 @@ Les alarmes incendie des usines sonnent souvent pour rien. Quand un vrai feu dé
 
 **Chaque usine est différente ?** Oui : modèle général + apprentissage local pendant le pilote. Preuve NIST : 6/33 → 29/33 fausses alarmes écartées après apprentissage local.
 
-**Et les coupures de courant ?** Pas besoin d'Internet, batterie LiFePO4 ≈ 57 h, solaire 150 W en option. Démo : bouton ⚡ COUPURE.
+**Et les coupures de courant ?** Pas besoin d'Internet, batterie LiFePO4 ≈ 55 h, solaire 150 W en option. Démo : bouton ⚡ COUPURE.
 
 ## 5. Questions probables du jury et réponses
 | Question | Réponse |

@@ -10,14 +10,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 # --- one sensor node, continuous operation (10 s sampling, needed for fast detection) ---------
-NODE = [  # name, volts, mA (typical), source
+NODE = [  # name, volts, mA (typical), source  -- kit "option 1" (docs/MATERIEL.md)
     ("Particules SPS30 (ventilateur)", 5.0, 55.0, "Sensirion SPS30 datasheet: 45-65 mA en mesure, 38 uA en veille"),
-    ("H2 brut SGP30 (MOX chauffé)", 3.3, 48.8, "Sensirion SGP30 datasheet: 48.8 mA en mesure (1.8 V, régulé depuis 3.3 V)"),
-    ("COV SGP41", 3.3, 3.0, "Sensirion SGP41: 3.0 mA en moyenne"),
-    ("CO2 SCD41 (périodique)", 3.3, 15.0, "Sensirion SCD4x datasheet: 15 mA (3.2 mA en mode basse conso.)"),
-    ("CO électrochimique + ampli", 3.3, 1.0, "cellule électrochimique (uA) + ampli potentiostat - estimation"),
-    ("Temp./humidité SHT4x", 3.3, 0.01, "négligeable"),
-    ("Microcontrôleur + radio basse conso.", 3.3, 10.0, "MCU basse conso. + radio maillée 2.4 GHz, moyenne estimée"),
+    ("H2 + COV bruts SGP30 (MOX chauffé)", 3.3, 48.8, "Sensirion SGP30 datasheet: 48.8 mA en mesure (1.8 V, régulé depuis 3.3 V)"),
+    ("CO2 + temp. + humidité SCD40 (périodique)", 3.3, 15.0, "Sensirion SCD4x datasheet: 15 mA en mesure périodique"),
+    ("CO électrochimique Winsen ZE07-CO", 5.0, 5.0, "module avec petit microcontrôleur - estimation, à mesurer"),
+    ("Microcontrôleur ESP32-C3 + ESP-NOW (veille légère)", 3.3, 20.0, "moyenne estimée : veille légère + 1 envoi radio / 10 s, à mesurer"),
 ]
 CONVERTER_EFF = 0.85          # regulators / PoE splitter
 N_NODES = 9                   # hall of the demo (22 x 10 m)

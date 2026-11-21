@@ -524,8 +524,8 @@
   $("btn-ghost").onclick = () => { CFD.showGhost = !CFD.showGhost; $("btn-ghost").textContent = "FANTÔME +60 s : " + (CFD.showGhost ? "ON" : "OFF"); $("btn-ghost").classList.toggle("on", CFD.showGhost); render(true); };
   $("btn-whatif").onclick = () => { st.whatIf = scn().t[st.i]; showPage("forecast", true); };
   /* ---------- power cut (STEG load shedding): the system keeps detecting on its backup battery ---------- */
-  // sizing: scripts/energy_budget.py -> 20.3 W system, LiFePO4 12.8 V 100 Ah -> ~57 h (76 h screen off)
-  const POWER = { cut: false, t0: 0, autonomyH: 57 };
+  // sizing: scripts/energy_budget.py -> 20.8 W system, LiFePO4 12.8 V 100 Ah -> ~55 h (73 h screen off)
+  const POWER = { cut: false, t0: 0, autonomyH: 55 };
   function renderPower() {
     const b = $("btn-power"); if (!b) return;
     b.classList.toggle("on", POWER.cut);
