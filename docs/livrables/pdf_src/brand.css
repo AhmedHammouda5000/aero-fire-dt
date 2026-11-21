@@ -1,0 +1,119 @@
+/* Aero-Fire DT — identité « cockpit » pour les livrables PDF (impression Chrome).
+   Couleurs reprises de l'application : ambre = attention, rouge = alarme, cyan = information, vert = normal. */
+@font-face { font-family: "Inter"; src: url("fonts/Inter.ttf") format("truetype"); font-weight: 100 900; }
+@font-face { font-family: "JBM"; src: url("fonts/JetBrainsMono.ttf") format("truetype"); font-weight: 100 800; }
+
+:root {
+  --navy: #0a1118; --navy2: #101b25; --navy3: #172634; --line: #24384a;
+  --ink: #0f1b26; --ink2: #3b4b59; --mute: #6b7b88; --paper: #ffffff; --paper2: #f3f6f9; --paper3: #e6ecf1;
+  --amber: #ffb000; --amber-d: #b37800; --red: #ff3b30; --red-d: #c62a20; --cyan: #38bdf8; --cyan-d: #0b7fb3;
+  --green: #22c55e; --green-d: #15803d;
+  --mono: "JBM", Consolas, monospace; --sans: "Inter", "Segoe UI", Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { font-family: var(--sans); color: var(--ink); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+b, strong { font-weight: 650; }
+a { color: var(--cyan-d); text-decoration: none; }
+.mono { font-family: var(--mono); }
+.amber { color: var(--amber-d); } .red { color: var(--red-d); } .cyan { color: var(--cyan-d); } .green { color: var(--green-d); }
+
+/* ============ A4 documents ============ */
+.doc { font-size: 9.6pt; line-height: 1.42; }
+.doc h1, .doc h2, .doc h3 { font-family: var(--mono); letter-spacing: .02em; color: var(--navy); }
+.doc h2 { font-size: 12.5pt; margin: 16px 0 6px; padding-bottom: 4px; border-bottom: 2px solid var(--navy); display: flex; gap: 10px; align-items: baseline; break-after: avoid; }
+.doc h2 .n { color: var(--amber-d); }
+.doc h3 { font-size: 10.5pt; margin: 10px 0 4px; break-after: avoid; }
+.doc p { margin: 4px 0 6px; }
+.doc ul, .doc ol { margin: 3px 0 6px; padding-left: 18px; }
+.doc li { margin: 2px 0; }
+.doc table { width: 100%; border-collapse: collapse; margin: 6px 0 8px; font-size: 9pt; break-inside: avoid; }
+.doc th { background: var(--navy); color: #fff; font-family: var(--mono); font-weight: 600; font-size: 8.3pt; letter-spacing: .03em; text-align: left; padding: 5px 7px; }
+.doc td { padding: 4px 7px; border-bottom: 1px solid var(--paper3); vertical-align: top; }
+.doc tr:nth-child(even) td { background: var(--paper2); }
+.doc code { font-family: var(--mono); font-size: 8.6pt; background: var(--paper2); padding: 0 3px; border-radius: 3px; }
+.doc pre { font-family: var(--mono); font-size: 8pt; background: var(--paper2); padding: 8px 10px; border-left: 3px solid var(--navy); white-space: pre-wrap; break-inside: avoid; }
+.doc blockquote { margin: 6px 0; padding: 6px 12px; border-left: 3px solid var(--amber); background: #fff8e6; }
+.doc img { max-width: 100%; }
+
+.cover { background: var(--navy); color: #e8eef3; margin: 0 0 12px; padding: 18px 22px 16px; border-bottom: 4px solid var(--amber); position: relative; }
+.cover .tag { font-family: var(--mono); font-size: 8pt; letter-spacing: .18em; color: var(--amber); }
+.cover h1 { font-family: var(--mono); color: #fff; font-size: 22pt; letter-spacing: .08em; margin: 4px 0 2px; }
+.cover .sub { font-size: 11pt; color: #c9d6e0; max-width: 150mm; }
+.cover .meta { margin-top: 10px; font-family: var(--mono); font-size: 8pt; color: #8fa3b3; display: flex; gap: 18px; flex-wrap: wrap; }
+.cover .meta b { color: #e8eef3; font-weight: 600; }
+.cover .lamp { position: absolute; right: 22px; top: 18px; display: flex; gap: 6px; }
+.cover .lamp i { width: 11px; height: 11px; border-radius: 50%; display: block; }
+
+.callout { border: 1px solid var(--line); border-left: 5px solid var(--amber); background: #fffaf0; padding: 8px 12px; margin: 8px 0; break-inside: avoid; }
+.callout.cyan { border-left-color: var(--cyan); background: #f0f9ff; }
+.callout.green { border-left-color: var(--green); background: #f0fdf4; }
+.callout.red { border-left-color: var(--red); background: #fff4f3; }
+.callout .k { font-family: var(--mono); font-size: 8pt; letter-spacing: .12em; color: var(--mute); display: block; margin-bottom: 2px; }
+
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 8px 0; break-inside: avoid; }
+.kpi { background: var(--navy); color: #fff; padding: 8px 10px; border-top: 3px solid var(--green); }
+.kpi.a { border-top-color: var(--amber); } .kpi.c { border-top-color: var(--cyan); } .kpi.r { border-top-color: var(--red); }
+.kpi .v { font-family: var(--mono); font-size: 16pt; font-weight: 700; line-height: 1.1; }
+.kpi .l { font-size: 7.8pt; color: #b9c8d4; line-height: 1.3; margin-top: 3px; }
+figure { margin: 6px 0; break-inside: avoid; }
+figure img { width: 100%; border: 1px solid var(--line); display: block; }
+figcaption { font-size: 8pt; color: var(--mute); margin-top: 3px; }
+.flow { display: flex; align-items: stretch; gap: 0; margin: 8px 0; break-inside: avoid; }
+.flow .st { flex: 1; background: var(--paper2); border: 1px solid var(--paper3); border-top: 3px solid var(--cyan); padding: 6px 8px; font-size: 8.6pt; }
+.flow .st b { display: block; font-family: var(--mono); font-size: 8.4pt; color: var(--navy); margin-bottom: 2px; }
+.flow .ar { width: 18px; display: flex; align-items: center; justify-content: center; color: var(--amber-d); font-weight: 800; }
+.badge { display: inline-block; font-family: var(--mono); font-size: 7.6pt; padding: 1px 6px; border-radius: 3px; color: #fff; background: var(--navy); vertical-align: 1px; }
+.badge.g { background: var(--green-d); } .badge.a { background: var(--amber-d); } .badge.r { background: var(--red-d); } .badge.c { background: var(--cyan-d); }
+.small { font-size: 8.4pt; color: var(--ink2); }
+.pb { break-before: page; }
+.avoid { break-inside: avoid; }
+
+/* ============ 16:9 slides ============ */
+.deck { background: var(--navy); }
+.slide { width: 1280px; height: 720px; position: relative; overflow: hidden; background: var(--navy); color: #e8eef3; padding: 54px 64px 56px; break-after: page; }
+.slide:last-child { break-after: auto; }
+.slide::before { content: ""; position: absolute; inset: 0; background:
+  radial-gradient(1200px 500px at 110% -10%, rgba(56,189,248,.08), transparent 60%),
+  linear-gradient(transparent 0 0); pointer-events: none; }
+.slide .pg { position: absolute; top: 22px; left: 64px; font-family: var(--mono); font-size: 13px; letter-spacing: .2em; color: var(--amber); }
+.slide .pg .s { color: #5f7486; }
+.slide .ft { position: absolute; bottom: 18px; left: 64px; right: 64px; display: flex; justify-content: space-between; font-family: var(--mono); font-size: 11px; color: #5f7486; letter-spacing: .06em; border-top: 1px solid var(--line); padding-top: 8px; }
+.slide h1 { font-family: var(--mono); font-size: 40px; line-height: 1.12; margin: 6px 0 18px; color: #fff; letter-spacing: .01em; font-weight: 700; }
+.slide h1 em { font-style: normal; color: var(--amber); }
+.slide h2 { font-family: var(--mono); font-size: 20px; color: var(--cyan); margin: 0 0 10px; letter-spacing: .04em; font-weight: 600; }
+.slide p, .slide li { font-size: 21px; line-height: 1.42; color: #d5e0e8; }
+.slide ul { padding-left: 24px; margin: 6px 0; }
+.slide li { margin: 6px 0; }
+.slide li::marker { color: var(--amber); }
+.slide b { color: #fff; }
+.slide .lead { font-size: 25px; color: #e8eef3; line-height: 1.4; }
+.slide .note { font-size: 15px; color: #8fa3b3; }
+.slide .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+.slide .cols3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+.slide .panel { background: var(--navy2); border: 1px solid var(--line); border-radius: 6px; padding: 16px 18px; }
+.slide .panel.a { border-left: 5px solid var(--amber); } .slide .panel.r { border-left: 5px solid var(--red); }
+.slide .panel.c { border-left: 5px solid var(--cyan); } .slide .panel.g { border-left: 5px solid var(--green); }
+.slide .panel h3 { font-family: var(--mono); font-size: 16px; letter-spacing: .1em; color: #8fa3b3; margin: 0 0 6px; font-weight: 600; }
+.slide .panel p, .slide .panel li { font-size: 18px; }
+.slide .big { font-family: var(--mono); font-size: 54px; font-weight: 800; line-height: 1; color: #fff; }
+.slide .big.a { color: var(--amber); } .slide .big.g { color: var(--green); } .slide .big.r { color: var(--red); } .slide .big.c { color: var(--cyan); }
+.slide .cap { font-size: 15px; color: #9fb2c1; margin-top: 6px; line-height: 1.35; }
+.slide table { width: 100%; border-collapse: collapse; font-size: 17px; }
+.slide th { font-family: var(--mono); font-size: 13px; letter-spacing: .1em; color: #8fa3b3; text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--line); font-weight: 600; }
+.slide td { padding: 9px 10px; border-bottom: 1px solid var(--line); color: #d5e0e8; vertical-align: top; }
+.slide td b { color: #fff; }
+.slide .shot { border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: #000; }
+.slide .shot img { display: block; width: 100%; }
+.slide .chip { display: inline-block; font-family: var(--mono); font-size: 13px; letter-spacing: .08em; padding: 3px 9px; border-radius: 3px; margin-right: 6px; font-weight: 700; }
+.chip.r { background: var(--red); color: #fff; } .chip.a { background: var(--amber); color: #111; } .chip.g { background: var(--green); color: #062; } .chip.c { background: var(--cyan); color: #032; } .chip.k { background: #2b3d4e; color: #cfe; }
+.slide .say { position: absolute; left: 64px; right: 64px; bottom: 50px; font-size: 18px; color: #c9d6e0; border-left: 4px solid var(--amber); padding: 6px 14px; background: rgba(255,176,0,.06); }
+.slide .say::before { content: "« "; color: var(--amber); } .slide .say::after { content: " »"; color: var(--amber); }
+.diagram { display: flex; align-items: center; gap: 0; }
+.diagram .box { background: var(--navy2); border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; text-align: center; flex: 1; }
+.diagram .box .t { font-family: var(--mono); font-size: 15px; letter-spacing: .1em; color: var(--cyan); font-weight: 700; }
+.diagram .box .d { font-size: 15px; color: #b9c8d4; margin-top: 5px; line-height: 1.35; }
+.diagram .arr { width: 46px; text-align: center; font-size: 30px; color: var(--amber); font-weight: 800; }
+.backup .pg { color: var(--cyan); }

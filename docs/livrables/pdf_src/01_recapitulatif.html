@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>Aero-Fire DT — Fichier récapitulatif</title>
+<link rel="stylesheet" href="brand.css"></head>
+<body class="doc">
+
+<div class="cover">
+  <div class="lamp"><i style="background:#22c55e"></i><i style="background:#ffb000"></i><i style="background:#ff3b30"></i></div>
+  <div class="tag">FICHIER RÉCAPITULATIF · PRÉSÉLECTION</div>
+  <h1>AERO-FIRE DT</h1>
+  <div class="sub">Un copilote incendie qui <b>lit</b> le système de sécurité incendie (SSI) d'une usine <b>sans jamais pouvoir le toucher</b>, et qui dit à l'agent : « vrai feu ou fausse alarme ? que faire ? que va-t-il se passer dans 60 s ? »</div>
+  <div class="meta"><span>Challenge <b>Aero-Entrepreneur</b> · Tunisian Aeroday 2026</span><span>Partenaire du challenge : <b>Protection Civile</b></span><span><b>22 novembre 2026</b></span><span>Code : <b>github.com/AhmedHammouda5000/aero-fire-dt</b></span></div>
+</div>
+
+<div class="callout"><span class="k">EN UNE PHRASE</span>
+Les alarmes incendie des usines ne voient que la fumée et sonnent souvent pour rien. Nos boîtiers voient aussi les <b>gaz</b> et la <b>chaleur</b>, une petite IA donne un score « feu ou nuisance », et — comme les deux boucles de détection d'un moteur d'avion — nous ne disons <b>FEU</b> que si <b>deux signes physiques différents</b> sont d'accord. Le SSI certifié reste maître : nous ne pouvons ni l'éteindre ni le modifier.</div>
+
+<h2><span class="n">01</span>Le besoin et la cible</h2>
+<div class="grid2">
+<div>
+<ul>
+<li><b>Fausses alarmes :</b> aérosols, poussière, échappement, soudure… déclenchent le SSI → évacuation, arrêt de production, secours déplacés, perte de confiance. Au Royaume-Uni, <b>≈ 39 %</b> des interventions des pompiers sont des fausses alarmes (GOV.UK, sept. 2025). Aucune statistique tunisienne n'est publiée.</li>
+<li><b>Levée de doute à l'aveugle :</b> l'agent voit « ALARME ZONE B » sans savoir si c'est grave ni ce qui va arriver.</li>
+<li><b>Coût :</b> 47,9 MDT d'indemnités incendie en Tunisie au 1<sup>er</sup> semestre 2026 (+32,6 %).</li>
+</ul>
+</div>
+<div>
+<table>
+<tr><th>Utilisateurs</th><th>Ce qu'ils attendent</th></tr>
+<tr><td>Agent du poste de sécurité</td><td>un verdict clair &lt; 60 s, la zone, la procédure</td></tr>
+<tr><td>Responsable HSE</td><td>moins de faux départs, preuve que le SSI n'est pas modifié</td></tr>
+<tr><td>Protection Civile</td><td>information fiable avant d'engager, pré-plans numériques</td></tr>
+<tr><td>Installateur SSI agréé</td><td>raccordement qu'il pose lui-même, sans risque pour sa garantie</td></tr>
+</table>
+<p class="small"><b>Cible :</b> usines et entrepôts déjà équipés d'un SSI — 4 519 entreprises industrielles de 10+ salariés ; d'abord les établissements classés 1<sup>re</sup>/2<sup>e</sup> classe (Décret 2006-2687 : étude de dangers, POI).</p>
+</div>
+</div>
+
+<h2><span class="n">02</span>La solution</h2>
+<div class="flow">
+  <div class="st" style="border-top-color:var(--green)"><b>BOÎTIERS CAPTEURS</b>9 au plafond du hall · fumée (taille des particules), CO, H₂, COV, CO₂, température, humidité · toutes les 10 s</div><div class="ar">▶</div>
+  <div class="st"><b>PASSERELLE LOCALE</b>IA + vote de sécurité à 2 canaux + prévision à 60 s · sans Internet · sur batterie</div><div class="ar">▶</div>
+  <div class="st" style="border-top-color:var(--amber)"><b>ÉCRAN DU GARDIEN</b>alertes type cockpit (rouge / ambre), actions, vue 3D, « pourquoi »</div>
+</div>
+<div class="flow" style="margin-top:-2px">
+  <div class="st" style="border-top-color:var(--red);flex:2"><b>SSI CERTIFIÉ (EXISTANT) ▶ LECTURE SEULE</b>Isolation galvanique (optocoupleurs), posée par l'installateur agréé, aucune voie de retour : l'IA ne peut ni acquitter, ni réarmer, ni inhiber une alarme.</div>
+  <div class="st" style="border-top-color:var(--red);flex:1"><b>RÈGLE D'OR</b>Pendant une alarme SSI, l'écran affiche « APPLIQUER LA PROCÉDURE », jamais un score.</div>
+</div>
+
+<h2><span class="n">03</span>Comment le système décide</h2>
+<div class="flow">
+  <div class="st"><b>1 · 11 MESURES</b>lues par chaque boîtier toutes les 10 s</div><div class="ar">▶</div>
+  <div class="st"><b>2 · 19 INDICES</b>hausses par rapport à « l'air normal » (30 min), vitesses, taille des particules, gaz/fumée, COV/fumée</div><div class="ar">▶</div>
+  <div class="st"><b>3 · SCORE IA 0 → 1</b>300 petits arbres de décision (gradient boosting), ≈ 2 ms, explicable</div><div class="ar">▶</div>
+  <div class="st" style="border-top-color:var(--amber)"><b>4 · VOTE À 2 CANAUX</b>sans IA : fumée + (gaz ou chaleur), sur les 3 boîtiers les plus actifs</div>
+</div>
+<table>
+<tr><th style="width:28%">Verdict</th><th>Condition</th><th style="width:30%">À l'écran</th></tr>
+<tr><td><span class="badge a">FEU COUVANT POSSIBLE</span></td><td>score ≥ 0,70 et fumée ou gaz encore en hausse, pendant 30 s</td><td>« envoyer un agent vérifier »</td></tr>
+<tr><td><span class="badge r">FEU</span></td><td>score ≥ 0,70 <b>et deux signes physiques différents</b> pendant 30 s — verrouillé jusqu'à acquittement humain</td><td>avec SSI : FEU CONFIRMÉ (évacuer, appeler 198) · sans SSI : PRÉ-ALARME</td></tr>
+<tr><td><span class="badge g">NUISANCE</span></td><td>score ≤ 0,30 pendant 30 s</td><td>avec SSI : procédure + « indices de nuisance », levée de doute ciblée</td></tr>
+<tr><td><span class="badge">AUTRES</span></td><td>CO élevé · capteur incohérent</td><td>CO ÉLEVÉ (santé) · capteur exclu du vote</td></tr>
+</table>
+
+<h2><span class="n">04</span>Résultats mesurés (essais jamais vus par l'IA)</h2>
+<p class="small">Données réelles publiques : <b>Mendeley « Industrial Hall »</b> (Allemagne, CC BY 4.0) — 9 boîtiers, 77 h, <b>32 essais réels</b> : 17 feux (bois, bougies, câbles, mèches), 15 nuisances (déodorant, échappement, machine à fumée, CO, éthanol, soudure, découpe, déchets verts) + ≈ 50 h d'activité normale. Évaluation « un essai retiré à la fois » : chaque essai est jugé par un modèle qui ne l'a jamais vu.</p>
+<div class="kpis">
+  <div class="kpi"><div class="v">17/17</div><div class="l">feux détectés (IC 95 % : 82–100 %)</div></div>
+  <div class="kpi c"><div class="v">11/15</div><div class="l">nuisances rejetées (détecteur fumée seule : 10/15)</div></div>
+  <div class="kpi a"><div class="v">17/17</div><div class="l">alerte « feu couvant possible », avant un seuil optique standard dans 10 cas</div></div>
+  <div class="kpi"><div class="v">12/13 · 7/7</div><div class="l">autre salle jamais vue (EN 54) : feux · nuisances</div></div>
+</div>
+<table>
+<tr><th>Mesure</th><th>Aero-Fire DT</th><th>Détecteur fumée seule</th></tr>
+<tr><td>Fausses alarmes du détecteur classique reconnues comme nuisance</td><td><b>3 / 5</b> (les déodorants)</td><td>—</td></tr>
+<tr><td>Feu confirmé au plus 60 s après l'alarme SSI</td><td><b>15 / 17</b></td><td>—</td></tr>
+<tr><td>Type de scénario entier caché à l'entraînement (test sévère)</td><td>15 / 17 feux · 10 / 15 nuisances</td><td>—</td></tr>
+<tr><td>Autre salle (EN 54, jamais vue)</td><td><b>12 / 13 feux · 7 / 7 nuisances</b></td><td>13 / 13 · 6 / 7</td></tr>
+<tr><td>Prévision à +60 s (1 000 feux simulés jamais vus, comparée à notre modèle physique)</td><td colspan="2">± 0,06 m sur la hauteur de fumée · ± 6,8 °C · « intenable dans 60 s » correct à 96 % · 0,14 ms</td></tr>
+</table>
+
+<h3>Chaque usine est différente : apprentissage local (test sur un site indépendant)</h3>
+<div class="grid2">
+<div>
+<table>
+<tr><th>NIST (États-Unis), 41 essais</th><th>Feux (8)</th><th>Cuisine non appelée feu (33)</th></tr>
+<tr><td>Modèle appris ailleurs (jour 1)</td><td>7 / 8</td><td>6 / 33</td></tr>
+<tr><td><b>Après apprentissage sur les données du site</b></td><td><b>8 / 8</b></td><td><b>29 / 33</b></td></tr>
+<tr><td>Données du site seules</td><td>8 / 8</td><td>29 / 33</td></tr>
+</table>
+</div>
+<div class="callout green" style="margin-top:6px"><span class="k">CE QUE CELA MONTRE</span>Les données propres du site font passer les fausses alarmes de cuisine de <b>27 à 4</b>. D'où notre règle : chaque usine commence par un <b>pilote de 90 jours</b> sous la centrale certifiée ; les réponses du gardien après chaque levée de doute servent d'étiquettes pour un <b>modèle local propre à l'usine</b>. L'usine d'origine n'est pas abîmée (17/17 feux conservés).</div>
+</div>
+
+<h2><span class="n">05</span>Le prototype (application hors ligne)</h2>
+<div class="grid2">
+<figure><img src="img/A_fire.png"><figcaption>Scénario A, feu de bois réel : « feu couvant possible » à 3 min 30, pré-alarme à 6 min 30, le détecteur classique sonne à 10 min 10 → FEU CONFIRMÉ. Carte de danger à hauteur de tête.</figcaption></figure>
+<figure><img src="img/B_procedure.png"><figcaption>Scénario B, aérosol : le SSI sonne pour rien. Écran : « ALARME SSI : APPLIQUER LA PROCÉDURE » + indices de nuisance, sans score → levée de doute ciblée au lieu d'une évacuation à l'aveugle.</figcaption></figure>
+</div>
+<ul>
+<li><b>Ouvrir :</b> télécharger le dépôt GitHub, double-cliquer sur <code>app/index.html</code> (Chrome / Edge). Aucune installation, aucun Internet.</li>
+<li><b>Scénarios A–E</b> rejoués à partir de mesures réelles (feu, aérosol, échappement avec CO dangereux, capteur en panne exclu du vote, soudure = cas difficile).</li>
+<li><b>Banc d'essai libre (F) — interactivité :</b> l'utilisateur pose feux et nuisances en cliquant ; un <b>solveur physique 3D</b> (14 080 cellules, flottabilité, transport de fumée et de gaz, propagation du feu entre objets, vérifié contre les formules de Heskestad et d'Alpert) amène fumée et gaz aux capteurs, puis la <b>même IA</b> décide.</li>
+<li><b>Écran type cockpit Airbus (ECAM) :</b> cockpit sombre, MASTER WARN / CAUT, onglets ZONE · CAPTEURS · PRÉVISION · POURQUOI · SSI, fenêtre « Détecteur classique vs Aero-Fire DT », bouton ⚡ COUPURE (STEG).</li>
+</ul>
+
+<h2><span class="n">06</span>Sécurité et lien avec l'aéronautique</h2>
+<table>
+<tr><th style="width:44%">Aéronautique</th><th>Dans Aero-Fire DT</th></tr>
+<tr><td>Soutes d'avion : ≈ 200 fausses alarmes pour 1 feu réel (NIST SP 965)</td><td>le même problème dans les usines</td></tr>
+<tr><td>Détection incendie moteur à <b>double boucle</b> : A et B doivent être d'accord</td><td>règle des <b>2 canaux physiques</b> avant « FEU »</td></tr>
+<tr><td>Alerte équipage en moins de 60 s</td><td>objectif de verdict &lt; 60 s, dans la temporisation déjà réglée du SSI</td></tr>
+<tr><td>Écran <b>ECAM</b> : cockpit sombre, alertes rouge / ambre, check-lists</td><td>écran du gardien, MASTER WARN / CAUT, actions affichées</td></tr>
+<tr><td><b>« Iron bird »</b> : banc d'essai au sol avant le vol</td><td>banc d'essai libre et scénarios rejoués</td></tr>
+<tr><td>Analyse de sécurité (FHA, arbres de défaillance)</td><td>dossier de sécurité ; l'IA ne peut qu'informer, jamais inhiber</td></tr>
+</table>
+<p class="small">Aucune certification aéronautique n'est revendiquée : méthodes « inspirées de ». Le SSI certifié (EN 54 / NFPA 72) reste la barrière de sécurité.</p>
+
+<h2><span class="n">07</span>Matériel, énergie, coupures STEG</h2>
+<div class="grid2">
+<div>
+<table>
+<tr><th>Boîtier « option 1 »</th><th>Mesures</th></tr>
+<tr><td>Sensirion SPS30</td><td>particules + taille</td></tr>
+<tr><td>Sensirion SGP30</td><td>H₂ + COV</td></tr>
+<tr><td>Sensirion SCD40</td><td>CO₂ + température + humidité</td></tr>
+<tr><td>Winsen ZE07-CO</td><td>CO électrochimique</td></tr>
+<tr><td>ESP32-C3</td><td>19 indices + score IA, radio</td></tr>
+</table>
+<p class="small"><b>≈ 215–340 TND</b> en pièces par boîtier, ≈ 300–475 TND rendu en Tunisie (prix relevés le 21/11/2026, à confirmer à l'achat).</p>
+</div>
+<div>
+<div class="kpis" style="grid-template-columns:1fr 1fr">
+<div class="kpi c"><div class="v">0,68 W</div><div class="l">par boîtier · ≈ 21 W pour tout le hall</div></div>
+<div class="kpi a"><div class="v">≈ 55 h</div><div class="l">sur batterie LiFePO4 100 Ah (≈ 27 coupures de 2 h)</div></div>
+<div class="kpi"><div class="v">0</div><div class="l">besoin d'Internet : tout tourne sur place</div></div>
+<div class="kpi c"><div class="v">150 W</div><div class="l">panneau solaire en option</div></div>
+</div>
+<p class="small">Le SSI garde sa propre alimentation de secours réglementaire : les deux chaînes restent indépendantes.</p>
+</div>
+</div>
+
+<h2><span class="n">08</span>Modèle économique et coût global</h2>
+<div class="grid2">
+<table>
+<tr><th>Offre</th><th>Mise en service</th><th>Abonnement</th></tr>
+<tr><td>A · PME industrielles</td><td>7 000 TND</td><td>450 TND / mois</td></tr>
+<tr><td>B · établissements classés</td><td>22 000 TND</td><td>1 200 TND / mois</td></tr>
+<tr><td>C · grands comptes</td><td>45 000 TND</td><td>3 000 TND / mois</td></tr>
+<tr><td colspan="3" class="small">+ formation des opérateurs 2 500 TND / session · le pilote de 90 jours est une calibration payante · l'abonnement couvre le réapprentissage local et le support</td></tr>
+</table>
+<table>
+<tr><th>Coût global</th><th>Valeur</th></tr>
+<tr><td>Coût de démarrage (banc matériel, kit de démo, dossier de sécurité, marque)</td><td><b>≈ 45 800 TND</b></td></tr>
+<tr><td>Équipe année 1</td><td>3 ingénieurs (IA, IoT, simulation)</td></tr>
+<tr><td>Sites actifs</td><td>10 (A1) → 20 (A2) → 40 (A3)</td></tr>
+<tr><td>Seuil de rentabilité récurrent</td><td>≈ 16 sites ; résultat positif en année 3</td></tr>
+<tr><td>Besoin de financement maximal</td><td>≈ 96 000 TND (fin A2) : incubateur / pré-amorçage, Startup Act</td></tr>
+</table>
+</div>
+<p class="small">Canal : installateurs SSI agréés (prestation de raccordement facturée) ; prescripteurs : bureaux de contrôle, assureurs. Crédit d'assurance non compté dans les revenus. Détail : BMC et <code>Financial_Projections.csv</code>.</p>
+
+<h2><span class="n">09</span>Feuille de route et déploiement avec la Protection Civile</h2>
+<div class="flow">
+  <div class="st"><b>M0–M1</b>cadrage, label Startup Act</div><div class="ar">▶</div>
+  <div class="st"><b>M1–M3</b>vrais boîtiers + banc avec une vraie centrale (« iron bird »)</div><div class="ar">▶</div>
+  <div class="st" style="border-top-color:var(--amber)"><b>M3–M6</b>pilote de 90 jours en usine : gain <b>mesuré</b></div><div class="ar">▶</div>
+  <div class="st"><b>M6–M12</b>10 sites</div><div class="ar">▶</div>
+  <div class="st"><b>M12–M18</b>consolidation, 20+ sites</div>
+</div>
+<div class="grid2">
+<div><b>Avec la Protection Civile</b>
+<ul class="small">
+<li>pré-plans numériques des sites (plan 3D, zones, capteurs) ;</li>
+<li>formation des agents : « l'IA conseille, la centrale décide » ;</li>
+<li>journal d'événements partagé pour les retours d'expérience ;</li>
+<li>maintenance des capteurs planifiée (détection de dérive).</li>
+</ul></div>
+<div><b>Notre demande</b>
+<ul class="small">
+<li>1 site pilote volontaire ;</li>
+<li>1 installateur SSI agréé partenaire ;</li>
+<li>un cadre de test avec la Protection Civile pour <b>mesurer</b> la réduction des fausses alarmes sur 90 jours.</li>
+</ul></div>
+</div>
+
+<h2><span class="n">10</span>Réel, simulé, à venir — et livrables</h2>
+<table>
+<tr><th>✅ Réel et fonctionnel</th><th>⚠️ Simulé</th><th>⏳ À venir</th></tr>
+<tr><td>IA entraînée et testée sur mesures réelles ; vote ; alerte précoce ; tableau de bord hors ligne ; physique 3D vérifiée ; apprentissage local testé (NIST)</td><td>la centrale SSI (le jeu de données n'en a pas) ; les capteurs du banc d'essai libre ; la panne du capteur du scénario D ; chiffres de batterie (fiches techniques)</td><td>boîtiers physiques et passerelle réelle ; IA sur microcontrôleur ; pilote de 90 jours en usine tunisienne</td></tr>
+</table>
+<table>
+<tr><th>Livrable</th><th>Fichier</th></tr>
+<tr><td>Fichier récapitulatif</td><td>01_Fichier_Recapitulatif_Aero-Fire-DT.pdf (ce document)</td></tr>
+<tr><td>Présentation (pitch)</td><td>02_Presentation_Pitch_Aero-Fire-DT.pdf</td></tr>
+<tr><td>BMC · carte d'empathie · compte rendu d'équipe</td><td>03_BMC · 04_Carte_Empathie · 05_Compte_Rendu_Equipe (PDF)</td></tr>
+<tr><td>Rapport du modèle IA</td><td>06_Rapport_Modele_IA_Aero-Fire-DT.pdf</td></tr>
+<tr><td>Vidéo explicative (1 min)</td><td>dossier Drive de l'équipe</td></tr>
+<tr><td>Dépôt GitHub public (code, données, tests, application)</td><td><a href="https://github.com/AhmedHammouda5000/aero-fire-dt">github.com/AhmedHammouda5000/aero-fire-dt</a></td></tr>
+</table>
+<p class="small">Reproduire tous les résultats : <code>pip install -r requirements.txt</code> puis <code>python scripts/run_all.py</code> (télécharge les données avec contrôle SHA-256, entraîne, évalue, teste). Données : Mendeley Industrial Hall et salle EN 54 (CC BY 4.0), NIST FR 4019 (domaine public).</p>
+</body></html>

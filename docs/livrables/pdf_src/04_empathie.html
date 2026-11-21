@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>Aero-Fire DT — Carte d'empathie</title>
+<link rel="stylesheet" href="brand.css">
+<style>
+.pers { break-after: page; height: 182mm; display: flex; flex-direction: column; }
+.pers:last-of-type { break-after: auto; }
+.top { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 3px solid var(--amber); padding-bottom: 4px; margin-bottom: 8px; }
+.top h1 { font-family: var(--mono); font-size: 15pt; margin: 0; color: var(--navy); }
+.top .s { font-family: var(--mono); font-size: 8pt; color: var(--mute); }
+.em { flex: 1; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 6px; position: relative; }
+.q { background: var(--paper2); border: 1px solid var(--paper3); padding: 14px 18px; font-size: 13.5pt; line-height: 1.45; }
+.q h3 { font-family: var(--mono); font-size: 11pt; letter-spacing: .12em; margin: 0 0 6px; color: var(--navy); }
+.q p { margin: 3px 0; }
+.q.tl { padding-right: 70px; } .q.tr { padding-left: 70px; } .q.bl { padding-right: 70px; } .q.br { padding-left: 70px; }
+.who { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 150px; height: 150px; border-radius: 50%; background: var(--navy); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border: 4px solid var(--amber); font-size: 10pt; padding: 12px; }
+.who b { font-family: var(--mono); font-size: 9pt; color: var(--amber); display: block; margin-bottom: 2px; }
+.pg2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 6px; }
+.pain { border-left: 5px solid var(--red); background: #fff4f3; padding: 10px 14px; font-size: 11.5pt; }
+.gain { border-left: 5px solid var(--green); background: #f0fdf4; padding: 10px 14px; font-size: 11.5pt; }
+.pain h3, .gain h3 { font-family: var(--mono); font-size: 9pt; margin: 0 0 4px; letter-spacing: .1em; }
+</style></head>
+<body class="doc">
+
+<section class="pers">
+<div class="top"><h1>CARTE D'EMPATHIE · 1/4 · RESPONSABLE HSE</h1><div class="s">site industriel classé · Sfax / Gabès / Sousse</div></div>
+<div class="em">
+<div class="q tl"><h3>DIT</h3><p>« Encore une fausse alerte, on a arrêté la ligne pour rien. »</p><p>« Je dois prouver au bureau de contrôle que rien n'a été modifié sur le SSI. »</p></div>
+<div class="q tr"><h3>PENSE</h3><p>« Si l'IA se trompe, c'est ma responsabilité qui est engagée. »</p><p>« Mon budget est déjà absorbé par la maintenance. »</p></div>
+<div class="q bl"><h3>FAIT</h3><p>Relève les rapports d'incidents, relance l'intégrateur, tient l'étude de dangers et le POI, négocie la prime d'assurance.</p></div>
+<div class="q br"><h3>RESSENT</h3><p>Stress de la décision, lassitude des faux départs, pression du coût.</p></div>
+<div class="who"><b>HSE</b>responsable sécurité-environnement</div>
+</div>
+<div class="pg2"><div class="pain"><h3>DOULEURS</h3>Faux positifs ; aucune traçabilité ; données éparpillées ; assureur qui demande des preuves.</div>
+<div class="gain"><h3>GAINS ATTENDUS AVEC AERO-FIRE DT</h3>Moins de faux départs (gain <b>mesuré</b> au pilote de 90 jours) ; <b>preuve que le SSI n'a pas été modifié</b> (lecture seule, raccordement consigné) ; rapport d'événements horodaté ; prévision de fumée utilisable dans le POI.</div></div>
+</section>
+
+<section class="pers">
+<div class="top"><h1>CARTE D'EMPATHIE · 2/4 · OPÉRATEUR DU POSTE DE SÉCURITÉ</h1><div class="s">équipe de sécurité · souvent de nuit</div></div>
+<div class="em">
+<div class="q tl"><h3>DIT</h3><p>« Je vois une alerte mais je ne sais pas où ni si c'est grave. »</p><p>« J'appelle le responsable, puis j'attends. »</p></div>
+<div class="q tr"><h3>PENSE</h3><p>« Si j'évacue à tort, on me le reproche ; si j'attends trop, c'est pire. »</p></div>
+<div class="q bl"><h3>FAIT</h3><p>Surveille la centrale et les écrans, téléphone, consigne les interventions.</p></div>
+<div class="q br"><h3>RESSENT</h3><p>Surcharge, doute, fatigue de nuit.</p></div>
+<div class="who"><b>AGENT</b>poste de sécurité</div>
+</div>
+<div class="pg2"><div class="pain"><h3>DOULEURS</h3>Interfaces peu lisibles ; pas de hiérarchie des alertes ; levée de doute à l'aveugle.</div>
+<div class="gain"><h3>GAINS ATTENDUS AVEC AERO-FIRE DT</h3>Verdict en <b>&lt; 60 s</b>, zone et procédure affichées (ex. « ALARME SSI ZONE C : APPLIQUER LA PROCÉDURE · indices compatibles avec un aérosol · levée de doute zone C ») ; écran sombre quand tout va bien ; trois niveaux d'alerte clairs ; <b>c'est toujours lui qui décide</b> sur la centrale.</div></div>
+</section>
+
+<section class="pers">
+<div class="top"><h1>CARTE D'EMPATHIE · 3/4 · OFFICIER DE LA PROTECTION CIVILE</h1><div class="s">prévention, intervention, retours d'expérience</div></div>
+<div class="em">
+<div class="q tl"><h3>DIT</h3><p>« On part souvent sur une fausse alerte. »</p><p>« Il me manque le plan et l'accès. »</p></div>
+<div class="q tr"><h3>PENSE</h3><p>« J'ai besoin d'une information fiable avant d'engager mes équipes. »</p></div>
+<div class="q bl"><h3>FAIT</h3><p>Pré-plans, exercices, interventions, retours d'expérience ; examine les dossiers de sécurité.</p></div>
+<div class="q br"><h3>RESSENT</h3><p>Urgence ; besoin de confiance dans l'information reçue.</p></div>
+<div class="who"><b>ONPC</b>officier Protection Civile</div>
+</div>
+<div class="pg2"><div class="pain"><h3>DOULEURS</h3>Pré-plans papier ; zones mal connues ; peu de retours d'expérience exploitables.</div>
+<div class="gain"><h3>GAINS ATTENDUS AVEC AERO-FIRE DT</h3><b>Pré-plan numérique</b> (plan 3D, zones, capteurs) et prévision de fumée à 60 s ; journal d'événements partagé pour les retours d'expérience ; escalade plus rapide quand deux signes physiques confirment un feu.</div></div>
+</section>
+
+<section class="pers">
+<div class="top"><h1>CARTE D'EMPATHIE · 4/4 · INSTALLATEUR SSI AGRÉÉ</h1><div class="s">pose et maintenance des centrales</div></div>
+<div class="em">
+<div class="q tl"><h3>DIT</h3><p>« Je ne touche pas à une centrale que j'ai mise en service sans savoir qui répondra en cas de problème. »</p></div>
+<div class="q tr"><h3>PENSE</h3><p>« Si un tiers se branche mal, c'est ma garantie et mon contrat de maintenance qui sautent. »</p></div>
+<div class="q bl"><h3>FAIT</h3><p>Programme les relais et passerelles, tient la matrice de mise en sécurité, assure la maintenance.</p></div>
+<div class="q br"><h3>RESSENT</h3><p>Méfiance envers les « boîtiers IA » ; intérêt pour un service facturable en plus.</p></div>
+<div class="who"><b>INSTALLATEUR</b>SSI agréé</div>
+</div>
+<div class="pg2"><div class="pain"><h3>DOULEURS</h3>Responsabilité sur la certification ; interventions non planifiées après les fausses alarmes.</div>
+<div class="gain"><h3>GAINS ATTENDUS AVEC AERO-FIRE DT</h3>Raccordement <b>qu'il réalise lui-même</b>, isolé et sans voie de retour ; spécification d'interface écrite ; prestation facturée ; détection de dérive des capteurs pour planifier la maintenance.</div></div>
+<div class="callout" style="margin-top:6px"><span class="k">SYNTHÈSE</span>Le fil commun est la <b>levée de doute</b> : le responsable HSE veut des preuves, l'opérateur de la clarté, la Protection Civile de la fiabilité, l'installateur la garantie que son SSI reste intact. Aero-Fire DT ne remplace aucun d'eux : il leur donne le même état de situation, en lecture seule, sans jamais pouvoir désactiver la protection réglementaire.</div>
+</section>
+</body></html>

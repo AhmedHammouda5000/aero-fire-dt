@@ -1,0 +1,86 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Aero-Fire DT — Compte Rendu D'Équipe</title><link rel="stylesheet" href="brand.css"></head><body class="doc"><div class="cover"><div class="lamp"><i style="background:#22c55e"></i><i style="background:#ffb000"></i><i style="background:#ff3b30"></i></div>
+<div class="tag">COMPTE RENDU D'ÉQUIPE · AERO-FIRE DT</div><h1>ANALYSE DE LA PROBLÉMATIQUE</h1><div class="sub">Comment nous avons lu le besoin, analysé le problème et couvert les contraintes du cahier des charges.</div>
+<div class="meta"><span>Challenge <b>Aero-Entrepreneur</b> · Tunisian Aeroday 2026</span><span>Partenaire du challenge : <b>Protection Civile</b></span>
+<span><b>22 novembre 2026</b></span><span>Code : <b>github.com/AhmedHammouda5000/aero-fire-dt</b></span></div></div><h2><span class="n">1</span>Lecture du besoin</h2>
+<p>Le challenge demande de transposer des <strong>méthodes</strong> aéronautiques — et non des équipements certifiés « drop-in » — à la prévention, la détection et la gestion des incendies en Tunisie. Nous avons écarté deux pièges :</p>
+<ul>
+<li><strong>Piège technologique :</strong> remplacer un détecteur EN 54 par un réseau de caméras IA. Défendable en laboratoire, irrecevable pour un audit incendie et pour un assureur.</li>
+<li><strong>Piège économique :</strong> vendre un jumeau numérique coûteux là où le client tunisien n'a pas les moyens d'un sprinklage lourd. Les chiffres américains (ESFR 140-280 k$, crédit d'assurance 20-40 %) ne sont pas transposables.</li>
+</ul>
+<p>Notre lecture : la valeur ajoutée est d'<strong>éclairer l'opérateur pendant la levée de doute</strong> sans toucher à la fonction de sécurité réglementaire. Aucune statistique tunisienne de fausses alarmes n'est publiée ; au Royaume-Uni, ≈ 39 % des interventions des pompiers sont des fausses alarmes incendie (<a href="https://www.gov.uk/government/statistics/fire-and-rescue-incident-statistics-year-ending-september-2025/fire-and-rescue-incident-statistics-year-ending-september-2025">GOV.UK, 2025</a>).</p>
+<h2><span class="n">2</span>Méthode d'analyse</h2>
+<ol>
+<li>Décomposition en sous-questions (détection, capteurs, vision, prévision, jumeau, interface SSI, réglementation, économie, facteurs humains).</li>
+<li>Revue croisée des corpus de recherche, puis <strong>vérification</strong> des sources (jeux de données, licences, normes, prix).</li>
+<li>Grille de notation (innovation / viabilité / faisabilité Tunisie) et sélection de l'architecture.</li>
+<li>Contrôle de la couverture des contraintes C1-C6 (§4).</li>
+</ol>
+<h2><span class="n">3</span>Résultat</h2>
+<p>Une architecture en <strong>double chaîne</strong> : le SSI certifié (EN 54 / NFPA 72) garde la fonction de sécurité ; Aero-Fire DT s'y raccorde <strong>en lecture seule</strong>, par relais via optocoupleurs ou passerelle constructeur (Modbus fonctions 1-4, BACnet lecture/COV), à travers une isolation galvanique, <strong>sans voie de retour</strong>. Le raccordement est fait par l'installateur agréé et consigné dans la matrice de mise en sécurité et le dossier de sécurité. Les temporisations restent dans l'ECS certifié.</p>
+<p>Au-dessus : vérification multicritère (fusion capteurs, vision optionnelle), prévision t+30/t+60 s en local, tableau de bord inspiré de l'ECAM, et un <strong>dossier de sécurité</strong> (FHA, arbre de défaillances, modes communs, vote double boucle, matrice d'essais — <code>Safety_Case.md</code>). Modèle économique en 3 paliers TND.</p>
+<h2><span class="n">4</span>Couverture des contraintes du brief</h2>
+<table>
+<thead>
+<tr>
+<th>Contrainte</th>
+<th>Réponse apportée</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C1 Réalisme / précision</td>
+<td>Méthodes <strong>transposées</strong>, sans certification revendiquée : objectif de performance inspiré de <strong>25.858</strong> (alerte &lt; 60 s, test de chaque voie, toutes configurations) ; <strong>ARP4761A</strong> (FHA / FTA / CCA, gravités qualitatives) ; <strong>double boucle</strong> des détecteurs moteurs ; <strong>ECAM</strong> ; <strong>Concept Paper IA de l'EASA, niveau 1</strong> pour l'IA (la DO-178C ne vaut que pour le logiciel classique)</td>
+</tr>
+<tr>
+<td>C2 Interactivité</td>
+<td>Tableau de bord ECAM (cockpit sombre, 3 niveaux, indicateur de vie permanent), page de prévision, panneau « pourquoi », banc d'essai virtuel « iron bird » rejouant des scénarios</td>
+</tr>
+<tr>
+<td>C3 Données réelles</td>
+<td>Industrial Hall et salle EN54 (Mendeley, CC BY 4.0) ; validation « essai jamais vu » et inter-sites ; données du site pilote ensuite</td>
+</tr>
+<tr>
+<td>C4 Simulation physique</td>
+<td>Modèle de zone Python (t², Alpert, deux couches, MQH, RTI) → 5 000 scénarios → IA de substitution (0,14 ms, ± 0,06 m à +60 s) ; CFAST et FDS comme références de validation futures</td>
+</tr>
+<tr>
+<td>C5 BMC obligatoire</td>
+<td><code>Adapted_BMC.md</code> + <code>Financial_Projections.csv</code> (TND au cours BCT, droits et TVA, embauches, formules)</td>
+</tr>
+<tr>
+<td>C6 Sécurité</td>
+<td>SSI inchangé ; l'IA ne peut ni acquitter, ni réarmer, ni inhiber ; elle peut seulement escalader plus vite. Vie privée : INPDP, pas de son, traitement local</td>
+</tr>
+</tbody>
+</table>
+<h2><span class="n">5</span>Ce qui existe déjà / ce que nous ajoutons</h2>
+<p>Bosch AVIOTEC, Honeywell Distinguish (nov. 2026), Siemens ASA, Hikvision/iThermAI et Dahua (MENA) intègrent l'IA <strong>dans leurs propres détecteurs</strong> ; PolyU SureFire prévoit le champ de température à 60 s (~92 %) <strong>via le cloud</strong> ; de nombreux projets de hackathon font « capteurs + IA ». Nous ne revendiquons pas ces briques. Nous ajoutons : <strong>une couche neutre multi-marques en lecture seule, incapable par construction d'inhiber le SSI</strong>, <strong>un dossier de sécurité de méthode aéronautique</strong>, <strong>un prix PME en TND</strong> et <strong>une prévision en local</strong> qui fonctionne sans internet.</p>
+<h2><span class="n">6</span>Base légale tunisienne</h2>
+<table>
+<thead>
+<tr>
+<th>Texte</th>
+<th>Conséquence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Loi 2009-11 (code de sécurité incendie des bâtiments)</td>
+<td>Raccordement consigné dans le dossier de sécurité examiné par l'ONPC</td>
+</tr>
+<tr>
+<td>Décret 2006-2687 (établissements classés)</td>
+<td>Étude de dangers et POI pour la 1re/2e classe : premiers clients</td>
+</tr>
+<tr>
+<td>Arrêté du 14 août 2020</td>
+<td>Équipes de sécurité formées par l'ONPC : utilisateurs du tableau de bord</td>
+</tr>
+<tr>
+<td>Loi 2004-63 art. 69-74 + Décret 2007-3004</td>
+<td>Autorisation INPDP préalable aux caméras, pas de son, signalisation</td>
+</tr>
+</tbody>
+</table>
+<h2><span class="n">7</span>Limites et suites</h2>
+<p>Pas de données d'incendie industriel tunisiennes ; marques de SSI dominantes en Tunisie inconnues ; coût de l'installateur pour le raccordement à chiffrer ; statut INPDP des caméras thermiques non tranché ; texte intégral de la Loi 2009-11 sur la détection non consulté. Résultats du prototype : 17/17 feux, 11/15 nuisances rejetées, mais la soudure et la machine à fumée (1-2 essais seulement) trompent encore l'IA ; le gain réel sera mesuré au pilote de 90 jours. Crédit d'assurance exclu. Drones : hors périmètre (phases 4-5, sous autorité de la Protection Civile).</p></body></html>

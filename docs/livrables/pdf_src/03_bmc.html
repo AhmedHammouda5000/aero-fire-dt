@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>Aero-Fire DT — BMC</title>
+<link rel="stylesheet" href="brand.css">
+<style>
+.bmc { display: grid; grid-template-columns: repeat(10, 1fr); grid-template-rows: 1fr 1fr .78fr; gap: 6px; height: 174mm; font-size: 9.1pt; line-height: 1.3; }
+.c { border: 1px solid var(--paper3); border-top: 4px solid var(--navy); background: var(--paper2); padding: 6px 8px; overflow: hidden; }
+.c h3 { font-family: var(--mono); font-size: 9.6pt; margin: 0 0 4px; color: var(--navy); letter-spacing: .04em; }
+.c h3 i { font-style: normal; color: var(--amber-d); margin-right: 4px; }
+.c ul { margin: 0; padding-left: 13px; } .c li { margin: 1.5px 0; }
+.kp { grid-column: 1 / 3; grid-row: 1 / 3; }
+.ka { grid-column: 3 / 5; grid-row: 1; } .kr { grid-column: 3 / 5; grid-row: 2; }
+.vp { grid-column: 5 / 7; grid-row: 1 / 3; border-top-color: var(--amber); background: #fffaf0; }
+.cr { grid-column: 7 / 9; grid-row: 1; } .ch { grid-column: 7 / 9; grid-row: 2; }
+.cs { grid-column: 9 / 11; grid-row: 1 / 3; border-top-color: var(--cyan); }
+.co { grid-column: 1 / 6; grid-row: 3; border-top-color: var(--red); } .rs { grid-column: 6 / 11; grid-row: 3; border-top-color: var(--green); }
+.head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 6px; border-bottom: 3px solid var(--amber); padding-bottom: 4px; }
+.head h1 { font-family: var(--mono); font-size: 16pt; margin: 0; color: var(--navy); letter-spacing: .05em; }
+.head .s { font-size: 8.5pt; color: var(--mute); text-align: right; }
+</style></head>
+<body class="doc">
+<div class="head"><h1>BUSINESS MODEL CANVAS · AERO-FIRE DT</h1><div class="s">Marché tunisien · prix HT en TND · 1 USD = 3,0335 TND (BCT, 12/11/2026)<br>Détail chiffré : Financial_Projections.csv · Challenge Aero-Entrepreneur, Tunisian Aeroday 2026</div></div>
+<div class="bmc">
+<div class="c kp"><h3><i>8</i>PARTENAIRES CLÉS</h3><ul>
+<li><b>Installateurs SSI agréés</b> (posent le raccordement en lecture seule)</li>
+<li>Constructeurs de centrales et leurs passerelles de lecture (Honeywell/Notifier, Siemens, Kidde/Edwards)</li>
+<li><b>Bureaux de contrôle</b> (Apave et équivalents)</li>
+<li><b>Protection Civile</b> (partenaire du challenge)</li>
+<li>Universités : ENIT, ENSI, Sup'Com, IPEST</li>
+<li>Cluster aéronautique tunisien</li>
+<li>Fournisseurs de capteurs (Sensirion, Winsen)</li>
+<li>Assureurs (prescripteurs)</li></ul></div>
+<div class="c ka"><h3><i>7</i>ACTIVITÉS CLÉS</h3><ul>
+<li>Analyse de sécurité par site (FHA, modes communs)</li>
+<li>Banc d'essai « iron bird » matériel</li>
+<li>Pilote de 90 jours + <b>réapprentissage local</b> (hors fonction de sécurité)</li>
+<li>Intégration edge, maintenance des capteurs</li>
+<li>Veille réglementaire (EN 54-13, NFPA 72, textes tunisiens)</li></ul></div>
+<div class="c kr"><h3><i>6</i>RESSOURCES CLÉS</h3><ul>
+<li>Vérificateur IA versionné + vote à 2 canaux ; modèle local par usine</li>
+<li>Jumeau 3D + solveur physique ; base de 5 000 scénarios simulés</li>
+<li>Dossier de sécurité (FHA, FTA, matrice d'essais)</li>
+<li>3 ingénieurs (IA, IoT/edge, simulation) → 5-7 en A3</li>
+<li>Kit capteur standard (≈ 300–475 TND rendu)</li></ul></div>
+<div class="c vp"><h3><i>2</i>PROPOSITION DE VALEUR</h3>
+<p style="margin:0 0 4px"><b>Un copilote qui lit le SSI sans jamais pouvoir le toucher.</b></p><ul>
+<li><b>Lecture seule</b>, isolée, posée par l'installateur agréé ; aucun remplacement du SSI</li>
+<li>« FEU » seulement si <b>2 signes physiques</b> sont d'accord (double boucle aéronautique)</li>
+<li>Verdict <b>&lt; 60 s</b> dans la levée de doute ; pendant une alarme SSI : « appliquer la procédure », jamais de score</li>
+<li>Alerte précoce « feu couvant possible » ; prévision de fumée à 60 s</li>
+<li><b>Apprend chaque site</b> pendant 90 jours</li>
+<li>Hors ligne, sur batterie (≈ 55 h) pendant les coupures STEG</li>
+<li>Prototype : 17/17 feux, 11/15 nuisances rejetées (essais réels jamais vus) ; gain réel mesuré au pilote</li></ul></div>
+<div class="c cr"><h3><i>4</i>RELATIONS CLIENTS</h3><ul>
+<li>Audit initial gratuit sur 1 site</li>
+<li>Pilote de 90 jours = calibration</li>
+<li>Formation des équipes de sécurité</li>
+<li><b>Contrat de performance</b> (disponibilité, délai du verdict) · support 7j/7 · revue trimestrielle</li></ul></div>
+<div class="c ch"><h3><i>3</i>CANAUX</h3><ul>
+<li><b>Installateurs / intégrateurs SSI agréés</b> (canal principal, raccordement facturé)</li>
+<li>Bureaux d'études et de contrôle</li>
+<li>Dossiers POI, appels d'offres</li>
+<li>Incubateurs (Flat6Labs, The Core), assureurs</li></ul></div>
+<div class="c cs"><h3><i>1</i>SEGMENTS CLIENTS</h3><ul>
+<li><b>A · PME industrielles et entrepôts</b> (Sousse, Tunis–Radès, Sfax)</li>
+<li><b>B · Établissements classés</b> 1<sup>re</sup>/2<sup>e</sup> classe, chimie, phosphates (Gabès, Sfax) — étude de dangers, POI</li>
+<li><b>C · Grands comptes</b> : IGH, data centers, aéroports</li>
+<li><b>D · Protection Civile</b> : pré-plans, retours d'expérience, formation</li>
+<li>E · Assureurs : prescripteurs, non payeurs</li></ul>
+<p class="small" style="margin-top:4px">Marché : <b>4 519</b> entreprises industrielles de 10+ salariés, ~115 zones AFI.</p></div>
+<div class="c co"><h3><i>9</i>STRUCTURE DES COÛTS</h3><ul>
+<li>Personnel : 90 000 TND (A1) → 141 600 (A2) → 193 200 (A3)</li>
+<li><b>Démarrage ≈ 45 800 TND</b> : banc matériel, kit de démo, dossier de sécurité, marque, INPDP</li>
+<li>Mise en service par site (palier A) ≈ 5 200 TND (matériel rendu + pose) · variable 2 400 TND/site/an</li>
+<li>Bureau 18-24 k/an · logiciels 9,6-19,2 k/an · Startup Act : bourse fondateur, exonération d'IS</li></ul></div>
+<div class="c rs"><h3><i>5</i>SOURCES DE REVENUS</h3><ul>
+<li><b>Mise en service</b> : 7 000 (A) / 22 000 (B) / 45 000 (C) TND</li>
+<li><b>Abonnement</b> : 450 / 1 200 / 3 000 TND par site et par mois (réapprentissage local + support)</li>
+<li>Formation des opérateurs : 2 500 TND / session</li>
+<li>Seuil récurrent ≈ 16 sites · résultat positif en A3 · crédit d'assurance <b>non compté</b></li></ul></div>
+</div>
+
+<h2 class="pb" style="margin-top:0"><span class="n">+</span>Particularités tunisiennes et projection sur 3 ans</h2>
+<div class="grid2">
+<div>
+<ul>
+<li><b>Pouvoir d'achat :</b> on ne remplace ni le SSI ni l'extinction ; matériel du palier A ≈ 3 000 TND avant droits (+40 % de droits, TVA et fret) → mise en service à 7 000 TND pour couvrir matériel, pose et marge.</li>
+<li><b>Assurance :</b> le crédit de prime de 20-40 % est un usage américain : il n'est <b>pas</b> compté. Argument : 47,9 MDT d'indemnités incendie au 1<sup>er</sup> semestre 2026.</li>
+<li><b>Réglementation :</b> « autre système » (EN 54-13) / équipement supplémentaire (NFPA 72) ; dossier de sécurité (Loi 2009-11) ; caméras futures soumises à l'INPDP.</li>
+<li><b>Coupures STEG :</b> fonctionnement hors ligne et sur batterie, indépendant de l'alimentation du SSI.</li>
+<li><b>Hors périmètre :</b> drones (phases ultérieures, sous autorité de la Protection Civile).</li>
+</ul>
+</div>
+<div>
+<table>
+<tr><th>TND</th><th>Année 1</th><th>Année 2</th><th>Année 3</th></tr>
+<tr><td>Sites actifs</td><td>10</td><td>20</td><td>40</td></tr>
+<tr><td>Chiffre d'affaires</td><td>208 800</td><td>320 400</td><td>640 800</td></tr>
+<tr><td>Résultat d'exploitation</td><td>−55 600</td><td>−30 400</td><td><b>+66 800</b></td></tr>
+<tr><td>Capex de démarrage</td><td>−45 782</td><td>—</td><td>—</td></tr>
+<tr><td>Trésorerie cumulée</td><td>−65 382</td><td>−95 782 (besoin max.)</td><td>−28 982</td></tr>
+</table>
+<p class="small">Hypothèses : mix d'offres A/B/C 60/30/10 ; sites installés en cours d'année facturés 6 mois en moyenne ; bourse Startup Act 36 000 TND en A1 ; trésorerie positive au cours de l'année 4 sur la base récurrente.</p>
+</div>
+</div>
+</body></html>

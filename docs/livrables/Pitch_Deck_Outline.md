@@ -15,7 +15,7 @@
 | 9 | Ressources, étapes et coût global | M0–M1 cadrage · M1–M3 banc matériel · M3–M6 pilote 90 jours · M6–M12 10 sites · M12–M18 consolidation. **Coût de démarrage ≈ 45 800 TND** (banc, kit de démo, dossier de sécurité) ; équipe de 3–4 ingénieurs ; 1 installateur SSI agréé | 0:20 |
 | 10 | Déploiement avec la Protection Civile & demande | Pré-plans numériques des sites, formation des agents « l'IA conseille, la centrale décide », retours d'expérience partagés. **Demande :** 1 site pilote, 1 installateur agréé, un cadre de test avec la Protection Civile. Dépôt : **https://github.com/AhmedHammouda5000/aero-fire-dt** | 0:20 |
 
-**Total : ≈ 4:50.** Règle : **aucun sigle technique à l'oral** (normes, protocoles, certifications) → tout est dans les slides de réserve.
+**Total : ≈ 4:50.** Support de présentation : `02_Presentation_Pitch_Aero-Fire-DT.pdf` (présenter **ce fichier exact**). Règle : **aucun sigle technique à l'oral** (normes, protocoles, certifications) → tout est dans les slides de réserve.
 
 ## Phrases du pitch (à dire mot pour mot)
 
@@ -24,14 +24,14 @@
 - Slide 7 : « Sur des essais réels jamais vus pendant l'entraînement, nous détectons les 17 feux et lançons une alerte "feu couvant possible" sur les 17, avant un seuil optique standard dans 10 cas. Sur un nouveau site, ses propres données ont réduit les fausses alarmes de cuisine de 27 sur 33 à 4 sur 33. C'est pour ça que chaque site commence par un pilote de 90 jours, sous la centrale certifiée. »
 - Si on demande « quel gain sur le détecteur classique ? » : « Sur le hall, une nuisance de plus seulement : 11 contre 10. La vraie valeur, c'est la règle des deux boucles, l'alerte précoce et l'apprentissage du site, et le gain réel sera mesuré au pilote. »
 
-## Slides de réserve (Q&R)
+## Slides de réserve (Q&R) — identiques au PDF `02_Presentation_Pitch_Aero-Fire-DT.pdf`
 
-- **R1 — Angles morts assumés :** marques de SSI dominantes en Tunisie (inconnues) ; coût de l'installateur pour le raccordement (à chiffrer) ; INPDP et caméras thermiques (statut non tranché, autorisation demandée) ; gain réel (mesuré au pilote).
-- **R2 — Nomenclature matériel (BOM) :** passerelle Jetson Orin Nano Super (~760-1 060 TND) ou Raspberry Pi 5 ; nœud « option 1 » : ESP32-C3 + SPS30 + SGP30 + SCD40 + Winsen ZE07-CO (≈ 215–340 TND en pièces, ≈ 300–475 TND rendu ; détail `docs/MATERIEL.md`) ; PureThermal Mini Pro + Lepton 3.5 (~1 120 TND) ; modules DI optocouplés. Palier A ≈ 3 000 TND avant droits, 4 000-4 500 rendu. Change BCT 1 USD = 3,0335 TND.
-- **R3 — Cadre légal :** Loi 2009-11, Décret 2006-2687, arrêté du 14 août 2020, Loi 2004-63 + Décret 2007-3004 ; EN 54-13 (« autre système »), NFPA 72 (équipement supplémentaire).
-- **R4 — Équipe et répartition des rôles.**
-- **R5 — Détails techniques (uniquement en Q&R) :** isolation galvanique (optocoupleurs), lecture Modbus FC 1-4 / BACnet en lecture seule ; FHA / arbre de défaillance ; niveaux d'alerte type ECAM ; IA = assistance niveau 1 (Concept Paper EASA, transposé) ; aucune certification aéronautique revendiquée.
-- **R6 — Ce que nous savons ne pas encore faire :** soudure et machine à fumée trompent encore l'IA ; « avant le détecteur » est mesuré contre un seuil optique standard, pas une vraie centrale ; pas encore de test en usine tunisienne.
+- **R1 — Réel, simulé, angles morts :** tableau réel / simulé / à venir ; marques de SSI en Tunisie inconnues, coût du raccordement à chiffrer, caméras = option future (INPDP), gain réel mesuré au pilote.
+- **R2 — Matériel et énergie :** SPS30 + SGP30 + SCD40 + Winsen ZE07-CO + ESP32-C3 (≈ 215–340 TND en pièces, ≈ 300–475 TND rendu) ; 0,68 W / boîtier, ≈ 55 h sur LiFePO4 100 Ah.
+- **R3 — Cadre légal :** Loi 2009-11, Décret 2006-2687, arrêté du 14 août 2020, Loi 2004-63 + Décret 2007-3004, EN 54-13 / NFPA 72.
+- **R4 — Apprentissage local (NIST) :** jour 1 6/33 → 29/33 après apprentissage sur le site ; données du site seules : même résultat ; pilote court : 74 % des feux.
+- **R5 — Détails techniques :** optocoupleurs, Modbus FC 1-4 / BACnet lecture seule, FHA, ECAM, IA niveau 1 (EASA, transposé), aucune certification revendiquée.
+- **R6 — Ce que nous ne savons pas encore faire :** soudure / machine à fumée, « avant le détecteur » = seuil optique standard, +1 nuisance seulement sur le hall, pas encore de test en usine tunisienne.
 
 ## Rappels de soumission
 
