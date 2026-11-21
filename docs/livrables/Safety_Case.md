@@ -70,7 +70,7 @@ Principes physiques indépendants : (1) aérosols/particules (PM, diffusion opti
 | Niveau | Condition | Affichage / son | Exemple |
 |---|---|---|---|
 | **ROUGE** (niveau 3) | **SSI en alarme feu** dans la zone **ET** ≥ 2 principes physiques indépendants concordants | MASTER WARN clignotant, carillon continu, zone + procédure (lignes d'action cyan) | « FEU ZONE B CONFIRMÉ » · `ÉVAC ZONE B ... LANCER` · `PROTECTION CIVILE ... APPELER 198` |
-| **AMBRE SONORE** (niveau 2) | 1 seule voie positive (pré-alarme SSI, ou 1 principe overlay), ou 2 principes overlay sans SSI (escalade : équipe de sécurité prévenue) | MASTER CAUT, carillon unique | « PRÉ-ALARME ZONE C : IA 91 % SOUDURE — VÉRIFIER CAM 3 » |
+| **AMBRE SONORE** (niveau 2) | 1 seule voie positive (pré-alarme SSI, ou 1 principe overlay), ou 2 principes overlay sans SSI (escalade : équipe de sécurité prévenue) | MASTER CAUT, carillon unique | « FEU COUVANT POSSIBLE ZONE C — LEVÉE DE DOUTE : ENVOYER AGENT » |
 | **AMBRE SILENCIEUX** (niveau 1) | Dérive capteur, perte d'un nœud, perte de la liaison SSI, mode simple boucle | Texte ambre, sans son | « DÉTECTEUR 7 DÉRIVE » · « NŒUD 4 PERDU : MODE SIMPLE BOUCLE » |
 | **Cockpit sombre** | Aucune anomalie | Liste vide + **indicateur de vie vert permanent** | « LIAISON SSI OK · 14/14 NŒUDS · IA v1.2 » |
 

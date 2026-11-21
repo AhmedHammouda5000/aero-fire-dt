@@ -159,10 +159,10 @@
       const nAct = hv.active;
       if (ssiZ.length && hv.verdict === "FIRE" && dual) a.push({ level: 3, code: "FIRE_CONFIRMED", title: "FEU CONFIRMÉ " + zn, detail: "SSI + IA (score max " + (this.pMax || 0).toFixed(2) + ") + 2 canaux physiques indépendants",
         actions: ["ÉVACUATION " + zn + " ........ DÉCLENCHER", "PROTECTION CIVILE 198 ........ APPELER", "DÉSENFUMAGE ........ VÉRIFIER", "ÉQUIPE DE SÉCURITÉ ........ ENGAGER"] });
-      else if (ssiZ.length && hv.verdict === "NUISANCE") a.push({ level: 2, code: "SSI_NUISANCE", title: "ALARME SSI ZONE " + ssiZ[0] + " — NUISANCE PROBABLE", detail: "IA score feu " + p + " · profil : " + prof,
-        actions: ["LEVÉE DE DOUTE ZONE " + ssiZ[0] + " ........ ENVOYER AGENT", "ALARME SSI ........ MAINTENUE (NON INHIBÉE)", "DÉCISION ........ OPÉRATEUR"] });
-      else if (ssiZ.length) a.push({ level: 2, code: "SSI_UNCERTAIN", title: "ALARME SSI ZONE " + ssiZ[0] + " — IA : EN ANALYSE", detail: "score feu " + p + " · profil : " + prof,
-        actions: ["LEVÉE DE DOUTE ZONE " + ssiZ[0] + " ........ ENVOYER AGENT", "ALARME SSI ........ MAINTENUE (NON INHIBÉE)"] });
+      else if (ssiZ.length && hv.verdict === "NUISANCE") a.push({ level: 2, code: "SSI_NUISANCE", title: "ALARME SSI ZONE " + ssiZ[0] + " : APPLIQUER LA PROCÉDURE", detail: "information IA (pas une décision) : indices compatibles avec une nuisance · profil : " + prof,
+        actions: ["PROCÉDURE SSI ........ APPLIQUER", "LEVÉE DE DOUTE ZONE " + ssiZ[0] + " ........ ENVOYER AGENT", "ALARME SSI ........ MAINTENUE (NON INHIBÉE)", "DÉCISION ........ OPÉRATEUR"] });
+      else if (ssiZ.length) a.push({ level: 2, code: "SSI_UNCERTAIN", title: "ALARME SSI ZONE " + ssiZ[0] + " : APPLIQUER LA PROCÉDURE", detail: "information IA : en analyse · profil : " + prof,
+        actions: ["PROCÉDURE SSI ........ APPLIQUER", "LEVÉE DE DOUTE ZONE " + ssiZ[0] + " ........ ENVOYER AGENT", "ALARME SSI ........ MAINTENUE (NON INHIBÉE)"] });
       else if (hv.verdict === "FIRE" && dual) a.push({ level: 2, code: "AI_PREALARM", title: "PRÉ-ALARME IA : FEU PROBABLE " + zn, detail: "score max " + (this.pMax || 0).toFixed(2) + " · 2 canaux concordants · SSI pas encore déclenché",
         actions: ["LEVÉE DE DOUTE " + zn + " ........ ENVOYER AGENT", "CHEF DE SÉCURITÉ ........ PRÉVENIR", "PROTECTION CIVILE ........ PRÉ-AVERTIR"] });
       else if (this.earlyOn && hv.verdict === "UNCERTAIN") a.push({ level: 2, code: "AI_EARLY", title: "FEU COUVANT POSSIBLE " + zn,

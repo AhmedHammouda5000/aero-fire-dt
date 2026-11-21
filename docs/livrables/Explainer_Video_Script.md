@@ -16,7 +16,7 @@
 | 0:08-0:13 | Pré-alarme ambre « FEU PROBABLE ZONE A », avant le détecteur officiel | « Notre IA croise particules et gaz : elle donne l'alerte avant le détecteur. » |
 | 0:13-0:17 | Alerte rouge « FEU CONFIRMÉ ZONE A », MASTER WARN, procédure en cyan | « Le SSI sonne : deux principes physiques concordent, comme la double boucle d'un moteur d'avion. Feu confirmé. » |
 | 0:17-0:22 | Page PRÉVISION : nappe de fumée à +60 s, compte à rebours | « Le jumeau numérique prévoit la fumée à soixante secondes. » |
-| 0:22-0:30 | Scénario B : le SSI sonne pour un aérosol, l'IA dit « NUISANCE PROBABLE » | « Ici, un aérosol déclenche l'alarme. L'IA reconnaît une nuisance… » |
+| 0:22-0:30 | Scénario B : le SSI sonne pour un aérosol, procédure appliquée, l'IA signale des indices de nuisance | « Ici, un aérosol déclenche l'alarme. La procédure est appliquée ; l'IA indique des indices de nuisance, l'agent vérifie la zone… » |
 | 0:30-0:35 | Page SSI : schéma « aucune voie de retour », journal Modbus lecture seule | « … mais l'alarme reste maintenue : lecture seule, jamais d'inhibition. L'opérateur décide. » |
 | 0:35-0:42 | Scénario C : CO élevé (échappement) | « Pas de feu, mais du CO : alerte santé. » |
 | 0:42-0:47 | Scénario D : capteur en dérive, mode dégradé | « Un capteur dérive ? Il est détecté et exclu du vote. » |

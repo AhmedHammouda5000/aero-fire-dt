@@ -170,16 +170,18 @@ def ecam(tl: pd.DataFrame, nodes: dict, ssi: dict, drift: list[str | None], sc: 
                                   "ÉQUIPE DE SÉCURITÉ ........ ENGAGER"]})
         elif ssi_zones and r.verdict == "NUISANCE":
             a.append({"level": 2, "code": "SSI_NUISANCE",
-                      "title": f"ALARME SSI ZONE {ssi_zones[0]} — NUISANCE PROBABLE",
-                      "detail": f"IA score feu {p} · profil : {prof}",
-                      "actions": [f"LEVÉE DE DOUTE ZONE {ssi_zones[0]} ........ ENVOYER AGENT",
+                      "title": f"ALARME SSI ZONE {ssi_zones[0]} : APPLIQUER LA PROCÉDURE",
+                      "detail": f"information IA (pas une décision) : indices compatibles avec une nuisance · profil : {prof}",
+                      "actions": ["PROCÉDURE SSI ........ APPLIQUER",
+                                  f"LEVÉE DE DOUTE ZONE {ssi_zones[0]} ........ ENVOYER AGENT",
                                   "ALARME SSI ........ MAINTENUE (NON INHIBÉE)",
                                   "DÉCISION ........ OPÉRATEUR"]})
         elif ssi_zones:
             a.append({"level": 2, "code": "SSI_UNCERTAIN",
-                      "title": f"ALARME SSI ZONE {ssi_zones[0]} — IA : EN ANALYSE",
-                      "detail": f"score feu {p} · profil : {prof}",
-                      "actions": [f"LEVÉE DE DOUTE ZONE {ssi_zones[0]} ........ ENVOYER AGENT",
+                      "title": f"ALARME SSI ZONE {ssi_zones[0]} : APPLIQUER LA PROCÉDURE",
+                      "detail": f"information IA : en analyse · profil : {prof}",
+                      "actions": ["PROCÉDURE SSI ........ APPLIQUER",
+                                  f"LEVÉE DE DOUTE ZONE {ssi_zones[0]} ........ ENVOYER AGENT",
                                   "ALARME SSI ........ MAINTENUE (NON INHIBÉE)"]})
         elif r.verdict == "FIRE" and dual:
             a.append({"level": 2, "code": "AI_PREALARM",

@@ -242,14 +242,17 @@
     if (codes.includes("FIRE_CONFIRMED")) oS = '<span class="st-fire">🔥 FEU CONFIRMÉ</span>';
     else if (codes.includes("AI_PREALARM")) oS = '<span class="st-fire">⚠ PRÉ-ALARME FEU</span>';
     else if (codes.includes("AI_EARLY")) oS = '<span class="st-unc">⚠ FEU COUVANT POSSIBLE</span>';
-    else if (codes.includes("SSI_NUISANCE") || codes.includes("AI_NUISANCE")) oS = '<span class="st-nuis">✋ NUISANCE PROBABLE</span>';
-    else if (codes.includes("SSI_UNCERTAIN")) oS = '<span class="st-unc">? EN ANALYSE</span>';
+    else if (codes.includes("SSI_NUISANCE") || codes.includes("SSI_UNCERTAIN")) oS = '<span class="st-unc">🔔 ALARME SSI : APPLIQUER LA PROCÉDURE</span>';
+    else if (codes.includes("AI_NUISANCE")) oS = '<span class="st-nuis">✋ NUISANCE PROBABLE</span>';
     else if (codes.includes("AI_ACTIVITY")) oS = '<span class="st-act">◔ ACTIVITÉ</span>';
     else oS = '<span class="st-ok">● NORMAL</span>';
     const extra = [];
     if (codes.includes("CO_HEALTH")) extra.push("CO dangereux signalé");
     if (codes.includes("NODE_DRIFT")) extra.push("capteur en panne exclu");
-    oW = "5 capteurs (fumée, CO, H₂, COV, chaleur) + IA + 2 canaux" + (p !== null && p !== undefined ? " · score feu " + (+p).toFixed(2) : "") + (extra.length ? " · " + extra.join(", ") : "");
+    // safety rule: while the certified SSI is in alarm, no nuisance verdict and no confidence number is shown
+    if (codes.includes("SSI_NUISANCE")) extra.unshift("information IA : indices compatibles avec une nuisance");
+    const showP = !on && p !== null && p !== undefined;
+    oW = "5 capteurs (fumée, CO, H₂, COV, chaleur) + IA + 2 canaux" + (showP ? " · score feu " + (+p).toFixed(2) : "") + (extra.length ? " · " + extra.join(", ") : "");
     const fireSaid = codes.includes("FIRE_CONFIRMED") || codes.includes("AI_PREALARM");
     const nuisSaid = codes.includes("SSI_NUISANCE") || codes.includes("AI_NUISANCE");
     let oR = "", oC = "wait";
@@ -262,7 +265,7 @@
     } else if (tr.fire === false) {
       if (fireSaid) { oR = "✗ se trompe : cas limite connu (une personne vérifie)"; oC = "bad"; }
       else if (codes.includes("AI_EARLY")) { oR = "~ demande une vérification (pas d'évacuation)"; }
-      else if (nuisSaid) { oR = "✓ NUISANCE reconnue : on envoie 1 agent vérifier au lieu d'évacuer"; oC = "good"; }
+      else if (nuisSaid) { oR = on ? "✓ indices de nuisance : levée de doute ciblée pendant la temporisation du SSI (l'opérateur décide)" : "✓ nuisance reconnue, pas d'alarme feu"; oC = "good"; }
       else if (on) { oR = "… analyse en cours, demande une levée de doute"; }
       else if (codes.includes("CO_HEALTH")) { oR = "✓ pas un feu, mais danger CO signalé"; oC = "good"; }
       else { oR = "✓ pas d'alarme feu"; oC = "good"; }
@@ -288,7 +291,7 @@
     const chA = s.hall.chA[i], chBC = s.hall.chB[i] || s.hall.chC[i];
     const ok = c => c ? '<span class="ok">✔</span>' : '<span class="ko">✖</span>';
     $("vote").innerHTML = `<b>VOTE ROUGE</b> = SSI ${ok(ssiZ.length > 0)} + IA ≥ 0,70 ${ok(p !== null && p >= T.P_FIRE)}
-      + particules ${ok(chA)} + gaz/chaleur ${ok(chBC)} · score IA <b>${p === null ? "—" : p.toFixed(2)}</b>`;
+      + particules ${ok(chA)} + gaz/chaleur ${ok(chBC)} · score IA <b>${p === null || ssiZ.length ? "—" : p.toFixed(2)}</b>`;
   }
 
   function nodeLevel(id, i) {
@@ -435,7 +438,8 @@
       <span class="bar"><i style="width:${Math.min(100, Math.max(0, r) / 3 * 100)}%"></i><span class="thr"></span></span>
       <span class="st">${on ? "ACTIF" : "—"}</span></div><div style="padding:0 10px 4px 168px;color:#6b7b86;font-size:11px">${v}</div>`).join("") +
       (drift ? '<div style="padding:4px 10px;color:#ffb000;font-size:12px">Nœud 11 exclu du vote (dérive détectée)</div>' : "");
-    CH.gauge($("why-gauge"), s.hall.p[i], { lo: T.P_NUIS, hi: T.P_FIRE });
+    const ssiOn = Object.values(s.ssi.zones).some(v => v[i]), confirmed = (s.alerts[i] || []).some(x => x.code === "FIRE_CONFIRMED");
+    CH.gauge($("why-gauge"), s.hall.p[i], { lo: T.P_NUIS, hi: T.P_FIRE, masked: ssiOn && !confirmed });
     const top = (s.alerts[i] || []).find(x => /profil/.test(x.detail));
     $("why-profile").innerHTML = top ? "Profil reconnu : " + top.detail.split("profil : ")[1] : (s.hall.p[i] === null ? "Air normal : aucun canal actif." : "");
     const ssi = Object.values(s.ssi.zones).some(v => v[i]);
@@ -750,7 +754,7 @@
       async () => { caption("L'IA croise particules + gaz : pré-alarme… avant le détecteur officiel."); return playRange(0, 400, 560, 4, token); },
       async () => { caption("Le SSI sonne : 2 principes physiques concordent → FEU CONFIRMÉ (logique double boucle, comme un moteur d'avion)."); return playRange(0, 560, 640, 3, token); },
       async () => { showPage("forecast", false); caption("Le jumeau prévoit la fumée à +60 s et le temps avant conditions intenables."); await sleep(5000); return token === videoToken; },
-      async () => { caption("Autre cas : un aérosol déclenche le SSI… l'IA reconnaît une nuisance (essai jamais vu)."); showPage("why", false); return playRange(1, 40, 120, 2.5, token); },
+      async () => { caption("Autre cas : un aérosol déclenche le SSI. Procédure appliquée ; l'IA signale des indices de nuisance → levée de doute ciblée (essai jamais vu)."); showPage("why", false); return playRange(1, 40, 120, 2.5, token); },
       async () => { showPage("ssi", false); caption("L'alarme SSI reste maintenue : lecture seule, aucune voie de retour. L'opérateur décide."); await sleep(4500); return token === videoToken; },
       async () => { showPage("sensors", false); caption("Moteur thermique dans le hall : pas de feu, mais CO élevé → alerte santé."); return playRange(2, 10, 80, 2.5, token); },
       async () => { showPage("zone", false); caption("Un capteur dérive ? Détecté, exclu du vote : mode dégradé signalé."); return playRange(3, 600, 700, 4, token); },

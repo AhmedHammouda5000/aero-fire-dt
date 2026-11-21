@@ -22,7 +22,7 @@
 | **Fait** | Surveille la centrale et les écrans, téléphone, consigne les interventions. |
 | **Ressent** | Surcharge cognitive, doute, fatigue de nuit. |
 | **Douleurs** | Interfaces peu lisibles, pas de hiérarchie des alertes, levée de doute à l'aveugle. |
-| **Gains attendus** | **Verdict IA en < 60 s, zone et procédure affichées** (ex. « Zone C : profil soudure 91 %, vérifier CAM 3 ») ; écran sombre quand tout va bien avec indicateur de vie permanent ; trois niveaux d'alerte clairs ; c'est toujours lui qui décide sur la centrale. |
+| **Gains attendus** | **Verdict IA en < 60 s, zone et procédure affichées** (ex. « ALARME SSI ZONE C : APPLIQUER LA PROCÉDURE · indices compatibles avec un aérosol · levée de doute zone C ») ; écran sombre quand tout va bien avec indicateur de vie permanent ; trois niveaux d'alerte clairs ; c'est toujours lui qui décide sur la centrale. |
 
 ## Persona 3 — Officier de la Protection Civile
 

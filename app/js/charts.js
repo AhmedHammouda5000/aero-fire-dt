@@ -106,6 +106,13 @@
     const arc = (from, to, color, lw) => { ctx.strokeStyle = color; ctx.lineWidth = lw; ctx.beginPath();
       ctx.arc(cx, cy, r, a0 + from * Math.PI, a0 + to * Math.PI); ctx.stroke(); };
     arc(0, opt.lo, "#1d4d33", 14); arc(opt.lo, opt.hi, "#4d401d", 14); arc(opt.hi, 1, "#4d1d1d", 14);
+    if (opt.masked) {  // certified SSI in alarm: no confidence number shown to the operator
+      ctx.fillStyle = C.amber; ctx.font = "bold 16px Consolas, monospace"; ctx.textAlign = "center";
+      ctx.fillText("ALARME SSI EN COURS", cx, cy - r * 0.38);
+      ctx.font = "12px Consolas, monospace"; ctx.fillStyle = C.dim;
+      ctx.fillText("score masqué : appliquer la procédure", cx, cy - r * 0.38 + 20);
+      ctx.textAlign = "left"; return;
+    }
     if (value !== null && value !== undefined) {
       const a = a0 + Math.min(Math.max(value, 0), 1) * Math.PI;
       ctx.strokeStyle = C.white; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(cx, cy);
