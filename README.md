@@ -1,97 +1,244 @@
 # Aero-Fire DT — copilote incendie pour les usines
 
-> **Un copilote qui lit votre système de sécurité incendie (SSI) sans jamais pouvoir le toucher.**
+> **Un copilote qui lit le système de sécurité incendie (SSI) d'une usine sans jamais pouvoir le toucher, et qui dit à l'agent de sécurité : « vrai feu ou fausse alarme ? que faire ? que va-t-il se passer dans 60 s ? »**
 > Prototype du challenge *Aero-Entrepreneur* — Tunisian Aeroday 2026, en partenariat avec la Protection Civile.
 
-![Poste de sécurité — feu confirmé](docs/screenshots/VFX3_smoke_layer.png)
+![Feu qui se propage dans les étagères, poste de sécurité en mode batterie](docs/screenshots/P1_power_cut_battery.png)
 
-## Le problème
-Les alarmes incendie des usines sonnent souvent pour rien (aérosols, poussières, échappement…) : arrêts de production, évacuations inutiles, déplacements des secours. Et quand un vrai feu démarre, l'agent de sécurité voit seulement « ALARME ZONE B », sans savoir si c'est grave ni ce qui va se passer.
-En Angleterre, **39 % des interventions des pompiers concernent de fausses alarmes** (année se terminant en septembre 2025) ; dans les soutes d'avions, on comptait **environ 200 fausses alarmes pour 1 feu réel** (NIST SP 965).
+**Essayer tout de suite :** télécharger ou cloner le dépôt, puis **double-cliquer sur `app/index.html`** (Chrome, Edge ou Firefox). Aucune installation, aucun Internet nécessaire.
 
-## La solution
-Une **couche consultative** ajoutée au SSI existant, inspirée des méthodes de l'aéronautique :
+---
 
-| Brique | Ce qu'elle fait | Inspiration aéronautique |
+## Sommaire
+1. [Le problème](#1-le-problème)
+2. [La solution en une image](#2-la-solution-en-une-image)
+3. [Comment ça marche, étape par étape](#3-comment-ça-marche-étape-par-étape)
+4. [Les données utilisées](#4-les-données-utilisées)
+5. [Le modèle IA : général + local](#5-le-modèle-ia--général--local)
+6. [Résultats mesurés](#6-résultats-mesurés)
+7. [L'application (tableau de bord)](#7-lapplication-tableau-de-bord)
+8. [Physique 3D réelle (CFD) et banc d'essai libre](#8-physique-3d-réelle-cfd-et-banc-dessai-libre)
+9. [Matériel, énergie et coupures de courant](#9-matériel-énergie-et-coupures-de-courant)
+10. [Sûreté et lien avec l'aéronautique](#10-sûreté-et-lien-avec-laéronautique)
+11. [Ce qui est réel, simulé, ou à venir](#11-ce-qui-est-réel-simulé-ou-à-venir)
+12. [Limites (dites honnêtement)](#12-limites-dites-honnêtement)
+13. [Reproduire tous les résultats](#13-reproduire-tous-les-résultats)
+14. [Structure du dépôt](#14-structure-du-dépôt)
+15. [Données, licences, crédits](#15-données-licences-crédits)
+
+---
+
+## 1. Le problème
+- Les alarmes incendie des usines sonnent souvent **pour rien** (aérosols, poussière, échappement, soudure, vapeur…) : évacuations inutiles, production arrêtée, secours déplacés. En Angleterre, **39 % des interventions des pompiers concernent de fausses alarmes** (année se terminant en septembre 2025) ; dans les soutes d'avions, on comptait **environ 200 fausses alarmes pour 1 feu réel** (NIST SP 965).
+- Quand un vrai feu démarre, l'agent voit seulement « ALARME ZONE B », sans savoir si c'est grave ni ce qui va arriver.
+- Un détecteur classique ne regarde **que la fumée** : il ne peut pas distinguer un spray d'un feu.
+
+## 2. La solution en une image
+```
+ Boîtiers capteurs (9 dans le hall)          Passerelle (petit ordinateur local)            Écran du gardien
+ fumée · CO · H2 · COV · CO2 · T° · HR  ──►  IA + vote de sécurité + prévision 60 s   ──►  alertes type cockpit
+                                              ▲                                              + vue 3D
+ SSI certifié (alarme incendie existante) ────┘  LECTURE SEULE : on lit, on ne commande jamais
+```
+- **On n'enlève rien** : le SSI certifié reste la barrière de sécurité. Aero-Fire DT ajoute un **deuxième avis**.
+- **Fonctionne sans Internet** et **sur batterie** en cas de coupure STEG.
+
+## 3. Comment ça marche, étape par étape
+Toutes les **10 secondes** :
+
+| # | Où | Ce qui se passe |
 |---|---|---|
-| Raccordement **lecture seule** | lit les relais du SSI via optocoupleurs ; aucune voie de retour, l'IA ne peut jamais acquitter, temporiser ni inhiber une alarme | architecture à double chaîne, analyse de sécurité (ARP4761A, transposée) |
-| **Vérification d'alarme** | 9 nœuds multi-capteurs (particules, CO, H₂, COV, CO₂, température) + IA « feu ou nuisance ? » | détection multicritère des soutes cargo (recherche FAA) |
-| **Vote double boucle** | alerte rouge seulement si SSI + IA + **2 principes physiques indépendants** concordent | détection incendie moteur à double boucle (boucle A ET boucle B) |
-| **Prévision 30-60 s** | jumeau numérique (IFC) + modèle de zones + IA de substitution : hauteur de fumée, température, temps avant conditions intenables | — |
-| **Écran du poste de sécurité** | cockpit sombre, alertes rouge/ambre, procédures en cyan, MASTER WARN/CAUT, indicateur de vie permanent | philosophie ECAM (Airbus) |
-| **Banc d'essai virtuel** | rejoue des scénarios réels de feu et de nuisance dans toute la chaîne logicielle | « iron bird », méthode d'essai AC 25-9A, objectif d'alerte ≤ 60 s inspiré de 14 CFR 25.858 |
+| 1 | Boîtier | Lit **11 mesures** : particules (petites, moyennes, total, taille moyenne), CO, H₂, COV, CO₂, température, humidité |
+| 2 | Boîtier | Apprend son **air normal** (niveau bas des 30 dernières minutes) et ne regarde que les **hausses** |
+| 3 | Boîtier | Calcule **19 indices** : hausses, vitesse de hausse sur 60 s, taille des particules, « gaz par fumée », « COV par fumée » |
+| 4 | Boîtier | Le **modèle IA** (300 petits arbres de décision) donne un **score de feu de 0 à 1** |
+| 5 | Boîtier | 3 vérifications simples (sans IA) : **canal A** fumée, **canal B** gaz (CO, H₂ ou COV), **canal C** chaleur |
+| 6 | Passerelle | Prend les 3 boîtiers les plus actifs, moyenne et lisse leurs scores → **score du hall** |
+| 7 | Passerelle | **Décide** (règle de sécurité ci-dessous) et lit l'état du SSI |
+| 8 | Écran | Affiche l'alerte, la zone, les actions, la prévision à 60 s |
 
-**Aucune certification aéronautique n'est revendiquée** : ce sont des méthodes transposées, pas des certificats.
+**Règle de décision (le « verrou de sécurité »)**
 
-## Résultats mesurés (données réelles, essais jamais vus)
-Jeu public *Indoor Fire Dataset with Distributed Multi-Sensor Nodes* — hall industriel 10 × 22 × 8 m (Mendeley, CC BY 4.0). Chaque essai est jugé par un modèle entraîné **sans** cet essai (leave-one-episode-out).
+| Verdict | Condition |
+|---|---|
+| ⚠ **FEU COUVANT POSSIBLE** | score ≥ 0,70 + fumée ou gaz encore en hausse, pendant 30 s → « envoyer quelqu'un vérifier » |
+| 🔥 **FEU** | score ≥ 0,70 **ET 2 signes physiques différents** (fumée + gaz, ou fumée + chaleur) **pendant 30 s** → reste verrouillé jusqu'à acquittement humain |
+| ✋ **NUISANCE** | score ≤ 0,30 pendant 30 s |
+| ? **INCERTAIN** | entre les deux |
 
-| | IA Aero-Fire DT | Détecteur optique classique |
+Combiné avec le SSI : SSI + FEU → **FEU CONFIRMÉ** (évacuer, appeler 198) · FEU sans SSI → **PRÉ-ALARME** · SSI + NUISANCE → **NUISANCE PROBABLE** (levée de doute, l'alarme SSI n'est **jamais** inhibée) · CO élevé → **CO ÉLEVÉ** · capteur incohérent → **exclu du vote**.
+
+**Exemple réel (scénario A, feu de bois enregistré)** : 3 min 30 « feu couvant possible » → 6 min 30 pré-alarme → 10 min 10 le détecteur classique sonne enfin → « FEU CONFIRMÉ ».
+
+## 4. Les données utilisées
+| # | Jeu de données | Contenu | Utilisation |
+|---|---|---|---|
+| 1 | **Mendeley « Industrial Hall »** (Allemagne, CC BY 4.0) | 9 boîtiers multi-capteurs, 1 mesure / 10 s, **248 502 lignes, 77 h**. **32 essais réels** : 17 feux (bois, bougies, câbles, mèches) et 15 nuisances (déodorant, échappement, machine à fumée, CO, éthanol, soudure, découpe, déchets verts) + ≈ 50 h d'activité normale | **Entraînement** + évaluation honnête |
+| 2 | **Mendeley « salle EN 54 »** (même laboratoire, autre salle) | 13 feux, 7 nuisances | **Test uniquement** (autre site) |
+| 3 | **NIST FR 4019** (USA, domaine public) | 8 petits feux, 33 nuisances (cuisine, cigarettes, bougie), **capteurs différents** | Test indépendant + **exemple de « nouvelle usine »** pour l'apprentissage local |
+| 4 | Données simulées (nos modèles physiques) | 5 000 feux simulés, CFD | Prévision de fumée et banc d'essai **uniquement** — jamais pour entraîner l'IA feu/nuisance |
+
+**Exemple de ce que voit l'IA (vraies lignes du jeu 1)**
+
+| | 🔥 Feu de bois | 💨 Spray déodorant | 🚜 Échappement |
+|---|---|---|---|
+| Particules | 6 252 (beaucoup) | 1 517 | 40 |
+| Taille des particules | **0,51 µm (fines = fumée)** | **1,03 µm (grosses = gouttelettes)** | 0,44 |
+| Hausse CO | +1,9 ppm | +0,3 | **+41 ppm** |
+| Hausse COV | +5 | **+18,7** | +4,6 |
+
+Un détecteur classique sonne pour le spray ; l'IA voit « grosses particules + COV + pas de CO = spray ».
+
+**Règle d'évaluation partout :** chaque essai est jugé par un modèle qui **ne l'a jamais vu** (on retire un essai, on entraîne sur les autres, on juge, on recommence).
+
+## 5. Le modèle IA : général + local
+- **Ce qu'est le modèle** : un « gradient boosting » de **300 arbres de décision** (scikit-learn). Entrée : 19 indices d'un boîtier. Sortie : un score de feu entre 0 et 1. Calcul ≈ 2 ms. Choisi parce qu'il apprend bien avec peu d'essais, est rapide et **explicable** (onglet POURQUOI). Pas de YOLO : YOLO traite des images, nos données sont des mesures de capteurs.
+- **Le score ne décide jamais seul** : la règle de sécurité à 2 canaux a toujours le dernier mot.
+- **Modèle général** : appris sur tous les sites connus (aujourd'hui le hall industriel). C'est ce que reçoit une nouvelle usine le **jour 1**.
+- **Modèle local (un par usine)** : données générales + enregistrements de l'usine pendant le **pilote de 90 jours** (les réponses du gardien après chaque levée de doute servent d'étiquettes), réentraînés ensemble.
+
+| Fichier | Rôle |
+|---|---|
+| `ai/alarm_verifier/results/model.pkl` et `app/data/verifier_data.js` | Modèle de démonstration (19 indices) utilisé par l'application et tous les résultats principaux |
+| `models/general_model.pkl` | Modèle **général** (7 indices disponibles sur NIST) |
+| `models/local_model_NIST.pkl` | Modèle **local** de l'usine-exemple NIST |
+| `models/models_card.json` | Carte d'identité des deux modèles (données, résultats) |
+| `ai/external_test/site_adaptation.py` → `train_site_model()` | Le mécanisme d'apprentissage local |
+
+**Prévision à +60 s** : petit réseau de neurones (MLP 64 × 64) entraîné sur 5 000 feux simulés par un modèle de zones (même famille que CFAST du NIST).
+
+## 6. Résultats mesurés
+**Vérification d'alarme — hall industriel (essais jamais vus)**
+
+| | IA Aero-Fire DT | Détecteur classique (fumée seule) |
 |---|---|---|
 | Feux détectés | **17 / 17** | 17 / 17 |
-| Essais de nuisance rejetés | **11 / 15** | 10 / 15 |
-| Fausses alarmes du détecteur classique reconnues comme nuisance | **3 / 5** | — |
-| Feu confirmé ≤ 60 s après l'alarme SSI | **15 / 17** (avant le SSI : 9 / 17) | — |
+| Nuisances rejetées | **11 / 15** (IC 95 % ≈ 48–89 %) | 10 / 15 |
+| Fausses alarmes du détecteur reconnues comme nuisance | **3 / 5** | — |
+| Feu confirmé ≤ 60 s après le SSI | **15 / 17** (avant le SSI : 9 / 17) | — |
 | Fausses alertes sur 49,9 h d'activité normale | **0** | 1 |
-| **Autre site jamais vu (salle EN 54)** : nuisances rejetées · feux confirmés | **7 / 7 · 12 / 13** | 6 / 7 · 13 / 13 |
+| Alerte précoce « feu couvant possible » | **17 / 17 feux, 10 / 17 avant le détecteur**, 2 / 15 nuisances | — |
+| Type de scénario entier jamais vu (test sévère) | 15 / 17 feux, 10 / 15 nuisances | — |
+| **Autre salle (EN 54)** | **12 / 13 feux, 7 / 7 nuisances** | 13 / 13 · 6 / 7 |
 
-Prévision (1 000 feux simulés jamais vus) : **± 0,06 m** sur la hauteur de nappe et **± 6,8 °C** à +60 s (sans IA : ± 0,41 m / ± 34 °C), alerte « intenable dans 60 s » correcte à **96 %**, calcul en **0,14 ms**.
+**Nouvelle usine (NIST, USA) : général puis local**
 
-**Alerte précoce « FEU COUVANT POSSIBLE »** (consultative, jamais une confirmation) : score IA ≥ 0,70 pendant 30 s + un signal (fumée, CO ou H₂) encore en hausse sur 60 s. Évaluée sur les mêmes essais jamais vus : **17 / 17 feux** signalés, **10 / 17 avant le détecteur classique**, en moyenne 29 s (jusqu'à 250 s) avant la confirmation ; déclenchée sur **2 / 15 nuisances** seulement (machine à fumée) → simple levée de doute. Détails : `docs/results/early_warning.json`.
+| | Feux | Fausses alarmes de cuisine NON appelées feu |
+|---|---|---|
+| Modèle général seul (jour 1) | 7 / 8 | **6 / 33** |
+| **Général + apprentissage local** | **8 / 8** | **29 / 33** |
+| Pilote court (30 % des essais locaux) | 74 % en moyenne | 88 % en moyenne |
+| Usine d'origine après apprentissage local (pas d'oubli) | 17 / 17 | 9 / 15 (avant : 10 / 15) |
 
-Test plus sévère (type de scénario entier jamais vu) : **15 / 17 feux, 10 / 15 nuisances** ; intervalles de confiance et audit des données : [`docs/results/data_audit.md`](docs/results/data_audit.md).
+**Prévision (1 000 feux simulés jamais vus)** : ± 0,06 m sur la hauteur de fumée et ± 6,8 °C à +60 s (sans IA : ± 0,41 m / ± 34 °C), alerte « intenable dans 60 s » correcte à 96 %, calcul en 0,14 ms.
 
-**Physique réelle :** solveur CFD 3D temps réel (14 080 cellules, fumée, CO, chaleur, propagation entre objets) vérifié contre Heskestad et Alpert (`tests/test_cfd.js`) — on voit où va la fumée et la carte de danger à 1,8 m.
+Détails : [`docs/AI_Model_Report.md`](docs/AI_Model_Report.md), [`docs/results/`](docs/results/).
 
-**Test indépendant NIST (USA, données jamais vues, aucun réglage)** : avec seulement 7 des 19 entrées disponibles (pas de capteur COV ni H₂, compteur de particules différent), l'IA confirme **7 / 8 feux** mais ne rejette que **6 / 33 nuisances de cuisine** (cigarettes : 2 / 2 rejetées ; bacon, hamburgers, pizza : non). Conclusion : les capteurs **COV et H₂ sont indispensables** (ce sont les entrées les plus utiles du modèle) et une cuisine ou cantine demande un apprentissage sur site pendant le pilote. Détails : `docs/results/nist_fr4019.md`.
+## 7. L'application (tableau de bord)
+Ouvrir `app/index.html`.
 
-**Modèle général + apprentissage local (prouvé sur NIST, données jamais vues)** : modèle général seul 7/8 feux, **6/33** fausses alarmes de cuisine écartées → après apprentissage local **8/8 feux, 29/33** ; l'usine d'origine n'est pas abîmée (17/17 feux conservés). Un modèle général partagé + un modèle local par usine pendant le pilote de 90 jours. Détails : `docs/results/site_adaptation.md`.
+| Zone de l'écran | Rôle |
+|---|---|
+| Barre du haut | lien SSI (lecture seule), horloge, **MASTER WARN / MASTER CAUT**, **⚡ COUPURE** (simule une coupure de courant), son, résultats |
+| Gauche | alertes et actions à faire · fenêtre **« Détecteur classique vs Aero-Fire DT »** (qui a raison, en direct) · ligne de vote |
+| Onglets | **ZONE** (usine 3D, fumée, carte de danger) · **CAPTEURS** (courbes) · **PRÉVISION** (+60 s) · **POURQUOI** (indices qui ont compté) · **SSI** |
+| Bas | scénarios, lecture / pause, vitesse, curseur de temps, **MODE VIDÉO** (visite guidée de 55 s) |
 
-**Coupures de courant STEG** : fonctionne sans Internet ; ≈ 20 W pour tout le système → batterie LiFePO4 100 Ah ≈ **57 h** d'autonomie (≈ 28 coupures de 2 h), panneau solaire 150 W en option pour une autonomie illimitée. Détails : `docs/ENERGIE.md` (bouton ⚡ COUPURE dans le tableau de bord).
+| Scénario | Contenu |
+|---|---|
+| **A** Feu réel (bois) | mesures réelles : alerte précoce, pré-alarme, feu confirmé |
+| **B** Aérosol | le SSI sonne pour rien, l'IA dit « nuisance » |
+| **C** Échappement | pas de feu mais CO dangereux |
+| **D** Capteur en dérive | détecté et exclu du vote |
+| **E** Soudure | cas limite honnête : l'IA se trompe |
+| **F** Banc d'essai libre | **vous** placez feux et nuisances en cliquant sur le sol |
 
-**Limites :** soudure et machine à fumée (1-2 essais seulement) trompent encore l'IA ; positions des nœuds et SSI simulés ; les feux d'essai sont naissants, leur croissance est une hypothèse du modèle de zones. Le gain réel sera mesuré pendant un pilote de 90 jours.
+Couleurs des capteurs : 🟢 normal · 🟡 un seul canal actif · 🔴 deux canaux + score élevé · ⚫ exclu.
 
-## Démarrer
+## 8. Physique 3D réelle (CFD) et banc d'essai libre
+- **Solveur de mécanique des fluides 3D** dans le navigateur (`app/js/cfd.js`) : 14 080 cellules de 50 cm, flottabilité, transport de la chaleur, fumée, CO, CO₂, H₂, COV, grosses particules ; **propagation du feu** d'un objet à l'autre (rayonnement + convection) ; carte de danger à 1,8 m ; prévision « fantôme » à +60 s.
+- Vérifié contre des formules d'ingénierie incendie reconnues : panache (Heskestad), jet sous plafond (Alpert), conservation de la masse, ouvertures, hauteur de flamme (`tests/test_cfd.js`).
+- **Rendu** : boîtes posées sur les vraies étagères (« gravité »), objets qui noircissent et rougeoient en brûlant, flammes qui montent le long des racks, toit en bac acier, fumée volumique — contrôlé par `tests/test_scene_integrity.js` (0 boîte flottante sur 94).
+- **Banc d'essai libre (scénario F)** : cigarette, bougies, petit / grand feu de bois, textile, plastiques ; aérosol, soudure, échappement, poussière. La physique transporte fumée et gaz jusqu'aux capteurs (capteurs **synthétiques**), puis la **même IA** décide. Matrice automatique : gros feux confirmés, aucune nuisance confirmée comme feu, bougie/cigarette loin des capteurs non détectées (réaliste). Test qualitatif, pas une validation.
+
+## 9. Matériel, énergie et coupures de courant
+- **Kit standard identique dans chaque usine** (composants du commerce, nous ne fabriquons pas de capteurs) : particules, CO électrochimique, H₂, COV, CO₂, température/humidité, microcontrôleur basse consommation ; une **passerelle** locale (type Raspberry Pi) ; une tablette pour le gardien.
+- **Où tourne quoi** : indices + score dans chaque boîtier (le modèle à arbres est assez léger pour un microcontroller) ; vote, prévision et écran sur la passerelle ; la CFD sur la passerelle/l'écran.
+- **Énergie** (`docs/ENERGIE.md`, `python scripts/energy_budget.py`) : ≈ 0,63 W par boîtier, ≈ **20 W** pour tout le hall. Batterie LiFePO4 100 Ah → **≈ 57 h** (≈ 28 coupures STEG de 2 h) ; panneau solaire 150 W en option = autonomie illimitée. Pas besoin d'Internet.
+
+## 10. Sûreté et lien avec l'aéronautique
+| Aéronautique | Dans Aero-Fire DT |
+|---|---|
+| Détection incendie moteur à **double boucle** (A et B doivent être d'accord) | Règle des **2 canaux physiques** avant « feu » |
+| Écran **ECAM** (Airbus) : cockpit sombre, alertes rouge/ambre, check-lists | Écran du gardien, MASTER WARN / CAUT |
+| **« Iron bird »** : banc d'essai au sol avant le vol | Banc d'essai libre et scénarios rejoués |
+| **CFD** (outil de base de l'aéronautique) | Fumée simulée en 3D |
+| Système certifié indépendant + aide consultative | Lecture seule, le SSI garde la priorité ; dossier de sécurité `docs/safety/Safety_Case.md` |
+
+**Aucune certification aéronautique n'est revendiquée** : méthodes « inspirées de », pas des certificats. Le SSI certifié (EN 54 / NFPA 72) reste la barrière de sécurité.
+
+## 11. Ce qui est réel, simulé, ou à venir
+| ✅ Réel et fonctionnel | ⚠️ Simulé | ❌ À venir |
+|---|---|---|
+| IA sur mesures réelles, vote, alerte précoce, exclusion de capteur | Le **SSI** (le jeu de données n'a pas de vraie centrale) | Boîtiers capteurs physiques et passerelle réelle |
+| Tableau de bord complet, hors ligne | Les capteurs du **banc d'essai F** (calculés par la physique) | Modèle local intégré dans l'application |
+| CFD 3D vérifiée, banc d'essai | La batterie (chiffres des fiches techniques) | IA sur microcontrôleur |
+| Preuve général + local (NIST), fichiers des modèles | | Pilote de 90 jours en usine |
+
+## 12. Limites (dites honnêtement)
+- **Peu d'essais** (32 dans le hall) : résultats prometteurs, pas définitifs (intervalles de confiance larges).
+- Soudure et machine à fumée (1–2 essais) trompent encore l'IA.
+- Sans capteurs COV et H₂ (test NIST), l'IA confond la cuisine avec un feu → ces capteurs sont **obligatoires** et chaque usine a besoin d'un apprentissage local.
+- Un pilote trop court ne suffit pas pour les feux (peu d'exemples locaux).
+- Positions des nœuds plausibles (non publiées), SSI simulé ; la croissance des grands feux est une hypothèse des modèles physiques.
+- La CFD est une version simplifiée temps réel (maille 50 cm), pas un remplaçant de FDS.
+- Usines chimiques (zones ATEX) : matériel certifié spécifique nécessaire → marché ultérieur.
+
+## 13. Reproduire tous les résultats
 ```bash
 pip install -r requirements.txt
-python scripts/run_all.py        # télécharge les données, entraîne, évalue, construit, teste (~4 min)
+python scripts/run_all.py          # télécharge les données (SHA-256 vérifié), entraîne, évalue, construit, teste
+cd tools && npm install && cd ..   # (optionnel) pour les tests navigateur et les captures (playwright-core + Chrome)
 ```
-Puis ouvrir **`app/index.html`** (double-clic, fonctionne hors ligne dans Chrome / Edge / Firefox).
-- Scénarios : **A** feu réel · **B** aérosol (fausse alarme SSI) · **C** échappement (CO) · **D** capteur en dérive · **E** cas limite soudure.
-- **F · Banc d'essai libre** : choisissez un feu (cigarette, bougies, bois, textile, plastiques) ou une nuisance (aérosol, soudure, échappement, poussière), cliquez sur le sol du hall : la physique transporte fumée et gaz jusqu'aux capteurs et la même IA décide (capteurs synthétiques, test qualitatif).
-- Bouton **MODE VIDÉO** : visite guidée de 55 s avec sous-titres (pour l'enregistrement de la vidéo).
-- Bouton **RÉSULTATS** : tous les chiffres mesurés.
-
-Démonstration du raccordement lecture seule (Modbus) :
+Expériences supplémentaires :
 ```bash
-python edge/panel_sim.py          # SSI simulé (rejoue le feu réel)
-python edge/gateway.py            # passerelle : lit en FC03 uniquement, toute écriture est refusée
+python -I ai/external_test/nist_fr4019.py all           # test indépendant NIST (télécharge ~57 Mo)
+python -I -m ai.external_test.site_adaptation           # général vs local
+python -I -m ai.external_test.site_forgetting           # l'usine d'origine n'est pas oubliée
+python -I -m ai.external_test.build_site_models         # enregistre models/general_model.pkl et local_model_NIST.pkl
+python scripts/energy_budget.py                         # bilan énergie et batterie
+python edge/panel_sim.py & python edge/gateway.py       # démo du raccordement Modbus en lecture seule
 ```
 
-## Structure
+## 14. Structure du dépôt
 ```
-ai/common/          chargement des données, caractéristiques causales
-ai/alarm_verifier/  vérification feu/nuisance, vote double boucle, évaluation honnête
-ai/forecast/        modèle de zones (physique), 5 000 scénarios, IA de substitution
-twin/               jumeau IFC du hall (IfcOpenShell) → JSON
-scenarios/          scénarios du tableau de bord à partir des mesures réelles
-app/                tableau de bord ECAM (HTML/JS, Three.js en local), CFD 3D (js/cfd.js), banc d'essai (js/sandbox.js)
-edge/               SSI simulé + passerelle Modbus lecture seule
-tests/              tests physiques et CFD, JS = Python (prévision + 300 arbres IA), banc d'essai, passerelle lecture seule
-tools/              vérification du tableau de bord dans Chrome sans écran + captures
-docs/               résultats, captures, dossier de sécurité, explications pour l'équipe
+app/                 tableau de bord (ouvrir index.html) — js/cfd.js physique 3D, js/sandbox.js banc d'essai,
+                     js/verifier.js IA dans le navigateur, data/*.js données embarquées (fonctionne hors ligne)
+ai/common/           lecture des données, calcul des 19 indices
+ai/alarm_verifier/   modèle feu/nuisance, vote à 2 canaux, évaluation honnête, alerte précoce, export JS
+ai/forecast/         modèle de zones + prévision par réseau de neurones
+ai/external_test/    test NIST, apprentissage local, fichiers des modèles général/local
+ai/data_audit/       audit de la qualité des données
+models/              general_model.pkl, local_model_NIST.pkl, models_card.json
+scenarios/           construction des scénarios A–E à partir des mesures réelles
+twin/                jumeau numérique du hall (IFC)
+edge/                SSI simulé + passerelle Modbus lecture seule
+tests/               physique, CFD, IA JS = Python, banc d'essai, intégrité de la scène 3D, lecture seule
+tools/               captures d'écran et vérifications dans Chrome
+docs/                rapport IA, dossier de sécurité, énergie, explications équipe, résultats, captures, livrables
+scripts/             run_all.py (tout reproduire), énergie, téléchargement des données
 ```
-Documents : [rapport du modèle](docs/AI_Model_Report.md) · [dossier de sécurité](docs/safety/Safety_Case.md) · [comment ça marche](docs/COMMENT_CA_MARCHE.md).
+Documents : [rapport du modèle IA](docs/AI_Model_Report.md) · [comment ça marche (équipe)](docs/COMMENT_CA_MARCHE.md) · [énergie](docs/ENERGIE.md) · [dossier de sécurité](docs/safety/Safety_Case.md) · [général + local](docs/results/site_adaptation.md) · [test NIST](docs/results/nist_fr4019.md) · [audit des données](docs/results/data_audit.md).
 
-## Données et licences
-- Code : licence MIT (voir `LICENSE`). Three.js r147 + GLTFLoader : MIT.
-- Modèles et textures 3D réels : **Poly Haven**, licence **CC0** (étagères, cartons, chariot de soudure, extincteurs, fûts, lampes industrielles, sol béton, bardage acier) — liste dans `app/data/ASSETS_CREDITS.md`, reconstruits par `python tools/build_assets.py`.
-- Effets visuels : flammes, braises et fumée en particules, pilotés par la physique (hauteur de flamme de Heskestad à partir de la puissance du modèle de zones, hauteur de nappe du modèle).
-- Données (non redistribuées, téléchargées par `scripts/download_data.py` avec contrôle SHA-256), **CC BY 4.0** :
-  *Indoor Fire Dataset with Distributed Multi-Sensor Nodes — Industrial Hall*, Mendeley Data, DOI [10.17632/yghykzm4km.1](https://data.mendeley.com/datasets/yghykzm4km/1) ;
-  salle d'essai EN 54, Mendeley Data, DOI [10.17632/npk2zcm85h](https://data.mendeley.com/datasets/npk2zcm85h/1).
-- Ce prototype n'est **pas** un système de détection certifié. Le SSI certifié (EN 54 / NFPA 72) reste la barrière de sécurité.
+## 15. Données, licences, crédits
+- **Code** : licence MIT (`LICENSE`). Three.js r147 + GLTFLoader : MIT.
+- **Modèles et textures 3D** : Poly Haven, licence CC0 (liste : `app/data/ASSETS_CREDITS.md`).
+- **Données** (non redistribuées, téléchargées par les scripts avec contrôle SHA-256) :
+  - *Indoor Fire Dataset with Distributed Multi-Sensor Nodes — Industrial Hall*, Mendeley Data, DOI [10.17632/yghykzm4km.1](https://data.mendeley.com/datasets/yghykzm4km/1), CC BY 4.0 ;
+  - salle d'essai EN 54, Mendeley Data, DOI [10.17632/npk2zcm85h](https://data.mendeley.com/datasets/npk2zcm85h/1), CC BY 4.0 ;
+  - NIST FR 4019 (Cleary 2003), *Alarm Response to Nuisance Sources*, [nist.gov](https://www.nist.gov/node/437741), domaine public (USA).
+- Ce prototype n'est **pas** un système de détection certifié.
 
 ---
 ### English summary
-Aero-Fire DT is an advisory, read-only layer on top of a factory's certified fire alarm panel. It verifies alarms with multi-sensor fusion and a dual-loop voting rule borrowed from aircraft engine fire detection, forecasts smoke conditions 30-60 s ahead with a physics-trained surrogate and a real-time 3D CFD solver (with a free-test bench where users place fires and nuisance sources), and presents everything on an ECAM-inspired operator display. Evaluated on a public real-fire dataset with leave-one-episode-out validation: 17/17 fires detected, 11/15 nuisance runs rejected (classic optical detector: 10/15), 7/7 nuisances rejected on an unseen second site. Run `python scripts/run_all.py`, then open `app/index.html`.
+Aero-Fire DT is a read-only advisory layer on top of a factory's certified fire alarm panel. Each sensor node (particles, CO, H2, VOC, CO2, temperature, humidity) computes 19 causal features every 10 s; a 300-tree gradient-boosting model scores "fire vs nuisance", and a dual-channel voting rule inspired by aircraft engine fire detection confirms a fire only when two independent physical signals agree for 30 s. Leave-one-episode-out on a public real-fire dataset: 17/17 fires, 11/15 nuisance runs rejected (optical detector 10/15), 0 false alerts in 49.9 h; unseen second room 12/13 fires, 7/7 nuisances. General + local learning proven on NIST FR 4019: 6/33 → 29/33 cooking nuisances rejected after site learning. Includes a real-time 3D CFD solver, a free-test bench, an ECAM-style dashboard, offline operation and battery backup sizing. Open `app/index.html` to try it.
