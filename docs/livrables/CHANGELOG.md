@@ -66,4 +66,4 @@ Corrections appliquées à partir de la vérification (« Aero Fire DT implement
 - Tous les placeholders `[X %]`, `[Y s]`, `[Z %]`, `[R]`, `[L ms]` remplacés par les résultats **mesurés** (reproductibles avec `python scripts/run_all.py`) : 17/17 feux, 11/15 nuisances rejetées (détecteur classique 10/15), 3/5 fausses alarmes SSI reconnues, confirmation ≤ 60 s après le SSI pour 15/17 feux ; autre site 7/7 nuisances, 12/13 feux ; prévision +60 s ± 0,06 m / ± 6,8 °C en 0,14 ms ; latence du vérificateur 2,3 ms par cycle.
 - `AI_Model_Report.md` réécrit pour décrire **exactement** le prototype livré : Zenodo 5643075 et NIST FCD passent en « à ajouter » (non utilisés dans le prototype) ; vision (YOLO) non incluse ; IA de substitution = MLP 64×64 ; CFAST/FDS = validation future. Licence du code : MIT.
 - Limites ajoutées partout où des résultats sont cités : soudure et machine à fumée (1-2 essais) trompent encore l'IA.
-- Reste à compléter par l'équipe : https://github.com/AhmedHammouda5000/aero-fire-dt.
+- Dépôt GitHub public : https://github.com/AhmedHammouda5000/aero-fire-dt
