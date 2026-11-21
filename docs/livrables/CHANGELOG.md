@@ -20,7 +20,7 @@ Corrections appliquées à partir de la vérification (« Aero Fire DT implement
 - Substitution entraînée sur un modèle de zone Python (pas FDS) ; vérification CFAST ; sorties par zone à t+30/t+60.
 - Nouveau tableau des jeux de données (URL, licence, sha256) ; découpage par répétition + inter-sites ; avertissement fuite des découpages aléatoires ; référence Vorwerk et al. 2024 (69-73 %).
 - Sûreté : ARP4761A, Concept Paper IA EASA niveau 1, DO-178C limité au logiciel classique, ED-324 en veille.
-- Structure du repo (`ai/alarm_verifier`, `ai/forecast_surrogate`, `app/`, `docs/safety`, `edge/panel_sim`) et `[URL GitHub à compléter]`.
+- Structure du repo (`ai/alarm_verifier`, `ai/forecast_surrogate`, `app/`, `docs/safety`, `edge/panel_sim`) et https://github.com/AhmedHammouda5000/aero-fire-dt.
 - Retrait : transformer spatio-temporel, RL évacuation, FDS+Evac/Pathfinder, « documenté pour l'inspection UAV ».
 
 ## Adapted_BMC.md
@@ -66,4 +66,4 @@ Corrections appliquées à partir de la vérification (« Aero Fire DT implement
 - Tous les placeholders `[X %]`, `[Y s]`, `[Z %]`, `[R]`, `[L ms]` remplacés par les résultats **mesurés** (reproductibles avec `python scripts/run_all.py`) : 17/17 feux, 11/15 nuisances rejetées (détecteur classique 10/15), 3/5 fausses alarmes SSI reconnues, confirmation ≤ 60 s après le SSI pour 15/17 feux ; autre site 7/7 nuisances, 12/13 feux ; prévision +60 s ± 0,06 m / ± 6,8 °C en 0,14 ms ; latence du vérificateur 2,3 ms par cycle.
 - `AI_Model_Report.md` réécrit pour décrire **exactement** le prototype livré : Zenodo 5643075 et NIST FCD passent en « à ajouter » (non utilisés dans le prototype) ; vision (YOLO) non incluse ; IA de substitution = MLP 64×64 ; CFAST/FDS = validation future. Licence du code : MIT.
 - Limites ajoutées partout où des résultats sont cités : soudure et machine à fumée (1-2 essais) trompent encore l'IA.
-- Reste à compléter par l'équipe : `[URL GitHub à compléter]`.
+- Reste à compléter par l'équipe : https://github.com/AhmedHammouda5000/aero-fire-dt.

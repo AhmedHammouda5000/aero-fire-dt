@@ -35,5 +35,5 @@
 
 - PDF exporté **identique** au pitch oral (−10 pts sinon). Dépôt Drive visé **08:30**, limite 09:00 le 22 novembre ; aucune modification après dépôt.
 - « Partenaires du challenge », jamais « nos partenaires ».
-- Lien du repo GitHub public en slide 5 et slide 10 : **[URL GitHub à compléter]**.
+- Lien du repo GitHub public en slide 5 et slide 10 : **https://github.com/AhmedHammouda5000/aero-fire-dt**.
 - En cas d'égalité, le jury privilégie le coût de réalisation le plus faible : la démo est 100 % logicielle, le produit ne remplace rien.

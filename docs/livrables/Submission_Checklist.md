@@ -9,7 +9,7 @@
 | Carte d'empathie (10 pts) | `Empathy_Map.md` | Fichier prêt |
 | Vidéo explicative 1 minute (20 pts) | `Explainer_Video_Script.md` | **Script prêt — MP4 à enregistrer** |
 | Rapport du modèle IA | `AI_Model_Report.md` | **Prêt — résultats mesurés intégrés** |
-| Lien repo GitHub public | `AI_Model_Report.md` §6 | **[URL GitHub à compléter] — repo à rendre public** |
+| Lien repo GitHub public | `AI_Model_Report.md` §6 | **https://github.com/AhmedHammouda5000/aero-fire-dt** (à rendre public) |
 | Présentation PDF | `Pitch_Deck_Outline.md` | **Plan prêt — export PDF à générer** |
 | Étude du besoin / faisabilité | `Executive_Summary.md`, `Team_Report.md`, `Safety_Case.md` | Fichiers prêts |
 | Dépôt Google Drive + présentation live | — | **Action équipe : dépôt visé 08:30 (limite 09:00, 22 nov.)** |
@@ -26,7 +26,7 @@
 - [ ] **Le PDF des slides correspond exactement au pitch oral** (−10 pts sinon).
 - [ ] Aucun « −40 % / −50 % », aucune mention « certifié / conforme DO-178C / 25.858 », aucun « certificat SORA ».
 - [ ] Mêmes prix partout (7 000 / 22 000 / 45 000 TND + 450 / 1 200 / 3 000 TND/mois) et même cours de change (3,0335 / 3,3639).
-- [x] Résultats mesurés intégrés ; - [ ] `[URL GitHub à compléter]` à remplacer par l'équipe.
+- [x] Résultats mesurés intégrés ; - [x] URL GitHub : https://github.com/AhmedHammouda5000/aero-fire-dt
 
 ## Rappels de pénalités
 - −5 pts : même idée qu'une autre équipe (d'où la slide « Déjà fait / ce que nous ajoutons ») ; −5 pts : absence aux formations (2 membres minimum).

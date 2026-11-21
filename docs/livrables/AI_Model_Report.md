@@ -148,4 +148,4 @@ Matrice automatique (`tests/test_sandbox.js`, source à ~3,5 m d'un nœud, 200 �
 Structure : `ai/alarm_verifier/` (vérification, export JavaScript), `ai/data_audit/` (audit des données), `ai/forecast/` (physique + IA de substitution), `app/js/cfd.js` (CFD 3D), `app/js/sandbox.js` (banc d'essai libre), `twin/` (IFC), `scenarios/` (rejeu de mesures réelles), `app/` (tableau de bord, fonctionne hors ligne), `edge/` (simulateur de SSI + passerelle lecture seule), `tests/`, `docs/`.
 Reproduction complète : `pip install -r requirements.txt` puis `python scripts/run_all.py` (≈ 4 min sur un portable), puis ouvrir `app/index.html`.
 Licence du code : MIT. Données : CC BY 4.0 (attribution aux auteurs du jeu Mendeley). Three.js : MIT.
-**[URL GitHub à compléter par l'équipe]**
+**https://github.com/AhmedHammouda5000/aero-fire-dt**
