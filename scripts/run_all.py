@@ -23,11 +23,15 @@ PIPELINE = [
     ("Digital twin: IFC hall + JSON", [PY, "twin/make_hall_ifc.py"]),
     ("Dashboard scenarios from real recordings", [PY, "-m", "scenarios.build_scenarios"]),
     ("Export results for the dashboard", [PY, "scripts/export_results.py"]),
+    ("Export the alarm verifier to JavaScript (free-test bench)", [PY, "-m", "ai.alarm_verifier.export_js"]),
 ]
 TESTS = [
     ("Physics sanity tests (zone model)", [PY, "tests/test_zone_model.py"]),
     ("JS zone model == Python", [PY, "tests/test_zonemodel_js.py"]),
     ("JS surrogate == Python", ["node", "tests/test_surrogate_js.js"]),
+    ("JS alarm verifier == Python (300 trees)", ["node", "tests/test_verifier_js.js"]),
+    ("Real-time CFD physics vs fire-engineering correlations", ["node", "tests/test_cfd.js"]),
+    ("Free-test bench: every source through physics + AI", ["node", "tests/test_sandbox.js", "200"]),
     ("Read-only gateway vs simulated panel (Modbus)", [PY, "tests/test_readonly_gateway.py"]),
     ("Dashboard in headless Chrome (no JS errors + screenshots)", ["node", "tools/screenshots.js"]),
 ]

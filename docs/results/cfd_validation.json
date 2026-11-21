@@ -1,0 +1,81 @@
+{
+  "plume_centreline_vs_heskestad": {
+    "ok": true,
+    "rows": [
+      {
+        "z": 3,
+        "cfd_dT": 155.9,
+        "heskestad_dT": 331.5,
+        "ratio": 0.47
+      },
+      {
+        "z": 4,
+        "cfd_dT": 146.1,
+        "heskestad_dT": 202.6,
+        "ratio": 0.72
+      },
+      {
+        "z": 5,
+        "cfd_dT": 129.7,
+        "heskestad_dT": 138.6,
+        "ratio": 0.94
+      }
+    ],
+    "tolerance": "factor 3 (0.5 m cells smear the plume)"
+  },
+  "ceiling_jet_vs_alpert": {
+    "ok": true,
+    "rows": [
+      {
+        "r": 3,
+        "cfd_dT": 37.1,
+        "alpert_dT": 32.3,
+        "ratio": 1.15
+      },
+      {
+        "r": 5,
+        "cfd_dT": 23.5,
+        "alpert_dT": 23,
+        "ratio": 1.02
+      }
+    ],
+    "tolerance": "factor 3"
+  },
+  "smoke_mass_balance_closed_hall": {
+    "ok": true,
+    "produced_kg": 0.208,
+    "in_hall_kg": 0.208,
+    "ratio": 1,
+    "tolerance": "±30 %"
+  },
+  "openings_evacuate_smoke": {
+    "ok": true,
+    "closed_kg": 0.312,
+    "open_kg": 0.043,
+    "layer_closed_m": 0,
+    "layer_open_m": 6.5
+  },
+  "fire_spread_neighbours_vs_distant": {
+    "ok": true,
+    "ignition_times_s": {
+      "A1.2": 0.5,
+      "A1.1": 138.5,
+      "A1.3": 141,
+      "A2.2": 295
+    },
+    "hrr_MW_at_300s": 5.42
+  },
+  "flame_height_heskestad": {
+    "ok": true,
+    "Q_kW": 1000,
+    "D_m": 1.2,
+    "L_m": 2.5
+  },
+  "realtime_speed": {
+    "ok": true,
+    "ms_per_step": 24.5,
+    "cells": 14080,
+    "dt_s": 0.5,
+    "speedup_vs_realtime": 20
+  }
+}

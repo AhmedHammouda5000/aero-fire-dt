@@ -57,7 +57,7 @@ Variables les plus utiles (importance par permutation) : hausse des COV, ratio C
 
 - **« Leave-one-episode-out »** : chacun des 32 essais est jugé par un modèle entraîné **sans aucune ligne de cet essai**. Un découpage aléatoire par lignes donnerait > 99 % par fuite (lignes voisines quasi identiques) ; nous ne l'utilisons pas.
 - **Référence** : un détecteur optique classique mono-critère (seuil de particules), qui modélise le SSI.
-- **Activité normale** : 56,6 h de périodes calmes (hors 15 min après chaque essai).
+- **Activité normale** : 49,9 h de périodes calmes (hors 30 min après chaque essai et hors lignes marquées nuisance).
 - **Autre site** : modèle entraîné sur le hall, testé sur la salle EN 54.
 
 ## 5. Résultats mesurés
@@ -68,7 +68,7 @@ Variables les plus utiles (importance par permutation) : hausse des COV, ratio C
 | Essais de nuisance rejetés | **11 / 15 (73 %)** | 10 / 15 (67 %) |
 | Fausses alarmes du détecteur classique reconnues comme nuisance | **3 / 5** (les 3 aérosols) | — |
 | Feux confirmés avant l'alarme du détecteur / au plus 60 s après | **9 / 17 · 15 / 17** (objectif ≤ 60 s inspiré de 25.858) | — |
-| Fausses alertes « feu » sur 56,6 h d'activité normale | 1 | 1 |
+| Fausses alertes « feu » sur 49,9 h d'activité normale | **0** | 1 |
 | Précision équilibrée par mesure (hall) | 91,6 % | — |
 | **Autre site (EN 54)** : feux confirmés / nuisances rejetées | **12 / 13 · 7 / 7** (le feu non confirmé reste signalé par le SSI) | 13 / 13 · 6 / 7 |
 | Précision équilibrée par mesure (EN 54) | 92,3 % | — |
@@ -83,12 +83,45 @@ Variables les plus utiles (importance par permutation) : hausse des COV, ratio C
 
 **Amélioration documentée (v1 → v2) :** la première version (un seul canal suffisait) rejetait 53 % des nuisances et produisait 26 fausses alertes pour 100 h ; l'application de la règle double boucle a porté le rejet à 73 % et les fausses alertes à 1,8 pour 100 h, au prix d'une confirmation plus tardive (médiane 420 s au lieu de 150 s après le début de l'essai). La v1 comptait aussi à tort des verdicts antérieurs au début de l'essai (erreur d'évaluation corrigée).
 
+### 5 bis. Robustesse (audit des données, `docs/results/data_audit.md`)
+
+- **Petits échantillons** : 11 / 15 nuisances rejetées = 73 %, intervalle de confiance à 95 % (Wilson) **≈ 48 – 89 %** ; 17 / 17 feux = intervalle ≈ 82 – 100 %. Les chiffres sont prometteurs, pas définitifs.
+- **Test plus sévère « un type de scénario entier caché »** (le modèle n'a jamais vu ce type de feu ou de nuisance) : **15 / 17 feux** confirmés, **10 / 15 nuisances** rejetées. C'est le chiffre à citer si un jury demande « et sur un type jamais vu ? ».
+- **Nettoyage appliqué** : 639 lignes « Background » marquées nuisance (13/07 14:02–14:15) exclues de l'activité normale ; fenêtre après essai portée de 15 à 30 min (la fumée d'extinction n'est pas de l'air normal). Résultat : **0 fausse alerte IA sur 49,9 h** (détecteur optique : 1).
+- Les nuisances de la salle EN 54 sont plus faciles que celles du hall, et les seuils ont été réglés sur le hall : le 7 / 7 EN 54 est un indicateur de transfert, pas une preuve.
+
 **Pour situer :** les auteurs du jeu de données obtiennent environ 69-73 % de classification lors d'un transfert d'une chambre de laboratoire vers la salle EN 54 (Vorwerk et al., *Sensors* 2024) — protocole différent, comparaison indicative seulement.
 
 ## 6. Modèle physique de la prévision
 
 Modèle à deux zones (même famille que CFAST du NIST) : feu en t² (α de 0,003 à 0,19 kW/s²) plafonné, entraînement du panache de Heskestad, bilan de masse et d'énergie de la couche chaude, sorties de fumée par porte et exutoire, jet sous plafond d'Alpert, réponse de détecteur (RTI). Conditions intenables : nappe sous 2 m ou au-dessus de 60 °C (critère simplifié ; la méthode complète est la dose ISO 13571).
 **Vérifications :** 5 tests physiques automatiques (descente monotone, feu rapide plus dangereux, exutoire bénéfique, grand volume plus lent) et comparaison à la formule analytique de remplissage d'une salle fermée (écart 16 %). Température plafonnée à 1 000 °C : au-delà de l'embrasement généralisé (~600 °C) le modèle est hors domaine, ce que le tableau de bord affiche.
+
+## 6 bis. Physique 3D en temps réel (CFD) — « voir où va le feu »
+
+En plus du modèle de zones, le tableau de bord embarque un **solveur de mécanique des fluides 3D** écrit pour le navigateur (`app/js/cfd.js`) :
+- grille décalée (MAC) 44 × 16 × 20 cellules de 0,5 m (14 080 cellules) couvrant tout le hall ; advection semi-lagrangienne, flottabilité de Boussinesq, pression par SOR, murs étanches, porte et exutoire ouverts ;
+- transport conservatif de la température, des suies (fumée), du CO, du CO₂, de l'H₂, des COV et des grosses particules, avec diffusion turbulente ;
+- vrais objets combustibles (étagères de friperie, palettes de carton, fûts d'huile) : courbe t², puissance par m², rendements de fumée et de CO (valeurs SFPE / Tewarson indicatives) ; **propagation par rayonnement et convection** d'un objet à l'autre ;
+- critères d'intenabilité à 1,8 m (visibilité, température, CO) → **carte de danger** au sol ; prévision **+60 s** calculée en arrière-plan par la même physique (« fantôme » cyan).
+
+**Vérifications automatiques (`tests/test_cfd.js`, résultats `docs/results/cfd_validation.json`)** : panache comparé à Heskestad (rapports 0,5 – 0,9 selon la hauteur, la maille de 0,5 m étale le panache), jet sous plafond comparé à Alpert (rapports 1,0 – 1,2 dans son domaine de validité), conservation de la masse de fumée (1,00), évacuation par les ouvertures, propagation aux voisins avant les objets éloignés, hauteur de flamme, vitesse ≈ 15 – 25 ms par pas de 0,5 s (≈ 20 × plus rapide que le temps réel).
+**Limites** : maille grossière (pas de détail sous 0,5 m), pas de modèle de combustion détaillé ni de rayonnement des fumées ; c'est un outil de visualisation et d'aide à la décision, pas un remplaçant de FDS pour une étude d'ingénierie.
+
+## 6 ter. Banc d'essai libre (scénario F)
+
+L'utilisateur place lui-même **des feux** (cigarette, bougies, petit / grand feu de bois, balle de textile, plastiques) et **des nuisances** (aérosol, soudure, échappement de chariot, poussière de découpe) n'importe où dans le hall, avec l'intensité de son choix. La CFD transporte fumée, gaz et chaleur jusqu'aux 9 nœuds ; les concentrations sont converties en **capteurs synthétiques** dans les mêmes unités que les capteurs réels ; puis **le même modèle IA (exporté en JavaScript, écart avec Python 1e-16)**, le même vote double boucle et un SSI optique simulé décident.
+
+Matrice automatique (`tests/test_sandbox.js`, source à ~3,5 m d'un nœud, 200 – 300 s) :
+
+| Source | Résultat |
+|---|---|
+| Petit / grand feu de bois, textile, plastiques | **FEU CONFIRMÉ** (IA après 90 – 120 s ; SSI à 60 – 90 s) |
+| Aérosol, échappement | **NUISANCE** reconnue (alarme SSI maintenue, levée de doute demandée) |
+| Soudure, poussière | **INCERTAIN** : jamais confirmé comme feu, levée de doute demandée (cas limites connus) |
+| Cigarette, bougies à 4 m des capteurs | non détectées (trop peu de fumée à 3 m de hauteur) — limite réaliste |
+
+**Honnêteté** : les capteurs synthétiques sont une approximation physique calibrée sur les ordres de grandeur du jeu de données ; l'IA a été entraînée sur de vrais capteurs. Le banc est un **test qualitatif** (« que se passe-t-il si… ? »), pas une validation.
 
 ## 7. Limites (dites honnêtement)
 
@@ -106,7 +139,7 @@ Modèle à deux zones (même famille que CFAST du NIST) : feu en t² (α de 0,00
 
 ## 9. Dépôt public
 
-Structure : `ai/alarm_verifier/` (vérification), `ai/forecast/` (physique + IA de substitution), `twin/` (IFC), `scenarios/` (rejeu de mesures réelles), `app/` (tableau de bord, fonctionne hors ligne), `edge/` (simulateur de SSI + passerelle lecture seule), `tests/`, `docs/`.
+Structure : `ai/alarm_verifier/` (vérification, export JavaScript), `ai/data_audit/` (audit des données), `ai/forecast/` (physique + IA de substitution), `app/js/cfd.js` (CFD 3D), `app/js/sandbox.js` (banc d'essai libre), `twin/` (IFC), `scenarios/` (rejeu de mesures réelles), `app/` (tableau de bord, fonctionne hors ligne), `edge/` (simulateur de SSI + passerelle lecture seule), `tests/`, `docs/`.
 Reproduction complète : `pip install -r requirements.txt` puis `python scripts/run_all.py` (≈ 4 min sur un portable), puis ouvrir `app/index.html`.
 Licence du code : MIT. Données : CC BY 4.0 (attribution aux auteurs du jeu Mendeley). Three.js : MIT.
 **[URL GitHub à compléter par l'équipe]**

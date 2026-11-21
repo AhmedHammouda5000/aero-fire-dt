@@ -54,7 +54,8 @@ def load_hall() -> pd.DataFrame:
     df["node"] = df["Sensor_ID"].str[-2:].astype(int)
     df["scenario"] = df["scenario_label"]
     df["exp"] = df["experiment_number"].fillna(0).astype(int)
-    keep = ["Date", "node", "scenario", "exp", "progress_label", *SENSORS]
+    df["nuis_label"] = df["nuisance"].fillna(0).astype(int)   # 639 Background rows are flagged nuisance (data audit)
+    keep = ["Date", "node", "scenario", "exp", "progress_label", "nuis_label", *SENSORS]
     return df[keep].sort_values(["node", "Date"]).reset_index(drop=True)
 
 

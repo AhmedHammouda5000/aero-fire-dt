@@ -1,0 +1,217 @@
+{
+ "cigarette": {
+  "expected": "fire",
+  "dist_to_node_m": 3.9,
+  "max_dPM_log": 4.81,
+  "max_dCO": 0.04,
+  "max_dH2": 0.16,
+  "max_dVOC": 0.05,
+  "max_dTEMP": 0,
+  "max_p": 0,
+  "verdicts": [
+   "NORMAL"
+  ],
+  "final": "NORMAL",
+  "ssi_alarm_s": null,
+  "ai_fire_s": null,
+  "alert_codes": []
+ },
+ "bougies": {
+  "expected": "fire",
+  "dist_to_node_m": 3.9,
+  "max_dPM_log": 3.04,
+  "max_dCO": 0,
+  "max_dH2": 0.54,
+  "max_dVOC": 0.01,
+  "max_dTEMP": 0.02,
+  "max_p": 0,
+  "verdicts": [
+   "NORMAL"
+  ],
+  "final": "NORMAL",
+  "ssi_alarm_s": null,
+  "ai_fire_s": null,
+  "alert_codes": []
+ },
+ "bois_petit": {
+  "expected": "fire",
+  "dist_to_node_m": 3.9,
+  "max_dPM_log": 9.37,
+  "max_dCO": 0.65,
+  "max_dH2": 27,
+  "max_dVOC": 3.54,
+  "max_dTEMP": 0.32,
+  "max_p": 1,
+  "verdicts": [
+   "NORMAL",
+   "UNCERTAIN",
+   "NUISANCE",
+   "FIRE"
+  ],
+  "final": "FIRE",
+  "ssi_alarm_s": 90,
+  "ai_fire_s": 120,
+  "alert_codes": [
+   "AI_ACTIVITY",
+   "SSI_UNCERTAIN",
+   "FIRE_CONFIRMED"
+  ]
+ },
+ "bois_grand": {
+  "expected": "fire",
+  "dist_to_node_m": 3.9,
+  "max_dPM_log": 10.6,
+  "max_dCO": 3.99,
+  "max_dH2": 59.2,
+  "max_dVOC": 21.86,
+  "max_dTEMP": 1.93,
+  "max_p": 0.99,
+  "verdicts": [
+   "NORMAL",
+   "UNCERTAIN",
+   "NUISANCE",
+   "FIRE"
+  ],
+  "final": "FIRE",
+  "ssi_alarm_s": 70,
+  "ai_fire_s": 110,
+  "alert_codes": [
+   "AI_NUISANCE",
+   "SSI_UNCERTAIN",
+   "FIRE_CONFIRMED"
+  ]
+ },
+ "textile": {
+  "expected": "fire",
+  "dist_to_node_m": 3.9,
+  "max_dPM_log": 10.6,
+  "max_dCO": 18.16,
+  "max_dH2": 59.2,
+  "max_dVOC": 44.17,
+  "max_dTEMP": 1.63,
+  "max_p": 0.99,
+  "verdicts": [
+   "NORMAL",
+   "UNCERTAIN",
+   "FIRE"
+  ],
+  "final": "FIRE",
+  "ssi_alarm_s": 70,
+  "ai_fire_s": 90,
+  "alert_codes": [
+   "AI_ACTIVITY",
+   "SSI_UNCERTAIN",
+   "FIRE_CONFIRMED"
+  ]
+ },
+ "plastique": {
+  "expected": "fire",
+  "dist_to_node_m": 3.9,
+  "max_dPM_log": 10.6,
+  "max_dCO": 19.15,
+  "max_dH2": 59.2,
+  "max_dVOC": 34.93,
+  "max_dTEMP": 5.02,
+  "max_p": 0.97,
+  "verdicts": [
+   "NORMAL",
+   "UNCERTAIN",
+   "FIRE"
+  ],
+  "final": "FIRE",
+  "ssi_alarm_s": 60,
+  "ai_fire_s": 100,
+  "alert_codes": [
+   "AI_ACTIVITY",
+   "SSI_UNCERTAIN",
+   "FIRE_CONFIRMED"
+  ]
+ },
+ "aerosol": {
+  "expected": "nuisance",
+  "dist_to_node_m": 3.4,
+  "max_dPM_log": 8,
+  "max_dCO": 0,
+  "max_dH2": 0,
+  "max_dVOC": 29.92,
+  "max_dTEMP": 0,
+  "max_p": 0.08,
+  "verdicts": [
+   "NORMAL",
+   "UNCERTAIN",
+   "NUISANCE"
+  ],
+  "final": "NUISANCE",
+  "ssi_alarm_s": 50,
+  "ai_fire_s": null,
+  "alert_codes": [
+   "AI_ACTIVITY",
+   "SSI_NUISANCE"
+  ]
+ },
+ "soudure": {
+  "expected": "nuisance",
+  "dist_to_node_m": 3.6,
+  "max_dPM_log": 7.85,
+  "max_dCO": 0.03,
+  "max_dH2": 0,
+  "max_dVOC": 0,
+  "max_dTEMP": 0.08,
+  "max_p": 0.98,
+  "verdicts": [
+   "NORMAL",
+   "UNCERTAIN"
+  ],
+  "final": "UNCERTAIN",
+  "ssi_alarm_s": 120,
+  "ai_fire_s": null,
+  "alert_codes": [
+   "AI_ACTIVITY",
+   "SSI_UNCERTAIN"
+  ]
+ },
+ "echappement": {
+  "expected": "nuisance",
+  "dist_to_node_m": 3.8,
+  "max_dPM_log": 6.33,
+  "max_dCO": 16.14,
+  "max_dH2": 8.41,
+  "max_dVOC": 0,
+  "max_dTEMP": 0.24,
+  "max_p": 0.23,
+  "verdicts": [
+   "NORMAL",
+   "UNCERTAIN",
+   "NUISANCE"
+  ],
+  "final": "NUISANCE",
+  "ssi_alarm_s": null,
+  "ai_fire_s": null,
+  "alert_codes": [
+   "AI_ACTIVITY",
+   "AI_NUISANCE"
+  ]
+ },
+ "poussiere": {
+  "expected": "nuisance",
+  "dist_to_node_m": 3.6,
+  "max_dPM_log": 8.86,
+  "max_dCO": 0,
+  "max_dH2": 0,
+  "max_dVOC": 0,
+  "max_dTEMP": 0.02,
+  "max_p": 0.59,
+  "verdicts": [
+   "NORMAL",
+   "UNCERTAIN",
+   "NUISANCE"
+  ],
+  "final": "UNCERTAIN",
+  "ssi_alarm_s": 30,
+  "ai_fire_s": null,
+  "alert_codes": [
+   "SSI_UNCERTAIN",
+   "SSI_NUISANCE"
+  ]
+ }
+}

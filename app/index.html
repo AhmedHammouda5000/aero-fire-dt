@@ -45,9 +45,17 @@
       <div class="legend">
         <span><i class="c-green"></i>nœud normal</span><span><i class="c-amber"></i>1 canal actif</span>
         <span><i class="c-red"></i>2 canaux + score feu élevé</span><span><i class="c-grey"></i>nœud exclu (dérive)</span>
-        <span><i class="c-det"></i>détecteur SSI</span><span class="hint">glisser pour tourner · molette pour zoomer</span>
+        <span><i class="c-det"></i>détecteur SSI</span><button class="small on" id="btn-danger" title="Niveau de danger à hauteur de tête calculé par la physique">CARTE DE DANGER : ON</button><button class="small" id="btn-ghost" title="Prévision physique : fumée et propagation dans 60 s">FANTÔME +60 s : OFF</button><span class="hint">glisser pour tourner · molette pour zoomer</span>
       </div>
       <div class="zone-note" id="zone-note"></div>
+      <div class="sandbox-panel" id="sandbox-panel">
+        <div class="pt">BANC D'ESSAI LIBRE — choisissez une source, puis cliquez sur le sol</div>
+        <div id="sb-tools"></div>
+        <label class="sb-scale">Intensité <b id="v-sbscale">×1</b><input type="range" id="sb-scale" min="0.25" max="3" step="0.25" value="1"></label>
+        <div id="sb-list"></div>
+        <button class="small" id="sb-reset">RÉINITIALISER LE BANC</button>
+        <div class="sb-note">Capteurs synthétiques calculés par la physique CFD (mêmes unités que les capteurs réels) · même IA que les scénarios réels · test qualitatif</div>
+      </div>
     </div>
 
     <div class="page" id="page-sensors">
@@ -169,6 +177,10 @@
 <script src="data/results_data.js"></script>
 <script src="js/zonemodel.js"></script>
 <script src="js/surrogate.js"></script>
+<script src="js/cfd.js"></script>
+<script src="data/verifier_data.js"></script>
+<script src="js/verifier.js"></script>
+<script src="js/sandbox.js"></script>
 <script src="js/charts.js"></script>
 <script src="js/twin3d.js"></script>
 <script src="js/app.js"></script>

@@ -48,6 +48,8 @@ Les alarmes incendie des usines sonnent souvent pour rien. Quand un vrai feu dé
 | Feu confirmé ≤ 60 s après le SSI | **15/17** (avant le SSI : 9/17) | — |
 | Autre site jamais vu | **7/7 nuisances, 12/13 feux** | 6/7, 13/13 |
 | Prévision à +60 s | **± 0,06 m, ± 6,8 °C, 0,14 ms** | sans IA : ± 0,41 m, ± 34 °C |
+| Fausses alertes sur 49,9 h d'activité normale | **0** | 1 |
+| Type de scénario jamais vu (test sévère) | **15/17 feux, 10/15 nuisances** | — |
 
 **Méthode** (à savoir expliquer) : chaque essai est jugé par un modèle qui **ne l'a jamais vu** (« leave-one-episode-out »). Mélanger les lignes au hasard donnerait 99 % de réussite… mais ce serait de la triche (lignes voisines presque identiques).
 
@@ -57,6 +59,9 @@ Les alarmes incendie des usines sonnent souvent pour rien. Quand un vrai feu dé
 - **C — Échappement** : pas de feu, mais **CO ÉLEVÉ (137 ppm)** → aérer, arrêter le moteur.
 - **D — Capteur en dérive** (défaut simulé) : détecté en ~8 min, exclu du vote.
 - **E — Soudure** : cas limite honnête, l'IA se trompe (1 seul essai disponible pour apprendre).
+- **F — Banc d'essai libre** : VOUS placez le feu ou la fausse alarme. Choisir une source à droite (ex. « Grand feu de bois » ou « Aérosol »), cliquer sur le sol du hall. La vraie physique 3D (CFD) pousse la fumée, le CO et la chaleur ; la ligne pointillée montre la distance au capteur le plus proche ; la même IA décide. À tester : feu de bois près d'une étagère (le feu se propage à l'étagère), aérosol dans l'atelier (NUISANCE), chariot qui tourne (CO élevé), feu + chariot en même temps. Bougies et cigarette loin des capteurs = pas détectées (normal : trop peu de fumée à 3 m). Capteurs « synthétiques » : c'est un test qualitatif, à dire au jury.
+
+**Si le jury demande « c'est de la vraie physique ? »** : oui, un solveur de mécanique des fluides 3D (14 080 cellules de 50 cm) qui tourne dans le navigateur, vérifié contre deux formules d'ingénierie incendie reconnues (Heskestad pour le panache, Alpert pour le jet sous plafond). Ce n'est pas FDS (trop lent pour le temps réel), c'est sa version simplifiée temps réel.
 
 ## 5. Questions probables du jury et réponses
 | Question | Réponse |

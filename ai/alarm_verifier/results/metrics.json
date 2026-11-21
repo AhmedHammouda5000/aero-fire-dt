@@ -15,11 +15,11 @@
   "ai_verdict_after_first_activity_max_s": 1060.0,
   "row_level_balanced_accuracy_loeo": 0.9161,
   "background": {
-    "background_hours": 56.6,
-    "ai_fire_events": 1,
+    "background_hours": 49.9,
+    "ai_fire_events": 0,
     "optical_trip_events": 1,
-    "ai_fire_events_per_100h": 1.77,
-    "optical_trip_events_per_100h": 1.77
+    "ai_fire_events_per_100h": 0.0,
+    "optical_trip_events_per_100h": 2.01
   },
   "cross_site_en54": {
     "fire_runs": 13,
@@ -72,7 +72,7 @@
     "EMA": 0.4,
     "DUAL_CHANNEL": true
   },
-  "runtime_s": 66.7,
+  "runtime_s": 62.7,
   "operational_hall": {
     "panel_false_alarms": 5,
     "panel_false_alarms_flagged_nuisance_by_ai": 3,
@@ -122,7 +122,7 @@
     "v2_dual_channel": {
       "nuisance_rejection_rate_ai": 0.7333333333333334,
       "t_ai_fire_median_s": 420.0,
-      "background_ai_fire_events_per_100h": 1.77
+      "background_ai_fire_events_per_100h": 0.0
     },
     "note": "v1 also counted verdicts latched before the run start (evaluation bug, fixed in v2)."
   }

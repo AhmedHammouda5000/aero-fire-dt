@@ -1,0 +1,71 @@
+[
+ {
+  "case": "SB1_wood_fire_near_rack",
+  "t": 150,
+  "verdict": "FIRE",
+  "p": 0.504,
+  "ssi": 30,
+  "aiFire": 50,
+  "alerts": [
+   "FEU CONFIRMÉ ZONE A"
+  ],
+  "sources": [
+   "Grand feu de bois → capteur 8 à 3.0 m"
+  ],
+  "burning": [
+   "A1.3",
+   "src-1"
+  ]
+ },
+ {
+  "case": "SB2_aerosol_workshop",
+  "t": 120,
+  "verdict": "NUISANCE",
+  "p": 0.007,
+  "ssi": 10,
+  "aiFire": null,
+  "alerts": [
+   "ALARME SSI ZONE C — NUISANCE PROBABLE"
+  ],
+  "sources": [
+   "Aérosol (spray) → capteur 15 à 2.0 m"
+  ],
+  "burning": []
+ },
+ {
+  "case": "SB3_candle_vs_cigarette",
+  "t": 150,
+  "verdict": "NUISANCE",
+  "p": 0.224,
+  "ssi": null,
+  "aiFire": null,
+  "alerts": [],
+  "sources": [
+   "Bougies (×4) → capteur 11 à 2.5 m",
+   "Cigarette → capteur 12 à 3.5 m"
+  ],
+  "burning": [
+   "src-1",
+   "src-2"
+  ]
+ },
+ {
+  "case": "SB4_fire_and_nuisance",
+  "t": 160,
+  "verdict": "FIRE",
+  "p": 0.282,
+  "ssi": 30,
+  "aiFire": 80,
+  "alerts": [
+   "FEU CONFIRMÉ ZONE B",
+   "CO ÉLEVÉ ZONE B : 40 ppm"
+  ],
+  "sources": [
+   "Balle de textile → capteur 11 à 3.4 m",
+   "Échappement chariot → capteur 15 à 3.0 m"
+  ],
+  "burning": [
+   "src-1"
+  ]
+ }
+]

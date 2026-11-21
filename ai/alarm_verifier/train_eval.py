@@ -26,7 +26,7 @@ from ai.alarm_verifier import verifier as V
 
 OUT = ROOT / "ai" / "alarm_verifier" / "results"
 PRE = pd.Timedelta("5min")      # context shown before each run
-POST = pd.Timedelta("15min")    # lingering smoke after a run is not "clean background"
+POST = pd.Timedelta("30min")    # lingering smoke after a run is not "clean background" (data audit: 15 -> 30 min)
 
 
 def prepare(f: pd.DataFrame) -> pd.DataFrame:
@@ -97,6 +97,8 @@ def summarize(eps: pd.DataFrame) -> dict:
 def background_false_alarms(f, model) -> dict:
     eps = episode_table(f, min_rows=1)
     mask = f["label"] == "background"
+    if "nuis_label" in f:
+        mask &= f["nuis_label"] != 1          # unannounced nuisance event labelled Background (data audit)
     for r in eps.itertuples():
         mask &= ~((f["Date"] >= r.start) & (f["Date"] <= r.end + POST))
     bg = f[mask]

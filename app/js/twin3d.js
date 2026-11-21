@@ -281,107 +281,195 @@
       nodes[n.id] = { led, glow, x: n.x, y: n.z, z: n.y, dPM: 0, level: 0, excluded: false };
     });
 
-    /* ---------- VFX: fire, embers, smoke column, smoke layer, haze ---------- */
-    const flames = new Particles(900, softTex, THREE.AdditiveBlending, scene);
-    const embers = new Particles(160, softTex, THREE.AdditiveBlending, scene);
+    /* ---------- VFX driven by the CFD physics ---------- */
+    const flameTex = canvasTex(64, 128, (g, w, h) => {         // tear-drop flame tongue
+      g.save(); g.translate(w / 2, h * 0.62); g.scale(1, 2.0);
+      const r = g.createRadialGradient(0, 0, 0, 0, 0, w / 2);
+      r.addColorStop(0, "rgba(255,255,255,1)"); r.addColorStop(0.45, "rgba(255,255,255,0.65)"); r.addColorStop(1, "rgba(255,255,255,0)");
+      g.fillStyle = r; g.beginPath(); g.arc(0, 0, w / 2, 0, 7); g.fill(); g.restore();
+    });
+    const flames = new Particles(1400, flameTex, THREE.AdditiveBlending, scene);
+    const embers = new Particles(220, softTex, THREE.AdditiveBlending, scene);
     const smoke = new Particles(700, puffTex, THREE.NormalBlending, scene);
-    const layer = new Particles(520, puffTex, THREE.NormalBlending, scene);
     const haze = new Particles(500, puffTex, THREE.NormalBlending, scene);
-    smoke.points.renderOrder = 2; layer.points.renderOrder = 3; flames.points.renderOrder = 4; embers.points.renderOrder = 5;
+    smoke.points.renderOrder = 6; haze.points.renderOrder = 6; flames.points.renderOrder = 7; embers.points.renderOrder = 8;
+    const ALL = [flames, embers, smoke, haze];
     const fireLight = new THREE.PointLight(0xff7a2a, 0, 20, 1.5); fireLight.castShadow = true; fireLight.shadow.mapSize.set(512, 512); scene.add(fireLight);
     const floorGlow = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ map: softTex, color: 0xff6a1a, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false }));
     floorGlow.rotation.x = -Math.PI / 2; floorGlow.position.y = 0.02; scene.add(floorGlow);
-    const layerSheet = new THREE.Mesh(new THREE.BoxGeometry(W - 0.2, 1, D - 0.2), new THREE.MeshBasicMaterial({ color: 0x0c0c0d, transparent: true, opacity: 0, depthWrite: false, toneMapped: false }));
-    scene.add(layerSheet);
 
-    let st = { nodes: {}, ssiZones: {}, smokeZ: null, fire: null, smokeHot: false, smolder: null };
+    // volumetric smoke: ray-marching through the CFD soot / temperature field (Beer-Lambert)
+    const VOL_VS = "out vec3 vWorld; void main(){ vec4 wp = modelMatrix * vec4(position, 1.0); vWorld = wp.xyz; gl_Position = projectionMatrix * viewMatrix * wp; }";
+    const VOL_FS = [
+      "precision highp float; precision highp sampler3D;",
+      "uniform sampler3D uVol; uniform vec3 uCam; uniform vec3 uSize; uniform vec3 uColor; uniform float uK; uniform float uGlow;",
+      "in vec3 vWorld; out vec4 outColor;",
+      "void main(){",
+      "  vec3 d = normalize(vWorld - uCam);",
+      "  vec3 inv = 1.0 / d, t0 = (vec3(0.0) - uCam) * inv, t1 = (uSize - uCam) * inv;",
+      "  vec3 tmn = min(t0, t1), tmx = max(t0, t1);",
+      "  float a0 = max(max(max(tmn.x, tmn.y), tmn.z), 0.0), a1 = min(min(tmx.x, tmx.y), tmx.z);",
+      "  if (a0 >= a1) discard;",
+      "  const int N = 80; float stepLen = (a1 - a0) / float(N);",
+      "  float jit = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453);",
+      "  vec3 col = vec3(0.0); float alpha = 0.0;",
+      "  for (int i = 0; i < N; i++) {",
+      "    vec3 p = uCam + d * (a0 + (float(i) + jit) * stepLen);",
+      "    vec4 v = texture(uVol, p / uSize);",
+      "    float Kc = v.b * uK, K = v.r * uK + Kc;",
+      "    if (K > 0.003) {",
+      "      float a = 1.0 - exp(-K * stepLen);",
+      "      float hot = smoothstep(0.55, 1.0, v.g);",
+      "      vec3 c = mix(uColor * (0.55 + 0.45 * p.y / uSize.y), vec3(0.78, 0.8, 0.82), Kc / max(K, 1e-4)) + vec3(1.0, 0.38, 0.06) * hot * uGlow * 1.4;",
+      "      col += (1.0 - alpha) * a * c; alpha += (1.0 - alpha) * a;",
+      "      if (alpha > 0.985) break;",
+      "    }",
+      "  }",
+      "  outColor = vec4(col, alpha);",
+      "}"].join("\n");
+    function volumeMaterial(color, k, glow) {
+      return new THREE.ShaderMaterial({ glslVersion: THREE.GLSL3, vertexShader: VOL_VS, fragmentShader: VOL_FS,
+        uniforms: { uVol: { value: null }, uCam: { value: new THREE.Vector3() }, uSize: { value: new THREE.Vector3(W, H, D) },
+          uColor: { value: new THREE.Color(color) }, uK: { value: k }, uGlow: { value: glow } },
+        transparent: true, depthTest: false, depthWrite: false, side: THREE.BackSide,
+        blending: THREE.CustomBlending, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor, toneMapped: false });
+    }
+    const volBox = new THREE.BoxGeometry(W, H, D);
+    const smokeVol = new THREE.Mesh(volBox, volumeMaterial(0x232426, 2.2, 1.0)); smokeVol.position.set(W / 2, H / 2, D / 2); smokeVol.renderOrder = 5; smokeVol.visible = false; scene.add(smokeVol);
+    const ghostVol = new THREE.Mesh(volBox, volumeMaterial(0x0c4f6e, 0.7, 0.0)); ghostVol.position.copy(smokeVol.position); ghostVol.renderOrder = 9; ghostVol.visible = false;
+    ghostVol.material.blendDst = THREE.OneFactor; ghostVol.material.blendSrc = THREE.OneFactor; scene.add(ghostVol);   // additive cyan glow on top
+    let vol = null, ghostV = null, dangerTex = null, dangerData = null, lastVolTime = -1, lastGhostTime = -1, lastDangerKey = "";
+    function makeTex(sim) {
+      const data = new Uint8Array(sim.N * 4), t = new THREE.Data3DTexture(data, sim.NX, sim.NY, sim.NZ);
+      t.format = THREE.RGBAFormat; t.minFilter = t.magFilter = THREE.LinearFilter; t.unpackAlignment = 1; t.needsUpdate = true;
+      return { data, tex: t };
+    }
+    function fillTex(target, soot, T, pmc) {
+      const d = target.data, n = soot.length;
+      for (let c = 0; c < n; c++) {
+        const K = 8700 * soot[c];                                  // extinction coefficient (1/m)
+        d[4 * c] = Math.min(255, K / 2.2 * 255); d[4 * c + 1] = T ? Math.min(255, T[c] / 700 * 255) : 0;
+        d[4 * c + 2] = pmc ? Math.min(255, 4000 * pmc[c] / 2.2 * 255) : 0; d[4 * c + 3] = 255;   // coarse particles (spray, dust)
+      }
+      target.tex.needsUpdate = true;
+    }
+    // danger map at head height (tenability levels from the CFD)
+    const dangerPlane = new THREE.Mesh(new THREE.PlaneGeometry(W, D), new THREE.MeshBasicMaterial({ transparent: true, depthWrite: false, opacity: 1 }));
+    dangerPlane.rotation.x = -Math.PI / 2; dangerPlane.position.set(W / 2, 0.035, D / 2); dangerPlane.renderOrder = 1; dangerPlane.visible = false; scene.add(dangerPlane);
+    function fillDanger(sim, ten) {
+      if (!dangerTex) { dangerData = new Uint8Array(sim.NX * sim.NZ * 4); dangerTex = new THREE.DataTexture(dangerData, sim.NX, sim.NZ, THREE.RGBAFormat); dangerTex.magFilter = THREE.LinearFilter; dangerPlane.material.map = dangerTex; }
+      for (let k = 0; k < sim.NZ; k++) for (let i = 0; i < sim.NX; i++) {
+        const lv = ten.level[i + sim.NX * k], o = 4 * (i + sim.NX * (sim.NZ - 1 - k));
+        const c = lv === 2 ? [255, 40, 40, 150] : lv === 1 ? [255, 176, 0, 95] : [34, 211, 107, 28];
+        dangerData.set(c, o);
+      }
+      dangerTex.needsUpdate = true;
+    }
+    // fuel packages: glowing when burning, charred when burnt, cyan outline when predicted to ignite
+    const fuelFx = {};
+    function fuelMesh(p) {
+      const g = new THREE.BoxGeometry(p.x1 - p.x0 + 0.06, p.y1 - p.y0 + 0.06, p.z1 - p.z0 + 0.06);
+      const glow = new THREE.Mesh(g, new THREE.MeshBasicMaterial({ color: 0xff5a10, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false }));
+      const char = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ color: 0x0b0908, roughness: 1, transparent: true, opacity: 0 }));
+      const warn = new THREE.LineSegments(new THREE.EdgesGeometry(g), new THREE.LineBasicMaterial({ color: 0x33d7ff, transparent: true, opacity: 0 }));
+      [glow, char, warn].forEach(m => { m.position.set(p.cx, (p.y0 + p.y1) / 2, p.cz); scene.add(m); });
+      return { glow, char, warn };
+    }
+
+    let st = { nodes: {}, ssiZones: {}, smolder: null, cfd: null };
+    const flameH = (q, D) => q <= 0 ? 0 : Math.max(0.3, 0.235 * Math.pow(q, 0.4) - 1.02 * D);
 
     function updateVFX(dt, time) {
-      const f = st.fire;
-      // --- flames (Heskestad flame height) ---
-      let Hf = 0, R = 0;
-      if (f && f.q > 20) {
-        R = Math.min(1.8, 0.35 + Math.sqrt(f.q / 1000) * 0.55);              // fire base radius (m)
-        Hf = Math.max(0.6, Math.min(H - 0.5, 0.235 * Math.pow(f.q, 0.4) - 1.02 * 2 * R)); // flame height (m)
-        const rate = 70 + Math.min(380, f.q / 12);
-        flames.acc += rate * dt;
-        while (flames.acc >= 1) { flames.acc--; const a = Math.random() * 6.28, r = Math.sqrt(Math.random()) * R, life = 0.45 + Math.random() * 0.5;
-          flames.spawn(f.x + Math.cos(a) * r, 0.1, f.y + Math.sin(a) * r, (Math.random() - 0.5) * 0.3, Hf / life * (0.6 + Math.random() * 0.7), (Math.random() - 0.5) * 0.3, life, 0.55 + R * 0.6 + Math.random() * 0.5, r / R); }
-        embers.acc += (12 + f.q / 250) * dt;
-        while (embers.acc >= 1) { embers.acc--; embers.spawn(f.x + (Math.random() - 0.5) * R, Hf * 0.5, f.y + (Math.random() - 0.5) * R, (Math.random() - 0.5) * 1.2, 2 + Math.random() * 2.5, (Math.random() - 0.5) * 1.2, 1.6 + Math.random() * 1.4, 0.07, 0); }
-        smoke.acc += (35 + f.q / 45) * dt;
-        while (smoke.acc >= 1) { smoke.acc--; smoke.spawn(f.x + (Math.random() - 0.5) * R, Hf * 0.9, f.y + (Math.random() - 0.5) * R, (Math.random() - 0.5) * 0.4, 1.6 + Math.random() * 1.2, (Math.random() - 0.5) * 0.4, 7 + Math.random() * 4, 1.0 + R * 0.6, 0); }
+      const C = st.cfd, sim = C && C.sim;
+      // --- smoke volume + ghost + danger map from the CFD fields ---
+      if (sim) {
+        if (!vol) { vol = makeTex(sim); ghostV = makeTex(sim); smokeVol.material.uniforms.uVol.value = vol.tex; ghostVol.material.uniforms.uVol.value = ghostV.tex; }
+        if (sim.time !== lastVolTime) { fillTex(vol, sim.soot, sim.T, sim.pmc); lastVolTime = sim.time; }
+        smokeVol.visible = true; smokeVol.material.uniforms.uCam.value.copy(camera.position);
+        const g = C.ghost;
+        ghostVol.visible = !!(C.showGhost && g);
+        if (ghostVol.visible) { if (g.time !== lastGhostTime) { fillTex(ghostV, g.soot, null); lastGhostTime = g.time; } ghostVol.material.uniforms.uCam.value.copy(camera.position); }
+        const ten = C.showGhost && g ? g.ten : C.ten;
+        dangerPlane.visible = !!(C.showDanger && ten);
+        const dk = (C.showGhost && g ? "g" + g.time : "n" + sim.time);
+        if (dangerPlane.visible && dk !== lastDangerKey) { fillDanger(sim, ten); lastDangerKey = dk; }
+        sim.fuel.forEach(p => {
+          const fx = fuelFx[p.id] || (fuelFx[p.id] = fuelMesh(p));
+          fx.glow.material.opacity = p.burning ? Math.min(0.35, 0.08 + p.q / 9000) * (0.8 + 0.2 * Math.sin(time * 9 + p.cx)) : 0;
+          fx.char.material.opacity = p.burnt ? 0.85 : p.burning ? Math.min(0.6, p.eBurnt / p.eLoad * 1.5) : 0;
+          const willIgnite = C.showGhost && g && g.ignite.includes(p.id) && !p.burning;
+          fx.warn.material.opacity = willIgnite ? 0.55 + 0.45 * Math.sin(time * 6) : 0;
+        });
+      } else {
+        smokeVol.visible = ghostVol.visible = dangerPlane.visible = false;
+        for (const id in fuelFx) { const fx = fuelFx[id]; fx.glow.material.opacity = fx.char.material.opacity = fx.warn.material.opacity = 0; }
+      }
+
+      // --- flames on every burning package (Heskestad flame height per package) ---
+      let qTot = 0, lx = 0, lz = 0, Hmax = 0;
+      if (sim) for (const p of sim.fuel) {
+        if (p.burning && p.q > 0.02 && p.q < 15) {            // candle / cigarette: tiny flame or glowing tip
+          p._acc = (p._acc || 0) + (p.q < 0.1 ? 6 : 20) * dt;
+          while (p._acc >= 1) { p._acc--; flames.spawn(p.cx + (Math.random() - 0.5) * (p.x1 - p.x0) * 0.6, p.y1 + 0.02, p.cz + (Math.random() - 0.5) * (p.z1 - p.z0) * 0.6, 0, p.q < 0.1 ? 0.15 : 0.5, 0, 0.35, p.q < 0.1 ? 0.06 : 0.16, 0.5); }
+          continue;
+        }
+        if (!p.burning || p.q < 15) continue;
+        const Lf = Math.min(H - 0.4, flameH(p.q, p.dEq)), top = Math.max(p.y1 * 0.9, Lf);
+        qTot += p.q; lx += p.cx * p.q; lz += p.cz * p.q; Hmax = Math.max(Hmax, top);
+        const rate = Math.min(260, 25 + p.q / 18);
+        p._acc = (p._acc || 0) + rate * dt;
+        const vertical = p.y1 - p.y0 > 2;                     // racks burn on their whole face
+        while (p._acc >= 1) {
+          p._acc--;
+          const x = p.x0 + Math.random() * (p.x1 - p.x0), z = p.z0 + Math.random() * (p.z1 - p.z0);
+          const y0 = vertical ? Math.random() * Math.min(p.y1, top) * 0.85 : p.y0 + p.y1 * 0.6;
+          const life = 0.4 + Math.random() * 0.45, rise = Math.max(0.4, top - y0);
+          flames.spawn(x, y0, z, (Math.random() - 0.5) * 0.3, rise / life * (0.55 + Math.random() * 0.6), (Math.random() - 0.5) * 0.3, life, 0.5 + Math.min(1.4, p.q / 2500) + Math.random() * 0.45, Math.random());
+        }
+        p._em = (p._em || 0) + (5 + p.q / 400) * dt;
+        while (p._em >= 1) { p._em--; embers.spawn(p.cx + (Math.random() - 0.5) * (p.x1 - p.x0), top * 0.6, p.cz + (Math.random() - 0.5) * (p.z1 - p.z0), (Math.random() - 0.5) * 1.2, 2 + Math.random() * 2.5, (Math.random() - 0.5) * 1.2, 1.6 + Math.random() * 1.4, 0.07, 0); }
+        p._sm = (p._sm || 0) + (6 + p.q / 300) * dt;
+        while (p._sm >= 1) { p._sm--; smoke.spawn(p.x0 + Math.random() * (p.x1 - p.x0), top, p.z0 + Math.random() * (p.z1 - p.z0), 0, 1.5, 0, 5 + Math.random() * 3, 0.9 + Math.random() * 0.6, 2); }
       }
       // smouldering wisps (incipient real fire, before the simulated growth)
-      if (st.smolder && !(f && f.q > 20)) {
+      if (st.smolder && qTot === 0) {
         smoke.acc += (4 + st.smolder.i * 3) * dt;
         while (smoke.acc >= 1) { smoke.acc--; smoke.spawn(st.smolder.x + (Math.random() - 0.5) * 0.4, 0.4, st.smolder.y + (Math.random() - 0.5) * 0.4, (Math.random() - 0.5) * 0.15, 0.5 + Math.random() * 0.4, (Math.random() - 0.5) * 0.15, 9, 0.5, 1); }
       }
-      const tf = (i) => flames.life[i] / flames.max[i];
       for (let i = 0; i < flames.n; i++) {
         if (flames.life[i] >= flames.max[i]) { flames.col[4 * i + 3] = 0; continue; }
-        flames.life[i] += dt; const t = Math.min(1, tf(i)), p = 3 * i;
-        const swirl = Math.sin(time * 7 + i) * 0.6;
-        flames.vel[p] += (swirl - flames.vel[p]) * dt * 2 - (flames.pos[p] - (f ? f.x : 0)) * dt * 1.2;
-        flames.vel[p + 2] += (Math.cos(time * 6 + i * 1.3) * 0.6 - flames.vel[p + 2]) * dt * 2 - (flames.pos[p + 2] - (f ? f.y : 0)) * dt * 1.2;
+        flames.life[i] += dt; const t = Math.min(1, flames.life[i] / flames.max[i]), p = 3 * i;
+        flames.vel[p] += Math.sin(time * 7 + i) * 0.9 * dt; flames.vel[p + 2] += Math.cos(time * 6 + i * 1.3) * 0.9 * dt;
         flames.pos[p] += flames.vel[p] * dt; flames.pos[p + 1] += flames.vel[p + 1] * dt; flames.pos[p + 2] += flames.vel[p + 2] * dt;
-        // colour ramp: white-yellow core -> orange -> deep red -> fade
         let r, g, b;
-        if (t < 0.25) { r = 1; g = 0.92 - t * 0.9; b = 0.55 - t * 1.8; } else if (t < 0.6) { r = 1; g = 0.7 - (t - 0.25) * 1.2; b = 0.08; } else { r = 0.95 - (t - 0.6) * 1.2; g = 0.28 - (t - 0.6) * 0.5; b = 0.05; }
-        const core = 1 - flames.k[i] * 0.4;
-        flames.col.set([r, Math.max(0, g) * core * 0.85, Math.max(0, b) * 0.6, Math.pow(1 - t, 1.5) * 0.42], 4 * i);
-        flames.size[i] = flames.s0[i] * (1.0 - t * 0.55); flames.rot[i] += flames.rs[i] * dt;
+        if (t < 0.2) { r = 1; g = 0.9 - t; b = 0.5 - t * 2; } else if (t < 0.55) { r = 1; g = 0.7 - (t - 0.2) * 1.15; b = 0.06; } else { r = 0.95 - (t - 0.55) * 1.3; g = 0.3 - (t - 0.55) * 0.55; b = 0.04; }
+        flames.col.set([r, Math.max(0, g) * (0.85 + flames.k[i] * 0.15), Math.max(0, b), Math.pow(1 - t, 1.5) * 0.4], 4 * i);
+        flames.size[i] = flames.s0[i] * (1.0 - t * 0.45); flames.rot[i] = Math.sin(time * 3 + i) * 0.25;
       }
       for (let i = 0; i < embers.n; i++) {
         if (embers.life[i] >= embers.max[i]) { embers.col[4 * i + 3] = 0; continue; }
         embers.life[i] += dt; const t = embers.life[i] / embers.max[i], p = 3 * i;
-        embers.vel[p] += Math.sin(time * 3 + i) * dt * 1.5; embers.vel[p + 1] -= 0.6 * dt; embers.vel[p + 2] += Math.cos(time * 2.5 + i) * dt * 1.5;
+        if (sim) { const v = sim.velocityAt(embers.pos[p], embers.pos[p + 1], embers.pos[p + 2]); embers.vel[p] += (v[0] - embers.vel[p]) * dt; embers.vel[p + 2] += (v[2] - embers.vel[p + 2]) * dt; }
+        embers.vel[p + 1] -= 0.5 * dt;
         embers.pos[p] += embers.vel[p] * dt; embers.pos[p + 1] = Math.min(H - 0.3, embers.pos[p + 1] + embers.vel[p + 1] * dt); embers.pos[p + 2] += embers.vel[p + 2] * dt;
         embers.col.set([1, 0.55 + 0.3 * Math.sin(time * 20 + i), 0.15, (1 - t) * (0.6 + 0.4 * Math.sin(time * 30 + i))], 4 * i);
         embers.size[i] = 0.08;
       }
-      // smoke column: rises, hits the layer / ceiling, spreads horizontally
-      const ceilingY = st.smokeZ !== null ? Math.max(st.smokeZ, 0.8) : H - 0.4;
-      const hot = st.smokeHot;
+      // smoke detail puffs follow the CFD velocity field (falls back to slow rise without CFD)
       for (let i = 0; i < smoke.n; i++) {
         if (smoke.life[i] >= smoke.max[i]) { smoke.col[4 * i + 3] = 0; continue; }
         smoke.life[i] += dt; const t = smoke.life[i] / smoke.max[i], p = 3 * i;
-        const targetY = smoke.k[i] === 1 ? H - 0.5 : (ceilingY + H) / 2;
-        if (smoke.pos[p + 1] > targetY - 0.3) {   // spread under the roof
-          const dx = smoke.pos[p] - W / 2 || 0.01, dz = smoke.pos[p + 2] - D / 2 || 0.01, n = Math.hypot(dx, dz);
-          smoke.vel[p] += (dx / n * 1.4 - smoke.vel[p]) * dt; smoke.vel[p + 2] += (dz / n * 1.0 - smoke.vel[p + 2]) * dt; smoke.vel[p + 1] *= 0.9;
-        }
-        smoke.pos[p] = Math.min(W - 0.3, Math.max(0.3, smoke.pos[p] + smoke.vel[p] * dt));
-        smoke.pos[p + 1] = Math.min(H - 0.3, smoke.pos[p + 1] + smoke.vel[p + 1] * dt);
-        smoke.pos[p + 2] = Math.min(D - 0.3, Math.max(0.3, smoke.pos[p + 2] + smoke.vel[p + 2] * dt));
-        const shade = smoke.k[i] === 1 ? 0.55 : hot ? 0.09 : 0.16;
-        smoke.col.set([shade + (hot ? 0.03 : 0), shade, shade, Math.min(1, t * 6) * (1 - t) * (smoke.k[i] === 1 ? 0.35 : 0.6)], 4 * i);
-        smoke.size[i] = smoke.s0[i] * (1 + t * 3.5); smoke.rot[i] += smoke.rs[i] * dt * 0.3;
+        if (sim && smoke.k[i] === 2) { const v = sim.velocityAt(smoke.pos[p], smoke.pos[p + 1], smoke.pos[p + 2]); smoke.vel[p] = v[0]; smoke.vel[p + 1] = v[1]; smoke.vel[p + 2] = v[2]; }
+        smoke.pos[p] = Math.min(W - 0.2, Math.max(0.2, smoke.pos[p] + smoke.vel[p] * dt));
+        smoke.pos[p + 1] = Math.min(H - 0.25, Math.max(0.1, smoke.pos[p + 1] + smoke.vel[p + 1] * dt));
+        smoke.pos[p + 2] = Math.min(D - 0.2, Math.max(0.2, smoke.pos[p + 2] + smoke.vel[p + 2] * dt));
+        const sh = smoke.k[i] === 1 ? 0.55 : 0.08;
+        smoke.col.set([sh, sh, sh, Math.min(1, t * 5) * (1 - t) * (smoke.k[i] === 1 ? 0.35 : 0.5)], 4 * i);
+        smoke.size[i] = smoke.s0[i] * (1 + t * 2.5); smoke.rot[i] += smoke.rs[i] * dt * 0.3;
       }
-      // accumulated smoke layer (zone-model interface)
-      const want = st.smokeZ !== null && st.smokeZ < H - 0.1 ? Math.floor(layer.n * Math.min(1, (H - st.smokeZ) / (H - 0.5))) : 0;
-      for (let i = 0; i < layer.n; i++) {
-        const p = 3 * i, alive = i < want;
-        if (alive && layer.life[i] >= layer.max[i]) {     // (re)seed a puff inside the layer volume
-          layer.pos.set([0.6 + Math.random() * (W - 1.2), st.smokeZ + Math.random() * (H - st.smokeZ - 0.2), 0.6 + Math.random() * (D - 1.2)], p);
-          layer.vel.set([(Math.random() - 0.5) * 0.25, 0, (Math.random() - 0.5) * 0.25], p);
-          layer.life[i] = 0; layer.max[i] = 8 + Math.random() * 6; layer.s0[i] = 2.2 + Math.random() * 2.2; layer.rot[i] = Math.random() * 6.28;
-        }
-        if (!alive) { layer.col[4 * i + 3] = 0; layer.life[i] = layer.max[i]; continue; }
-        layer.life[i] += dt; const t = layer.life[i] / layer.max[i];
-        layer.pos[p] += layer.vel[p] * dt; layer.pos[p + 2] += layer.vel[p + 2] * dt;
-        layer.pos[p + 1] = Math.max(st.smokeZ + 0.2, Math.min(H - 0.2, layer.pos[p + 1]));
-        const sh = hot ? 0.06 : 0.11;
-        layer.col.set([sh + (hot ? 0.04 : 0), sh, sh, Math.sin(Math.PI * t) * 0.42], 4 * i);
-        layer.size[i] = layer.s0[i]; layer.rot[i] += 0.05 * dt;
-      }
-      if (want > 0) {
-        const th = H - st.smokeZ; layerSheet.scale.y = th; layerSheet.position.set(W / 2, H - th / 2, D / 2);
-        layerSheet.material.opacity = Math.min(0.72, 0.18 + 0.07 * th); layerSheet.material.color.setHex(hot ? 0x150b07 : 0x0c0c0d);
-      } else layerSheet.material.opacity = 0;
-      // measured particle haze around our nodes (aerosol, smoke from real recordings)
+      // measured particle haze around our nodes (real recordings) — off when the CFD provides the smoke
       let hz = 0;
-      for (const id in nodes) {
+      if (!sim) for (const id in nodes) {
         const nd = nodes[id], rise = Math.max(0, nd.dPM - 4.6);
         const rate = rise * rise * 2.2 * dt;
         let k = Math.floor(rate) + (Math.random() < rate % 1 ? 1 : 0);
@@ -394,13 +482,14 @@
         haze.col.set([0.78, 0.8, 0.82, Math.sin(Math.PI * t) * 0.3], 4 * i);
         haze.size[i] = haze.s0[i] * (1 + t); haze.rot[i] += 0.1 * dt;
       }
-      [flames, embers, smoke, layer, haze].forEach(s => s.commit());
-      // fire light + floor glow (flicker)
-      if (f && f.q > 20) {
-        const fl = 0.85 + 0.15 * Math.sin(time * 23) * Math.sin(time * 7.3);
-        fireLight.position.set(f.x, Math.min(H - 0.5, 0.6 + Hf * 0.4), f.y); fireLight.intensity = Math.min(4.5, 0.8 + f.q / 900) * fl; fireLight.distance = 10 + R * 8;
-        floorGlow.position.set(f.x, 0.02, f.y); floorGlow.scale.setScalar(R * 7); floorGlow.material.opacity = 0.55 * fl;
+      ALL.forEach(s => s.commit());
+      // fire light (HRR-weighted centre) + floor glow
+      if (qTot > 15) {
+        const fl = 0.85 + 0.15 * Math.sin(time * 23) * Math.sin(time * 7.3), cx = lx / qTot, cz = lz / qTot;
+        fireLight.position.set(cx, Math.min(H - 0.5, 0.8 + Hmax * 0.35), cz); fireLight.intensity = Math.min(5, 0.8 + qTot / 1200) * fl; fireLight.distance = 12 + Math.sqrt(qTot) / 6;
+        floorGlow.position.set(cx, 0.02, cz); floorGlow.scale.setScalar(4 + Math.sqrt(qTot) / 12); floorGlow.material.opacity = 0.5 * fl;
       } else { fireLight.intensity = 0; floorGlow.material.opacity = 0; }
+      st._dark = sim ? Math.min(1, Math.max(0, (C.ten ? C.ten.fracBad : 0) * 2)) : 0;
     }
 
     function updateIndicators(time) {
@@ -419,6 +508,34 @@
       }
     }
 
+    /* ---------- free-test bench: floor picking + source markers ---------- */
+    const raycaster = new THREE.Raycaster(), floorPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+    function pickFloor(clientX, clientY) {
+      const r = renderer.domElement.getBoundingClientRect();
+      const ndc = new THREE.Vector2(((clientX - r.left) / r.width) * 2 - 1, -((clientY - r.top) / r.height) * 2 + 1);
+      raycaster.setFromCamera(ndc, camera);
+      const hit = new THREE.Vector3();
+      if (!raycaster.ray.intersectPlane(floorPlane, hit)) return null;
+      if (hit.x < 0.3 || hit.x > W - 0.3 || hit.z < 0.3 || hit.z > D - 0.3) return null;
+      return { x: hit.x, z: hit.z };
+    }
+    const markerGroup = new THREE.Group(); scene.add(markerGroup);
+    function setMarkers(list) {
+      while (markerGroup.children.length) markerGroup.remove(markerGroup.children[0]);
+      list.forEach(m => {
+        const col = m.kind === "fire" ? 0xff7a2a : 0x33d7ff;
+        const ring = new THREE.Mesh(new THREE.RingGeometry(0.35, 0.5, 32), new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: 0.85, side: THREE.DoubleSide, depthWrite: false }));
+        ring.rotation.x = -Math.PI / 2; ring.position.set(m.x, 0.05, m.z); markerGroup.add(ring);
+        markerGroup.add(sprite(m.icon + " " + m.label, m.x, 1.5, m.z, 0.4, m.kind === "fire" ? "#ffb070" : "#8fe6ff"));
+        if (m.node) {   // dashed line to the nearest sensor node + distance
+          const g = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(m.x, 0.1, m.z), new THREE.Vector3(m.node.x, m.node.y, m.node.z)]);
+          const l = new THREE.Line(g, new THREE.LineDashedMaterial({ color: col, dashSize: 0.25, gapSize: 0.18, transparent: true, opacity: 0.75 }));
+          l.computeLineDistances(); markerGroup.add(l);
+          markerGroup.add(sprite(m.dist.toFixed(1) + " m", (m.x + m.node.x) / 2, (0.1 + m.node.y) / 2 + 0.25, (m.z + m.node.z) / 2, 0.3, "#d0d8de"));
+        }
+      });
+    }
+
     /* ---------- camera, input, loop ---------- */
     function resize() {
       const w = container.clientWidth, h = container.clientHeight; if (!w || !h) return;
@@ -427,7 +544,7 @@
       cv.style.width = w + "px"; cv.style.height = h + "px";
       camera.aspect = w / h; camera.updateProjectionMatrix();
       const scale = (h * renderer.getPixelRatio()) / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2));
-      [flames, embers, smoke, layer, haze].forEach(s => { s.mat.uniforms.uScale.value = scale; });
+      ALL.forEach(s => { s.mat.uniforms.uScale.value = scale; });
     }
     function placeCam() {
       camera.position.set(center.x + dist * Math.cos(el) * Math.cos(az), center.y + dist * Math.sin(el), center.z + dist * Math.cos(el) * Math.sin(az));
@@ -450,12 +567,12 @@
       if (!container.offsetParent) return;
       resize(); placeCam(); updateWalls();
       updateIndicators(time); updateVFX(dt, time);
-      lampLights.forEach(l => { l.intensity = st.smokeZ !== null && st.smokeZ < H - 1.5 ? 0.25 : 0.55; });
+      lampLights.forEach(l => { l.intensity = 0.55 - 0.35 * (st._dark || 0); });
       renderer.render(scene, camera);
     }
     loop();
-    function update(s) { st = Object.assign({ smolder: null }, s); }
-    return { update, resize, renderer, setView: (a, e, d) => { az = a; el = e; dist = d; } };
+    function update(s) { st = Object.assign({ smolder: null, cfd: null }, s); }
+    return { update, resize, renderer, pickFloor, setMarkers, setView: (a, e, d) => { az = a; el = e; dist = d; } };
   }
 
   root.AFDT_Twin3D = Twin3D;

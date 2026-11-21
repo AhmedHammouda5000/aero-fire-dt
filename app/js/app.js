@@ -46,6 +46,9 @@
     $("source").textContent = s.source;
     $("clock-scn").textContent = s.id + " · " + s.title;
     st.storyHidden = !showStory;
+    $("sandbox-panel").style.display = isSandbox() ? "block" : "none";
+    $("scrub").disabled = isSandbox();
+    if (isSandbox()) { st.i = s.t.length - 1; $("scrub").max = st.i; showPage("zone", true); }
     renderStory();
     buildNodeLegend();
     render(true);
@@ -178,7 +181,7 @@
         if (!newest || a.level > newest.level) newest = a;
       }
     });
-    if (newest && st.auto && performance.now() > st.manualUntil) {
+    if (newest && st.auto && !isSandbox() && performance.now() > st.manualUntil) {
       const pg = { FIRE_CONFIRMED: "forecast", AI_PREALARM: "zone", SSI_NUISANCE: "why",
         SSI_UNCERTAIN: "why", CO_HEALTH: "sensors" }[newest.code];
       if (pg) showPage(pg, false);
@@ -245,9 +248,15 @@
       // incipient real fire: smouldering wisps where the measured particles are highest
       const loc = nearRack(fireLocation()); smolder = { x: loc.x, y: loc.y, i: Math.max(0, maxOver(i, "dPM", true) - 5) };
     }
-    twin.update({ nodes, ssiZones, smokeZ, fire, smokeHot, smolder });
+    const live = cfdActive();
+    if (live) smolder = null;
+    twin.update({ nodes, ssiZones, smolder, cfd: live ? CFD : null });
     let note = "";
-    if (tw && tw.active) note = `Jumeau : hypothèse de développement (${st.p.alpha}) — nappe de fumée simulée à ${tw.z.toFixed(1)} m, ${tw.T.toFixed(0)} °C`;
+    if (live) {
+      const sim = CFD.sim, nb = sim.fuel.filter(p => p.burning).length;
+      note = "Physique CFD 3D réelle (" + sim.N.toLocaleString("fr-FR") + " cellules) · t = " + mmss(sim.time) + " · " + (sim.totalHRR() / 1000).toFixed(1) + " MW · " + nb + " objet(s) en feu" +
+        (CFD.behind > 1 ? " · calcul… (" + CFD.behind.toFixed(0) + " s)" : "") + (CFD.showGhost ? " · FANTÔME cyan = fumée et propagation dans 60 s" : "");
+    } else if (tw && tw.active) note = `Jumeau : hypothèse de développement (${st.p.alpha}) — nappe de fumée simulée à ${tw.z.toFixed(1)} m, ${tw.T.toFixed(0)} °C`;
     else if (tw && !tw.active) note = "Feu naissant (mesures réelles) — la phase de croissance simulée démarre à la pré-alarme IA";
     else if (s.kind === "drift") note = "Nœud 11 : dérive simulée du capteur CO sur une période calme réelle";
     else note = "Mesures réelles rejouées · halo gris = hausse de particules mesurée";
@@ -281,6 +290,7 @@
   }
 
   function renderForecast(i) {
+    if (cfdActive()) return renderForecastCFD(i);
     const s = scn(), tw = twinState(i), H = HALL.size.height;
     const status = $("fc-status"), cd = $("fc-countdown"), tbl = $("fc-table");
     if (!tw) {
@@ -440,6 +450,8 @@
   bindRange("p-tamb", "tamb", v => v + " °C", "v-tamb");
   $("p-door").onchange = e => { st.p.door = +e.target.value; render(true); };
   $("p-ref").onchange = e => { st.p.ref = e.target.checked; render(true); };
+  $("btn-danger").onclick = () => { CFD.showDanger = !CFD.showDanger; $("btn-danger").textContent = "CARTE DE DANGER : " + (CFD.showDanger ? "ON" : "OFF"); $("btn-danger").classList.toggle("on", CFD.showDanger); render(true); };
+  $("btn-ghost").onclick = () => { CFD.showGhost = !CFD.showGhost; $("btn-ghost").textContent = "FANTÔME +60 s : " + (CFD.showGhost ? "ON" : "OFF"); $("btn-ghost").classList.toggle("on", CFD.showGhost); render(true); };
   $("btn-whatif").onclick = () => { st.whatIf = scn().t[st.i]; showPage("forecast", true); };
   $("btn-results").onclick = () => { renderResults(); $("results-modal").classList.remove("hidden"); };
   $("btn-close-results").onclick = () => $("results-modal").classList.add("hidden");
@@ -470,15 +482,160 @@
       nœuds et SSI simulés ; feux d'essai naissants — le développement est une hypothèse du modèle de zones. Le gain réel sera mesuré pendant le pilote de 90 jours.</p>`;
   }
 
+  /* ---------- real physics (CFD) controller ---------- */
+  const CFD = { sim: null, key: "", snaps: [], ten: null, tenTime: -1, ghost: null, job: null, lastGhost: 0,
+    showDanger: true, showGhost: false, hist: [], behind: 0, lastUi: 0, lastSimTime: -1 };
+  function cfdKey() { return [st.k, growthStart(), st.p.alpha, st.p.qmax, st.p.door, st.p.vent, st.p.tamb].join("|"); }
+  function cfdTarget() { const t0 = growthStart(); return t0 === null ? null : scn().t[st.i] - t0; }
+  function cfdActive() { if (isSandbox()) return !!SBX.sb; const t = cfdTarget(); return !!(CFD.sim && t !== null && t >= 0); }
+  function cfdReset() {
+    const sim = new AFDT_CFD.Sim(HALL, { tamb: st.p.tamb, doorOpen: st.p.door, roofVent: st.p.vent });
+    const loc = nearRack(fireLocation());
+    sim.ignite(loc.x, loc.y, ZM.ALPHA[st.p.alpha], st.p.qmax);
+    Object.assign(CFD, { sim, key: cfdKey(), snaps: [sim.snapshot()], ghost: null, job: null, hist: [], ten: null, tenTime: -1 });
+  }
+  function cfdPump(budget) {
+    if (isSandbox()) return sbPump(budget);
+    const target = cfdTarget();
+    if (target === null || target < 0) { if (target === null) CFD.sim = null; CFD.behind = 0; CFD.job = null; return; }
+    if (!CFD.sim || CFD.key !== cfdKey()) cfdReset();
+    const sim = CFD.sim;
+    if (target < sim.time - 0.26) {            // going back in time: restore the closest earlier snapshot
+      let snap = CFD.snaps[0]; for (const s of CFD.snaps) if (s.time <= target + 1e-6) snap = s;
+      sim.restore(snap); CFD.ghost = null; CFD.job = null; CFD.hist = CFD.hist.filter(h => h.t <= sim.time);
+    }
+    const t0 = performance.now();
+    while (sim.time < target - 1e-6 && performance.now() - t0 < budget) {
+      sim.step(0.5);
+      if (sim.time % 10 === 0 && CFD.snaps[CFD.snaps.length - 1].time < sim.time) { CFD.snaps.push(sim.snapshot()); if (CFD.snaps.length > 180) CFD.snaps.splice(1, 1); }
+      if (sim.time % 2 === 0) { const te = sim.tenability(1.8); CFD.hist.push({ t: sim.time, bad: te.fracBad, vis: te.minVis }); }
+    }
+    CFD.behind = Math.max(0, target - sim.time);
+    if (CFD.tenTime !== sim.time) { CFD.ten = sim.tenability(1.8); CFD.tenTime = sim.time; }
+    ghostPump(sim);
+  }
+  /* ---------- background +60 s physics look-ahead (shared by scenarios and the free-test bench) ---------- */
+  function ghostPump(sim) {
+    if (CFD.ghost && Math.abs(sim.time - CFD.ghost.time) > 5) CFD.ghost = null;
+    if (CFD.job && Math.abs(sim.time - CFD.job.start) > 5) CFD.job = null;
+    const now = performance.now();
+    if (CFD.behind < 1 && !CFD.job && (!CFD.ghost || now - CFD.lastGhost > 2500)) {
+      CFD.job = { sim: sim.clone(), start: sim.time, steps: 0, done0: sim.fuel.filter(p => p.burning || p.burnt).map(p => p.id), ignT: {} };
+    }
+    if (CFD.job) {
+      const J = CFD.job, t1 = performance.now();
+      while (J.steps < 120 && performance.now() - t1 < 7) {
+        J.sim.step(0.5); J.steps++;
+        J.sim.fuel.forEach(p => { if (p.burning && !J.done0.includes(p.id) && J.ignT[p.id] === undefined) J.ignT[p.id] = J.steps * 0.5; });
+        if (J.steps === 60) { J.ten30 = J.sim.tenability(1.8); J.layer30 = J.sim.layerHeight(); }
+      }
+      if (J.steps >= 120) {
+        CFD.ghost = { time: J.start, soot: new Float32Array(J.sim.soot), ten: J.sim.tenability(1.8), ten30: J.ten30,
+          layer: J.sim.layerHeight(), layer30: J.layer30, ignite: Object.keys(J.ignT), ignT: J.ignT, q: J.sim.totalHRR() };
+        CFD.job = null; CFD.lastGhost = performance.now();
+      }
+    }
+  }
+
+  /* ---------- free-test bench (banc d'essai libre) ---------- */
+  const SBX = { sb: null, k: -1, tool: "bois_grand", scale: 1, simAcc: 0, lastT: 0, lastListT: -1 };
+  function isSandbox() { const s = scn(); return !!(s && s.kind === "sandbox"); }
+  function sbNew() {
+    SBX.sb = new AFDT_Sandbox.Sandbox(HALL, window.AFDT_VERIFIER, { tamb: st.p.tamb, door: st.p.door, vent: st.p.vent });
+    S[SBX.k] = SBX.sb.scn;
+    Object.assign(CFD, { sim: SBX.sb.sim, key: "sandbox", snaps: [], ghost: null, job: null, hist: [], ten: null, tenTime: -1 });
+    SBX.simAcc = 0; st.i = 0; st.seen = new Set(); setMW(false); setMC(false);
+    sbList();
+  }
+  function sbPump(budget) {
+    const sb = SBX.sb; if (!sb) return;
+    CFD.sim = sb.sim;
+    if (sb.sim.doorWidth !== st.p.door || sb.sim.ventArea !== st.p.vent) sb.sim.setOpenings(st.p.door, st.p.vent);
+    const now = performance.now();
+    if (st.playing) SBX.simAcc += Math.min(0.1, (now - (SBX.lastT || now)) / 1000) * st.speed;
+    SBX.lastT = now;
+    const n0 = sb.scn.t.length, t0 = performance.now();
+    while (SBX.simAcc >= 0.5 && performance.now() - t0 < budget) {
+      sb.step(0.5); SBX.simAcc -= 0.5;
+      if (sb.sim.time % 2 === 0) { const te = sb.sim.tenability(1.8); CFD.hist.push({ t: sb.sim.time, bad: te.fracBad, vis: te.minVis }); }
+    }
+    if (SBX.simAcc > 4) SBX.simAcc = 4;                    // never accumulate an unbounded lag
+    CFD.behind = SBX.simAcc;
+    if (CFD.tenTime !== sb.sim.time) { CFD.ten = sb.sim.tenability(1.8); CFD.tenTime = sb.sim.time; }
+    if (sb.scn.t.length !== n0) { st.i = sb.scn.t.length - 1; $("scrub").max = st.i; $("scrub").value = st.i; render(false); }
+    if (Math.floor(sb.sim.time / 2) !== SBX.lastListT) { SBX.lastListT = Math.floor(sb.sim.time / 2); sbList(); }
+    ghostPump(sb.sim);
+  }
+  function sbList() {
+    const sb = SBX.sb; if (!sb) return;
+    const nodePos = id => { const n = NODE[id]; return { x: n.x, y: n.z, z: n.y }; };
+    $("sb-list").innerHTML = sb.sources.length ? sb.sources.map(r => {
+      let state = "";
+      if (r.pkg) { const p = sb.sim.fuel.find(q => q.id === r.pkg.id); state = !p ? "" : p.burning ? (p.q >= 1 ? (p.q / 1000 >= 1 ? (p.q / 1000).toFixed(1) + " MW" : p.q.toFixed(0) + " kW") : (p.q * 1000).toFixed(0) + " W") : "éteint"; }
+      else if (r.em) state = sb.sim.time < r.em.t0 + (r.em.dur || 1e9) ? "actif" : "terminé";
+      return '<div class="sb-item ' + r.kind + '"><span>' + r.icon + " " + r.label + " ×" + r.scale + "</span><span class=\"st\">" + state + "</span>" +
+        '<button class="x" data-id="' + r.id + '">✕</button><div class="d">capteur ' + r.node + " à " + r.dNode.toFixed(1) + " m · détecteur SSI " + r.det + " à " + r.dDet.toFixed(1) + " m</div></div>";
+    }).join("") : '<div class="sb-empty">Aucune source. Choisissez-en une puis cliquez sur le sol du hall.</div>';
+    document.querySelectorAll("#sb-list .x").forEach(b => { b.onclick = () => { sb.remove(+b.dataset.id); sbList(); }; });
+    twin.setMarkers(sb.sources.map(r => ({ x: r.x, z: r.z, icon: r.icon, label: r.label, kind: r.kind, node: nodePos(r.node), dist: r.dNode })));
+  }
+  function sbBuildTools() {
+    const SRC = AFDT_Sandbox.SOURCES;
+    const btn = (k) => '<button class="sb-tool ' + SRC[k].kind + (k === SBX.tool ? " sel" : "") + '" data-k="' + k + '">' + SRC[k].icon + " " + SRC[k].label + "</button>";
+    const keys = Object.keys(SRC);
+    $("sb-tools").innerHTML = '<div class="sb-cat">FEUX RÉELS</div>' + keys.filter(k => SRC[k].kind === "fire").map(btn).join("") +
+      '<div class="sb-cat">NUISANCES (fausses alarmes)</div>' + keys.filter(k => SRC[k].kind !== "fire").map(btn).join("");
+    document.querySelectorAll(".sb-tool").forEach(b => { b.onclick = () => { SBX.tool = b.dataset.k; sbBuildTools(); }; });
+  }
+  function sbPlace(x, z) {
+    const rec = SBX.sb.place(SBX.tool, x, z, SBX.scale);
+    if (!st.playing) { st.playing = true; $("btn-play").textContent = "❚❚"; }
+    sbList(); return rec;
+  }
+  function renderForecastCFD(i) {
+    const sim = CFD.sim, te = CFD.ten || sim.tenability(1.8), g = CFD.ghost;
+    const burning = sim.fuel.filter(p => p.burning).map(p => p.id);
+    $("fc-status").innerHTML = "Physique CFD 3D · " + sim.N.toLocaleString("fr-FR") + " cellules de 50 cm · t = " + mmss(sim.time) +
+      " · puissance totale " + (sim.totalHRR() / 1000).toFixed(1) + " MW · en feu : " + (burning.join(", ") || "—") +
+      (CFD.behind > 1 ? ' · <span style="color:#ffb000">calcul physique en cours (' + CFD.behind.toFixed(0) + " s)</span>" : "");
+    const pct = x => (x * 100).toFixed(0) + " %", area = x => Math.round(x * HALL.size.width * HALL.size.length) + " m²";
+    if (g) {
+      const next = g.ignite.length ? g.ignite.map(id => id + " (≈ " + Math.round(g.ignT[id]) + " s)").join(", ") : "aucun nouvel objet";
+      const col = g.ten.fracBad > 0.25 ? "#ff2a2a" : g.ten.fracBad > 0.05 ? "#ffb000" : "#22d36b";
+      $("fc-countdown").innerHTML = '<span style="color:' + col + '">DANS 60 s : ' + pct(g.ten.fracBad) + " DU HALL INTENABLE À HAUTEUR DE TÊTE</span>" +
+        '<div style="font-size:14px;color:#33d7ff;margin-top:4px">Propagation prévue : ' + next + " · activez « FANTÔME +60 s » sur la page ZONE pour la voir en 3D</div>";
+    } else $("fc-countdown").innerHTML = '<span style="color:#6b7b86;font-size:16px">Prévision physique +60 s en cours de calcul…</span>';
+    const f3 = (t, k) => !t ? "…" : k === "bad" ? pct(t.fracBad) + " (" + area(t.fracBad) + ")" : k === "vis" ? t.minVis.toFixed(1) + " m" : k === "T" ? "+" + t.maxT.toFixed(0) + " °C" : t.maxCO.toFixed(0) + " ppm";
+    const rows = [["surface intenable à 1,8 m", "bad"], ["visibilité minimale à 1,8 m", "vis"], ["température max à 1,8 m", "T"], ["CO max à 1,8 m", "co"]];
+    let html = "<tr><th>physique CFD</th><th>maintenant</th><th>+30 s</th><th>+60 s</th></tr>" +
+      rows.map(([l, k]) => "<tr><td>" + l + "</td><td>" + f3(te, k) + "</td><td>" + f3(g && g.ten30, k) + "</td><td>" + f3(g && g.ten, k) + "</td></tr>").join("") +
+      "<tr><td>hauteur de nappe (visibilité &lt; 10 m)</td><td>" + sim.layerHeight().toFixed(1) + " m</td><td>" + (g ? g.layer30.toFixed(1) + " m" : "…") + "</td><td>" + (g ? g.layer.toFixed(1) + " m" : "…") + "</td></tr>";
+    const tw = twinState(i);
+    if (tw && tw.active) { const f = forecastAt(tw); html += "<tr><td>nappe — modèle global (zones + IA, 0,1 ms)</td><td>" + tw.z.toFixed(1) + " m</td><td>" + f.z30.toFixed(1) + " m</td><td>" + f.z60.toFixed(1) + " m</td></tr>"; }
+    $("fc-table").innerHTML = html;
+    drawGauge({ z: sim.layerHeight(), z60: g ? g.layer : sim.layerHeight() });
+    const t0 = growthStart() || 0, hs = CFD.hist;
+    const tt = hs.map(h => t0 + h.t), bb = hs.map(h => h.bad * 100);
+    if (!tt.length) { tt.push(t0, t0 + 1); bb.push(0, 0); }
+    const pts = g ? [{ x: t0 + g.time + 30, y: g.ten30.fracBad * 100, color: "#33d7ff", label: "+30" }, { x: t0 + g.time + 60, y: g.ten.fracBad * 100, color: "#33d7ff", label: "+60" }] : [];
+    tt.push(Math.max(tt[tt.length - 1] + 70, t0 + 120)); bb.push(null);
+    CH.line($("fc-chart"), tt, [{ data: bb, color: "#ff6060", width: 2 }], { title: "SURFACE DU HALL INTENABLE À HAUTEUR DE TÊTE (%) — physique CFD + prévision +30 / +60 s", ymin: 0, ymax: 100, points: pts });
+  }
+
   /* ---------- playback loop ---------- */
   let last = performance.now();
   function tick(now) {
     const dt = (now - last) / 1000; last = now;
-    if (st.playing && !st.video) {
+    if (st.playing && !st.video && !isSandbox()) {
       st.acc += dt * st.speed / 10;
       let moved = false;
       while (st.acc >= 1) { st.acc -= 1; if (st.i < scn().t.length - 1) { st.i++; moved = true; } else { st.playing = false; $("btn-play").textContent = "▶"; } }
       if (moved) render(false);
+    }
+    cfdPump(st.video ? 22 : 14);
+    if (CFD.sim && (CFD.sim.time !== CFD.lastSimTime || CFD.ghost !== CFD.lastGhostObj) && now - CFD.lastUi > 250) {
+      CFD.lastSimTime = CFD.sim.time; CFD.lastGhostObj = CFD.ghost; CFD.lastUi = now;
+      renderTwin(st.i); if (st.page === "forecast") renderForecast(st.i);
     }
     requestAnimationFrame(tick);
   }
@@ -514,6 +671,12 @@
       async () => { showPage("ssi", false); caption("L'alarme SSI reste maintenue : lecture seule, aucune voie de retour. L'opérateur décide."); await sleep(4500); return token === videoToken; },
       async () => { showPage("sensors", false); caption("Moteur thermique dans le hall : pas de feu, mais CO élevé → alerte santé."); return playRange(2, 10, 80, 2.5, token); },
       async () => { showPage("zone", false); caption("Un capteur dérive ? Détecté, exclu du vote : mode dégradé signalé."); return playRange(3, 600, 700, 4, token); },
+      async () => {
+        caption("Banc d'essai libre : un feu de bois posé près d'une étagère, un spray dans l'atelier… la physique décide.");
+        if (!SBX.sb) sbNew(); setScenario(SBX.k, false); sbNew(); setScenario(SBX.k, false);
+        st.speed = 30; SBX.tool = "bois_grand"; sbPlace(5.0, 2.2); SBX.tool = "aerosol"; sbPlace(19.5, 6.5);
+        showPage("zone", false); twin.setView(-0.85, 0.45, 24); await sleep(9000); return token === videoToken;
+      },
       async () => { caption("Aero-Fire DT — lecture seule, jamais d'inhibition. Résultats mesurés sur données réelles :"); renderResults(); $("results-modal").classList.remove("hidden"); await sleep(6500); return token === videoToken; },
     ];
     for (const step of steps) { if (!(await step())) break; }
@@ -521,15 +684,34 @@
   }
   function stopVideo() {
     if (!st.video) return;
-    videoToken++; st.video = false; document.body.classList.remove("video"); caption(null);
+    videoToken++; st.video = false; document.body.classList.remove("video"); caption(null); st.speed = +$("speed").value;
     $("btn-video").classList.remove("on"); $("btn-video").textContent = "MODE VIDÉO"; renderStory();
   }
   $("btn-video").onclick = () => { if (st.video) stopVideo(); else runVideo(); };
+
+  /* ---------- free-test bench button + floor clicks ---------- */
+  SBX.k = S.length; S.push(null);
+  (function () {
+    const b = document.createElement("button"); b.textContent = "F · Banc d'essai libre"; b.title = "Placez vous-même des feux et des nuisances"; b.classList.add("sandbox");
+    b.onclick = () => { stopVideo(); if (!SBX.sb) sbNew(); setScenario(SBX.k, true); };
+    $("scn-buttons").appendChild(b);
+    sbBuildTools();
+    $("sb-scale").oninput = e => { SBX.scale = +e.target.value; $("v-sbscale").textContent = "×" + SBX.scale; };
+    $("sb-reset").onclick = () => { sbNew(); render(true); };
+    let down = null;
+    $("three").addEventListener("mousedown", e => { down = [e.clientX, e.clientY]; });
+    $("three").addEventListener("mouseup", e => {
+      if (!down || !isSandbox() || !SBX.sb) return;
+      const moved = Math.hypot(e.clientX - down[0], e.clientY - down[1]); down = null;
+      if (moved > 5) return;
+      const hit = twin.pickFloor(e.clientX, e.clientY); if (hit) sbPlace(hit.x, hit.z);
+    });
+  })();
 
   /* ---------- start ---------- */
   buildLinkSvg();
   setScenario(0, true);
   requestAnimationFrame(tick);
   window.addEventListener("resize", () => render(true));
-  window.AFDT_APP = { st, twin, setScenario, showPage, render, seekT: t => { st.i = Math.max(0, scn().t.findIndex(v => v >= t)); render(false); }, runVideo, stopVideo };
+  window.AFDT_APP = { st, twin, CFD, SBX, sbNew, sbPlace, sandboxIndex: () => SBX.k, cfdBehind: () => (cfdTarget() !== null && cfdTarget() >= 0 ? (CFD.sim ? CFD.behind : 999) : 0), setScenario, showPage, render, seekT: t => { st.i = Math.max(0, scn().t.findIndex(v => v >= t)); render(false); }, runVideo, stopVideo };
 })();

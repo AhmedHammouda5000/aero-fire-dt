@@ -32,10 +32,14 @@ Jeu public *Indoor Fire Dataset with Distributed Multi-Sensor Nodes* — hall in
 | Essais de nuisance rejetés | **11 / 15** | 10 / 15 |
 | Fausses alarmes du détecteur classique reconnues comme nuisance | **3 / 5** | — |
 | Feu confirmé ≤ 60 s après l'alarme SSI | **15 / 17** (avant le SSI : 9 / 17) | — |
-| Fausses alertes sur 56,6 h d'activité normale | 1 | 1 |
+| Fausses alertes sur 49,9 h d'activité normale | **0** | 1 |
 | **Autre site jamais vu (salle EN 54)** : nuisances rejetées · feux confirmés | **7 / 7 · 12 / 13** | 6 / 7 · 13 / 13 |
 
 Prévision (1 000 feux simulés jamais vus) : **± 0,06 m** sur la hauteur de nappe et **± 6,8 °C** à +60 s (sans IA : ± 0,41 m / ± 34 °C), alerte « intenable dans 60 s » correcte à **96 %**, calcul en **0,14 ms**.
+
+Test plus sévère (type de scénario entier jamais vu) : **15 / 17 feux, 10 / 15 nuisances** ; intervalles de confiance et audit des données : [`docs/results/data_audit.md`](docs/results/data_audit.md).
+
+**Physique réelle :** solveur CFD 3D temps réel (14 080 cellules, fumée, CO, chaleur, propagation entre objets) vérifié contre Heskestad et Alpert (`tests/test_cfd.js`) — on voit où va la fumée et la carte de danger à 1,8 m.
 
 **Limites :** soudure et machine à fumée (1-2 essais seulement) trompent encore l'IA ; positions des nœuds et SSI simulés ; les feux d'essai sont naissants, leur croissance est une hypothèse du modèle de zones. Le gain réel sera mesuré pendant un pilote de 90 jours.
 
@@ -46,6 +50,7 @@ python scripts/run_all.py        # télécharge les données, entraîne, évalue
 ```
 Puis ouvrir **`app/index.html`** (double-clic, fonctionne hors ligne dans Chrome / Edge / Firefox).
 - Scénarios : **A** feu réel · **B** aérosol (fausse alarme SSI) · **C** échappement (CO) · **D** capteur en dérive · **E** cas limite soudure.
+- **F · Banc d'essai libre** : choisissez un feu (cigarette, bougies, bois, textile, plastiques) ou une nuisance (aérosol, soudure, échappement, poussière), cliquez sur le sol du hall : la physique transporte fumée et gaz jusqu'aux capteurs et la même IA décide (capteurs synthétiques, test qualitatif).
 - Bouton **MODE VIDÉO** : visite guidée de 55 s avec sous-titres (pour l'enregistrement de la vidéo).
 - Bouton **RÉSULTATS** : tous les chiffres mesurés.
 
@@ -62,9 +67,9 @@ ai/alarm_verifier/  vérification feu/nuisance, vote double boucle, évaluation 
 ai/forecast/        modèle de zones (physique), 5 000 scénarios, IA de substitution
 twin/               jumeau IFC du hall (IfcOpenShell) → JSON
 scenarios/          scénarios du tableau de bord à partir des mesures réelles
-app/                tableau de bord ECAM (HTML/JS, Three.js en local)
+app/                tableau de bord ECAM (HTML/JS, Three.js en local), CFD 3D (js/cfd.js), banc d'essai (js/sandbox.js)
 edge/               SSI simulé + passerelle Modbus lecture seule
-tests/              tests physiques, JS = Python, passerelle lecture seule
+tests/              tests physiques et CFD, JS = Python (prévision + 300 arbres IA), banc d'essai, passerelle lecture seule
 tools/              vérification du tableau de bord dans Chrome sans écran + captures
 docs/               résultats, captures, dossier de sécurité, explications pour l'équipe
 ```
@@ -81,4 +86,4 @@ Documents : [rapport du modèle](docs/AI_Model_Report.md) · [dossier de sécuri
 
 ---
 ### English summary
-Aero-Fire DT is an advisory, read-only layer on top of a factory's certified fire alarm panel. It verifies alarms with multi-sensor fusion and a dual-loop voting rule borrowed from aircraft engine fire detection, forecasts smoke conditions 30-60 s ahead with a physics-trained surrogate, and presents everything on an ECAM-inspired operator display. Evaluated on a public real-fire dataset with leave-one-episode-out validation: 17/17 fires detected, 11/15 nuisance runs rejected (classic optical detector: 10/15), 7/7 nuisances rejected on an unseen second site. Run `python scripts/run_all.py`, then open `app/index.html`.
+Aero-Fire DT is an advisory, read-only layer on top of a factory's certified fire alarm panel. It verifies alarms with multi-sensor fusion and a dual-loop voting rule borrowed from aircraft engine fire detection, forecasts smoke conditions 30-60 s ahead with a physics-trained surrogate and a real-time 3D CFD solver (with a free-test bench where users place fires and nuisance sources), and presents everything on an ECAM-inspired operator display. Evaluated on a public real-fire dataset with leave-one-episode-out validation: 17/17 fires detected, 11/15 nuisance runs rejected (classic optical detector: 10/15), 7/7 nuisances rejected on an unseen second site. Run `python scripts/run_all.py`, then open `app/index.html`.
