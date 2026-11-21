@@ -240,6 +240,7 @@
     let oS, oW;
     if (codes.includes("FIRE_CONFIRMED")) oS = '<span class="st-fire">🔥 FEU CONFIRMÉ</span>';
     else if (codes.includes("AI_PREALARM")) oS = '<span class="st-fire">⚠ PRÉ-ALARME FEU</span>';
+    else if (codes.includes("AI_EARLY")) oS = '<span class="st-unc">⚠ FEU COUVANT POSSIBLE</span>';
     else if (codes.includes("SSI_NUISANCE") || codes.includes("AI_NUISANCE")) oS = '<span class="st-nuis">✋ NUISANCE PROBABLE</span>';
     else if (codes.includes("SSI_UNCERTAIN")) oS = '<span class="st-unc">? EN ANALYSE</span>';
     else if (codes.includes("AI_ACTIVITY")) oS = '<span class="st-act">◔ ACTIVITÉ</span>';
@@ -253,11 +254,13 @@
     let oR = "", oC = "wait";
     const tA = s.key_times.ai_fire;
     if (tr.fire === true) {
-      if (fireSaid) { oR = "✓ feu reconnu"; oC = "good"; if (tA !== null && (tS === null || tA < tS)) oR += " · " + (tS === null ? "le détecteur classique n'a rien vu" : Math.round(tS - tA) + " s AVANT le détecteur classique"); }
+      if (!fireSaid && codes.includes("AI_EARLY")) { oR = "✓ alerte précoce : 1 agent part vérifier" + (tS === null || s.t[i] < tS ? " (le détecteur classique dort encore)" : ""); oC = "good"; }
+      else if (fireSaid) { oR = "✓ feu reconnu"; oC = "good"; if (tA !== null && (tS === null || tA < tS)) oR += " · " + (tS === null ? "le détecteur classique n'a rien vu" : Math.round(tS - tA) + " s AVANT le détecteur classique"); }
       else if (on) oR = "… vérifie encore (l'alarme classique reste prioritaire)";
       else oR = "… rien encore";
     } else if (tr.fire === false) {
       if (fireSaid) { oR = "✗ se trompe : cas limite connu (une personne vérifie)"; oC = "bad"; }
+      else if (codes.includes("AI_EARLY")) { oR = "~ demande une vérification (pas d'évacuation)"; }
       else if (nuisSaid) { oR = "✓ NUISANCE reconnue : on envoie 1 agent vérifier au lieu d'évacuer"; oC = "good"; }
       else if (on) { oR = "… analyse en cours, demande une levée de doute"; }
       else if (codes.includes("CO_HEALTH")) { oR = "✓ pas un feu, mais danger CO signalé"; oC = "good"; }
@@ -292,6 +295,7 @@
     const a = n.chA[i], b = n.chB[i], c = n.chC[i];
     const dual = a && (b || c);
     if (dual && n.p[i] >= T.P_FIRE) return 2;
+    if ((a || b || c) && scn().hall.verdict[i] === "FIRE") return 2;
     if (a || b || c) return 1;
     return 0;
   }
@@ -305,9 +309,9 @@
     if (tw && tw.active) {
       smokeZ = tw.z; smokeHot = tw.T > 200;
       const loc = nearRack(fireLocation()); fire = { x: loc.x, y: loc.y, q: tw.q };
-    } else if (s.kind === "fire" && s.hall.chA[i]) {
-      // incipient real fire: smouldering wisps where the measured particles are highest
-      const loc = nearRack(fireLocation()); smolder = { x: loc.x, y: loc.y, i: Math.max(0, maxOver(i, "dPM", true) - 5) };
+    } else if (s.kind === "fire" && (s.hall.chA[i] || (s.alerts[i] || []).some(a => a.code === "AI_EARLY"))) {
+      // incipient real fire: smouldering wisps where the measured particles are highest (also during the early caution)
+      const loc = nearRack(fireLocation()); smolder = { x: loc.x, y: loc.y, i: Math.max(0.6, maxOver(i, "dPM", true) - 5) };
     }
     const live = cfdActive();
     if (live) smolder = null;

@@ -167,6 +167,7 @@
   "ai_fire_s": null,
   "alert_codes": [
    "AI_ACTIVITY",
+   "AI_EARLY",
    "SSI_UNCERTAIN"
   ]
  },

@@ -1,0 +1,250 @@
+{
+ "rule": {
+  "p_min": 0.7,
+  "bins": 3,
+  "rise_60s": {
+   "pm": 0.5,
+   "co": 0.3,
+   "h2": 1.0
+  }
+ },
+ "fires_warned": "17/17",
+ "fires_warned_before_optical": "10/17",
+ "mean_gain_vs_confirmation_s": 28.8,
+ "max_gain_s": 250.0,
+ "nuisances_warned": "2/15",
+ "nuisances_warned_list": [
+  "Smoke#1",
+  "Smoke#2"
+ ],
+ "nuisances_warned_wilson95": [
+  0.037,
+  0.379
+ ],
+ "episodes": [
+  {
+   "episode": "Smoke#1",
+   "label": "nuisance",
+   "t_early_s": 470.0,
+   "t_ai_fire_s": 470.0,
+   "t_optical_s": null
+  },
+  {
+   "episode": "Lunts#1",
+   "label": "fire",
+   "t_early_s": 120.0,
+   "t_ai_fire_s": 120.0,
+   "t_optical_s": 170.0
+  },
+  {
+   "episode": "Deodorant#1",
+   "label": "nuisance",
+   "t_early_s": null,
+   "t_ai_fire_s": null,
+   "t_optical_s": 140.0
+  },
+  {
+   "episode": "Wood#1",
+   "label": "fire",
+   "t_early_s": 370.0,
+   "t_ai_fire_s": 500.0,
+   "t_optical_s": 450.0
+  },
+  {
+   "episode": "Ethanol#1",
+   "label": "nuisance",
+   "t_early_s": null,
+   "t_ai_fire_s": null,
+   "t_optical_s": null
+  },
+  {
+   "episode": "CO#1",
+   "label": "nuisance",
+   "t_early_s": null,
+   "t_ai_fire_s": null,
+   "t_optical_s": null
+  },
+  {
+   "episode": "Exhaust#1",
+   "label": "nuisance",
+   "t_early_s": null,
+   "t_ai_fire_s": null,
+   "t_optical_s": null
+  },
+  {
+   "episode": "Candles#1",
+   "label": "fire",
+   "t_early_s": 1470.0,
+   "t_ai_fire_s": 1280.0,
+   "t_optical_s": 1730.0
+  },
+  {
+   "episode": "Candles#2",
+   "label": "fire",
+   "t_early_s": 930.0,
+   "t_ai_fire_s": 1070.0,
+   "t_optical_s": 1160.0
+  },
+  {
+   "episode": "Deodorant#2",
+   "label": "nuisance",
+   "t_early_s": null,
+   "t_ai_fire_s": null,
+   "t_optical_s": 80.0
+  },
+  {
+   "episode": "Wood#2",
+   "label": "fire",
+   "t_early_s": 210.0,
+   "t_ai_fire_s": 390.0,
+   "t_optical_s": 610.0
+  },
+  {
+   "episode": "Cable#2",
+   "label": "fire",
+   "t_early_s": 160.0,
+   "t_ai_fire_s": 160.0,
+   "t_optical_s": 90.0
+  },
+  {
+   "episode": "Cable#3",
+   "label": "fire",
+   "t_early_s": 120.0,
+   "t_ai_fire_s": 170.0,
+   "t_optical_s": 120.0
+  },
+  {
+   "episode": "Candles#3",
+   "label": "fire",
+   "t_early_s": 1070.0,
+   "t_ai_fire_s": 1070.0,
+   "t_optical_s": 1060.0
+  },
+  {
+   "episode": "Smoke#2",
+   "label": "nuisance",
+   "t_early_s": 80.0,
+   "t_ai_fire_s": 80.0,
+   "t_optical_s": 70.0
+  },
+  {
+   "episode": "CO#2",
+   "label": "nuisance",
+   "t_early_s": null,
+   "t_ai_fire_s": null,
+   "t_optical_s": null
+  },
+  {
+   "episode": "Lunts#2",
+   "label": "fire",
+   "t_early_s": 40.0,
+   "t_ai_fire_s": 30.0,
+   "t_optical_s": 40.0
+  },
+  {
+   "episode": "Deodorant#3",
+   "label": "nuisance",
+   "t_early_s": null,
+   "t_ai_fire_s": null,
+   "t_optical_s": 20.0
+  },
+  {
+   "episode": "Wood#3",
+   "label": "fire",
+   "t_early_s": 360.0,
+   "t_ai_fire_s": 360.0,
+   "t_optical_s": 470.0
+  },
+  {
+   "episode": "Ethanol#2",
+   "label": "nuisance",
+   "t_early_s": null,
+   "t_ai_fire_s": null,
+   "t_optical_s": null
+  },
+  {
+   "episode": "Green_Waste#1",
+   "label": "nuisance",
+   "t_early_s": null,
+   "t_ai_fire_s": null,
+   "t_optical_s": null
+  },
+  {
+   "episode": "Candles#4",
+   "label": "fire",
+   "t_early_s": 700.0,
+   "t_ai_fire_s": 950.0,
+   "t_optical_s": 1050.0
+  },
+  {
+   "episode": "Wood#4",
+   "label": "fire",
+   "t_early_s": 940.0,
+   "t_ai_fire_s": 940.0,
+   "t_optical_s": 1060.0
+  },
+  {
+   "episode": "Cable#4",
+   "label": "fire",
+   "t_early_s": 250.0,
+   "t_ai_fire_s": 150.0,
+   "t_optical_s": 80.0
+  },
+  {
+   "episode": "Wood#5",
+   "label": "fire",
+   "t_early_s": 450.0,
+   "t_ai_fire_s": 490.0,
+   "t_optical_s": 480.0
+  },
+  {
+   "episode": "Exhaust#2",
+   "label": "nuisance",
+   "t_early_s": null,
+   "t_ai_fire_s": null,
+   "t_optical_s": null
+  },
+  {
+   "episode": "Wood#6",
+   "label": "fire",
+   "t_early_s": 860.0,
+   "t_ai_fire_s": 860.0,
+   "t_optical_s": 1390.0
+  },
+  {
+   "episode": "Exhaust#3",
+   "label": "nuisance",
+   "t_early_s": null,
+   "t_ai_fire_s": null,
+   "t_optical_s": null
+  },
+  {
+   "episode": "Lunts#3",
+   "label": "fire",
+   "t_early_s": 140.0,
+   "t_ai_fire_s": 140.0,
+   "t_optical_s": 120.0
+  },
+  {
+   "episode": "Wood#7",
+   "label": "fire",
+   "t_early_s": 420.0,
+   "t_ai_fire_s": 420.0,
+   "t_optical_s": 410.0
+  },
+  {
+   "episode": "Welding#1",
+   "label": "nuisance",
+   "t_early_s": null,
+   "t_ai_fire_s": 150.0,
+   "t_optical_s": 40.0
+  },
+  {
+   "episode": "Abrasive_Cutting#1",
+   "label": "nuisance",
+   "t_early_s": null,
+   "t_ai_fire_s": 270.0,
+   "t_optical_s": null
+  }
+ ]
+}

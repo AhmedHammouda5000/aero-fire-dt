@@ -49,12 +49,13 @@ Les alarmes incendie des usines sonnent souvent pour rien. Quand un vrai feu dé
 | Autre site jamais vu | **7/7 nuisances, 12/13 feux** | 6/7, 13/13 |
 | Prévision à +60 s | **± 0,06 m, ± 6,8 °C, 0,14 ms** | sans IA : ± 0,41 m, ± 34 °C |
 | Fausses alertes sur 49,9 h d'activité normale | **0** | 1 |
+| Alerte précoce « feu couvant possible » | **17/17 feux, 10/17 avant le détecteur classique**, 2/15 nuisances | — |
 | Type de scénario jamais vu (test sévère) | **15/17 feux, 10/15 nuisances** | — |
 
 **Méthode** (à savoir expliquer) : chaque essai est jugé par un modèle qui **ne l'a jamais vu** (« leave-one-episode-out »). Mélanger les lignes au hasard donnerait 99 % de réussite… mais ce serait de la triche (lignes voisines presque identiques).
 
 ## 4. Les scénarios de la démo
-- **A — Feu réel (bois)** : pré-alarme IA à 6 min 30, puis **FEU CONFIRMÉ ZONE A** à 10 min 10 quand le SSI sonne. Page PRÉVISION : fumée prévue à +60 s.
+- **A — Feu réel (bois)** : alerte précoce **FEU COUVANT POSSIBLE** à 3 min 30 (gaz de combustion en hausse, presque pas de fumée), pré-alarme IA à 6 min 30, puis **FEU CONFIRMÉ ZONE A** à 10 min 10 quand le SSI sonne. Le détecteur classique, lui, ne voit rien avant 10 min 10. Page PRÉVISION : fumée prévue à +60 s.
 - **B — Aérosol** : le SSI sonne à 1 min 20 pour rien, l'IA dit **NUISANCE PROBABLE** (profil aérosol), l'alarme SSI reste maintenue.
 - **C — Échappement** : pas de feu, mais **CO ÉLEVÉ (137 ppm)** → aérer, arrêter le moteur.
 - **D — Capteur en dérive** (défaut simulé) : détecté en ~8 min, exclu du vote.

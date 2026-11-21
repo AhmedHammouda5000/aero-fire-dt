@@ -122,6 +122,12 @@
       });
       const hv = this.voter.step(nodes);
       if (hv.p !== null) this.pMax = Math.max(this.pMax || 0, hv.p);
+      const mxN = k => Math.max(...nodes.map(n => n[k]));
+      (this.mxH = this.mxH || []).push({ pm: mxN("logPM"), co: mxN("dCO"), h2: mxN("dH2") });
+      const h0 = this.mxH[Math.max(0, this.mxH.length - 7)], h1 = this.mxH[this.mxH.length - 1];
+      const rising = h1.pm - h0.pm >= 0.5 || h1.co - h0.co >= 0.3 || h1.h2 - h0.h2 >= 1.0;   // same rule as the real scenarios
+      this.earlyRun = (hv.p !== null && hv.p >= this.S.P_FIRE && (hv.chA || hv.chB) && rising) ? (this.earlyRun || 0) + 1 : 0;
+      this.earlyOn = this.earlyRun >= this.S.CONFIRM_BINS || (this.earlyOn && hv.p !== null && hv.p >= 0.5 && (hv.chA || hv.chB));
       scn.t.push(Math.round(t));
       scn.hall.p.push(hv.p === null ? null : +hv.p.toFixed(3)); scn.hall.verdict.push(hv.verdict);
       scn.hall.chA.push(hv.chA); scn.hall.chB.push(hv.chB); scn.hall.chC.push(hv.chC); scn.hall.active_nodes.push(hv.active);
@@ -159,6 +165,9 @@
         actions: ["LEVÉE DE DOUTE ZONE " + ssiZ[0] + " ........ ENVOYER AGENT", "ALARME SSI ........ MAINTENUE (NON INHIBÉE)"] });
       else if (hv.verdict === "FIRE" && dual) a.push({ level: 2, code: "AI_PREALARM", title: "PRÉ-ALARME IA : FEU PROBABLE " + zn, detail: "score max " + (this.pMax || 0).toFixed(2) + " · 2 canaux concordants · SSI pas encore déclenché",
         actions: ["LEVÉE DE DOUTE " + zn + " ........ ENVOYER AGENT", "CHEF DE SÉCURITÉ ........ PRÉVENIR", "PROTECTION CIVILE ........ PRÉ-AVERTIR"] });
+      else if (this.earlyOn && hv.verdict === "UNCERTAIN") a.push({ level: 2, code: "AI_EARLY", title: "FEU COUVANT POSSIBLE " + zn,
+        detail: "score feu " + p + " · profil : " + prof + " · signal en hausse, 2e canal pas encore présent",
+        actions: ["LEVÉE DE DOUTE " + zn + " ........ ENVOYER AGENT", "CHEF DE SÉCURITÉ ........ PRÉVENIR"] });
       else if (nAct >= 2 && (hv.verdict === "UNCERTAIN" || hv.verdict === "FIRE")) a.push({ level: 1, code: "AI_ACTIVITY", title: "ACTIVITÉ CAPTEURS " + zn, detail: "score feu " + p + " · profil : " + prof, actions: [] });
       else if (nAct >= 2 && hv.verdict === "NUISANCE") a.push({ level: 1, code: "AI_NUISANCE", title: "NUISANCE DÉTECTÉE " + zn, detail: "score feu " + p + " · profil : " + prof, actions: [] });
       const coMax = mx("dCO");

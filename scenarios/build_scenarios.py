@@ -106,14 +106,27 @@ def simulate_ssi(nodes: dict, n: int) -> dict:
     return {"zones": zones, "fire": common, "fault": [0] * n}
 
 
+# early caution "FEU COUVANT POSSIBLE": evaluated on the leave-one-episode-out hall timelines
+# (docs/results/early_warning.json): 17/17 fires, 11/17 before the optical detector, 3/15 nuisances
+EARLY_RISE = {"pm": 0.5, "co": 0.3, "h2": 1.0}
+
+
 def ecam(tl: pd.DataFrame, nodes: dict, ssi: dict, drift: list[str | None], sc: dict) -> list:
     """Active alerts per bin. Levels: 3 = WARNING (red, continuous chime),
     2 = CAUTION (amber, single chime), 1 = ADVISORY (amber, no sound)."""
     alerts = []
     zone_lock, quiet, lock_smoke = None, 0, False
     trip_order: list[str] = []
+    early_run, early_on = 0, False   # consecutive bins with a high fire score but only one physical channel
     for i, r in enumerate(tl.itertuples()):
         a = []
+        j = max(1, i - 6)   # 60 s ago (bin 0 can be partial): the signal must still be RISING (flat leftovers of a previous test do not count)
+        rising = (tl["max_log_dPM"].iat[i] - tl["max_log_dPM"].iat[j] >= EARLY_RISE["pm"] or
+                  tl["max_dCO"].iat[i] - tl["max_dCO"].iat[j] >= EARLY_RISE["co"] or
+                  tl["max_dH2"].iat[i] - tl["max_dH2"].iat[j] >= EARLY_RISE["h2"])
+        early_run = early_run + 1 if (not pd.isna(r.p) and r.p >= V.P_FIRE and (r.chA or r.chB) and rising) else 0
+        # once raised, the caution is held while the AI stays fairly confident (no blinking)
+        early_on = (early_run >= V.CONFIRM_BINS) or (early_on and not pd.isna(r.p) and r.p >= 0.5 and (r.chA or r.chB))
         for z, v in ssi["zones"].items():
             if v[i] and z not in trip_order:
                 trip_order.append(z)
@@ -175,6 +188,14 @@ def ecam(tl: pd.DataFrame, nodes: dict, ssi: dict, drift: list[str | None], sc: 
                       "actions": [f"LEVÉE DE DOUTE {zname} ........ ENVOYER AGENT",
                                   "CHEF DE SÉCURITÉ ........ PRÉVENIR",
                                   "PROTECTION CIVILE ........ PRÉ-AVERTIR"]})
+        elif early_on and r.verdict == "UNCERTAIN":
+            # early caution: the AI is already confident but the 2nd physical channel is not there yet
+            # (typical of a smouldering fire: combustion gas before dense smoke). Not a confirmation.
+            a.append({"level": 2, "code": "AI_EARLY",
+                      "title": f"FEU COUVANT POSSIBLE {zname}",
+                      "detail": f"score feu {p} · profil : {prof} · signal en hausse, 2e canal pas encore présent",
+                      "actions": [f"LEVÉE DE DOUTE {zname} ........ ENVOYER AGENT",
+                                  "CHEF DE SÉCURITÉ ........ PRÉVENIR"]})
         elif n_active >= 2 and r.verdict in ("UNCERTAIN", "FIRE"):
             a.append({"level": 1, "code": "AI_ACTIVITY",
                       "title": f"ACTIVITÉ CAPTEURS {zname}",

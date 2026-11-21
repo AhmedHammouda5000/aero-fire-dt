@@ -37,6 +37,8 @@ Jeu public *Indoor Fire Dataset with Distributed Multi-Sensor Nodes* — hall in
 
 Prévision (1 000 feux simulés jamais vus) : **± 0,06 m** sur la hauteur de nappe et **± 6,8 °C** à +60 s (sans IA : ± 0,41 m / ± 34 °C), alerte « intenable dans 60 s » correcte à **96 %**, calcul en **0,14 ms**.
 
+**Alerte précoce « FEU COUVANT POSSIBLE »** (consultative, jamais une confirmation) : score IA ≥ 0,70 pendant 30 s + un signal (fumée, CO ou H₂) encore en hausse sur 60 s. Évaluée sur les mêmes essais jamais vus : **17 / 17 feux** signalés, **10 / 17 avant le détecteur classique**, en moyenne 29 s (jusqu'à 250 s) avant la confirmation ; déclenchée sur **2 / 15 nuisances** seulement (machine à fumée) → simple levée de doute. Détails : `docs/results/early_warning.json`.
+
 Test plus sévère (type de scénario entier jamais vu) : **15 / 17 feux, 10 / 15 nuisances** ; intervalles de confiance et audit des données : [`docs/results/data_audit.md`](docs/results/data_audit.md).
 
 **Physique réelle :** solveur CFD 3D temps réel (14 080 cellules, fumée, CO, chaleur, propagation entre objets) vérifié contre Heskestad et Alpert (`tests/test_cfd.js`) — on voit où va la fumée et la carte de danger à 1,8 m.

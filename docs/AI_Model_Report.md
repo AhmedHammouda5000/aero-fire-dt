@@ -83,6 +83,8 @@ Variables les plus utiles (importance par permutation) : hausse des COV, ratio C
 
 **Amélioration documentée (v1 → v2) :** la première version (un seul canal suffisait) rejetait 53 % des nuisances et produisait 26 fausses alertes pour 100 h ; l'application de la règle double boucle a porté le rejet à 73 % et les fausses alertes à 1,8 pour 100 h, au prix d'une confirmation plus tardive (médiane 420 s au lieu de 150 s après le début de l'essai). La v1 comptait aussi à tort des verdicts antérieurs au début de l'essai (erreur d'évaluation corrigée).
 
+**Alerte précoce « FEU COUVANT POSSIBLE »** (consultative, jamais une confirmation) : score IA ≥ 0,70 pendant 30 s + un signal (fumée, CO ou H₂) encore en hausse sur 60 s. Évaluée sur les mêmes essais jamais vus : **17 / 17 feux** signalés, **10 / 17 avant le détecteur classique**, en moyenne 29 s (jusqu'à 250 s) avant la confirmation ; déclenchée sur **2 / 15 nuisances** seulement (machine à fumée) → simple levée de doute. Détails : `docs/results/early_warning.json`.
+
 ### 5 bis. Robustesse (audit des données, `docs/results/data_audit.md`)
 
 - **Petits échantillons** : 11 / 15 nuisances rejetées = 73 %, intervalle de confiance à 95 % (Wilson) **≈ 48 – 89 %** ; 17 / 17 feux = intervalle ≈ 82 – 100 %. Les chiffres sont prometteurs, pas définitifs.
