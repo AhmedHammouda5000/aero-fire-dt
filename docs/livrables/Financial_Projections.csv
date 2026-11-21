@@ -28,48 +28,48 @@ Variable per site year,Consumables and sensor maintenance,site-year,1,600,600,Re
 Variable per site year,Support and on-call 7/7 (share),site-year,1,1500,1500,Shared on-call rota
 Variable per site year,Connectivity and edge updates,site-year,1,300,300,
 Variable per site year,TOTAL VARIABLE PER SITE,,,,2400,600 + 1500 + 300
-Setup cost per site,Offer A hardware (gateway + isolation + 6 nodes),site,1,4200,4200,~1000 USD = ~3000 TND before duties x 1.40
+Setup cost per site,Offer A hardware option 1 (6 nodes + Raspberry Pi gateway + isolation module),site,1,3402,3402,(6x280 + 350 + 400) x 1.40
 Setup cost per site,Offer A installer labour (relay tap by approved SSI installer),site,1,1000,1000,PLACEHOLDER estimate - quote locally (unknown)
-Setup cost per site,Offer A TOTAL SETUP COST,site,1,5200,5200,4200 + 1000
-Setup cost per site,Offer B hardware (2 thermal cameras + 15 nodes),site,1,16800,16800,~4000 USD = ~12000 TND before duties x 1.40
+Setup cost per site,Offer A TOTAL SETUP COST,site,1,4402,4402,3402 + 1000
+Setup cost per site,Offer B hardware option 1 (15 nodes + Raspberry Pi gateway + isolation module; no camera),site,1,6930,6930,(15x280 + 350 + 400) x 1.40
 Setup cost per site,Offer B installation and commissioning,site,1,2000,2000,PLACEHOLDER estimate
-Setup cost per site,Offer B TOTAL SETUP COST,site,1,18800,18800,16800 + 2000
-Setup cost per site,Offer C hardware (full site),site,1,25200,25200,~6000 USD = ~18000 TND before duties x 1.40
+Setup cost per site,Offer B TOTAL SETUP COST,site,1,8930,8930,6930 + 2000
+Setup cost per site,Offer C hardware option 1 (30 nodes + 2 gateways + 2 isolation modules; no camera),site,1,13860,13860,(30x280 + 2x350 + 2x400) x 1.40
 Setup cost per site,Offer C integration (IFC twin + commissioning),site,1,4000,4000,PLACEHOLDER estimate
-Setup cost per site,Offer C TOTAL SETUP COST,site,1,29200,29200,25200 + 4000
-Pricing,Offer A Fire Monitoring setup,site,1,7000,7000,Raised from 4500 to cover landed hardware + installation
+Setup cost per site,Offer C TOTAL SETUP COST,site,1,17860,17860,13860 + 4000
+Pricing,Offer A Fire Monitoring setup,site,1,7000,7000,Covers option-1 hardware + installation (4402) + margin
 Pricing,Offer A Fire Monitoring SaaS,site-month,1,450,5400,5400 TND per year
-Pricing,Offer B Fire Intelligence setup,site,1,22000,22000,Raised from 12000 (hardware ~16800 landed)
+Pricing,Offer B Fire Intelligence setup,site,1,22000,22000,Includes on-site twin + forecast set-up (hardware 6930 landed)
 Pricing,Offer B Fire Intelligence SaaS,site-month,1,1200,14400,14400 TND per year
 Pricing,Offer C Aero-Fire DT setup,site,1,45000,45000,Raised from 35000
 Pricing,Offer C Aero-Fire DT SaaS,site-month,1,3000,36000,36000 TND per year
 Pricing,Operator training session,session,1,2500,2500,Optional - excluded from projection
 Pricing,Insurer scenario licence,contract,0,0,0,To negotiate - excluded from base case
 Unit economics,Weighted setup price per site,site,1,15300,15300,0.6x7000 + 0.3x22000 + 0.1x45000
-Unit economics,Weighted setup cost per site,site,1,11680,11680,0.6x5200 + 0.3x18800 + 0.1x29200
-Unit economics,Weighted setup margin per site,site,1,3620,3620,15300 - 11680
+Unit economics,Weighted setup cost per site,site,1,7106,7106,0.6x4402 + 0.3x8930 + 0.1x17860
+Unit economics,Weighted setup margin per site,site,1,8194,8194,15300 - 7106
 Unit economics,Weighted annual recurring revenue per site,site-year,1,11160,11160,0.6x5400 + 0.3x14400 + 0.1x36000
 Unit economics,Annual recurring contribution per site,site-year,1,8760,8760,11160 - 2400
 Break-even,Recurring break-even on Y1 opex,sites,16,,,135600 / 8760 = 15.5 rounded up
 Break-even,Recurring break-even on Y2 opex,sites,23,,,198000 / 8760 = 22.6 rounded up
 Break-even,Recurring break-even on Y3 opex,sites,31,,,268400 / 8760 = 30.6 rounded up
-Break-even,First profitable year,year,3,,,Operating result turns positive in Y3 (see projection)
+Break-even,First profitable year,year,2,,,Operating result turns positive in Y2 (see projection)
 Projection 3 years,Year 1 new sites / active sites / billed site-years,sites,10,,,10 new; 10 active; 10 x 0.5 = 5 billed site-years
 Projection 3 years,Year 1 revenue,TND,1,208800,208800,10 x 15300 + 5 x 11160
-Projection 3 years,Year 1 setup costs,TND,1,-116800,-116800,10 x 11680
+Projection 3 years,Year 1 setup costs,TND,1,-71060,-71060,10 x 7106
 Projection 3 years,Year 1 variable costs,TND,1,-12000,-12000,5 x 2400
-Projection 3 years,Year 1 operating result before tax,TND,1,-55600,-55600,208800 - 116800 - 12000 - 135600
+Projection 3 years,Year 1 operating result before tax,TND,1,-9860,-9860,208800 - 71060 - 12000 - 135600
 Projection 3 years,Year 1 capex,TND,1,-9700,-9700,TOTAL CAPEX
 Projection 3 years,Year 1 Startup Act founder grant (inflow),TND,1,36000,36000,"Hypothesis: 2 founders x 1500 DT x 12 (range 1000-5000 DT/month, startup.gov.tn)"
-Projection 3 years,Year 1 net cash flow,TND,1,-29300,-29300,-55600 - 9700 + 36000
+Projection 3 years,Year 1 net cash flow,TND,1,16440,16440,-9860 - 9700 + 36000
 Projection 3 years,Year 2 new sites / active sites / billed site-years,sites,20,,,10 new; 20 active; 10 + 10 x 0.5 = 15 billed site-years
 Projection 3 years,Year 2 revenue,TND,1,320400,320400,10 x 15300 + 15 x 11160
-Projection 3 years,Year 2 operating result before tax,TND,1,-30400,-30400,320400 - 10x11680 - 15x2400 - 198000
-Projection 3 years,Cumulative cash end of Year 2 (peak need),TND,1,-59700,-59700,-29300 - 30400 -> to cover by pre-seed / incubator funding
+Projection 3 years,Year 2 operating result before tax,TND,1,15340,15340,320400 - 10x7106 - 15x2400 - 198000
+Projection 3 years,Cumulative cash end of Year 2,TND,1,31780,31780,16440 + 15340
 Projection 3 years,Year 3 new sites / active sites / billed site-years,sites,40,,,20 new; 40 active; 20 + 20 x 0.5 = 30 billed site-years
 Projection 3 years,Year 3 revenue,TND,1,640800,640800,20 x 15300 + 30 x 11160
-Projection 3 years,Year 3 operating result before tax,TND,1,66800,66800,640800 - 20x11680 - 30x2400 - 268400 (margin ~10%)
-Projection 3 years,Cumulative cash end of Year 3,TND,1,7100,7100,-59700 + 66800; cash positive in Year 3
+Projection 3 years,Year 3 operating result before tax,TND,1,158280,158280,640800 - 20x7106 - 30x2400 - 268400
+Projection 3 years,Cumulative cash end of Year 3,TND,1,190060,190060,31780 + 158280
 Context,Industrial firms with 10+ employees in Tunisia,firms,4519,,,APII via Business News (Sept 2026)
 Context,Fire insurance indemnities Tunisia H1 2026,MDT,47.9,,,+32.6% (Tunisie Numerique); 92 MDT in 2025 (allAfrica)
 Context,UK fire false alarms share of FRS incidents,percent,39,,,"GOV.UK year ending Sept 2025; 169717 due to apparatus; no Tunisian statistic published"
