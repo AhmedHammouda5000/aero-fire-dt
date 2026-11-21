@@ -228,7 +228,7 @@ def parse_test(n: int) -> dict:
 
 def _baseline(s: pd.Series) -> float:
     pre = s[s.index < 0].dropna()
-    return float(pre.median()) if len(pre) >= 3 else np.nan   # >= 30 s of pre-test data
+    return float(pre.median()) if len(pre) >= 2 else np.nan   # >= 2 pre-test bins (MHN47 has only ~20 s)
 
 
 def nist_frame(n: int, parsed: dict, particles: str = "NUM") -> tuple[pd.DataFrame | None, str]:
@@ -269,6 +269,8 @@ def nist_frame(n: int, parsed: dict, particles: str = "NUM") -> tuple[pd.DataFra
     f["d_VOC"] = 0.0    # of the shared V.hall_timeline (channel B = CO only on NIST and hall)
     f["Date"] = pd.Timestamp("2003-01-01") + pd.to_timedelta(f["t"], unit="s")
     f = f.dropna(subset=RED_FEATURES)
+    if f.empty:
+        return None, "no complete feature rows"
     return f, "ok"
 
 
@@ -347,7 +349,8 @@ def first_t(tl, mask):
     return float(tl.loc[mask, "t_rel"].iloc[0]) if mask.any() else None
 
 
-def eval_test(n: int, parsed: dict, model, particles: str, full_file: bool = False) -> dict:
+def eval_test(n: int, parsed: dict, model, particles: str, full_file: bool = False,
+              hall_max_log_dpm: float = np.inf) -> dict:
     meta = META[n]
     out = {"test": f"MHN{n:02d}", **meta}
     f, status = nist_frame(n, parsed, particles)
@@ -378,7 +381,8 @@ def eval_test(n: int, parsed: dict, model, particles: str, full_file: bool = Fal
         max_p_raw=float(np.nanmax(tl["p_raw"])) if tl["p_raw"].notna().any() else None,
         t_first_activity_s=first_t(tl, tl["active_nodes"] > 0),
         dual_channel_bins=int(dual.sum()),
-        max_log_dPM=float(tl["max_log_dPM"].max()), max_dCO=float(tl["max_dCO"].max()),
+        max_log_dPM=float(tl["max_log_dPM"].max()),
+        frac_bins_log_dPM_above_hall_max=round(float((tl["max_log_dPM"] > hall_max_log_dpm).mean()), 3), max_dCO=float(tl["max_dCO"].max()),
         max_dTEMP=float(tl["max_dTEMP"].max()),
         particle_trip=bool(tl["optical"].any()), t_particle_trip_s=first_t(tl, tl["optical"]),
         nist_photo_alarm=bool(pe_t), t_nist_photo_s=min(pe_t) if pe_t else None,
@@ -451,11 +455,12 @@ def run() -> dict:
 
     # 2) frozen application to NIST
     parsed = {n: parse_test(n) for n in tests}
+    hall_max = float(hf.loc[(hf["episode"] != "") & hf["active"], "log_dPM"].max())
     variants = {}
     for name, particles, full in (("primary_CPC_number", "NUM", False),
                                   ("sensitivity_Dustrak_mass", "MASS", False),
                                   ("sensitivity_CPC_full_file", "NUM", True)):
-        rows = [eval_test(n, parsed[n], final, particles, full) for n in tests]
+        rows = [eval_test(n, parsed[n], final, particles, full, hall_max) for n in tests]
         variants[name] = {"summary": summarize(rows), "tests": rows}
         s = variants[name]["summary"]
         print(name, "fires", s["ai_fires_confirmed"], "nuis rejected", s["ai_nuisances_rejected"])
@@ -483,7 +488,7 @@ def run() -> dict:
                                      "only the log-rise log1p(rise) is used, no rescaling",
                 "particles_sensitivity": "Dustrak mass (ug/m3), log-rise",
                 "baseline": "median of all pre-test data (t<0, 1-4 min) instead of 30-min q10",
-                "despike": "implausible values -> NaN, trailing 5-sample rolling median, then 10 s bin mean; baseline needs >= 3 pre-test bins",
+                "despike": "implausible values -> NaN, trailing 5-sample rolling median, then 10 s bin mean; baseline needs >= 2 pre-test bins",
                 "window": "t = 0 (source start) to nominal end of source activity from TN 1455 text",
                 "baseline_detectors": f"particle threshold log_dPM > {V.OPTICAL_TRIP} (hall optical rule); "
                                       f"NIST photo sensors >= {OPTICAL_PE_MED} 1/m and ion >= {ION_MED} 1/m at "
@@ -491,6 +496,7 @@ def run() -> dict:
             },
         },
         "hall_loeo_reduced": loeo,
+        "hall_training_max_log_dPM": hall_max,
         "hall_loeo_full_reference": {k: ref.get(k) for k in [
             "fire_runs", "fire_runs_detected_ai", "nuisance_runs", "nuisance_runs_false_alarm_ai",
             "t_ai_fire_median_s", "row_level_balanced_accuracy_loeo"]},

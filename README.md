@@ -43,6 +43,8 @@ Test plus sévère (type de scénario entier jamais vu) : **15 / 17 feux, 10 / 1
 
 **Physique réelle :** solveur CFD 3D temps réel (14 080 cellules, fumée, CO, chaleur, propagation entre objets) vérifié contre Heskestad et Alpert (`tests/test_cfd.js`) — on voit où va la fumée et la carte de danger à 1,8 m.
 
+**Test indépendant NIST (USA, données jamais vues, aucun réglage)** : avec seulement 7 des 19 entrées disponibles (pas de capteur COV ni H₂, compteur de particules différent), l'IA confirme **7 / 8 feux** mais ne rejette que **6 / 33 nuisances de cuisine** (cigarettes : 2 / 2 rejetées ; bacon, hamburgers, pizza : non). Conclusion : les capteurs **COV et H₂ sont indispensables** (ce sont les entrées les plus utiles du modèle) et une cuisine ou cantine demande un apprentissage sur site pendant le pilote. Détails : `docs/results/nist_fr4019.md`.
+
 **Limites :** soudure et machine à fumée (1-2 essais seulement) trompent encore l'IA ; positions des nœuds et SSI simulés ; les feux d'essai sont naissants, leur croissance est une hypothèse du modèle de zones. Le gain réel sera mesuré pendant un pilote de 90 jours.
 
 ## Démarrer

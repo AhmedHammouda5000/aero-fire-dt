@@ -64,6 +64,8 @@ Les alarmes incendie des usines sonnent souvent pour rien. Quand un vrai feu dé
 
 **Si le jury demande « c'est de la vraie physique ? »** : oui, un solveur de mécanique des fluides 3D (14 080 cellules de 50 cm) qui tourne dans le navigateur, vérifié contre deux formules d'ingénierie incendie reconnues (Heskestad pour le panache, Alpert pour le jet sous plafond). Ce n'est pas FDS (trop lent pour le temps réel), c'est sa version simplifiée temps réel.
 
+**Test NIST (données américaines jamais vues)** : 7/8 feux, mais seulement 6/33 nuisances de cuisine rejetées, car NIST n'a pas nos capteurs COV/H₂. Si le jury demande : « on l'a testé honnêtement, ça nous a appris que les capteurs COV et H₂ sont obligatoires et qu'une cuisine demande un apprentissage sur site ».
+
 ## 5. Questions probables du jury et réponses
 | Question | Réponse |
 |---|---|

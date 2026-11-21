@@ -300,9 +300,9 @@
       "particles_primary": "TSI 3007 CPC number conc. (p/cm3, >10 nm) - hall counter is optical (>0.3 um); only the log-rise log1p(rise) is used, no rescaling",
       "particles_sensitivity": "Dustrak mass (ug/m3), log-rise",
       "baseline": "median of all pre-test data (t<0, 1-4 min) instead of 30-min q10",
-      "despike": "trailing 5-sample rolling median, then 10 s bin mean",
+      "despike": "implausible values -> NaN, trailing 5-sample rolling median, then 10 s bin mean; baseline needs >= 2 pre-test bins",
       "window": "t = 0 (source start) to nominal end of source activity from TN 1455 text",
-      "baseline_detectors": "particle threshold log_dPM > 6.9 (hall optical rule); NIST photo sensors >= 0.083 1/m and ion >= 0.033 1/m at any position (TN 1455 table 22, medium sensitivity)"
+      "baseline_detectors": "particle threshold log_dPM > 6.9 (hall optical rule); NIST photo sensors >= 0.083 1/m and ion >= 0.033 1/m at any position (TN 1455 table 22, medium sensitivity), sustained 2 consecutive 10 s bins"
     }
   },
   "hall_loeo_reduced": {
@@ -581,6 +581,7 @@
       }
     ]
   },
+  "hall_training_max_log_dPM": 10.430343993374647,
   "hall_loeo_full_reference": {
     "fire_runs": 17,
     "fire_runs_detected_ai": 17,
@@ -636,21 +637,21 @@
           ]
         },
         "nist_photo_fires_detected": {
-          "k": 5,
+          "k": 3,
           "n": 8,
-          "rate": 0.625,
+          "rate": 0.375,
           "wilson95": [
-            0.306,
-            0.863
+            0.137,
+            0.694
           ]
         },
         "nist_photo_nuisances_rejected": {
-          "k": 8,
+          "k": 15,
           "n": 33,
-          "rate": 0.242,
+          "rate": 0.455,
           "wilson95": [
-            0.128,
-            0.41
+            0.298,
+            0.62
           ]
         },
         "nist_ion_fires_detected": {
@@ -663,12 +664,12 @@
           ]
         },
         "nist_ion_nuisances_rejected": {
-          "k": 12,
+          "k": 15,
           "n": 33,
-          "rate": 0.364,
+          "rate": 0.455,
           "wilson95": [
-            0.222,
-            0.534
+            0.298,
+            0.62
           ]
         },
         "ai_t_fire_median_s": 390.0,
@@ -705,7 +706,7 @@
             "ai_uncertain": 0,
             "ai_no_activity": 0,
             "particle_trip": 4,
-            "nist_photo": 4,
+            "nist_photo": 3,
             "nist_ion": 3
           },
           {
@@ -717,7 +718,7 @@
             "ai_uncertain": 0,
             "ai_no_activity": 0,
             "particle_trip": 3,
-            "nist_photo": 3,
+            "nist_photo": 1,
             "nist_ion": 2
           },
           {
@@ -729,8 +730,8 @@
             "ai_uncertain": 0,
             "ai_no_activity": 0,
             "particle_trip": 4,
-            "nist_photo": 2,
-            "nist_ion": 1
+            "nist_photo": 1,
+            "nist_ion": 0
           },
           {
             "source": "butter/margarine",
@@ -742,7 +743,7 @@
             "ai_no_activity": 0,
             "particle_trip": 5,
             "nist_photo": 5,
-            "nist_ion": 4
+            "nist_ion": 3
           },
           {
             "source": "cigarettes",
@@ -765,7 +766,7 @@
             "ai_uncertain": 0,
             "ai_no_activity": 0,
             "particle_trip": 6,
-            "nist_photo": 5,
+            "nist_photo": 4,
             "nist_ion": 3
           },
           {
@@ -778,7 +779,7 @@
             "ai_no_activity": 0,
             "particle_trip": 1,
             "nist_photo": 0,
-            "nist_ion": 1
+            "nist_ion": 0
           },
           {
             "source": "bagels",
@@ -789,7 +790,7 @@
             "ai_uncertain": 0,
             "ai_no_activity": 0,
             "particle_trip": 2,
-            "nist_photo": 1,
+            "nist_photo": 0,
             "nist_ion": 2
           },
           {
@@ -813,7 +814,7 @@
             "ai_uncertain": 0,
             "ai_no_activity": 0,
             "particle_trip": 1,
-            "nist_photo": 1,
+            "nist_photo": 0,
             "nist_ion": 0
           },
           {
@@ -837,7 +838,7 @@
             "ai_uncertain": 0,
             "ai_no_activity": 0,
             "particle_trip": 2,
-            "nist_photo": 2,
+            "nist_photo": 1,
             "nist_ion": 2
           },
           {
@@ -849,7 +850,7 @@
             "ai_uncertain": 0,
             "ai_no_activity": 0,
             "particle_trip": 2,
-            "nist_photo": 1,
+            "nist_photo": 0,
             "nist_ion": 2
           }
         ]
@@ -880,6 +881,7 @@
           "t_first_activity_s": 30.0,
           "dual_channel_bins": 54,
           "max_log_dPM": 15.56809260410202,
+          "frac_bins_log_dPM_above_hall_max": 0.918,
           "max_dCO": 52.0,
           "max_dTEMP": 3.9159000000000006,
           "particle_trip": true,
@@ -912,6 +914,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 39,
           "max_log_dPM": 15.216447442187105,
+          "frac_bins_log_dPM_above_hall_max": 0.77,
           "max_dCO": 7.0,
           "max_dTEMP": 2.6099999999999994,
           "particle_trip": true,
@@ -946,6 +949,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 72,
           "max_log_dPM": 15.692901741078805,
+          "frac_bins_log_dPM_above_hall_max": 0.89,
           "max_dCO": 12.0,
           "max_dTEMP": 8.05,
           "particle_trip": true,
@@ -979,12 +983,13 @@
           "t_first_activity_s": 20.0,
           "dual_channel_bins": 71,
           "max_log_dPM": 15.663581202597504,
+          "frac_bins_log_dPM_above_hall_max": 0.845,
           "max_dCO": 14.7,
           "max_dTEMP": 7.699999999999999,
           "particle_trip": true,
           "t_particle_trip_s": 20.0,
           "nist_photo_alarm": true,
-          "t_nist_photo_s": 0.0,
+          "t_nist_photo_s": 40.0,
           "nist_ion_alarm": true,
           "t_nist_ion_s": 380.0
         },
@@ -1008,6 +1013,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 58,
           "max_log_dPM": 14.982200721860126,
+          "frac_bins_log_dPM_above_hall_max": 0.864,
           "max_dCO": 0.0,
           "max_dTEMP": 5.469999999999995,
           "particle_trip": true,
@@ -1038,6 +1044,7 @@
           "t_first_activity_s": 180.0,
           "dual_channel_bins": 79,
           "max_log_dPM": 15.14763934575526,
+          "frac_bins_log_dPM_above_hall_max": 0.814,
           "max_dCO": 0.0,
           "max_dTEMP": 5.559999999999999,
           "particle_trip": true,
@@ -1069,6 +1076,7 @@
           "t_first_activity_s": 50.0,
           "dual_channel_bins": 87,
           "max_log_dPM": 14.862761479752516,
+          "frac_bins_log_dPM_above_hall_max": 0.861,
           "max_dCO": 0.0,
           "max_dTEMP": 5.479999999999997,
           "particle_trip": true,
@@ -1100,6 +1108,7 @@
           "t_first_activity_s": 20.0,
           "dual_channel_bins": 31,
           "max_log_dPM": 15.525237326907373,
+          "frac_bins_log_dPM_above_hall_max": 0.698,
           "max_dCO": 3.5999999999999996,
           "max_dTEMP": 3.6199999999999974,
           "particle_trip": true,
@@ -1132,12 +1141,13 @@
           "t_first_activity_s": 20.0,
           "dual_channel_bins": 36,
           "max_log_dPM": 15.383471261271902,
+          "frac_bins_log_dPM_above_hall_max": 0.767,
           "max_dCO": 11.0,
           "max_dTEMP": 3.7650000000000006,
           "particle_trip": true,
           "t_particle_trip_s": 30.0,
           "nist_photo_alarm": true,
-          "t_nist_photo_s": 0.0,
+          "t_nist_photo_s": 180.0,
           "nist_ion_alarm": true,
           "t_nist_ion_s": 200.0
         },
@@ -1164,6 +1174,7 @@
           "t_first_activity_s": 90.0,
           "dual_channel_bins": 3,
           "max_log_dPM": 11.314181800479554,
+          "frac_bins_log_dPM_above_hall_max": 0.387,
           "max_dCO": 3.5999999999999996,
           "max_dTEMP": 0.05999999999999872,
           "particle_trip": true,
@@ -1197,12 +1208,13 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 76,
           "max_log_dPM": 15.207096145821462,
+          "frac_bins_log_dPM_above_hall_max": 0.871,
           "max_dCO": 5.0,
           "max_dTEMP": 6.969999999999999,
           "particle_trip": true,
           "t_particle_trip_s": 130.0,
-          "nist_photo_alarm": true,
-          "t_nist_photo_s": 370.0,
+          "nist_photo_alarm": false,
+          "t_nist_photo_s": null,
           "nist_ion_alarm": true,
           "t_nist_ion_s": 710.0
         },
@@ -1230,6 +1242,7 @@
           "t_first_activity_s": 20.0,
           "dual_channel_bins": 84,
           "max_log_dPM": 15.201063644407967,
+          "frac_bins_log_dPM_above_hall_max": 0.832,
           "max_dCO": 5.0,
           "max_dTEMP": 4.169999999999995,
           "particle_trip": true,
@@ -1237,7 +1250,7 @@
           "nist_photo_alarm": false,
           "t_nist_photo_s": null,
           "nist_ion_alarm": true,
-          "t_nist_ion_s": 590.0
+          "t_nist_ion_s": 740.0
         },
         {
           "test": "MHN18",
@@ -1250,7 +1263,6 @@
           "nodes": [
             "B",
             "C",
-            "D",
             "E",
             "F",
             "G"
@@ -1258,19 +1270,20 @@
           "window_end_s": 960.0,
           "verdict": "FIRE",
           "t_fire_s": 350.0,
-          "max_p_smoothed": 0.8647588689101052,
+          "max_p_smoothed": 0.8647676148084087,
           "max_p_raw": 0.9280484647654436,
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 96,
           "max_log_dPM": 15.601423972264085,
+          "frac_bins_log_dPM_above_hall_max": 0.773,
           "max_dCO": 12.0,
           "max_dTEMP": 8.329999999999998,
           "particle_trip": true,
           "t_particle_trip_s": 10.0,
           "nist_photo_alarm": false,
           "t_nist_photo_s": null,
-          "nist_ion_alarm": true,
-          "t_nist_ion_s": 720.0
+          "nist_ion_alarm": false,
+          "t_nist_ion_s": null
         },
         {
           "test": "MHN19",
@@ -1296,6 +1309,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 29,
           "max_log_dPM": 15.212880482961769,
+          "frac_bins_log_dPM_above_hall_max": 0.877,
           "max_dCO": 2.4,
           "max_dTEMP": 2.469999999999999,
           "particle_trip": true,
@@ -1329,6 +1343,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 47,
           "max_log_dPM": 15.834316087137802,
+          "frac_bins_log_dPM_above_hall_max": 0.95,
           "max_dCO": 6.0,
           "max_dTEMP": 4.234999999999999,
           "particle_trip": true,
@@ -1362,12 +1377,13 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 4,
           "max_log_dPM": 14.822075537870017,
+          "frac_bins_log_dPM_above_hall_max": 0.934,
           "max_dCO": 3.6,
           "max_dTEMP": 1.0650000000000013,
           "particle_trip": true,
           "t_particle_trip_s": 10.0,
-          "nist_photo_alarm": true,
-          "t_nist_photo_s": 410.0,
+          "nist_photo_alarm": false,
+          "t_nist_photo_s": null,
           "nist_ion_alarm": true,
           "t_nist_ion_s": 310.0
         },
@@ -1395,6 +1411,7 @@
           "t_first_activity_s": 30.0,
           "dual_channel_bins": 34,
           "max_log_dPM": 14.50247415954544,
+          "frac_bins_log_dPM_above_hall_max": 0.869,
           "max_dCO": 6.0,
           "max_dTEMP": 1.1599999999999966,
           "particle_trip": true,
@@ -1428,14 +1445,15 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 6,
           "max_log_dPM": 14.276054585929387,
+          "frac_bins_log_dPM_above_hall_max": 0.852,
           "max_dCO": 6.0,
           "max_dTEMP": 1.3400000000000034,
           "particle_trip": true,
           "t_particle_trip_s": 20.0,
           "nist_photo_alarm": true,
-          "t_nist_photo_s": 230.0,
+          "t_nist_photo_s": 250.0,
           "nist_ion_alarm": true,
-          "t_nist_ion_s": 250.0
+          "t_nist_ion_s": 280.0
         },
         {
           "test": "MHN24",
@@ -1461,6 +1479,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 86,
           "max_log_dPM": 15.310173443643665,
+          "frac_bins_log_dPM_above_hall_max": 0.901,
           "max_dCO": 3.6,
           "max_dTEMP": 4.735000000000003,
           "particle_trip": true,
@@ -1494,6 +1513,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 52,
           "max_log_dPM": 14.324870708448648,
+          "frac_bins_log_dPM_above_hall_max": 0.808,
           "max_dCO": 2.4,
           "max_dTEMP": 2.150000000000002,
           "particle_trip": true,
@@ -1527,12 +1547,13 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 39,
           "max_log_dPM": 14.153132847306983,
+          "frac_bins_log_dPM_above_hall_max": 0.795,
           "max_dCO": 2.0,
           "max_dTEMP": 2.3200000000000003,
           "particle_trip": true,
           "t_particle_trip_s": 40.0,
           "nist_photo_alarm": true,
-          "t_nist_photo_s": 230.0,
+          "t_nist_photo_s": 620.0,
           "nist_ion_alarm": false,
           "t_nist_ion_s": null
         },
@@ -1561,14 +1582,15 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 67,
           "max_log_dPM": 15.419923064170476,
+          "frac_bins_log_dPM_above_hall_max": 0.911,
           "max_dCO": 4.0,
           "max_dTEMP": 2.8750000000000036,
           "particle_trip": true,
           "t_particle_trip_s": 80.0,
-          "nist_photo_alarm": true,
-          "t_nist_photo_s": 610.0,
-          "nist_ion_alarm": true,
-          "t_nist_ion_s": 540.0
+          "nist_photo_alarm": false,
+          "t_nist_photo_s": null,
+          "nist_ion_alarm": false,
+          "t_nist_ion_s": null
         },
         {
           "test": "MHN28",
@@ -1595,14 +1617,15 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 24,
           "max_log_dPM": 15.083405881237384,
+          "frac_bins_log_dPM_above_hall_max": 0.791,
           "max_dCO": 7.0,
           "max_dTEMP": 4.579999999999998,
           "particle_trip": true,
           "t_particle_trip_s": 0.0,
           "nist_photo_alarm": true,
-          "t_nist_photo_s": 120.0,
-          "nist_ion_alarm": true,
-          "t_nist_ion_s": 320.0
+          "t_nist_photo_s": 170.0,
+          "nist_ion_alarm": false,
+          "t_nist_ion_s": null
         },
         {
           "test": "MHN29",
@@ -1629,12 +1652,13 @@
           "t_first_activity_s": 50.0,
           "dual_channel_bins": 8,
           "max_log_dPM": 14.71496678131643,
+          "frac_bins_log_dPM_above_hall_max": 0.651,
           "max_dCO": 5.0,
           "max_dTEMP": 0.379999999999999,
           "particle_trip": true,
           "t_particle_trip_s": 60.0,
           "nist_photo_alarm": true,
-          "t_nist_photo_s": 210.0,
+          "t_nist_photo_s": 320.0,
           "nist_ion_alarm": false,
           "t_nist_ion_s": null
         },
@@ -1673,12 +1697,13 @@
           "t_first_activity_s": 30.0,
           "dual_channel_bins": 31,
           "max_log_dPM": 15.154866863701878,
+          "frac_bins_log_dPM_above_hall_max": 0.85,
           "max_dCO": 27.0,
           "max_dTEMP": 5.880000000000003,
           "particle_trip": true,
           "t_particle_trip_s": 90.0,
           "nist_photo_alarm": true,
-          "t_nist_photo_s": 220.0,
+          "t_nist_photo_s": 240.0,
           "nist_ion_alarm": true,
           "t_nist_ion_s": 230.0
         },
@@ -1707,14 +1732,15 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 71,
           "max_log_dPM": 15.24276474410536,
+          "frac_bins_log_dPM_above_hall_max": 1.0,
           "max_dCO": 0.6,
           "max_dTEMP": 8.695000000000004,
           "particle_trip": true,
           "t_particle_trip_s": 0.0,
-          "nist_photo_alarm": true,
-          "t_nist_photo_s": 500.0,
+          "nist_photo_alarm": false,
+          "t_nist_photo_s": null,
           "nist_ion_alarm": true,
-          "t_nist_ion_s": 1150.0
+          "t_nist_ion_s": 1170.0
         },
         {
           "test": "MHN33",
@@ -1741,12 +1767,13 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 105,
           "max_log_dPM": 14.9442465378378,
+          "frac_bins_log_dPM_above_hall_max": 0.984,
           "max_dCO": 6.0,
           "max_dTEMP": 6.48,
           "particle_trip": true,
           "t_particle_trip_s": 0.0,
-          "nist_photo_alarm": true,
-          "t_nist_photo_s": 1250.0,
+          "nist_photo_alarm": false,
+          "t_nist_photo_s": null,
           "nist_ion_alarm": false,
           "t_nist_ion_s": null
         },
@@ -1775,6 +1802,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 97,
           "max_log_dPM": 14.995285234921868,
+          "frac_bins_log_dPM_above_hall_max": 0.917,
           "max_dCO": 2.4,
           "max_dTEMP": 4.860000000000003,
           "particle_trip": true,
@@ -1806,12 +1834,13 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 12,
           "max_log_dPM": 13.49733628779289,
+          "frac_bins_log_dPM_above_hall_max": 0.945,
           "max_dCO": 0.0,
           "max_dTEMP": 2.0950000000000024,
           "particle_trip": true,
           "t_particle_trip_s": 30.0,
-          "nist_photo_alarm": true,
-          "t_nist_photo_s": 0.0,
+          "nist_photo_alarm": false,
+          "t_nist_photo_s": null,
           "nist_ion_alarm": false,
           "t_nist_ion_s": null
         },
@@ -1839,6 +1868,7 @@
           "t_first_activity_s": 10.0,
           "dual_channel_bins": 42,
           "max_log_dPM": 15.0069150104087,
+          "frac_bins_log_dPM_above_hall_max": 0.82,
           "max_dCO": 3.0,
           "max_dTEMP": 3.1549999999999976,
           "particle_trip": true,
@@ -1846,7 +1876,7 @@
           "nist_photo_alarm": true,
           "t_nist_photo_s": 30.0,
           "nist_ion_alarm": true,
-          "t_nist_ion_s": 200.0
+          "t_nist_ion_s": 220.0
         },
         {
           "test": "MHN37",
@@ -1872,12 +1902,13 @@
           "t_first_activity_s": 90.0,
           "dual_channel_bins": 10,
           "max_log_dPM": 13.676933313557273,
+          "frac_bins_log_dPM_above_hall_max": 0.721,
           "max_dCO": 3.0,
           "max_dTEMP": 1.8599999999999994,
           "particle_trip": true,
           "t_particle_trip_s": 90.0,
-          "nist_photo_alarm": true,
-          "t_nist_photo_s": 340.0,
+          "nist_photo_alarm": false,
+          "t_nist_photo_s": null,
           "nist_ion_alarm": false,
           "t_nist_ion_s": null
         },
@@ -1906,6 +1937,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 14,
           "max_log_dPM": 10.603262719386294,
+          "frac_bins_log_dPM_above_hall_max": 0.065,
           "max_dCO": 4.8,
           "max_dTEMP": 0.634999999999998,
           "particle_trip": true,
@@ -1940,6 +1972,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 74,
           "max_log_dPM": 14.848002986948922,
+          "frac_bins_log_dPM_above_hall_max": 0.772,
           "max_dCO": 4.2,
           "max_dTEMP": 4.300000000000001,
           "particle_trip": true,
@@ -1974,12 +2007,13 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 66,
           "max_log_dPM": 15.037452250490542,
+          "frac_bins_log_dPM_above_hall_max": 0.835,
           "max_dCO": 60.0,
           "max_dTEMP": 7.43,
           "particle_trip": true,
           "t_particle_trip_s": 60.0,
           "nist_photo_alarm": true,
-          "t_nist_photo_s": 130.0,
+          "t_nist_photo_s": 820.0,
           "nist_ion_alarm": true,
           "t_nist_ion_s": 810.0
         },
@@ -2008,6 +2042,7 @@
           "t_first_activity_s": 10.0,
           "dual_channel_bins": 18,
           "max_log_dPM": 11.189837261254489,
+          "frac_bins_log_dPM_above_hall_max": 0.519,
           "max_dCO": 0.6000000000000001,
           "max_dTEMP": 2.5900000000000034,
           "particle_trip": true,
@@ -2042,6 +2077,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 65,
           "max_log_dPM": 10.54299658642679,
+          "frac_bins_log_dPM_above_hall_max": 0.286,
           "max_dCO": 16.0,
           "max_dTEMP": 2.1849999999999987,
           "particle_trip": true,
@@ -2076,6 +2112,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 67,
           "max_log_dPM": 11.899452372058143,
+          "frac_bins_log_dPM_above_hall_max": 0.767,
           "max_dCO": 6.0,
           "max_dTEMP": 1.9999999999999964,
           "particle_trip": true,
@@ -2110,6 +2147,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 41,
           "max_log_dPM": 13.099935747802276,
+          "frac_bins_log_dPM_above_hall_max": 0.496,
           "max_dCO": 17.0,
           "max_dTEMP": 0.7325000000000017,
           "particle_trip": true,
@@ -2144,12 +2182,13 @@
           "t_first_activity_s": 10.0,
           "dual_channel_bins": 56,
           "max_log_dPM": 12.275904165253365,
+          "frac_bins_log_dPM_above_hall_max": 0.537,
           "max_dCO": 22.0,
           "max_dTEMP": 1.7349999999999959,
           "particle_trip": true,
           "t_particle_trip_s": 470.0,
-          "nist_photo_alarm": true,
-          "t_nist_photo_s": 1070.0,
+          "nist_photo_alarm": false,
+          "t_nist_photo_s": null,
           "nist_ion_alarm": true,
           "t_nist_ion_s": 1160.0
         },
@@ -2178,12 +2217,13 @@
           "t_first_activity_s": 20.0,
           "dual_channel_bins": 170,
           "max_log_dPM": 14.243213886992466,
+          "frac_bins_log_dPM_above_hall_max": 0.929,
           "max_dCO": 65.0,
           "max_dTEMP": 1.7674999999999983,
           "particle_trip": true,
           "t_particle_trip_s": 120.0,
-          "nist_photo_alarm": true,
-          "t_nist_photo_s": 1570.0,
+          "nist_photo_alarm": false,
+          "t_nist_photo_s": null,
           "nist_ion_alarm": true,
           "t_nist_ion_s": 160.0
         },
@@ -2212,6 +2252,7 @@
           "t_first_activity_s": 40.0,
           "dual_channel_bins": 170,
           "max_log_dPM": 13.943284407702773,
+          "frac_bins_log_dPM_above_hall_max": 0.939,
           "max_dCO": 47.0,
           "max_dTEMP": 2.830000000000002,
           "particle_trip": true,
@@ -2264,21 +2305,21 @@
           ]
         },
         "nist_photo_fires_detected": {
-          "k": 5,
+          "k": 3,
           "n": 8,
-          "rate": 0.625,
+          "rate": 0.375,
           "wilson95": [
-            0.306,
-            0.863
+            0.137,
+            0.694
           ]
         },
         "nist_photo_nuisances_rejected": {
-          "k": 8,
+          "k": 15,
           "n": 34,
-          "rate": 0.235,
+          "rate": 0.441,
           "wilson95": [
-            0.124,
-            0.4
+            0.289,
+            0.605
           ]
         },
         "nist_ion_fires_detected": {
@@ -2291,12 +2332,12 @@
           ]
         },
         "nist_ion_nuisances_rejected": {
-          "k": 12,
+          "k": 15,
           "n": 34,
-          "rate": 0.353,
+          "rate": 0.441,
           "wilson95": [
-            0.215,
-            0.521
+            0.289,
+            0.605
           ]
         },
         "ai_t_fire_median_s": 450.0,
@@ -2334,7 +2375,7 @@
             "ai_uncertain": 0,
             "ai_no_activity": 0,
             "particle_trip": 4,
-            "nist_photo": 4,
+            "nist_photo": 3,
             "nist_ion": 3
           },
           {
@@ -2346,7 +2387,7 @@
             "ai_uncertain": 0,
             "ai_no_activity": 0,
             "particle_trip": 3,
-            "nist_photo": 3,
+            "nist_photo": 1,
             "nist_ion": 2
           },
           {
@@ -2358,8 +2399,8 @@
             "ai_uncertain": 0,
             "ai_no_activity": 1,
             "particle_trip": 0,
-            "nist_photo": 2,
-            "nist_ion": 1
+            "nist_photo": 1,
+            "nist_ion": 0
           },
           {
             "source": "butter/margarine",
@@ -2371,7 +2412,7 @@
             "ai_no_activity": 0,
             "particle_trip": 6,
             "nist_photo": 6,
-            "nist_ion": 5
+            "nist_ion": 4
           },
           {
             "source": "cigarettes",
@@ -2394,7 +2435,7 @@
             "ai_uncertain": 0,
             "ai_no_activity": 0,
             "particle_trip": 6,
-            "nist_photo": 5,
+            "nist_photo": 4,
             "nist_ion": 3
           },
           {
@@ -2407,7 +2448,7 @@
             "ai_no_activity": 0,
             "particle_trip": 1,
             "nist_photo": 0,
-            "nist_ion": 1
+            "nist_ion": 0
           },
           {
             "source": "bagels",
@@ -2418,7 +2459,7 @@
             "ai_uncertain": 1,
             "ai_no_activity": 0,
             "particle_trip": 2,
-            "nist_photo": 1,
+            "nist_photo": 0,
             "nist_ion": 2
           },
           {
@@ -2442,7 +2483,7 @@
             "ai_uncertain": 0,
             "ai_no_activity": 1,
             "particle_trip": 0,
-            "nist_photo": 1,
+            "nist_photo": 0,
             "nist_ion": 0
           },
           {
@@ -2466,7 +2507,7 @@
             "ai_uncertain": 0,
             "ai_no_activity": 0,
             "particle_trip": 2,
-            "nist_photo": 2,
+            "nist_photo": 1,
             "nist_ion": 2
           },
           {
@@ -2478,7 +2519,7 @@
             "ai_uncertain": 0,
             "ai_no_activity": 0,
             "particle_trip": 2,
-            "nist_photo": 1,
+            "nist_photo": 0,
             "nist_ion": 2
           }
         ]
@@ -2509,6 +2550,7 @@
           "t_first_activity_s": 150.0,
           "dual_channel_bins": 46,
           "max_log_dPM": 12.588097327568425,
+          "frac_bins_log_dPM_above_hall_max": 0.18,
           "max_dCO": 52.0,
           "max_dTEMP": 3.9159000000000006,
           "particle_trip": true,
@@ -2541,6 +2583,7 @@
           "t_first_activity_s": 130.0,
           "dual_channel_bins": 48,
           "max_log_dPM": 12.588248655660385,
+          "frac_bins_log_dPM_above_hall_max": 0.23,
           "max_dCO": 7.0,
           "max_dTEMP": 2.6099999999999994,
           "particle_trip": true,
@@ -2575,6 +2618,7 @@
           "t_first_activity_s": 30.0,
           "dual_channel_bins": 58,
           "max_log_dPM": 10.992392039271886,
+          "frac_bins_log_dPM_above_hall_max": 0.068,
           "max_dCO": 12.0,
           "max_dTEMP": 8.05,
           "particle_trip": true,
@@ -2608,12 +2652,13 @@
           "t_first_activity_s": 50.0,
           "dual_channel_bins": 59,
           "max_log_dPM": 10.806872360090681,
+          "frac_bins_log_dPM_above_hall_max": 0.028,
           "max_dCO": 14.7,
           "max_dTEMP": 7.699999999999999,
           "particle_trip": true,
           "t_particle_trip_s": 210.0,
           "nist_photo_alarm": true,
-          "t_nist_photo_s": 0.0,
+          "t_nist_photo_s": 40.0,
           "nist_ion_alarm": true,
           "t_nist_ion_s": 380.0
         },
@@ -2637,6 +2682,7 @@
           "t_first_activity_s": 30.0,
           "dual_channel_bins": 58,
           "max_log_dPM": 10.126777093193375,
+          "frac_bins_log_dPM_above_hall_max": 0.0,
           "max_dCO": 0.0,
           "max_dTEMP": 5.469999999999995,
           "particle_trip": true,
@@ -2667,6 +2713,7 @@
           "t_first_activity_s": 90.0,
           "dual_channel_bins": 2,
           "max_log_dPM": 5.968323854666339,
+          "frac_bins_log_dPM_above_hall_max": 0.0,
           "max_dCO": 0.0,
           "max_dTEMP": 5.559999999999999,
           "particle_trip": false,
@@ -2698,6 +2745,7 @@
           "t_first_activity_s": null,
           "dual_channel_bins": 0,
           "max_log_dPM": 4.707275408925245,
+          "frac_bins_log_dPM_above_hall_max": 0.0,
           "max_dCO": 0.0,
           "max_dTEMP": 5.479999999999997,
           "particle_trip": false,
@@ -2729,6 +2777,7 @@
           "t_first_activity_s": 20.0,
           "dual_channel_bins": 29,
           "max_log_dPM": 11.800808642199089,
+          "frac_bins_log_dPM_above_hall_max": 0.395,
           "max_dCO": 3.5999999999999996,
           "max_dTEMP": 3.6199999999999974,
           "particle_trip": true,
@@ -2761,12 +2810,13 @@
           "t_first_activity_s": 20.0,
           "dual_channel_bins": 33,
           "max_log_dPM": 12.489176692295363,
+          "frac_bins_log_dPM_above_hall_max": 0.395,
           "max_dCO": 11.0,
           "max_dTEMP": 3.7650000000000006,
           "particle_trip": true,
           "t_particle_trip_s": 200.0,
           "nist_photo_alarm": true,
-          "t_nist_photo_s": 0.0,
+          "t_nist_photo_s": 180.0,
           "nist_ion_alarm": true,
           "t_nist_ion_s": 200.0
         },
@@ -2793,6 +2843,7 @@
           "t_first_activity_s": 110.0,
           "dual_channel_bins": 3,
           "max_log_dPM": 7.357843149532577,
+          "frac_bins_log_dPM_above_hall_max": 0.0,
           "max_dCO": 3.5999999999999996,
           "max_dTEMP": 0.05999999999999872,
           "particle_trip": true,
@@ -2826,12 +2877,13 @@
           "t_first_activity_s": 30.0,
           "dual_channel_bins": 53,
           "max_log_dPM": 10.096229626657967,
+          "frac_bins_log_dPM_above_hall_max": 0.0,
           "max_dCO": 5.0,
           "max_dTEMP": 6.969999999999999,
           "particle_trip": true,
           "t_particle_trip_s": 540.0,
-          "nist_photo_alarm": true,
-          "t_nist_photo_s": 370.0,
+          "nist_photo_alarm": false,
+          "t_nist_photo_s": null,
           "nist_ion_alarm": true,
           "t_nist_ion_s": 710.0
         },
@@ -2859,6 +2911,7 @@
           "t_first_activity_s": 20.0,
           "dual_channel_bins": 61,
           "max_log_dPM": 9.363447650506725,
+          "frac_bins_log_dPM_above_hall_max": 0.0,
           "max_dCO": 5.0,
           "max_dTEMP": 4.169999999999995,
           "particle_trip": true,
@@ -2866,7 +2919,7 @@
           "nist_photo_alarm": false,
           "t_nist_photo_s": null,
           "nist_ion_alarm": true,
-          "t_nist_ion_s": 590.0
+          "t_nist_ion_s": 740.0
         },
         {
           "test": "MHN18",
@@ -2879,7 +2932,6 @@
           "nodes": [
             "B",
             "C",
-            "D",
             "E",
             "F",
             "G"
@@ -2887,19 +2939,20 @@
           "window_end_s": 960.0,
           "verdict": "NUISANCE",
           "t_fire_s": null,
-          "max_p_smoothed": 0.13972432384684869,
-          "max_p_raw": 0.1813777259936947,
+          "max_p_smoothed": 0.17042894073957648,
+          "max_p_raw": 0.212830726525165,
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 59,
           "max_log_dPM": 7.287321213564613,
+          "frac_bins_log_dPM_above_hall_max": 0.0,
           "max_dCO": 12.0,
           "max_dTEMP": 8.329999999999998,
           "particle_trip": true,
           "t_particle_trip_s": 720.0,
           "nist_photo_alarm": false,
           "t_nist_photo_s": null,
-          "nist_ion_alarm": true,
-          "t_nist_ion_s": 720.0
+          "nist_ion_alarm": false,
+          "t_nist_ion_s": null
         },
         {
           "test": "MHN19",
@@ -2925,6 +2978,7 @@
           "t_first_activity_s": 110.0,
           "dual_channel_bins": 29,
           "max_log_dPM": 11.34552050057415,
+          "frac_bins_log_dPM_above_hall_max": 0.301,
           "max_dCO": 2.4,
           "max_dTEMP": 2.469999999999999,
           "particle_trip": true,
@@ -2958,6 +3012,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 33,
           "max_log_dPM": 10.344191096070311,
+          "frac_bins_log_dPM_above_hall_max": 0.0,
           "max_dCO": 6.0,
           "max_dTEMP": 4.234999999999999,
           "particle_trip": true,
@@ -2991,12 +3046,13 @@
           "t_first_activity_s": 40.0,
           "dual_channel_bins": 2,
           "max_log_dPM": 8.970400295509823,
+          "frac_bins_log_dPM_above_hall_max": 0.0,
           "max_dCO": 3.6,
           "max_dTEMP": 1.0650000000000013,
           "particle_trip": true,
           "t_particle_trip_s": 240.0,
-          "nist_photo_alarm": true,
-          "t_nist_photo_s": 410.0,
+          "nist_photo_alarm": false,
+          "t_nist_photo_s": null,
           "nist_ion_alarm": true,
           "t_nist_ion_s": 310.0
         },
@@ -3024,6 +3080,7 @@
           "t_first_activity_s": 70.0,
           "dual_channel_bins": 33,
           "max_log_dPM": 11.897675149310242,
+          "frac_bins_log_dPM_above_hall_max": 0.098,
           "max_dCO": 6.0,
           "max_dTEMP": 1.1599999999999966,
           "particle_trip": true,
@@ -3057,14 +3114,15 @@
           "t_first_activity_s": 180.0,
           "dual_channel_bins": 6,
           "max_log_dPM": 11.144192398917678,
+          "frac_bins_log_dPM_above_hall_max": 0.033,
           "max_dCO": 6.0,
           "max_dTEMP": 1.3400000000000034,
           "particle_trip": true,
           "t_particle_trip_s": 200.0,
           "nist_photo_alarm": true,
-          "t_nist_photo_s": 230.0,
+          "t_nist_photo_s": 250.0,
           "nist_ion_alarm": true,
-          "t_nist_ion_s": 250.0
+          "t_nist_ion_s": 280.0
         },
         {
           "test": "MHN24",
@@ -3090,6 +3148,7 @@
           "t_first_activity_s": 30.0,
           "dual_channel_bins": 12,
           "max_log_dPM": 5.347345597615392,
+          "frac_bins_log_dPM_above_hall_max": 0.0,
           "max_dCO": 3.6,
           "max_dTEMP": 4.735000000000003,
           "particle_trip": false,
@@ -3123,6 +3182,7 @@
           "t_first_activity_s": 10.0,
           "dual_channel_bins": 48,
           "max_log_dPM": 10.102506429952252,
+          "frac_bins_log_dPM_above_hall_max": 0.0,
           "max_dCO": 2.4,
           "max_dTEMP": 2.150000000000002,
           "particle_trip": true,
@@ -3156,12 +3216,13 @@
           "t_first_activity_s": 40.0,
           "dual_channel_bins": 33,
           "max_log_dPM": 10.058493580734362,
+          "frac_bins_log_dPM_above_hall_max": 0.0,
           "max_dCO": 2.0,
           "max_dTEMP": 2.3200000000000003,
           "particle_trip": true,
           "t_particle_trip_s": 190.0,
           "nist_photo_alarm": true,
-          "t_nist_photo_s": 230.0,
+          "t_nist_photo_s": 620.0,
           "nist_ion_alarm": false,
           "t_nist_ion_s": null
         },
@@ -3190,14 +3251,15 @@
           "t_first_activity_s": 80.0,
           "dual_channel_bins": 16,
           "max_log_dPM": 6.57444802850408,
+          "frac_bins_log_dPM_above_hall_max": 0.0,
           "max_dCO": 4.0,
           "max_dTEMP": 2.8750000000000036,
           "particle_trip": false,
           "t_particle_trip_s": null,
-          "nist_photo_alarm": true,
-          "t_nist_photo_s": 610.0,
-          "nist_ion_alarm": true,
-          "t_nist_ion_s": 540.0
+          "nist_photo_alarm": false,
+          "t_nist_photo_s": null,
+          "nist_ion_alarm": false,
+          "t_nist_ion_s": null
         },
         {
           "test": "MHN28",
@@ -3224,14 +3286,15 @@
           "t_first_activity_s": 90.0,
           "dual_channel_bins": 24,
           "max_log_dPM": 12.115422839295432,
+          "frac_bins_log_dPM_above_hall_max": 0.419,
           "max_dCO": 7.0,
           "max_dTEMP": 4.579999999999998,
           "particle_trip": true,
           "t_particle_trip_s": 110.0,
           "nist_photo_alarm": true,
-          "t_nist_photo_s": 120.0,
-          "nist_ion_alarm": true,
-          "t_nist_ion_s": 320.0
+          "t_nist_photo_s": 170.0,
+          "nist_ion_alarm": false,
+          "t_nist_ion_s": null
         },
         {
           "test": "MHN29",
@@ -3258,12 +3321,13 @@
           "t_first_activity_s": 60.0,
           "dual_channel_bins": 8,
           "max_log_dPM": 10.451338693312909,
+          "frac_bins_log_dPM_above_hall_max": 0.023,
           "max_dCO": 5.0,
           "max_dTEMP": 0.379999999999999,
           "particle_trip": true,
           "t_particle_trip_s": 150.0,
           "nist_photo_alarm": true,
-          "t_nist_photo_s": 210.0,
+          "t_nist_photo_s": 320.0,
           "nist_ion_alarm": false,
           "t_nist_ion_s": null
         },
@@ -3292,6 +3356,7 @@
           "t_first_activity_s": 50.0,
           "dual_channel_bins": 25,
           "max_log_dPM": 9.86391997923382,
+          "frac_bins_log_dPM_above_hall_max": 0.0,
           "max_dCO": 4.8,
           "max_dTEMP": 2.3399999999999963,
           "particle_trip": true,
@@ -3299,7 +3364,7 @@
           "nist_photo_alarm": true,
           "t_nist_photo_s": 240.0,
           "nist_ion_alarm": true,
-          "t_nist_ion_s": 250.0
+          "t_nist_ion_s": 270.0
         },
         {
           "test": "MHN31",
@@ -3326,12 +3391,13 @@
           "t_first_activity_s": 30.0,
           "dual_channel_bins": 30,
           "max_log_dPM": 12.573823079172591,
+          "frac_bins_log_dPM_above_hall_max": 0.625,
           "max_dCO": 27.0,
           "max_dTEMP": 5.880000000000003,
           "particle_trip": true,
           "t_particle_trip_s": 120.0,
           "nist_photo_alarm": true,
-          "t_nist_photo_s": 220.0,
+          "t_nist_photo_s": 240.0,
           "nist_ion_alarm": true,
           "t_nist_ion_s": 230.0
         },
@@ -3360,14 +3426,15 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 35,
           "max_log_dPM": 8.973381690807283,
+          "frac_bins_log_dPM_above_hall_max": 0.0,
           "max_dCO": 0.6,
           "max_dTEMP": 8.695000000000004,
           "particle_trip": true,
           "t_particle_trip_s": 990.0,
-          "nist_photo_alarm": true,
-          "t_nist_photo_s": 500.0,
+          "nist_photo_alarm": false,
+          "t_nist_photo_s": null,
           "nist_ion_alarm": true,
-          "t_nist_ion_s": 1150.0
+          "t_nist_ion_s": 1170.0
         },
         {
           "test": "MHN33",
@@ -3394,12 +3461,13 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 24,
           "max_log_dPM": 8.132162863694555,
+          "frac_bins_log_dPM_above_hall_max": 0.0,
           "max_dCO": 6.0,
           "max_dTEMP": 6.48,
           "particle_trip": true,
           "t_particle_trip_s": 1120.0,
-          "nist_photo_alarm": true,
-          "t_nist_photo_s": 1250.0,
+          "nist_photo_alarm": false,
+          "t_nist_photo_s": null,
           "nist_ion_alarm": false,
           "t_nist_ion_s": null
         },
@@ -3428,6 +3496,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 73,
           "max_log_dPM": 7.372840583071326,
+          "frac_bins_log_dPM_above_hall_max": 0.0,
           "max_dCO": 2.4,
           "max_dTEMP": 4.860000000000003,
           "particle_trip": true,
@@ -3459,12 +3528,13 @@
           "t_first_activity_s": null,
           "dual_channel_bins": 0,
           "max_log_dPM": 3.182211840496609,
+          "frac_bins_log_dPM_above_hall_max": 0.0,
           "max_dCO": 0.0,
           "max_dTEMP": 2.0950000000000024,
           "particle_trip": false,
           "t_particle_trip_s": null,
-          "nist_photo_alarm": true,
-          "t_nist_photo_s": 0.0,
+          "nist_photo_alarm": false,
+          "t_nist_photo_s": null,
           "nist_ion_alarm": false,
           "t_nist_ion_s": null
         },
@@ -3492,6 +3562,7 @@
           "t_first_activity_s": 40.0,
           "dual_channel_bins": 42,
           "max_log_dPM": 11.01491487675108,
+          "frac_bins_log_dPM_above_hall_max": 0.197,
           "max_dCO": 3.0,
           "max_dTEMP": 3.1549999999999976,
           "particle_trip": true,
@@ -3499,7 +3570,7 @@
           "nist_photo_alarm": true,
           "t_nist_photo_s": 30.0,
           "nist_ion_alarm": true,
-          "t_nist_ion_s": 200.0
+          "t_nist_ion_s": 220.0
         },
         {
           "test": "MHN37",
@@ -3525,12 +3596,13 @@
           "t_first_activity_s": 90.0,
           "dual_channel_bins": 9,
           "max_log_dPM": 9.338460902252042,
+          "frac_bins_log_dPM_above_hall_max": 0.0,
           "max_dCO": 3.0,
           "max_dTEMP": 1.8599999999999994,
           "particle_trip": true,
           "t_particle_trip_s": 190.0,
-          "nist_photo_alarm": true,
-          "t_nist_photo_s": 340.0,
+          "nist_photo_alarm": false,
+          "t_nist_photo_s": null,
           "nist_ion_alarm": false,
           "t_nist_ion_s": null
         },
@@ -3559,6 +3631,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 14,
           "max_log_dPM": 7.505822253291813,
+          "frac_bins_log_dPM_above_hall_max": 0.0,
           "max_dCO": 4.8,
           "max_dTEMP": 0.634999999999998,
           "particle_trip": true,
@@ -3593,6 +3666,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 49,
           "max_log_dPM": 8.931148819497379,
+          "frac_bins_log_dPM_above_hall_max": 0.0,
           "max_dCO": 4.2,
           "max_dTEMP": 4.300000000000001,
           "particle_trip": true,
@@ -3627,12 +3701,13 @@
           "t_first_activity_s": 80.0,
           "dual_channel_bins": 66,
           "max_log_dPM": 11.683064785395203,
+          "frac_bins_log_dPM_above_hall_max": 0.121,
           "max_dCO": 60.0,
           "max_dTEMP": 7.43,
           "particle_trip": true,
           "t_particle_trip_s": 140.0,
           "nist_photo_alarm": true,
-          "t_nist_photo_s": 130.0,
+          "t_nist_photo_s": 820.0,
           "nist_ion_alarm": true,
           "t_nist_ion_s": 810.0
         },
@@ -3661,6 +3736,7 @@
           "t_first_activity_s": 140.0,
           "dual_channel_bins": 18,
           "max_log_dPM": 8.729906536755628,
+          "frac_bins_log_dPM_above_hall_max": 0.0,
           "max_dCO": 0.6000000000000001,
           "max_dTEMP": 2.5900000000000034,
           "particle_trip": true,
@@ -3695,6 +3771,7 @@
           "t_first_activity_s": 20.0,
           "dual_channel_bins": 61,
           "max_log_dPM": 9.473273705262525,
+          "frac_bins_log_dPM_above_hall_max": 0.0,
           "max_dCO": 16.0,
           "max_dTEMP": 2.1849999999999987,
           "particle_trip": true,
@@ -3729,6 +3806,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 60,
           "max_log_dPM": 10.247311272095711,
+          "frac_bins_log_dPM_above_hall_max": 0.0,
           "max_dCO": 6.0,
           "max_dTEMP": 1.9999999999999964,
           "particle_trip": true,
@@ -3763,6 +3841,7 @@
           "t_first_activity_s": 650.0,
           "dual_channel_bins": 41,
           "max_log_dPM": 10.842206383705227,
+          "frac_bins_log_dPM_above_hall_max": 0.107,
           "max_dCO": 17.0,
           "max_dTEMP": 0.7325000000000017,
           "particle_trip": true,
@@ -3797,12 +3876,13 @@
           "t_first_activity_s": 10.0,
           "dual_channel_bins": 45,
           "max_log_dPM": 10.05874404929384,
+          "frac_bins_log_dPM_above_hall_max": 0.0,
           "max_dCO": 22.0,
           "max_dTEMP": 1.7349999999999959,
           "particle_trip": true,
           "t_particle_trip_s": 780.0,
-          "nist_photo_alarm": true,
-          "t_nist_photo_s": 1070.0,
+          "nist_photo_alarm": false,
+          "t_nist_photo_s": null,
           "nist_ion_alarm": true,
           "t_nist_ion_s": 1160.0
         },
@@ -3831,12 +3911,13 @@
           "t_first_activity_s": 20.0,
           "dual_channel_bins": 170,
           "max_log_dPM": 10.884452108893944,
+          "frac_bins_log_dPM_above_hall_max": 0.402,
           "max_dCO": 65.0,
           "max_dTEMP": 1.7674999999999983,
           "particle_trip": true,
           "t_particle_trip_s": 130.0,
-          "nist_photo_alarm": true,
-          "t_nist_photo_s": 1570.0,
+          "nist_photo_alarm": false,
+          "t_nist_photo_s": null,
           "nist_ion_alarm": true,
           "t_nist_ion_s": 160.0
         },
@@ -3865,6 +3946,7 @@
           "t_first_activity_s": 130.0,
           "dual_channel_bins": 170,
           "max_log_dPM": 10.50187683825433,
+          "frac_bins_log_dPM_above_hall_max": 0.083,
           "max_dCO": 47.0,
           "max_dTEMP": 2.830000000000002,
           "particle_trip": true,
@@ -3922,21 +4004,21 @@
           ]
         },
         "nist_photo_fires_detected": {
-          "k": 5,
+          "k": 4,
           "n": 8,
-          "rate": 0.625,
+          "rate": 0.5,
           "wilson95": [
-            0.306,
-            0.863
+            0.215,
+            0.785
           ]
         },
         "nist_photo_nuisances_rejected": {
-          "k": 6,
+          "k": 13,
           "n": 33,
-          "rate": 0.182,
+          "rate": 0.394,
           "wilson95": [
-            0.086,
-            0.344
+            0.247,
+            0.563
           ]
         },
         "nist_ion_fires_detected": {
@@ -3949,12 +4031,12 @@
           ]
         },
         "nist_ion_nuisances_rejected": {
-          "k": 12,
+          "k": 15,
           "n": 33,
-          "rate": 0.364,
+          "rate": 0.455,
           "wilson95": [
-            0.222,
-            0.534
+            0.298,
+            0.62
           ]
         },
         "ai_t_fire_median_s": 390.0,
@@ -3991,7 +4073,7 @@
             "ai_uncertain": 0,
             "ai_no_activity": 0,
             "particle_trip": 4,
-            "nist_photo": 4,
+            "nist_photo": 3,
             "nist_ion": 3
           },
           {
@@ -4003,7 +4085,7 @@
             "ai_uncertain": 0,
             "ai_no_activity": 0,
             "particle_trip": 3,
-            "nist_photo": 3,
+            "nist_photo": 1,
             "nist_ion": 2
           },
           {
@@ -4015,8 +4097,8 @@
             "ai_uncertain": 0,
             "ai_no_activity": 0,
             "particle_trip": 4,
-            "nist_photo": 3,
-            "nist_ion": 1
+            "nist_photo": 2,
+            "nist_ion": 0
           },
           {
             "source": "butter/margarine",
@@ -4028,7 +4110,7 @@
             "ai_no_activity": 0,
             "particle_trip": 5,
             "nist_photo": 5,
-            "nist_ion": 4
+            "nist_ion": 3
           },
           {
             "source": "cigarettes",
@@ -4051,7 +4133,7 @@
             "ai_uncertain": 0,
             "ai_no_activity": 0,
             "particle_trip": 6,
-            "nist_photo": 5,
+            "nist_photo": 4,
             "nist_ion": 3
           },
           {
@@ -4064,7 +4146,7 @@
             "ai_no_activity": 0,
             "particle_trip": 1,
             "nist_photo": 0,
-            "nist_ion": 1
+            "nist_ion": 0
           },
           {
             "source": "bagels",
@@ -4075,7 +4157,7 @@
             "ai_uncertain": 0,
             "ai_no_activity": 0,
             "particle_trip": 2,
-            "nist_photo": 1,
+            "nist_photo": 0,
             "nist_ion": 2
           },
           {
@@ -4099,7 +4181,7 @@
             "ai_uncertain": 0,
             "ai_no_activity": 0,
             "particle_trip": 1,
-            "nist_photo": 1,
+            "nist_photo": 0,
             "nist_ion": 0
           },
           {
@@ -4135,7 +4217,7 @@
             "ai_uncertain": 0,
             "ai_no_activity": 0,
             "particle_trip": 2,
-            "nist_photo": 1,
+            "nist_photo": 0,
             "nist_ion": 2
           }
         ]
@@ -4166,6 +4248,7 @@
           "t_first_activity_s": 30.0,
           "dual_channel_bins": 62,
           "max_log_dPM": 15.56809260410202,
+          "frac_bins_log_dPM_above_hall_max": 0.936,
           "max_dCO": 52.0,
           "max_dTEMP": 3.9159000000000006,
           "particle_trip": true,
@@ -4198,6 +4281,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 65,
           "max_log_dPM": 15.216447442187105,
+          "frac_bins_log_dPM_above_hall_max": 0.769,
           "max_dCO": 109.2,
           "max_dTEMP": 2.6099999999999994,
           "particle_trip": true,
@@ -4232,6 +4316,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 78,
           "max_log_dPM": 15.692901741078805,
+          "frac_bins_log_dPM_above_hall_max": 0.899,
           "max_dCO": 12.0,
           "max_dTEMP": 8.05,
           "particle_trip": true,
@@ -4265,12 +4350,13 @@
           "t_first_activity_s": 20.0,
           "dual_channel_bins": 87,
           "max_log_dPM": 15.663581202597504,
+          "frac_bins_log_dPM_above_hall_max": 0.874,
           "max_dCO": 17.900000000000002,
           "max_dTEMP": 7.699999999999999,
           "particle_trip": true,
           "t_particle_trip_s": 20.0,
           "nist_photo_alarm": true,
-          "t_nist_photo_s": 0.0,
+          "t_nist_photo_s": 40.0,
           "nist_ion_alarm": true,
           "t_nist_ion_s": 380.0
         },
@@ -4294,6 +4380,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 63,
           "max_log_dPM": 14.982200721860126,
+          "frac_bins_log_dPM_above_hall_max": 0.872,
           "max_dCO": 0.0,
           "max_dTEMP": 5.469999999999995,
           "particle_trip": true,
@@ -4324,6 +4411,7 @@
           "t_first_activity_s": 180.0,
           "dual_channel_bins": 79,
           "max_log_dPM": 15.14763934575526,
+          "frac_bins_log_dPM_above_hall_max": 0.814,
           "max_dCO": 0.0,
           "max_dTEMP": 5.559999999999999,
           "particle_trip": true,
@@ -4355,6 +4443,7 @@
           "t_first_activity_s": 50.0,
           "dual_channel_bins": 90,
           "max_log_dPM": 14.862761479752516,
+          "frac_bins_log_dPM_above_hall_max": 0.865,
           "max_dCO": 0.0,
           "max_dTEMP": 5.479999999999997,
           "particle_trip": true,
@@ -4386,6 +4475,7 @@
           "t_first_activity_s": 20.0,
           "dual_channel_bins": 37,
           "max_log_dPM": 15.525237326907373,
+          "frac_bins_log_dPM_above_hall_max": 0.735,
           "max_dCO": 3.5999999999999996,
           "max_dTEMP": 3.6199999999999974,
           "particle_trip": true,
@@ -4418,12 +4508,13 @@
           "t_first_activity_s": 20.0,
           "dual_channel_bins": 60,
           "max_log_dPM": 15.383471261271902,
+          "frac_bins_log_dPM_above_hall_max": 0.851,
           "max_dCO": 11.0,
           "max_dTEMP": 4.335000000000001,
           "particle_trip": true,
           "t_particle_trip_s": 30.0,
           "nist_photo_alarm": true,
-          "t_nist_photo_s": 0.0,
+          "t_nist_photo_s": 180.0,
           "nist_ion_alarm": true,
           "t_nist_ion_s": 200.0
         },
@@ -4450,6 +4541,7 @@
           "t_first_activity_s": 90.0,
           "dual_channel_bins": 19,
           "max_log_dPM": 11.449730041473082,
+          "frac_bins_log_dPM_above_hall_max": 0.49,
           "max_dCO": 3.5999999999999996,
           "max_dTEMP": 0.05999999999999872,
           "particle_trip": true,
@@ -4483,12 +4575,13 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 108,
           "max_log_dPM": 15.207096145821462,
+          "frac_bins_log_dPM_above_hall_max": 0.902,
           "max_dCO": 5.0,
           "max_dTEMP": 7.439999999999998,
           "particle_trip": true,
           "t_particle_trip_s": 130.0,
-          "nist_photo_alarm": true,
-          "t_nist_photo_s": 370.0,
+          "nist_photo_alarm": false,
+          "t_nist_photo_s": null,
           "nist_ion_alarm": true,
           "t_nist_ion_s": 710.0
         },
@@ -4516,6 +4609,7 @@
           "t_first_activity_s": 20.0,
           "dual_channel_bins": 99,
           "max_log_dPM": 15.201063644407967,
+          "frac_bins_log_dPM_above_hall_max": 0.853,
           "max_dCO": 5.0,
           "max_dTEMP": 4.939999999999994,
           "particle_trip": true,
@@ -4523,7 +4617,7 @@
           "nist_photo_alarm": false,
           "t_nist_photo_s": null,
           "nist_ion_alarm": true,
-          "t_nist_ion_s": 590.0
+          "t_nist_ion_s": 740.0
         },
         {
           "test": "MHN18",
@@ -4536,7 +4630,6 @@
           "nodes": [
             "B",
             "C",
-            "D",
             "E",
             "F",
             "G"
@@ -4544,19 +4637,20 @@
           "window_end_s": 1270.0,
           "verdict": "FIRE",
           "t_fire_s": 350.0,
-          "max_p_smoothed": 0.9848524895612887,
+          "max_p_smoothed": 0.9848526241788254,
           "max_p_raw": 0.9898244946432424,
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 127,
           "max_log_dPM": 15.601423972264085,
+          "frac_bins_log_dPM_above_hall_max": 0.828,
           "max_dCO": 12.0,
           "max_dTEMP": 8.329999999999998,
           "particle_trip": true,
           "t_particle_trip_s": 10.0,
           "nist_photo_alarm": false,
           "t_nist_photo_s": null,
-          "nist_ion_alarm": true,
-          "t_nist_ion_s": 720.0
+          "nist_ion_alarm": false,
+          "t_nist_ion_s": null
         },
         {
           "test": "MHN19",
@@ -4582,6 +4676,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 29,
           "max_log_dPM": 15.212880482961769,
+          "frac_bins_log_dPM_above_hall_max": 0.878,
           "max_dCO": 2.4,
           "max_dTEMP": 2.469999999999999,
           "particle_trip": true,
@@ -4615,6 +4710,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 47,
           "max_log_dPM": 15.834316087137802,
+          "frac_bins_log_dPM_above_hall_max": 0.95,
           "max_dCO": 6.0,
           "max_dTEMP": 4.234999999999999,
           "particle_trip": true,
@@ -4648,12 +4744,13 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 7,
           "max_log_dPM": 14.822075537870017,
+          "frac_bins_log_dPM_above_hall_max": 0.946,
           "max_dCO": 3.6,
           "max_dTEMP": 1.0650000000000013,
           "particle_trip": true,
           "t_particle_trip_s": 10.0,
-          "nist_photo_alarm": true,
-          "t_nist_photo_s": 410.0,
+          "nist_photo_alarm": false,
+          "t_nist_photo_s": null,
           "nist_ion_alarm": true,
           "t_nist_ion_s": 310.0
         },
@@ -4681,6 +4778,7 @@
           "t_first_activity_s": 30.0,
           "dual_channel_bins": 40,
           "max_log_dPM": 14.50247415954544,
+          "frac_bins_log_dPM_above_hall_max": 0.892,
           "max_dCO": 6.0,
           "max_dTEMP": 1.1599999999999966,
           "particle_trip": true,
@@ -4714,14 +4812,15 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 8,
           "max_log_dPM": 14.276054585929387,
+          "frac_bins_log_dPM_above_hall_max": 0.882,
           "max_dCO": 6.0,
           "max_dTEMP": 1.3400000000000034,
           "particle_trip": true,
           "t_particle_trip_s": 20.0,
           "nist_photo_alarm": true,
-          "t_nist_photo_s": 230.0,
+          "t_nist_photo_s": 250.0,
           "nist_ion_alarm": true,
-          "t_nist_ion_s": 250.0
+          "t_nist_ion_s": 280.0
         },
         {
           "test": "MHN24",
@@ -4747,6 +4846,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 125,
           "max_log_dPM": 15.310173443643665,
+          "frac_bins_log_dPM_above_hall_max": 0.929,
           "max_dCO": 3.6,
           "max_dTEMP": 5.855000000000004,
           "particle_trip": true,
@@ -4780,6 +4880,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 67,
           "max_log_dPM": 14.324870708448648,
+          "frac_bins_log_dPM_above_hall_max": 0.848,
           "max_dCO": 2.4,
           "max_dTEMP": 2.400000000000002,
           "particle_trip": true,
@@ -4813,12 +4914,13 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 42,
           "max_log_dPM": 14.153132847306983,
+          "frac_bins_log_dPM_above_hall_max": 0.812,
           "max_dCO": 2.0,
           "max_dTEMP": 2.3200000000000003,
           "particle_trip": true,
           "t_particle_trip_s": 40.0,
           "nist_photo_alarm": true,
-          "t_nist_photo_s": 230.0,
+          "t_nist_photo_s": 620.0,
           "nist_ion_alarm": false,
           "t_nist_ion_s": null
         },
@@ -4847,14 +4949,15 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 93,
           "max_log_dPM": 15.419923064170476,
+          "frac_bins_log_dPM_above_hall_max": 0.929,
           "max_dCO": 4.0,
           "max_dTEMP": 3.475000000000005,
           "particle_trip": true,
           "t_particle_trip_s": 80.0,
-          "nist_photo_alarm": true,
-          "t_nist_photo_s": 610.0,
-          "nist_ion_alarm": true,
-          "t_nist_ion_s": 540.0
+          "nist_photo_alarm": false,
+          "t_nist_photo_s": null,
+          "nist_ion_alarm": false,
+          "t_nist_ion_s": null
         },
         {
           "test": "MHN28",
@@ -4881,14 +4984,15 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 27,
           "max_log_dPM": 15.083405881237384,
+          "frac_bins_log_dPM_above_hall_max": 0.804,
           "max_dCO": 7.0,
           "max_dTEMP": 4.579999999999998,
           "particle_trip": true,
           "t_particle_trip_s": 0.0,
           "nist_photo_alarm": true,
-          "t_nist_photo_s": 120.0,
-          "nist_ion_alarm": true,
-          "t_nist_ion_s": 320.0
+          "t_nist_photo_s": 170.0,
+          "nist_ion_alarm": false,
+          "t_nist_ion_s": null
         },
         {
           "test": "MHN29",
@@ -4915,12 +5019,13 @@
           "t_first_activity_s": 50.0,
           "dual_channel_bins": 9,
           "max_log_dPM": 14.71496678131643,
+          "frac_bins_log_dPM_above_hall_max": 0.688,
           "max_dCO": 5.0,
           "max_dTEMP": 0.379999999999999,
           "particle_trip": true,
           "t_particle_trip_s": 60.0,
           "nist_photo_alarm": true,
-          "t_nist_photo_s": 210.0,
+          "t_nist_photo_s": 320.0,
           "nist_ion_alarm": false,
           "t_nist_ion_s": null
         },
@@ -4959,12 +5064,13 @@
           "t_first_activity_s": 30.0,
           "dual_channel_bins": 44,
           "max_log_dPM": 15.154866863701878,
+          "frac_bins_log_dPM_above_hall_max": 0.887,
           "max_dCO": 27.0,
           "max_dTEMP": 5.880000000000003,
           "particle_trip": true,
           "t_particle_trip_s": 90.0,
           "nist_photo_alarm": true,
-          "t_nist_photo_s": 220.0,
+          "t_nist_photo_s": 240.0,
           "nist_ion_alarm": true,
           "t_nist_ion_s": 230.0
         },
@@ -4993,14 +5099,15 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 89,
           "max_log_dPM": 15.24276474410536,
+          "frac_bins_log_dPM_above_hall_max": 1.0,
           "max_dCO": 2.0,
           "max_dTEMP": 8.695000000000004,
           "particle_trip": true,
           "t_particle_trip_s": 0.0,
-          "nist_photo_alarm": true,
-          "t_nist_photo_s": 500.0,
+          "nist_photo_alarm": false,
+          "t_nist_photo_s": null,
           "nist_ion_alarm": true,
-          "t_nist_ion_s": 1150.0
+          "t_nist_ion_s": 1170.0
         },
         {
           "test": "MHN33",
@@ -5027,12 +5134,13 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 122,
           "max_log_dPM": 14.9442465378378,
+          "frac_bins_log_dPM_above_hall_max": 0.986,
           "max_dCO": 6.0,
           "max_dTEMP": 7.219999999999999,
           "particle_trip": true,
           "t_particle_trip_s": 0.0,
-          "nist_photo_alarm": true,
-          "t_nist_photo_s": 1250.0,
+          "nist_photo_alarm": false,
+          "t_nist_photo_s": null,
           "nist_ion_alarm": false,
           "t_nist_ion_s": null
         },
@@ -5061,6 +5169,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 109,
           "max_log_dPM": 14.995285234921868,
+          "frac_bins_log_dPM_above_hall_max": 0.925,
           "max_dCO": 2.4,
           "max_dTEMP": 4.860000000000003,
           "particle_trip": true,
@@ -5092,12 +5201,13 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 12,
           "max_log_dPM": 13.582286367307114,
+          "frac_bins_log_dPM_above_hall_max": 0.954,
           "max_dCO": 0.0,
           "max_dTEMP": 2.0950000000000024,
           "particle_trip": true,
           "t_particle_trip_s": 30.0,
-          "nist_photo_alarm": true,
-          "t_nist_photo_s": 0.0,
+          "nist_photo_alarm": false,
+          "t_nist_photo_s": null,
           "nist_ion_alarm": false,
           "t_nist_ion_s": null
         },
@@ -5125,6 +5235,7 @@
           "t_first_activity_s": 10.0,
           "dual_channel_bins": 51,
           "max_log_dPM": 15.0069150104087,
+          "frac_bins_log_dPM_above_hall_max": 0.843,
           "max_dCO": 3.0,
           "max_dTEMP": 3.1549999999999976,
           "particle_trip": true,
@@ -5132,7 +5243,7 @@
           "nist_photo_alarm": true,
           "t_nist_photo_s": 30.0,
           "nist_ion_alarm": true,
-          "t_nist_ion_s": 200.0
+          "t_nist_ion_s": 220.0
         },
         {
           "test": "MHN37",
@@ -5158,12 +5269,13 @@
           "t_first_activity_s": 90.0,
           "dual_channel_bins": 18,
           "max_log_dPM": 13.676933313557273,
+          "frac_bins_log_dPM_above_hall_max": 0.779,
           "max_dCO": 3.0,
           "max_dTEMP": 2.1400000000000006,
           "particle_trip": true,
           "t_particle_trip_s": 90.0,
-          "nist_photo_alarm": true,
-          "t_nist_photo_s": 340.0,
+          "nist_photo_alarm": false,
+          "t_nist_photo_s": null,
           "nist_ion_alarm": false,
           "t_nist_ion_s": null
         },
@@ -5192,6 +5304,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 26,
           "max_log_dPM": 10.636239987688432,
+          "frac_bins_log_dPM_above_hall_max": 0.367,
           "max_dCO": 6.0,
           "max_dTEMP": 0.634999999999998,
           "particle_trip": true,
@@ -5226,6 +5339,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 99,
           "max_log_dPM": 14.92541089620215,
+          "frac_bins_log_dPM_above_hall_max": 0.817,
           "max_dCO": 4.2,
           "max_dTEMP": 4.350000000000001,
           "particle_trip": true,
@@ -5260,12 +5374,13 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 114,
           "max_log_dPM": 15.037452250490542,
+          "frac_bins_log_dPM_above_hall_max": 0.892,
           "max_dCO": 60.0,
           "max_dTEMP": 7.43,
           "particle_trip": true,
           "t_particle_trip_s": 60.0,
           "nist_photo_alarm": true,
-          "t_nist_photo_s": 130.0,
+          "t_nist_photo_s": 820.0,
           "nist_ion_alarm": true,
           "t_nist_ion_s": 810.0
         },
@@ -5294,6 +5409,7 @@
           "t_first_activity_s": 10.0,
           "dual_channel_bins": 18,
           "max_log_dPM": 11.440042895549958,
+          "frac_bins_log_dPM_above_hall_max": 0.524,
           "max_dCO": 0.6000000000000001,
           "max_dTEMP": 2.5900000000000034,
           "particle_trip": true,
@@ -5328,6 +5444,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 82,
           "max_log_dPM": 10.54299658642679,
+          "frac_bins_log_dPM_above_hall_max": 0.25,
           "max_dCO": 16.0,
           "max_dTEMP": 2.5150000000000006,
           "particle_trip": true,
@@ -5362,6 +5479,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 67,
           "max_log_dPM": 11.899452372058143,
+          "frac_bins_log_dPM_above_hall_max": 0.767,
           "max_dCO": 6.0,
           "max_dTEMP": 1.9999999999999964,
           "particle_trip": true,
@@ -5396,6 +5514,7 @@
           "t_first_activity_s": 0.0,
           "dual_channel_bins": 89,
           "max_log_dPM": 13.724174570585294,
+          "frac_bins_log_dPM_above_hall_max": 0.639,
           "max_dCO": 21.0,
           "max_dTEMP": 1.0625000000000036,
           "particle_trip": true,
@@ -5430,12 +5549,13 @@
           "t_first_activity_s": 10.0,
           "dual_channel_bins": 104,
           "max_log_dPM": 13.420043551845447,
+          "frac_bins_log_dPM_above_hall_max": 0.669,
           "max_dCO": 24.0,
           "max_dTEMP": 1.7349999999999959,
           "particle_trip": true,
           "t_particle_trip_s": 470.0,
           "nist_photo_alarm": true,
-          "t_nist_photo_s": 1070.0,
+          "t_nist_photo_s": 1220.0,
           "nist_ion_alarm": true,
           "t_nist_ion_s": 1160.0
         },
@@ -5464,12 +5584,13 @@
           "t_first_activity_s": 20.0,
           "dual_channel_bins": 191,
           "max_log_dPM": 14.243213886992466,
+          "frac_bins_log_dPM_above_hall_max": 0.937,
           "max_dCO": 73.0,
           "max_dTEMP": 1.7674999999999983,
           "particle_trip": true,
           "t_particle_trip_s": 120.0,
-          "nist_photo_alarm": true,
-          "t_nist_photo_s": 1570.0,
+          "nist_photo_alarm": false,
+          "t_nist_photo_s": null,
           "nist_ion_alarm": true,
           "t_nist_ion_s": 160.0
         },
@@ -5498,6 +5619,7 @@
           "t_first_activity_s": 40.0,
           "dual_channel_bins": 191,
           "max_log_dPM": 14.24031805675704,
+          "frac_bins_log_dPM_above_hall_max": 0.945,
           "max_dCO": 54.0,
           "max_dTEMP": 3.2400000000000055,
           "particle_trip": true,
@@ -5510,5 +5632,5 @@
       ]
     }
   },
-  "runtime_s": 79.2
+  "runtime_s": 59.3
 }

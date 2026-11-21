@@ -127,6 +127,8 @@ Matrice automatique (`tests/test_sandbox.js`, source à ~3,5 m d'un nœud, 200 �
 
 ## 7. Limites (dites honnêtement)
 
+- **Test indépendant NIST (USA, données jamais vues, aucun réglage)** : avec seulement 7 des 19 entrées disponibles (pas de capteur COV ni H₂, compteur de particules différent), l'IA confirme **7 / 8 feux** mais ne rejette que **6 / 33 nuisances de cuisine** (cigarettes : 2 / 2 rejetées ; bacon, hamburgers, pizza : non). Conclusion : les capteurs **COV et H₂ sont indispensables** (ce sont les entrées les plus utiles du modèle) et une cuisine ou cantine demande un apprentissage sur site pendant le pilote. Détails : `docs/results/nist_fr4019.md`.
+
 - **1 à 3 répétitions par type de nuisance** : la soudure (1 essai) et la machine à fumée (2 essais) trompent encore l'IA ; elles ne peuvent pas être apprises en validation croisée. Le pilote de 90 jours sert à collecter les nuisances propres à chaque usine.
 - Les feux d'essai sont **naissants** : la croissance d'un grand feu est une **hypothèse** du modèle de zones (prolongation simulée, affichée comme telle).
 - Les positions des nœuds dans le hall ne sont pas publiées (disposition plausible), le **SSI est simulé**.
