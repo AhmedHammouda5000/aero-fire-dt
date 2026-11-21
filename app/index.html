@@ -26,6 +26,14 @@
   <section class="panel" id="ewd">
     <div class="panel-title">E/WD — ALERTES &amp; PROCÉDURES</div>
     <div id="alerts"></div>
+    <div id="versus">
+      <div class="vs-title">DÉTECTEUR CLASSIQUE <span>vs</span> AERO-FIRE DT</div>
+      <div class="vs-truth" id="vs-truth"></div>
+      <div class="vs-grid">
+        <div class="vs-col" id="vs-classic"></div>
+        <div class="vs-col ours" id="vs-ours"></div>
+      </div>
+    </div>
     <div id="memo"></div>
     <div class="vote" id="vote"></div>
   </section>
@@ -49,12 +57,15 @@
       </div>
       <div class="zone-note" id="zone-note"></div>
       <div class="sandbox-panel" id="sandbox-panel">
-        <div class="pt">BANC D'ESSAI LIBRE — choisissez une source, puis cliquez sur le sol</div>
+        <div class="sb-head"><span class="pt">BANC D'ESSAI LIBRE</span><button id="sb-min" title="Réduire / agrandir le panneau">–</button></div>
+        <div id="sb-body">
+        <button class="sb-reset-big" id="sb-reset-top">↺ RÉINITIALISER (vider le hall)</button>
+        <div class="sb-help">1. choisissez une source &nbsp; 2. cliquez sur le sol du hall</div>
         <div id="sb-tools"></div>
         <label class="sb-scale">Intensité <b id="v-sbscale">×1</b><input type="range" id="sb-scale" min="0.25" max="3" step="0.25" value="1"></label>
         <div id="sb-list"></div>
-        <button class="small" id="sb-reset">RÉINITIALISER LE BANC</button>
         <div class="sb-note">Capteurs synthétiques calculés par la physique CFD (mêmes unités que les capteurs réels) · même IA que les scénarios réels · test qualitatif</div>
+        </div>
       </div>
     </div>
 

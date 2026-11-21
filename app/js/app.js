@@ -37,6 +37,10 @@
 
   function setScenario(k, showStory) {
     st.k = k; st.i = 0; st.seen = new Set(); st.whatIf = null; setMW(false); setMC(false);
+    // clean the scene at once: no smoke, flames, markers or physics left over from the previous scenario
+    twin.clearFx();
+    Object.assign(CFD, { sim: null, key: null, snaps: [], ghost: null, job: null, hist: [], ten: null, tenTime: -1, behind: 0 });
+    if (k === SBX.k) sbNew();
     const s = scn();
     // start a little before the event for real runs
     const start = s.t.findIndex(v => v >= -60);
@@ -199,11 +203,68 @@
       : "SSI LINK OK (LECTURE SEULE) · 9/9 NŒUDS · IA v1.0";
     if (!force) checkNewAlerts(i);
     renderAlerts(i);
+    renderVersus(i);
     renderTwin(i);
     if (st.page === "sensors") renderSensors(i);
     if (st.page === "forecast") renderForecast(i);
     if (st.page === "why") renderWhy(i);
     if (st.page === "ssi") renderSSI(i);
+  }
+
+  /* ---------- classic detector vs Aero-Fire DT (live comparison) ---------- */
+  function truthOf() {
+    const s = scn();
+    if (isSandbox()) {
+      const src = SBX.sb ? SBX.sb.sources : [];
+      const f = src.filter(r => r.kind === "fire"), n = src.filter(r => r.kind !== "fire");
+      if (!src.length) return { fire: null, text: "aucune source placée" };
+      const names = src.map(r => r.icon + " " + r.label).join(" + ");
+      return { fire: f.length > 0, text: (f.length ? "FEU RÉEL" : "PAS DE FEU (nuisance)") + " · " + names };
+    }
+    if (s.kind === "fire") return { fire: true, text: "FEU RÉEL (bois) — essai réel mesuré" };
+    if (s.kind === "drift") return { fire: false, text: "PAS DE FEU — un capteur tombe en panne" };
+    return { fire: false, text: "PAS DE FEU — " + s.title.replace(/\s*\(.*\)/, "") };
+  }
+  function renderVersus(i) {
+    const s = scn(), tr = truthOf(), t = s.t[i];
+    $("vs-truth").innerHTML = "Réalité : <b class=\"" + (tr.fire === null ? "none" : tr.fire ? "fire" : "nofire") + "\">" + tr.text + "</b>";
+    // classic optical detector (= the certified SSI behaviour, single criterion: smoke particles)
+    const on = !!s.ssi.fire[i], tS = s.key_times.ssi_alarm;
+    let cS, cW, cR = "", cC = "wait";
+    if (on) { cS = '<span class="st-alarm">🔔 ALARME FEU</span>'; cW = "depuis T" + (tS >= 0 ? "+" : "") + mmss(tS) + " · il voit seulement de la fumée → sirène, évacuation de tout le site"; }
+    else { cS = '<span class="st-off">· veille</span>'; cW = "ne regarde que les particules de fumée"; }
+    if (tr.fire === true) { if (on) { cR = "✓ a détecté le feu"; cC = "good"; } else { cR = "… n'a encore rien vu"; } }
+    else if (tr.fire === false) { if (on) { cR = "✗ FAUSSE ALARME : évacuation et arrêt de production pour rien"; cC = "bad"; } else { cR = "✓ silencieux"; cC = "good"; } }
+    // Aero-Fire DT
+    const codes = activeAlerts(i).map(a => a.code), v = s.hall.verdict[i], p = s.hall.p[i];
+    let oS, oW;
+    if (codes.includes("FIRE_CONFIRMED")) oS = '<span class="st-fire">🔥 FEU CONFIRMÉ</span>';
+    else if (codes.includes("AI_PREALARM")) oS = '<span class="st-fire">⚠ PRÉ-ALARME FEU</span>';
+    else if (codes.includes("SSI_NUISANCE") || codes.includes("AI_NUISANCE")) oS = '<span class="st-nuis">✋ NUISANCE PROBABLE</span>';
+    else if (codes.includes("SSI_UNCERTAIN")) oS = '<span class="st-unc">? EN ANALYSE</span>';
+    else if (codes.includes("AI_ACTIVITY")) oS = '<span class="st-act">◔ ACTIVITÉ</span>';
+    else oS = '<span class="st-ok">● NORMAL</span>';
+    const extra = [];
+    if (codes.includes("CO_HEALTH")) extra.push("CO dangereux signalé");
+    if (codes.includes("NODE_DRIFT")) extra.push("capteur en panne exclu");
+    oW = "5 capteurs (fumée, CO, H₂, COV, chaleur) + IA + 2 canaux" + (p !== null && p !== undefined ? " · score feu " + (+p).toFixed(2) : "") + (extra.length ? " · " + extra.join(", ") : "");
+    const fireSaid = codes.includes("FIRE_CONFIRMED") || codes.includes("AI_PREALARM");
+    const nuisSaid = codes.includes("SSI_NUISANCE") || codes.includes("AI_NUISANCE");
+    let oR = "", oC = "wait";
+    const tA = s.key_times.ai_fire;
+    if (tr.fire === true) {
+      if (fireSaid) { oR = "✓ feu reconnu"; oC = "good"; if (tA !== null && (tS === null || tA < tS)) oR += " · " + (tS === null ? "le détecteur classique n'a rien vu" : Math.round(tS - tA) + " s AVANT le détecteur classique"); }
+      else if (on) oR = "… vérifie encore (l'alarme classique reste prioritaire)";
+      else oR = "… rien encore";
+    } else if (tr.fire === false) {
+      if (fireSaid) { oR = "✗ se trompe : cas limite connu (une personne vérifie)"; oC = "bad"; }
+      else if (nuisSaid) { oR = "✓ NUISANCE reconnue : on envoie 1 agent vérifier au lieu d'évacuer"; oC = "good"; }
+      else if (on) { oR = "… analyse en cours, demande une levée de doute"; }
+      else if (codes.includes("CO_HEALTH")) { oR = "✓ pas un feu, mais danger CO signalé"; oC = "good"; }
+      else { oR = "✓ pas d'alarme feu"; oC = "good"; }
+    }
+    $("vs-classic").innerHTML = '<div class="h">DÉTECTEUR CLASSIQUE (fumée seule)</div><div class="state">' + cS + '</div><div class="what">' + cW + '</div>' + (cR ? '<div class="res ' + cC + '">' + cR + "</div>" : "");
+    $("vs-ours").innerHTML = '<div class="h">AERO-FIRE DT (notre système)</div><div class="state">' + oS + '</div><div class="what">' + oW + '</div>' + (oR ? '<div class="res ' + oC + '">' + oR + "</div>" : "");
   }
 
   function renderAlerts(i) {
@@ -542,7 +603,7 @@
   function isSandbox() { const s = scn(); return !!(s && s.kind === "sandbox"); }
   function sbNew() {
     SBX.sb = new AFDT_Sandbox.Sandbox(HALL, window.AFDT_VERIFIER, { tamb: st.p.tamb, door: st.p.door, vent: st.p.vent });
-    S[SBX.k] = SBX.sb.scn;
+    S[SBX.k] = SBX.sb.scn; twin.clearFx();
     Object.assign(CFD, { sim: SBX.sb.sim, key: "sandbox", snaps: [], ghost: null, job: null, hist: [], ten: null, tenTime: -1 });
     SBX.simAcc = 0; st.i = 0; st.seen = new Set(); setMW(false); setMC(false);
     sbList();
@@ -673,7 +734,7 @@
       async () => { showPage("zone", false); caption("Un capteur dérive ? Détecté, exclu du vote : mode dégradé signalé."); return playRange(3, 600, 700, 4, token); },
       async () => {
         caption("Banc d'essai libre : un feu de bois posé près d'une étagère, un spray dans l'atelier… la physique décide.");
-        if (!SBX.sb) sbNew(); setScenario(SBX.k, false); sbNew(); setScenario(SBX.k, false);
+        setScenario(SBX.k, false);
         st.speed = 30; SBX.tool = "bois_grand"; sbPlace(5.0, 2.2); SBX.tool = "aerosol"; sbPlace(19.5, 6.5);
         showPage("zone", false); twin.setView(-0.85, 0.45, 24); await sleep(9000); return token === videoToken;
       },
@@ -693,11 +754,12 @@
   SBX.k = S.length; S.push(null);
   (function () {
     const b = document.createElement("button"); b.textContent = "F · Banc d'essai libre"; b.title = "Placez vous-même des feux et des nuisances"; b.classList.add("sandbox");
-    b.onclick = () => { stopVideo(); if (!SBX.sb) sbNew(); setScenario(SBX.k, true); };
+    b.onclick = () => { stopVideo(); setScenario(SBX.k, true); };
     $("scn-buttons").appendChild(b);
     sbBuildTools();
     $("sb-scale").oninput = e => { SBX.scale = +e.target.value; $("v-sbscale").textContent = "×" + SBX.scale; };
-    $("sb-reset").onclick = () => { sbNew(); render(true); };
+    $("sb-reset-top").onclick = () => { sbNew(); $("scrub").max = 0; render(true); };
+    $("sb-min").onclick = () => { const m = $("sandbox-panel").classList.toggle("min"); $("sb-min").textContent = m ? "+" : "–"; };
     let down = null;
     $("three").addEventListener("mousedown", e => { down = [e.clientX, e.clientY]; });
     $("three").addEventListener("mouseup", e => {

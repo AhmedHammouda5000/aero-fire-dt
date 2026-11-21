@@ -393,8 +393,10 @@
         dangerPlane.visible = !!(C.showDanger && ten);
         const dk = (C.showGhost && g ? "g" + g.time : "n" + sim.time);
         if (dangerPlane.visible && dk !== lastDangerKey) { fillDanger(sim, ten); lastDangerKey = dk; }
+        for (const id in fuelFx) { const fx = fuelFx[id]; fx.glow.material.opacity = fx.char.material.opacity = fx.warn.material.opacity = 0; }
         sim.fuel.forEach(p => {
-          const fx = fuelFx[p.id] || (fuelFx[p.id] = fuelMesh(p));
+          const key = p.id + "@" + p.cx.toFixed(2) + "," + p.cz.toFixed(2) + "," + (p.x1 - p.x0).toFixed(2);
+          const fx = fuelFx[key] || (fuelFx[key] = fuelMesh(p));
           fx.glow.material.opacity = p.burning ? Math.min(0.35, 0.08 + p.q / 9000) * (0.8 + 0.2 * Math.sin(time * 9 + p.cx)) : 0;
           fx.char.material.opacity = p.burnt ? 0.85 : p.burning ? Math.min(0.6, p.eBurnt / p.eLoad * 1.5) : 0;
           const willIgnite = C.showGhost && g && g.ignite.includes(p.id) && !p.burning;
@@ -572,7 +574,16 @@
     }
     loop();
     function update(s) { st = Object.assign({ smolder: null, cfd: null }, s); }
-    return { update, resize, renderer, pickFloor, setMarkers, setView: (a, e, d) => { az = a; el = e; dist = d; } };
+    /* wipe every visual effect at once (scenario change, bench reset) */
+    function clearFx() {
+      ALL.forEach(P => { P.life.fill(0); P.max.fill(0); P.col.fill(0); P.points.geometry.attributes.color.needsUpdate = true; });
+      smokeVol.visible = ghostVol.visible = dangerPlane.visible = false;
+      lastVolTime = -1; lastGhostTime = -1; lastDangerKey = "";
+      for (const id in fuelFx) { const fx = fuelFx[id]; fx.glow.material.opacity = fx.char.material.opacity = fx.warn.material.opacity = 0; }
+      fireLight.intensity = 0; floorGlow.material.opacity = 0;
+      setMarkers([]);
+    }
+    return { update, resize, renderer, pickFloor, setMarkers, clearFx, setView: (a, e, d) => { az = a; el = e; dist = d; } };
   }
 
   root.AFDT_Twin3D = Twin3D;

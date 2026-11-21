@@ -195,3 +195,29 @@ body.video .story { display: none; }
 .scn-buttons button.sandbox { border-color: var(--amber); color: var(--amber); }
 
 @media (max-width: 1750px) { .source { display: none; } }
+
+/* ---- classic detector vs Aero-Fire DT ---- */
+#versus { border-top: 1px solid var(--line); padding: 8px 10px 10px; font-size: 12px; }
+.vs-title { color: var(--dim); letter-spacing: 1px; font-size: 10.5px; margin-bottom: 6px; }
+.vs-title span { color: var(--amber); }
+.vs-truth { margin-bottom: 7px; color: var(--white); }
+.vs-truth b.fire { color: #ff7a2a; } .vs-truth b.nofire { color: var(--green); } .vs-truth b.none { color: var(--dim); }
+.vs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.vs-col { background: #0b1217; border: 1px solid var(--line); border-radius: 4px; padding: 7px 8px; min-height: 92px; }
+.vs-col.ours { border-color: #1c4a5a; }
+.vs-col .h { font-size: 10px; color: var(--dim); letter-spacing: .5px; margin-bottom: 4px; }
+.vs-col .state { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+.vs-col .what { color: var(--dim); font-size: 11px; line-height: 1.3; }
+.vs-col .res { margin-top: 5px; font-size: 11.5px; line-height: 1.3; }
+.st-off { color: var(--dim); } .st-alarm { color: var(--red); } .st-fire { color: var(--red); } .st-nuis { color: var(--amber); }
+.st-unc { color: var(--amber); } .st-act { color: #e8d36a; } .st-ok { color: var(--green); }
+.res.good { color: var(--green); } .res.bad { color: var(--red); } .res.wait { color: var(--dim); }
+/* ---- free-test panel ---- */
+.sb-head { display: flex; justify-content: space-between; align-items: center; padding: 2px 0 6px; }
+.sb-head .pt { padding: 0; }
+#sb-min { background: none; border: 1px solid var(--line); color: var(--text); width: 26px; height: 22px; cursor: pointer; border-radius: 3px; font-family: var(--mono); }
+.sandbox-panel.min { width: auto; }
+.sandbox-panel.min #sb-body { display: none; }
+.sb-reset-big { width: 100%; background: #3a1410; color: #ffb8a8; border: 1px solid #c0402a; border-radius: 4px; padding: 7px; font-family: var(--mono); font-size: 12px; cursor: pointer; margin-bottom: 6px; }
+.sb-reset-big:hover { background: #55190f; color: #fff; }
+.sb-help { color: var(--cyan); font-size: 11px; margin-bottom: 2px; }

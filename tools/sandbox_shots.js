@@ -26,9 +26,9 @@ const out = path.join(root, "docs", "screenshots");
   for (const c of cases) {
     await p.evaluate(([c]) => {
       const A = window.AFDT_APP;
-      if (!A.SBX.sb) A.sbNew();
+
       A.setScenario(A.sandboxIndex(), false);
-      A.sbNew(); A.setScenario(A.sandboxIndex(), false);
+
       A.st.speed = 10; document.getElementById("speed").value = "10";
       c.tools.forEach(([k, x, z]) => { A.SBX.tool = k; A.sbPlace(x, z); });
       A.twin.setView(c.view[0], c.view[1], c.view[2]); A.CFD.showDanger = true;
