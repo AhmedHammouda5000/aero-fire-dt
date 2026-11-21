@@ -1,0 +1,49 @@
+{
+ "features": [
+  "d_CO",
+  "d_TEMP",
+  "d_HUM",
+  "log_dPM",
+  "slope_CO",
+  "slope_TEMP",
+  "gas_per_smoke_co"
+ ],
+ "general_model": {
+  "file": "models/general_model.pkl",
+  "learned_from": "Industrial Hall (Mendeley): 32 tests, 17 fires, 15 nuisances",
+  "rows": 22877,
+  "result_on_new_site_NIST": {
+   "fires_confirmed": "7/8",
+   "fires_wilson95": [
+    0.529,
+    0.978
+   ],
+   "nuisances_not_called_fire": "6/33",
+   "nuisances_wilson95": [
+    0.086,
+    0.344
+   ],
+   "nuisances_rejected_as_NUISANCE": "5/33"
+  }
+ },
+ "local_model_NIST": {
+  "file": "models/local_model_NIST.pkl",
+  "learned_from": "Industrial Hall + NIST site recordings (example of a 90-day pilot)",
+  "rows": 42313,
+  "local_rows": 19436,
+  "result_on_NIST_tests_never_seen (leave-one-test-out)": {
+   "fires_confirmed": "8/8",
+   "fires_wilson95": [
+    0.676,
+    1.0
+   ],
+   "nuisances_not_called_fire": "29/33",
+   "nuisances_wilson95": [
+    0.727,
+    0.952
+   ],
+   "nuisances_rejected_as_NUISANCE": "28/33"
+  }
+ },
+ "note": "The deployed demo verifier (app/data/verifier_data.js) uses all 19 clues; these two files show the general+local mechanism on the example site."
+}
