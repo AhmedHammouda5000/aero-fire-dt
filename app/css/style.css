@@ -221,3 +221,5 @@ body.video .story { display: none; }
 .sb-reset-big { width: 100%; background: #3a1410; color: #ffb8a8; border: 1px solid #c0402a; border-radius: 4px; padding: 7px; font-family: var(--mono); font-size: 12px; cursor: pointer; margin-bottom: 6px; }
 .sb-reset-big:hover { background: #55190f; color: #fff; }
 .sb-help { color: var(--cyan); font-size: 11px; margin-bottom: 2px; }
+
+#btn-power.on { border-color: var(--amber); color: var(--amber); background: #2a1e05; }

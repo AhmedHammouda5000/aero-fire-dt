@@ -45,6 +45,10 @@ Test plus sévère (type de scénario entier jamais vu) : **15 / 17 feux, 10 / 1
 
 **Test indépendant NIST (USA, données jamais vues, aucun réglage)** : avec seulement 7 des 19 entrées disponibles (pas de capteur COV ni H₂, compteur de particules différent), l'IA confirme **7 / 8 feux** mais ne rejette que **6 / 33 nuisances de cuisine** (cigarettes : 2 / 2 rejetées ; bacon, hamburgers, pizza : non). Conclusion : les capteurs **COV et H₂ sont indispensables** (ce sont les entrées les plus utiles du modèle) et une cuisine ou cantine demande un apprentissage sur site pendant le pilote. Détails : `docs/results/nist_fr4019.md`.
 
+**Modèle général + apprentissage local (prouvé sur NIST, données jamais vues)** : modèle général seul 7/8 feux, **6/33** fausses alarmes de cuisine écartées → après apprentissage local **8/8 feux, 29/33** ; l'usine d'origine n'est pas abîmée (17/17 feux conservés). Un modèle général partagé + un modèle local par usine pendant le pilote de 90 jours. Détails : `docs/results/site_adaptation.md`.
+
+**Coupures de courant STEG** : fonctionne sans Internet ; ≈ 20 W pour tout le système → batterie LiFePO4 100 Ah ≈ **57 h** d'autonomie (≈ 28 coupures de 2 h), panneau solaire 150 W en option pour une autonomie illimitée. Détails : `docs/ENERGIE.md` (bouton ⚡ COUPURE dans le tableau de bord).
+
 **Limites :** soudure et machine à fumée (1-2 essais seulement) trompent encore l'IA ; positions des nœuds et SSI simulés ; les feux d'essai sont naissants, leur croissance est une hypothèse du modèle de zones. Le gain réel sera mesuré pendant un pilote de 90 jours.
 
 ## Démarrer

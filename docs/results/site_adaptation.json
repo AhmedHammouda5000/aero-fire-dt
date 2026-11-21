@@ -1,0 +1,1559 @@
+{
+ "what": "General model + local learning, proven on an independent site (NIST FR 4019)",
+ "protocol": "each NIST test judged by a model that never saw it; same voting rule and thresholds; 7 features available on NIST",
+ "summary": {
+  "A_general_only": {
+   "fires_confirmed": "7/8",
+   "fires_wilson95": [
+    0.529,
+    0.978
+   ],
+   "nuisances_not_called_fire": "6/33",
+   "nuisances_wilson95": [
+    0.086,
+    0.344
+   ],
+   "nuisances_rejected_as_NUISANCE": "5/33"
+  },
+  "B_general_plus_local_full_pilot": {
+   "fires_confirmed": "8/8",
+   "fires_wilson95": [
+    0.676,
+    1.0
+   ],
+   "nuisances_not_called_fire": "29/33",
+   "nuisances_wilson95": [
+    0.727,
+    0.952
+   ],
+   "nuisances_rejected_as_NUISANCE": "28/33"
+  },
+  "D_local_only": {
+   "fires_confirmed": "8/8",
+   "fires_wilson95": [
+    0.676,
+    1.0
+   ],
+   "nuisances_not_called_fire": "29/33",
+   "nuisances_wilson95": [
+    0.727,
+    0.952
+   ],
+   "nuisances_rejected_as_NUISANCE": "29/33"
+  },
+  "C_general_plus_short_pilot": {
+   "fire_rate_mean": 0.742,
+   "fire_rate_min": 0.5,
+   "nuis_rate_mean": 0.876,
+   "nuis_rate_min": 0.652,
+   "nuis_rate_max": 1.0
+  }
+ },
+ "by_source_A": {
+  "toast": {
+   "label": "nuisance",
+   "n": 4,
+   "FIRE": 3,
+   "NUISANCE": 0,
+   "UNCERTAIN": 1,
+   "NO_ACTIVITY": 0
+  },
+  "bacon": {
+   "label": "nuisance",
+   "n": 4,
+   "FIRE": 4,
+   "NUISANCE": 0,
+   "UNCERTAIN": 0,
+   "NO_ACTIVITY": 0
+  },
+  "pizza": {
+   "label": "nuisance",
+   "n": 3,
+   "FIRE": 3,
+   "NUISANCE": 0,
+   "UNCERTAIN": 0,
+   "NO_ACTIVITY": 0
+  },
+  "spaghetti": {
+   "label": "nuisance",
+   "n": 4,
+   "FIRE": 3,
+   "NUISANCE": 1,
+   "UNCERTAIN": 0,
+   "NO_ACTIVITY": 0
+  },
+  "butter/margarine": {
+   "label": "nuisance",
+   "n": 5,
+   "FIRE": 4,
+   "NUISANCE": 1,
+   "UNCERTAIN": 0,
+   "NO_ACTIVITY": 0
+  },
+  "cigarettes": {
+   "label": "nuisance",
+   "n": 2,
+   "FIRE": 0,
+   "NUISANCE": 2,
+   "UNCERTAIN": 0,
+   "NO_ACTIVITY": 0
+  },
+  "hamburgers": {
+   "label": "nuisance",
+   "n": 6,
+   "FIRE": 6,
+   "NUISANCE": 0,
+   "UNCERTAIN": 0,
+   "NO_ACTIVITY": 0
+  },
+  "tortillas": {
+   "label": "nuisance",
+   "n": 1,
+   "FIRE": 1,
+   "NUISANCE": 0,
+   "UNCERTAIN": 0,
+   "NO_ACTIVITY": 0
+  },
+  "bagels": {
+   "label": "nuisance",
+   "n": 2,
+   "FIRE": 1,
+   "NUISANCE": 1,
+   "UNCERTAIN": 0,
+   "NO_ACTIVITY": 0
+  },
+  "fries": {
+   "label": "nuisance",
+   "n": 1,
+   "FIRE": 1,
+   "NUISANCE": 0,
+   "UNCERTAIN": 0,
+   "NO_ACTIVITY": 0
+  },
+  "candles": {
+   "label": "nuisance",
+   "n": 1,
+   "FIRE": 1,
+   "NUISANCE": 0,
+   "UNCERTAIN": 0,
+   "NO_ACTIVITY": 0
+  },
+  "PU foam smoulder": {
+   "label": "fire",
+   "n": 4,
+   "FIRE": 4,
+   "NUISANCE": 0,
+   "UNCERTAIN": 0,
+   "NO_ACTIVITY": 0
+  },
+  "wood blocks pyrolysis": {
+   "label": "fire",
+   "n": 2,
+   "FIRE": 2,
+   "NUISANCE": 0,
+   "UNCERTAIN": 0,
+   "NO_ACTIVITY": 0
+  },
+  "cotton wick smoulder": {
+   "label": "fire",
+   "n": 2,
+   "FIRE": 1,
+   "NUISANCE": 1,
+   "UNCERTAIN": 0,
+   "NO_ACTIVITY": 0
+  }
+ },
+ "by_source_B": {
+  "toast": {
+   "label": "nuisance",
+   "n": 4,
+   "FIRE": 1,
+   "NUISANCE": 3,
+   "UNCERTAIN": 0,
+   "NO_ACTIVITY": 0
+  },
+  "bacon": {
+   "label": "nuisance",
+   "n": 4,
+   "FIRE": 0,
+   "NUISANCE": 4,
+   "UNCERTAIN": 0,
+   "NO_ACTIVITY": 0
+  },
+  "pizza": {
+   "label": "nuisance",
+   "n": 3,
+   "FIRE": 1,
+   "NUISANCE": 2,
+   "UNCERTAIN": 0,
+   "NO_ACTIVITY": 0
+  },
+  "spaghetti": {
+   "label": "nuisance",
+   "n": 4,
+   "FIRE": 0,
+   "NUISANCE": 4,
+   "UNCERTAIN": 0,
+   "NO_ACTIVITY": 0
+  },
+  "butter/margarine": {
+   "label": "nuisance",
+   "n": 5,
+   "FIRE": 1,
+   "NUISANCE": 4,
+   "UNCERTAIN": 0,
+   "NO_ACTIVITY": 0
+  },
+  "cigarettes": {
+   "label": "nuisance",
+   "n": 2,
+   "FIRE": 0,
+   "NUISANCE": 1,
+   "UNCERTAIN": 1,
+   "NO_ACTIVITY": 0
+  },
+  "hamburgers": {
+   "label": "nuisance",
+   "n": 6,
+   "FIRE": 1,
+   "NUISANCE": 5,
+   "UNCERTAIN": 0,
+   "NO_ACTIVITY": 0
+  },
+  "tortillas": {
+   "label": "nuisance",
+   "n": 1,
+   "FIRE": 0,
+   "NUISANCE": 1,
+   "UNCERTAIN": 0,
+   "NO_ACTIVITY": 0
+  },
+  "bagels": {
+   "label": "nuisance",
+   "n": 2,
+   "FIRE": 0,
+   "NUISANCE": 2,
+   "UNCERTAIN": 0,
+   "NO_ACTIVITY": 0
+  },
+  "fries": {
+   "label": "nuisance",
+   "n": 1,
+   "FIRE": 0,
+   "NUISANCE": 1,
+   "UNCERTAIN": 0,
+   "NO_ACTIVITY": 0
+  },
+  "candles": {
+   "label": "nuisance",
+   "n": 1,
+   "FIRE": 0,
+   "NUISANCE": 1,
+   "UNCERTAIN": 0,
+   "NO_ACTIVITY": 0
+  },
+  "PU foam smoulder": {
+   "label": "fire",
+   "n": 4,
+   "FIRE": 4,
+   "NUISANCE": 0,
+   "UNCERTAIN": 0,
+   "NO_ACTIVITY": 0
+  },
+  "wood blocks pyrolysis": {
+   "label": "fire",
+   "n": 2,
+   "FIRE": 2,
+   "NUISANCE": 0,
+   "UNCERTAIN": 0,
+   "NO_ACTIVITY": 0
+  },
+  "cotton wick smoulder": {
+   "label": "fire",
+   "n": 2,
+   "FIRE": 2,
+   "NUISANCE": 0,
+   "UNCERTAIN": 0,
+   "NO_ACTIVITY": 0
+  }
+ },
+ "details": {
+  "A_general_only": [
+   {
+    "test": "MHN06",
+    "source": "toast",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.9913128599038976
+   },
+   {
+    "test": "MHN07",
+    "source": "toast",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.9910581785288091
+   },
+   {
+    "test": "MHN08",
+    "source": "bacon",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.7717234548313359
+   },
+   {
+    "test": "MHN09",
+    "source": "bacon",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.9782413442323579
+   },
+   {
+    "test": "MHN10",
+    "source": "pizza",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.9954518796054175
+   },
+   {
+    "test": "MHN11",
+    "source": "spaghetti",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.9881422608226641
+   },
+   {
+    "test": "MHN12",
+    "source": "spaghetti",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.910626148996649
+   },
+   {
+    "test": "MHN13",
+    "source": "butter/margarine",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.9843645193932722
+   },
+   {
+    "test": "MHN14",
+    "source": "butter/margarine",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.9927542169197137
+   },
+   {
+    "test": "MHN15",
+    "source": "cigarettes",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.6101016899814661
+   },
+   {
+    "test": "MHN16",
+    "source": "hamburgers",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.9940295020451224
+   },
+   {
+    "test": "MHN17",
+    "source": "hamburgers",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.8986253938733784
+   },
+   {
+    "test": "MHN18",
+    "source": "tortillas",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.8647676148084087
+   },
+   {
+    "test": "MHN19",
+    "source": "hamburgers",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.9854304045189942
+   },
+   {
+    "test": "MHN20",
+    "source": "bagels",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.9887154618204818
+   },
+   {
+    "test": "MHN21",
+    "source": "bagels",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.9015002231575284
+   },
+   {
+    "test": "MHN22",
+    "source": "toast",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.9698139165441736
+   },
+   {
+    "test": "MHN23",
+    "source": "toast",
+    "label": "nuisance",
+    "verdict": "UNCERTAIN",
+    "max_p": 0.9628956347128071
+   },
+   {
+    "test": "MHN24",
+    "source": "spaghetti",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.8963258354870405
+   },
+   {
+    "test": "MHN25",
+    "source": "hamburgers",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.8901854809445144
+   },
+   {
+    "test": "MHN26",
+    "source": "hamburgers",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.9202534495923418
+   },
+   {
+    "test": "MHN27",
+    "source": "spaghetti",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.6911027301047739
+   },
+   {
+    "test": "MHN28",
+    "source": "butter/margarine",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.96437800325652
+   },
+   {
+    "test": "MHN29",
+    "source": "butter/margarine",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.7705638535475454
+   },
+   {
+    "test": "MHN31",
+    "source": "butter/margarine",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.9656950678904812
+   },
+   {
+    "test": "MHN32",
+    "source": "pizza",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.9955495457568921
+   },
+   {
+    "test": "MHN33",
+    "source": "pizza",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.9953768854891054
+   },
+   {
+    "test": "MHN34",
+    "source": "fries",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.983800671184788
+   },
+   {
+    "test": "MHN35",
+    "source": "candles",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.9840247227620436
+   },
+   {
+    "test": "MHN36",
+    "source": "bacon",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.9448725675025594
+   },
+   {
+    "test": "MHN37",
+    "source": "bacon",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.9753829442789872
+   },
+   {
+    "test": "MHN38",
+    "source": "cigarettes",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.7649752734572344
+   },
+   {
+    "test": "MHN39",
+    "source": "hamburgers",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.9880053733041052
+   },
+   {
+    "test": "MHN40",
+    "source": "PU foam smoulder",
+    "label": "fire",
+    "verdict": "FIRE",
+    "max_p": 0.9528693217184053
+   },
+   {
+    "test": "MHN41",
+    "source": "PU foam smoulder",
+    "label": "fire",
+    "verdict": "FIRE",
+    "max_p": 0.9628532849577748
+   },
+   {
+    "test": "MHN42",
+    "source": "PU foam smoulder",
+    "label": "fire",
+    "verdict": "FIRE",
+    "max_p": 0.9505547106926762
+   },
+   {
+    "test": "MHN43",
+    "source": "PU foam smoulder",
+    "label": "fire",
+    "verdict": "FIRE",
+    "max_p": 0.9640928834401689
+   },
+   {
+    "test": "MHN44",
+    "source": "wood blocks pyrolysis",
+    "label": "fire",
+    "verdict": "FIRE",
+    "max_p": 0.848050585041799
+   },
+   {
+    "test": "MHN45",
+    "source": "wood blocks pyrolysis",
+    "label": "fire",
+    "verdict": "FIRE",
+    "max_p": 0.885163172798878
+   },
+   {
+    "test": "MHN46",
+    "source": "cotton wick smoulder",
+    "label": "fire",
+    "verdict": "NUISANCE",
+    "max_p": 0.6630101073140355
+   },
+   {
+    "test": "MHN47",
+    "source": "cotton wick smoulder",
+    "label": "fire",
+    "verdict": "FIRE",
+    "max_p": 0.8558680919324548
+   }
+  ],
+  "B_general_plus_local_full_pilot": [
+   {
+    "test": "MHN06",
+    "source": "toast",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.7520498394366747
+   },
+   {
+    "test": "MHN07",
+    "source": "toast",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.99314330601914
+   },
+   {
+    "test": "MHN08",
+    "source": "bacon",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.21724204325802074
+   },
+   {
+    "test": "MHN09",
+    "source": "bacon",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.17965089553438043
+   },
+   {
+    "test": "MHN10",
+    "source": "pizza",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.6901004077644878
+   },
+   {
+    "test": "MHN11",
+    "source": "spaghetti",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.09605439694861166
+   },
+   {
+    "test": "MHN12",
+    "source": "spaghetti",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.14128778374808593
+   },
+   {
+    "test": "MHN13",
+    "source": "butter/margarine",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.05704170437969586
+   },
+   {
+    "test": "MHN14",
+    "source": "butter/margarine",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.6947274118793498
+   },
+   {
+    "test": "MHN15",
+    "source": "cigarettes",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.2607140202550154
+   },
+   {
+    "test": "MHN16",
+    "source": "hamburgers",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.8212950306121609
+   },
+   {
+    "test": "MHN17",
+    "source": "hamburgers",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.5000862099534076
+   },
+   {
+    "test": "MHN18",
+    "source": "tortillas",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.7011287844181219
+   },
+   {
+    "test": "MHN19",
+    "source": "hamburgers",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.3886341697155929
+   },
+   {
+    "test": "MHN20",
+    "source": "bagels",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.22043747842481673
+   },
+   {
+    "test": "MHN21",
+    "source": "bagels",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.9681016493573511
+   },
+   {
+    "test": "MHN22",
+    "source": "toast",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.3421673475723519
+   },
+   {
+    "test": "MHN23",
+    "source": "toast",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.5915386775545248
+   },
+   {
+    "test": "MHN24",
+    "source": "spaghetti",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.20235615203142265
+   },
+   {
+    "test": "MHN25",
+    "source": "hamburgers",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.5477759569190515
+   },
+   {
+    "test": "MHN26",
+    "source": "hamburgers",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.6270499708274753
+   },
+   {
+    "test": "MHN27",
+    "source": "spaghetti",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.17912843514226326
+   },
+   {
+    "test": "MHN28",
+    "source": "butter/margarine",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.7585764563806379
+   },
+   {
+    "test": "MHN29",
+    "source": "butter/margarine",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.4428820596333052
+   },
+   {
+    "test": "MHN31",
+    "source": "butter/margarine",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.8649899809703144
+   },
+   {
+    "test": "MHN32",
+    "source": "pizza",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.6999060970186985
+   },
+   {
+    "test": "MHN33",
+    "source": "pizza",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.9912967925284331
+   },
+   {
+    "test": "MHN34",
+    "source": "fries",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.6634696606983249
+   },
+   {
+    "test": "MHN35",
+    "source": "candles",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.2228570767599059
+   },
+   {
+    "test": "MHN36",
+    "source": "bacon",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.31770753306538596
+   },
+   {
+    "test": "MHN37",
+    "source": "bacon",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.8175900047760947
+   },
+   {
+    "test": "MHN38",
+    "source": "cigarettes",
+    "label": "nuisance",
+    "verdict": "UNCERTAIN",
+    "max_p": 0.7359036686207445
+   },
+   {
+    "test": "MHN39",
+    "source": "hamburgers",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.8919591352691993
+   },
+   {
+    "test": "MHN40",
+    "source": "PU foam smoulder",
+    "label": "fire",
+    "verdict": "FIRE",
+    "max_p": 0.9906249159896585
+   },
+   {
+    "test": "MHN41",
+    "source": "PU foam smoulder",
+    "label": "fire",
+    "verdict": "FIRE",
+    "max_p": 0.9923336647508301
+   },
+   {
+    "test": "MHN42",
+    "source": "PU foam smoulder",
+    "label": "fire",
+    "verdict": "FIRE",
+    "max_p": 0.9967305055482276
+   },
+   {
+    "test": "MHN43",
+    "source": "PU foam smoulder",
+    "label": "fire",
+    "verdict": "FIRE",
+    "max_p": 0.9906359423394371
+   },
+   {
+    "test": "MHN44",
+    "source": "wood blocks pyrolysis",
+    "label": "fire",
+    "verdict": "FIRE",
+    "max_p": 0.9924610372444858
+   },
+   {
+    "test": "MHN45",
+    "source": "wood blocks pyrolysis",
+    "label": "fire",
+    "verdict": "FIRE",
+    "max_p": 0.9481539729976455
+   },
+   {
+    "test": "MHN46",
+    "source": "cotton wick smoulder",
+    "label": "fire",
+    "verdict": "FIRE",
+    "max_p": 0.884577664306621
+   },
+   {
+    "test": "MHN47",
+    "source": "cotton wick smoulder",
+    "label": "fire",
+    "verdict": "FIRE",
+    "max_p": 0.9796229430312255
+   }
+  ],
+  "C_general_plus_short_pilot": {
+   "draws": [
+    {
+     "pilot_tests": [
+      "MHN07",
+      "MHN12",
+      "MHN14",
+      "MHN15",
+      "MHN20",
+      "MHN26",
+      "MHN27",
+      "MHN28",
+      "MHN34",
+      "MHN37",
+      "MHN45",
+      "MHN46"
+     ],
+     "fire_rate": 0.6666666666666666,
+     "nuis_rate": 1.0,
+     "fires": "4/6",
+     "nuisances": "23/23"
+    },
+    {
+     "pilot_tests": [
+      "MHN12",
+      "MHN17",
+      "MHN18",
+      "MHN20",
+      "MHN21",
+      "MHN22",
+      "MHN31",
+      "MHN33",
+      "MHN36",
+      "MHN38",
+      "MHN42",
+      "MHN47"
+     ],
+     "fire_rate": 0.6666666666666666,
+     "nuis_rate": 0.9565217391304348,
+     "fires": "4/6",
+     "nuisances": "22/23"
+    },
+    {
+     "pilot_tests": [
+      "MHN06",
+      "MHN07",
+      "MHN09",
+      "MHN17",
+      "MHN19",
+      "MHN20",
+      "MHN32",
+      "MHN34",
+      "MHN35",
+      "MHN36",
+      "MHN44",
+      "MHN46"
+     ],
+     "fire_rate": 0.5,
+     "nuis_rate": 0.9565217391304348,
+     "fires": "3/6",
+     "nuisances": "22/23"
+    },
+    {
+     "pilot_tests": [
+      "MHN06",
+      "MHN11",
+      "MHN16",
+      "MHN20",
+      "MHN22",
+      "MHN25",
+      "MHN27",
+      "MHN28",
+      "MHN33",
+      "MHN37",
+      "MHN40",
+      "MHN41"
+     ],
+     "fire_rate": 0.5,
+     "nuis_rate": 0.9565217391304348,
+     "fires": "3/6",
+     "nuisances": "22/23"
+    },
+    {
+     "pilot_tests": [
+      "MHN08",
+      "MHN12",
+      "MHN17",
+      "MHN21",
+      "MHN23",
+      "MHN25",
+      "MHN27",
+      "MHN28",
+      "MHN34",
+      "MHN36",
+      "MHN44",
+      "MHN45"
+     ],
+     "fire_rate": 0.8333333333333334,
+     "nuis_rate": 0.782608695652174,
+     "fires": "5/6",
+     "nuisances": "18/23"
+    },
+    {
+     "pilot_tests": [
+      "MHN15",
+      "MHN16",
+      "MHN17",
+      "MHN19",
+      "MHN20",
+      "MHN21",
+      "MHN23",
+      "MHN25",
+      "MHN34",
+      "MHN38",
+      "MHN41",
+      "MHN47"
+     ],
+     "fire_rate": 0.6666666666666666,
+     "nuis_rate": 0.7391304347826086,
+     "fires": "4/6",
+     "nuisances": "17/23"
+    },
+    {
+     "pilot_tests": [
+      "MHN06",
+      "MHN08",
+      "MHN12",
+      "MHN15",
+      "MHN16",
+      "MHN22",
+      "MHN26",
+      "MHN32",
+      "MHN33",
+      "MHN37",
+      "MHN40",
+      "MHN43"
+     ],
+     "fire_rate": 0.5,
+     "nuis_rate": 0.9565217391304348,
+     "fires": "3/6",
+     "nuisances": "22/23"
+    },
+    {
+     "pilot_tests": [
+      "MHN07",
+      "MHN09",
+      "MHN11",
+      "MHN13",
+      "MHN19",
+      "MHN21",
+      "MHN23",
+      "MHN27",
+      "MHN34",
+      "MHN37",
+      "MHN44",
+      "MHN47"
+     ],
+     "fire_rate": 0.8333333333333334,
+     "nuis_rate": 0.9565217391304348,
+     "fires": "5/6",
+     "nuisances": "22/23"
+    },
+    {
+     "pilot_tests": [
+      "MHN06",
+      "MHN11",
+      "MHN20",
+      "MHN21",
+      "MHN22",
+      "MHN23",
+      "MHN29",
+      "MHN31",
+      "MHN33",
+      "MHN38",
+      "MHN43",
+      "MHN46"
+     ],
+     "fire_rate": 0.8333333333333334,
+     "nuis_rate": 0.9565217391304348,
+     "fires": "5/6",
+     "nuisances": "22/23"
+    },
+    {
+     "pilot_tests": [
+      "MHN08",
+      "MHN17",
+      "MHN19",
+      "MHN21",
+      "MHN23",
+      "MHN25",
+      "MHN28",
+      "MHN29",
+      "MHN34",
+      "MHN35",
+      "MHN40",
+      "MHN46"
+     ],
+     "fire_rate": 1.0,
+     "nuis_rate": 0.7391304347826086,
+     "fires": "6/6",
+     "nuisances": "17/23"
+    },
+    {
+     "pilot_tests": [
+      "MHN06",
+      "MHN09",
+      "MHN14",
+      "MHN17",
+      "MHN23",
+      "MHN27",
+      "MHN31",
+      "MHN33",
+      "MHN38",
+      "MHN39",
+      "MHN43",
+      "MHN46"
+     ],
+     "fire_rate": 1.0,
+     "nuis_rate": 1.0,
+     "fires": "6/6",
+     "nuisances": "23/23"
+    },
+    {
+     "pilot_tests": [
+      "MHN08",
+      "MHN11",
+      "MHN12",
+      "MHN19",
+      "MHN25",
+      "MHN26",
+      "MHN29",
+      "MHN36",
+      "MHN37",
+      "MHN38",
+      "MHN45",
+      "MHN46"
+     ],
+     "fire_rate": 0.6666666666666666,
+     "nuis_rate": 0.6521739130434783,
+     "fires": "4/6",
+     "nuisances": "15/23"
+    },
+    {
+     "pilot_tests": [
+      "MHN08",
+      "MHN10",
+      "MHN11",
+      "MHN12",
+      "MHN18",
+      "MHN22",
+      "MHN31",
+      "MHN35",
+      "MHN36",
+      "MHN38",
+      "MHN42",
+      "MHN46"
+     ],
+     "fire_rate": 0.8333333333333334,
+     "nuis_rate": 0.9130434782608695,
+     "fires": "5/6",
+     "nuisances": "21/23"
+    },
+    {
+     "pilot_tests": [
+      "MHN07",
+      "MHN08",
+      "MHN11",
+      "MHN13",
+      "MHN15",
+      "MHN18",
+      "MHN22",
+      "MHN23",
+      "MHN29",
+      "MHN39",
+      "MHN46",
+      "MHN47"
+     ],
+     "fire_rate": 0.6666666666666666,
+     "nuis_rate": 0.9130434782608695,
+     "fires": "4/6",
+     "nuisances": "21/23"
+    },
+    {
+     "pilot_tests": [
+      "MHN07",
+      "MHN11",
+      "MHN12",
+      "MHN13",
+      "MHN14",
+      "MHN17",
+      "MHN21",
+      "MHN22",
+      "MHN27",
+      "MHN29",
+      "MHN40",
+      "MHN45"
+     ],
+     "fire_rate": 0.8333333333333334,
+     "nuis_rate": 0.8260869565217391,
+     "fires": "5/6",
+     "nuisances": "19/23"
+    },
+    {
+     "pilot_tests": [
+      "MHN09",
+      "MHN13",
+      "MHN14",
+      "MHN16",
+      "MHN17",
+      "MHN20",
+      "MHN23",
+      "MHN29",
+      "MHN35",
+      "MHN38",
+      "MHN43",
+      "MHN46"
+     ],
+     "fire_rate": 0.8333333333333334,
+     "nuis_rate": 0.6956521739130435,
+     "fires": "5/6",
+     "nuisances": "16/23"
+    },
+    {
+     "pilot_tests": [
+      "MHN09",
+      "MHN24",
+      "MHN25",
+      "MHN27",
+      "MHN28",
+      "MHN31",
+      "MHN32",
+      "MHN33",
+      "MHN34",
+      "MHN35",
+      "MHN40",
+      "MHN46"
+     ],
+     "fire_rate": 1.0,
+     "nuis_rate": 1.0,
+     "fires": "6/6",
+     "nuisances": "23/23"
+    },
+    {
+     "pilot_tests": [
+      "MHN07",
+      "MHN11",
+      "MHN12",
+      "MHN13",
+      "MHN16",
+      "MHN23",
+      "MHN32",
+      "MHN33",
+      "MHN35",
+      "MHN36",
+      "MHN40",
+      "MHN43"
+     ],
+     "fire_rate": 0.6666666666666666,
+     "nuis_rate": 0.8695652173913043,
+     "fires": "4/6",
+     "nuisances": "20/23"
+    },
+    {
+     "pilot_tests": [
+      "MHN12",
+      "MHN13",
+      "MHN17",
+      "MHN18",
+      "MHN22",
+      "MHN24",
+      "MHN27",
+      "MHN32",
+      "MHN36",
+      "MHN38",
+      "MHN43",
+      "MHN47"
+     ],
+     "fire_rate": 0.6666666666666666,
+     "nuis_rate": 0.9130434782608695,
+     "fires": "4/6",
+     "nuisances": "21/23"
+    },
+    {
+     "pilot_tests": [
+      "MHN09",
+      "MHN10",
+      "MHN14",
+      "MHN15",
+      "MHN24",
+      "MHN27",
+      "MHN32",
+      "MHN35",
+      "MHN37",
+      "MHN38",
+      "MHN40",
+      "MHN47"
+     ],
+     "fire_rate": 0.6666666666666666,
+     "nuis_rate": 0.7391304347826086,
+     "fires": "4/6",
+     "nuisances": "17/23"
+    }
+   ],
+   "fire_rate_mean": 0.742,
+   "fire_rate_min": 0.5,
+   "nuis_rate_mean": 0.876,
+   "nuis_rate_min": 0.652,
+   "nuis_rate_max": 1.0
+  },
+  "D_local_only": [
+   {
+    "test": "MHN06",
+    "source": "toast",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.9757142713754017
+   },
+   {
+    "test": "MHN07",
+    "source": "toast",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.9992411977484051
+   },
+   {
+    "test": "MHN08",
+    "source": "bacon",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.0012722829358963305
+   },
+   {
+    "test": "MHN09",
+    "source": "bacon",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.0227751947794694
+   },
+   {
+    "test": "MHN10",
+    "source": "pizza",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.79083157280887
+   },
+   {
+    "test": "MHN11",
+    "source": "spaghetti",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.001311955035186917
+   },
+   {
+    "test": "MHN12",
+    "source": "spaghetti",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.0014785713669554319
+   },
+   {
+    "test": "MHN13",
+    "source": "butter/margarine",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.1212843133421451
+   },
+   {
+    "test": "MHN14",
+    "source": "butter/margarine",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.3395428556263804
+   },
+   {
+    "test": "MHN15",
+    "source": "cigarettes",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.43375685477024944
+   },
+   {
+    "test": "MHN16",
+    "source": "hamburgers",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.9992527217983478
+   },
+   {
+    "test": "MHN17",
+    "source": "hamburgers",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.8409384974188431
+   },
+   {
+    "test": "MHN18",
+    "source": "tortillas",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.0606580972617061
+   },
+   {
+    "test": "MHN19",
+    "source": "hamburgers",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.11334293674589233
+   },
+   {
+    "test": "MHN20",
+    "source": "bagels",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.14803051579205104
+   },
+   {
+    "test": "MHN21",
+    "source": "bagels",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.9921421713215102
+   },
+   {
+    "test": "MHN22",
+    "source": "toast",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.33736001289504114
+   },
+   {
+    "test": "MHN23",
+    "source": "toast",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.4981518020808272
+   },
+   {
+    "test": "MHN24",
+    "source": "spaghetti",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.13292226144640198
+   },
+   {
+    "test": "MHN25",
+    "source": "hamburgers",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.0388350599630982
+   },
+   {
+    "test": "MHN26",
+    "source": "hamburgers",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.5307661207842408
+   },
+   {
+    "test": "MHN27",
+    "source": "spaghetti",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.08129143562124465
+   },
+   {
+    "test": "MHN28",
+    "source": "butter/margarine",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.7195241978670354
+   },
+   {
+    "test": "MHN29",
+    "source": "butter/margarine",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.07731761839017523
+   },
+   {
+    "test": "MHN31",
+    "source": "butter/margarine",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.8796986615041972
+   },
+   {
+    "test": "MHN32",
+    "source": "pizza",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.7796116054852238
+   },
+   {
+    "test": "MHN33",
+    "source": "pizza",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.9986771623986992
+   },
+   {
+    "test": "MHN34",
+    "source": "fries",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.6793527759553011
+   },
+   {
+    "test": "MHN35",
+    "source": "candles",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.7141214355697126
+   },
+   {
+    "test": "MHN36",
+    "source": "bacon",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.3635438466350449
+   },
+   {
+    "test": "MHN37",
+    "source": "bacon",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.8598819730345726
+   },
+   {
+    "test": "MHN38",
+    "source": "cigarettes",
+    "label": "nuisance",
+    "verdict": "NUISANCE",
+    "max_p": 0.8771079089577809
+   },
+   {
+    "test": "MHN39",
+    "source": "hamburgers",
+    "label": "nuisance",
+    "verdict": "FIRE",
+    "max_p": 0.9847144290997555
+   },
+   {
+    "test": "MHN40",
+    "source": "PU foam smoulder",
+    "label": "fire",
+    "verdict": "FIRE",
+    "max_p": 0.9988511693482892
+   },
+   {
+    "test": "MHN41",
+    "source": "PU foam smoulder",
+    "label": "fire",
+    "verdict": "FIRE",
+    "max_p": 0.9992195901949568
+   },
+   {
+    "test": "MHN42",
+    "source": "PU foam smoulder",
+    "label": "fire",
+    "verdict": "FIRE",
+    "max_p": 0.9997763151234285
+   },
+   {
+    "test": "MHN43",
+    "source": "PU foam smoulder",
+    "label": "fire",
+    "verdict": "FIRE",
+    "max_p": 0.9989253092624981
+   },
+   {
+    "test": "MHN44",
+    "source": "wood blocks pyrolysis",
+    "label": "fire",
+    "verdict": "FIRE",
+    "max_p": 0.9973437044228952
+   },
+   {
+    "test": "MHN45",
+    "source": "wood blocks pyrolysis",
+    "label": "fire",
+    "verdict": "FIRE",
+    "max_p": 0.9972138240223815
+   },
+   {
+    "test": "MHN46",
+    "source": "cotton wick smoulder",
+    "label": "fire",
+    "verdict": "FIRE",
+    "max_p": 0.9420008129858102
+   },
+   {
+    "test": "MHN47",
+    "source": "cotton wick smoulder",
+    "label": "fire",
+    "verdict": "FIRE",
+    "max_p": 0.9955647746718922
+   }
+  ]
+ },
+ "runtime_s": 474.4
+}

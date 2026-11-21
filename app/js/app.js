@@ -201,6 +201,7 @@
     $("heartbeat").classList.toggle("degraded", drift);
     $("hb-text").textContent = drift ? "SSI LINK OK (LECTURE SEULE) · 8/9 NŒUDS · MODE DÉGRADÉ · IA v1.0"
       : "SSI LINK OK (LECTURE SEULE) · 9/9 NŒUDS · IA v1.0";
+    renderPower();
     if (!force) checkNewAlerts(i);
     renderAlerts(i);
     renderVersus(i);
@@ -518,6 +519,23 @@
   $("btn-danger").onclick = () => { CFD.showDanger = !CFD.showDanger; $("btn-danger").textContent = "CARTE DE DANGER : " + (CFD.showDanger ? "ON" : "OFF"); $("btn-danger").classList.toggle("on", CFD.showDanger); render(true); };
   $("btn-ghost").onclick = () => { CFD.showGhost = !CFD.showGhost; $("btn-ghost").textContent = "FANTÔME +60 s : " + (CFD.showGhost ? "ON" : "OFF"); $("btn-ghost").classList.toggle("on", CFD.showGhost); render(true); };
   $("btn-whatif").onclick = () => { st.whatIf = scn().t[st.i]; showPage("forecast", true); };
+  /* ---------- power cut (STEG load shedding): the system keeps detecting on its backup battery ---------- */
+  // sizing: scripts/energy_budget.py -> 20.3 W system, LiFePO4 12.8 V 100 Ah -> ~57 h (76 h screen off)
+  const POWER = { cut: false, t0: 0, autonomyH: 57 };
+  function renderPower() {
+    const b = $("btn-power"); if (!b) return;
+    b.classList.toggle("on", POWER.cut);
+    if (!POWER.cut) { b.textContent = "⚡ COUPURE"; return; }
+    const hours = (performance.now() - POWER.t0) / 1000 / 60;      // demo clock: 1 s real = 1 min on battery
+    const pct = Math.max(0, 100 * (1 - hours / POWER.autonomyH)), left = Math.max(0, POWER.autonomyH - hours);
+    b.textContent = "🔋 " + pct.toFixed(0) + " %";
+    $("heartbeat").classList.add("degraded");
+    $("hb-text").textContent = "⚡ SECTEUR COUPÉ · SUR BATTERIE " + pct.toFixed(0) + " % · AUTONOMIE ≈ " + Math.floor(left) + " h " +
+      String(Math.round((left % 1) * 60)).padStart(2, "0") + " · DÉTECTION ACTIVE · SSI SUR SA PROPRE BATTERIE";
+  }
+  $("btn-power").onclick = () => { POWER.cut = !POWER.cut; POWER.t0 = performance.now(); render(true); };
+  setInterval(() => { if (POWER.cut) renderPower(); }, 1000);
+
   $("btn-results").onclick = () => { renderResults(); $("results-modal").classList.remove("hidden"); };
   $("btn-close-results").onclick = () => $("results-modal").classList.add("hidden");
 

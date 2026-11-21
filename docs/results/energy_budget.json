@@ -1,0 +1,80 @@
+{
+ "node_components": [
+  {
+   "composant": "Particules SPS30 (ventilateur)",
+   "V": 5.0,
+   "mA": 55.0,
+   "W": 0.275,
+   "source": "Sensirion SPS30 datasheet: 45-65 mA en mesure, 38 uA en veille"
+  },
+  {
+   "composant": "H2 brut SGP30 (MOX chauffé)",
+   "V": 3.3,
+   "mA": 48.8,
+   "W": 0.161,
+   "source": "Sensirion SGP30 datasheet: 48.8 mA en mesure (1.8 V, régulé depuis 3.3 V)"
+  },
+  {
+   "composant": "COV SGP41",
+   "V": 3.3,
+   "mA": 3.0,
+   "W": 0.0099,
+   "source": "Sensirion SGP41: 3.0 mA en moyenne"
+  },
+  {
+   "composant": "CO2 SCD41 (périodique)",
+   "V": 3.3,
+   "mA": 15.0,
+   "W": 0.0495,
+   "source": "Sensirion SCD4x datasheet: 15 mA (3.2 mA en mode basse conso.)"
+  },
+  {
+   "composant": "CO électrochimique + ampli",
+   "V": 3.3,
+   "mA": 1.0,
+   "W": 0.0033,
+   "source": "cellule électrochimique (uA) + ampli potentiostat - estimation"
+  },
+  {
+   "composant": "Temp./humidité SHT4x",
+   "V": 3.3,
+   "mA": 0.01,
+   "W": 0.0,
+   "source": "négligeable"
+  },
+  {
+   "composant": "Microcontrôleur + radio basse conso.",
+   "V": 3.3,
+   "mA": 10.0,
+   "W": 0.033,
+   "source": "MCU basse conso. + radio maillée 2.4 GHz, moyenne estimée"
+  }
+ ],
+ "node_power_W": 0.626,
+ "node_energy_per_day_Wh": 15.0,
+ "biggest_consumer": "Particules SPS30 (ventilateur)",
+ "A_wired_PoE_central_battery": {
+  "nodes": 9,
+  "system_power_W": 20.3,
+  "system_power_without_screen_W": 15.3,
+  "battery": "LiFePO4 12.8 V 100 Ah (1280 Wh)",
+  "autonomy_h": 56.9,
+  "autonomy_without_screen_h": 75.5,
+  "STEG_cuts_2h_covered": 28
+ },
+ "B_wireless_node_battery": {
+  "pack": "2 x 18650 Li-ion (21.6 Wh)",
+  "autonomy_h": 29.4
+ },
+ "solar_to_run_indefinitely_W": 118,
+ "solar_recommended_panel_W": 150,
+ "assumptions": {
+  "converter_eff": 0.85,
+  "poe_eff": 0.9,
+  "gateway_W": 4.0,
+  "switch_W": 5.0,
+  "screen_W": 5.0,
+  "peak_sun_hours_tunisia": 5.5,
+  "note": "valeurs typiques des fiches techniques, à mesurer sur le matériel réel"
+ }
+}

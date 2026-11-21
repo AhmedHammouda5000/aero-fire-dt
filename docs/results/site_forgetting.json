@@ -1,0 +1,274 @@
+{
+ "summary": {
+  "hall_only": {
+   "hall_fires_confirmed": "17/17",
+   "hall_nuisances_not_fire": "10/15"
+  },
+  "hall_plus_nist": {
+   "hall_fires_confirmed": "17/17",
+   "hall_nuisances_not_fire": "9/15"
+  }
+ },
+ "episodes": {
+  "hall_only": {
+   "Abrasive_Cutting#1": {
+    "label": "nuisance",
+    "verdict": "FIRE"
+   },
+   "CO#1": {
+    "label": "nuisance",
+    "verdict": "NUISANCE"
+   },
+   "CO#2": {
+    "label": "nuisance",
+    "verdict": "NUISANCE"
+   },
+   "Cable#2": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Cable#3": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Cable#4": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Candles#1": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Candles#2": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Candles#3": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Candles#4": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Deodorant#1": {
+    "label": "nuisance",
+    "verdict": "NUISANCE"
+   },
+   "Deodorant#2": {
+    "label": "nuisance",
+    "verdict": "FIRE"
+   },
+   "Deodorant#3": {
+    "label": "nuisance",
+    "verdict": "NUISANCE"
+   },
+   "Ethanol#1": {
+    "label": "nuisance",
+    "verdict": "NUISANCE"
+   },
+   "Ethanol#2": {
+    "label": "nuisance",
+    "verdict": "NUISANCE"
+   },
+   "Exhaust#1": {
+    "label": "nuisance",
+    "verdict": "NUISANCE"
+   },
+   "Exhaust#2": {
+    "label": "nuisance",
+    "verdict": "NUISANCE"
+   },
+   "Exhaust#3": {
+    "label": "nuisance",
+    "verdict": "NUISANCE"
+   },
+   "Green_Waste#1": {
+    "label": "nuisance",
+    "verdict": "UNCERTAIN"
+   },
+   "Lunts#1": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Lunts#2": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Lunts#3": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Smoke#1": {
+    "label": "nuisance",
+    "verdict": "FIRE"
+   },
+   "Smoke#2": {
+    "label": "nuisance",
+    "verdict": "FIRE"
+   },
+   "Welding#1": {
+    "label": "nuisance",
+    "verdict": "FIRE"
+   },
+   "Wood#1": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Wood#2": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Wood#3": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Wood#4": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Wood#5": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Wood#6": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Wood#7": {
+    "label": "fire",
+    "verdict": "FIRE"
+   }
+  },
+  "hall_plus_nist": {
+   "Abrasive_Cutting#1": {
+    "label": "nuisance",
+    "verdict": "FIRE"
+   },
+   "CO#1": {
+    "label": "nuisance",
+    "verdict": "NUISANCE"
+   },
+   "CO#2": {
+    "label": "nuisance",
+    "verdict": "NUISANCE"
+   },
+   "Cable#2": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Cable#3": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Cable#4": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Candles#1": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Candles#2": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Candles#3": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Candles#4": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Deodorant#1": {
+    "label": "nuisance",
+    "verdict": "NUISANCE"
+   },
+   "Deodorant#2": {
+    "label": "nuisance",
+    "verdict": "FIRE"
+   },
+   "Deodorant#3": {
+    "label": "nuisance",
+    "verdict": "FIRE"
+   },
+   "Ethanol#1": {
+    "label": "nuisance",
+    "verdict": "NUISANCE"
+   },
+   "Ethanol#2": {
+    "label": "nuisance",
+    "verdict": "NUISANCE"
+   },
+   "Exhaust#1": {
+    "label": "nuisance",
+    "verdict": "NUISANCE"
+   },
+   "Exhaust#2": {
+    "label": "nuisance",
+    "verdict": "NUISANCE"
+   },
+   "Exhaust#3": {
+    "label": "nuisance",
+    "verdict": "NUISANCE"
+   },
+   "Green_Waste#1": {
+    "label": "nuisance",
+    "verdict": "UNCERTAIN"
+   },
+   "Lunts#1": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Lunts#2": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Lunts#3": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Smoke#1": {
+    "label": "nuisance",
+    "verdict": "FIRE"
+   },
+   "Smoke#2": {
+    "label": "nuisance",
+    "verdict": "FIRE"
+   },
+   "Welding#1": {
+    "label": "nuisance",
+    "verdict": "FIRE"
+   },
+   "Wood#1": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Wood#2": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Wood#3": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Wood#4": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Wood#5": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Wood#6": {
+    "label": "fire",
+    "verdict": "FIRE"
+   },
+   "Wood#7": {
+    "label": "fire",
+    "verdict": "FIRE"
+   }
+  }
+ }
+}

@@ -24,6 +24,8 @@ PIPELINE = [
     ("Dashboard scenarios from real recordings", [PY, "-m", "scenarios.build_scenarios"]),
     ("Export results for the dashboard", [PY, "scripts/export_results.py"]),
     ("Export the alarm verifier to JavaScript (free-test bench)", [PY, "-m", "ai.alarm_verifier.export_js"]),
+    ("Early caution evaluation (feu couvant possible)", [PY, "-m", "ai.alarm_verifier.early_warning"]),
+    ("Energy budget and backup battery sizing", [PY, "scripts/energy_budget.py"]),
 ]
 TESTS = [
     ("Physics sanity tests (zone model)", [PY, "tests/test_zone_model.py"]),
@@ -32,6 +34,7 @@ TESTS = [
     ("JS alarm verifier == Python (300 trees)", ["node", "tests/test_verifier_js.js"]),
     ("Real-time CFD physics vs fire-engineering correlations", ["node", "tests/test_cfd.js"]),
     ("Free-test bench: every source through physics + AI", ["node", "tests/test_sandbox.js", "200"]),
+    ("3D scene integrity: no floating boxes, roof, visible fire spread, clean reset", ["node", "tests/test_scene_integrity.js"]),
     ("Read-only gateway vs simulated panel (Modbus)", [PY, "tests/test_readonly_gateway.py"]),
     ("Dashboard in headless Chrome (no JS errors + screenshots)", ["node", "tools/screenshots.js"]),
 ]

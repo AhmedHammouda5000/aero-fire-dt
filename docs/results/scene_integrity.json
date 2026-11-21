@@ -1,0 +1,41 @@
+{
+ "boxes": {
+  "boxes": 94,
+  "floating": 0,
+  "worst_gap_m": 0,
+  "examples": [],
+  "ok": true
+ },
+ "roof": {
+  "exists": true,
+  "normal_y": -1,
+  "side": 0,
+  "ok": true
+ },
+ "spread": {
+  "racks_ignited": [
+   "A1.1",
+   "A1.2",
+   "A1.3"
+  ],
+  "charred_items": 40,
+  "flames_alive": 194,
+  "source_visual": 1,
+  "ok": true
+ },
+ "reset": {
+  "afterReset": {
+   "sources": 0,
+   "srcVis": 0,
+   "charred": 0
+  },
+  "afterSwitch": {
+   "sim": true,
+   "flames": 0,
+   "charred": 0
+  },
+  "ok": true
+ },
+ "js_errors": [],
+ "ok": true
+}

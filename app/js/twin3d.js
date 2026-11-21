@@ -175,6 +175,17 @@
         w.g.visible = !((w.side === "z0" && p.z < 0) || (w.side === "zD" && p.z > D) || (w.side === "x0" && p.x < 0) || (w.side === "xW" && p.x > W));
       });
     }
+    // roof deck: corrugated steel seen from inside (faces down, so it disappears when the camera looks from above)
+    const roofMat = wallMat.clone();
+    ["map", "normalMap", "roughnessMap", "metalnessMap", "aoMap"].forEach(k => { if (wallMat[k]) { roofMat[k] = wallMat[k].clone(); roofMat[k].repeat.set(D / 3, W / 3); roofMat[k].needsUpdate = true; } });
+    roofMat.color = new THREE.Color(0xc3ccd2); roofMat.emissive = new THREE.Color(0x2a3036);   // lit underside (lamps + skylights)
+    const roof = new THREE.Mesh(new THREE.PlaneGeometry(W, D), roofMat);
+    roofMat.side = THREE.FrontSide;
+    roof.rotation.x = Math.PI / 2; roof.position.set(W / 2, H, D / 2); roof.receiveShadow = true; scene.add(roof);
+    [W * 0.25, W * 0.5, W * 0.75].forEach(x => {                // translucent skylight strips
+      const sk = new THREE.Mesh(new THREE.PlaneGeometry(1.1, D * 0.8), new THREE.MeshBasicMaterial({ color: 0xbfd6e4, transparent: true, opacity: 0.55 }));
+      sk.rotation.x = Math.PI / 2; sk.position.set(x + W / 8, H - 0.02, D / 2); scene.add(sk);
+    });
     // roof trusses
     const steel = new THREE.MeshStandardMaterial({ color: 0x4a5b66, metalness: 0.7, roughness: 0.4 });
     for (let x = 0; x <= W + 0.01; x += W / 4) {
@@ -187,6 +198,55 @@
       new THREE.LineDashedMaterial({ color: 0xff3030, dashSize: 0.6, gapSize: 0.4, transparent: true, opacity: 0.85 }));
     hh.rotation.x = -Math.PI / 2; hh.position.set(W / 2, 2.0, D / 2); hh.computeLineDistances(); scene.add(hh);
     scene.add(sprite("2 m : tête des personnes", W + 0.2, 2.0, -0.2, 0.42, "#ff6b6b"));
+
+    /* ---------- burnable items: real objects char and glow themselves (no overlay boxes) ---------- */
+    const burnItems = [];
+    const CHAR = new THREE.Color(0x0d0b0a), EMBER = new THREE.Color(0x9a2c06);   // dim ember: charring must stay visible
+    function burnItem(obj, x, y, z, h, glow) {
+      if (!obj) return null;
+      const mats = [];
+      obj.traverse(o => { if (o.isMesh) { o.material = o.material.clone(); mats.push({ m: o.material, c0: o.material.color.clone() }); } });
+      const it = { obj, x, y, z, h, glow, mats, b: -1, e: -1 }; burnItems.push(it); return it;
+    }
+    function setBurn(it, b, e) {                       // b: charring 0..1, e: ember glow 0..1
+      if (Math.abs(b - it.b) < 0.01 && Math.abs(e - it.e) < 0.02) return;
+      it.b = b; it.e = e;
+      it.mats.forEach(({ m, c0 }) => { m.color.copy(c0).lerp(CHAR, b); if (m.emissive) m.emissive.copy(EMBER).multiplyScalar(e); });
+    }
+    // shelf surfaces measured on the real rack model (rays straight down) so boxes sit ON the shelves
+    const shelfRay = new THREE.Raycaster();
+    function shelfTops(obj, cx, cz, h, seg, depth) {
+      if (!obj) return [];
+      obj.updateMatrixWorld(true);
+      const ys = [];
+      [[-0.25, 0], [0.25, 0], [0, 0.2], [0, -0.2]].forEach(([fx, fz]) => {
+        shelfRay.set(new THREE.Vector3(cx + fx * seg, h + 2, cz + fz * depth), new THREE.Vector3(0, -1, 0));
+        shelfRay.intersectObject(obj, true).forEach(hit => {
+          const n = hit.face ? hit.face.normal.clone().transformDirection(hit.object.matrixWorld) : null;
+          if (n && n.y > 0.7) ys.push(hit.point.y);
+        });
+      });
+      ys.sort((a, b) => a - b);
+      const out = [];
+      ys.forEach(y => { if (!out.length || y - out[out.length - 1] > 0.12) out.push(y); else out[out.length - 1] = Math.max(out[out.length - 1], y); });
+      return out;
+    }
+
+    // "gravity": drop an object straight down until it rests on whatever is below (shelf, pallet, box, floor)
+    const dropRay = new THREE.Raycaster();
+    function dropToSupport(o) {
+      if (!o) return;
+      o.updateMatrixWorld(true);
+      const bb = new THREE.Box3().setFromObject(o), c = bb.getCenter(new THREE.Vector3()), own = new Set(); o.traverse(m => own.add(m));
+      const solids = []; scene.traverse(m => { if (m.isMesh && m.visible && !own.has(m) && !(m.material && m.material.transparent)) solids.push(m); });
+      let best = 0;                                    // floor
+      [[0, 0], [-0.25, -0.25], [0.25, 0.25], [-0.25, 0.25], [0.25, -0.25]].forEach(([fx, fz]) => {
+        dropRay.set(new THREE.Vector3(c.x + fx * (bb.max.x - bb.min.x), bb.min.y + 0.05, c.z + fz * (bb.max.z - bb.min.z)), new THREE.Vector3(0, -1, 0));
+        const h = dropRay.intersectObjects(solids, false)[0];
+        if (h) best = Math.max(best, h.point.y);
+      });
+      o.position.y += best - bb.min.y; o.updateMatrixWorld(true);
+    }
 
     /* ---------- real 3D models ---------- */
     const loader = new THREE.GLTFLoader();
@@ -222,11 +282,18 @@
           const n = Math.max(1, Math.round(len / 1.7)), seg = len / n;
           for (let k = 0; k < n; k++) {
             const cx = r.x0 + seg * (k + 0.5);
-            place(models.steel_frame_shelves_01, cx, cz, { sx: seg * 0.98, sy: r.h, sz: depth });
-            [0.02, 0.36, 0.69].forEach(f => {
+            const rack = place(models.steel_frame_shelves_01, cx, cz, { sx: seg * 0.98, sy: r.h, sz: depth });
+            burnItem(rack, cx, 0, cz, r.h, false);
+            let shelves = shelfTops(rack, cx, cz, r.h, seg, depth);
+            if (shelves.length < 2) shelves = [0.02, 0.36, 0.69].map(f => f * r.h);
+            shelves.forEach((y, si) => {
+              const gap = (si + 1 < shelves.length ? shelves[si + 1] : r.h + 0.6) - y - 0.08;   // free height above this shelf
+              if (gap < 0.22) return;
               for (let b = 0; b < 3; b++) if (rnd() > 0.15) {
-                const s = 0.42 + rnd() * 0.12;
-                place(models.cardboard_box_01, cx + (b - 1) * seg * 0.3, cz + (rnd() - 0.5) * 0.2, { sy: s, uniform: true, y: f * r.h + 0.04, rotY: (rnd() - 0.5) * 0.5 });
+                const sz = Math.min(gap, 0.42 + rnd() * 0.12), bx = cx + (b - 1) * seg * 0.3, bz = cz + (rnd() - 0.5) * 0.15;
+                const o = place(models.cardboard_box_01, bx, bz, { sy: sz, uniform: true, y: y + 0.002, rotY: (rnd() - 0.5) * 0.5 });
+                if (o) { o.userData.box = true; dropToSupport(o); }
+                burnItem(o, bx, y, bz, sz, true);
               }
             });
           }
@@ -235,14 +302,18 @@
           for (let x = r.x0 + 0.6; x < r.x1 - 0.3; x += 1.3) {
             const pal = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.15, 1.0), new THREE.MeshStandardMaterial({ color: 0x8a6a45, roughness: 0.9 }));
             pal.position.set(x, 0.075, cz); pal.castShadow = pal.receiveShadow = true; scene.add(pal);
-            for (let lv = 0; lv < 2 + Math.floor(rnd() * 2); lv++) for (let q = 0; q < 2; q++)
-              place(models.cardboard_box_01, x + (q - 0.5) * 0.55, cz, { sy: 0.5, uniform: true, y: 0.15 + lv * 0.5, rotY: (rnd() - 0.5) * 0.2 });
+            burnItem(pal, x, 0, cz, 0.15, false);
+            for (let lv = 0; lv < 2 + Math.floor(rnd() * 2); lv++) for (let q = 0; q < 2; q++) {
+              const bx = x + (q - 0.5) * 0.55, o = place(models.cardboard_box_01, bx, cz, { sy: 0.5, uniform: true, y: 0.15 + lv * 0.5, rotY: (rnd() - 0.5) * 0.2 });
+              if (o) { o.userData.box = true; dropToSupport(o); }
+              burnItem(o, bx, 0.15 + lv * 0.5, cz, 0.5, true);
+            }
           }
         }
       });
       // zone C: workshop
       place(models.portable_welding_cart, 18.6, 3.8, { sy: 1.1, uniform: true, rotY: 0.6 });
-      [[20.9, 8.9], [21.5, 8.9], [21.2, 9.45]].forEach(([x, z]) => place(models.Barrel_01, x, z, { sy: 0.9, uniform: true, rotY: rnd() * 3 }));
+      [[20.9, 8.9], [21.5, 8.9], [21.2, 9.45]].forEach(([x, z]) => burnItem(place(models.Barrel_01, x, z, { sy: 0.9, uniform: true, rotY: rnd() * 3 }), x, 0, z, 0.9, false));
       const bench = new THREE.Mesh(new THREE.BoxGeometry(2.2, 0.9, 0.8), new THREE.MeshStandardMaterial({ color: 0x5d6b73, metalness: 0.5, roughness: 0.5 }));
       bench.position.set(16.6, 0.45, 9.3); bench.castShadow = bench.receiveShadow = true; scene.add(bench);
       // extinguishers near doors and zones
@@ -282,13 +353,17 @@
     });
 
     /* ---------- VFX driven by the CFD physics ---------- */
-    const flameTex = canvasTex(64, 128, (g, w, h) => {         // tear-drop flame tongue
-      g.save(); g.translate(w / 2, h * 0.62); g.scale(1, 2.0);
-      const r = g.createRadialGradient(0, 0, 0, 0, 0, w / 2);
-      r.addColorStop(0, "rgba(255,255,255,1)"); r.addColorStop(0.45, "rgba(255,255,255,0.65)"); r.addColorStop(1, "rgba(255,255,255,0)");
-      g.fillStyle = r; g.beginPath(); g.arc(0, 0, w / 2, 0, 7); g.fill(); g.restore();
+    const flameTex = canvasTex(64, 96, (g, w, h) => {         // soft flame tongue: gaussian core, tapered tip
+      const img = g.createImageData(w, h);
+      for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+        const u = (x + 0.5) / w * 2 - 1, v = (y + 0.5) / h;       // v: 0 = tip, 1 = base
+        const wd = 0.22 + 0.78 * Math.pow(v, 0.65), r = Math.abs(u) / wd;
+        const a = Math.exp(-r * r * 3.0) * Math.pow(Math.sin(Math.PI * Math.min(1, v * 1.04)), 0.7);
+        const k = 4 * (y * w + x); img.data[k] = img.data[k + 1] = img.data[k + 2] = 255; img.data[k + 3] = Math.max(0, Math.min(255, a * 255));
+      }
+      g.putImageData(img, 0, 0);
     });
-    const flames = new Particles(1400, flameTex, THREE.AdditiveBlending, scene);
+    const flames = new Particles(2600, flameTex, THREE.AdditiveBlending, scene);
     const embers = new Particles(220, softTex, THREE.AdditiveBlending, scene);
     const smoke = new Particles(700, puffTex, THREE.NormalBlending, scene);
     const haze = new Particles(500, puffTex, THREE.NormalBlending, scene);
@@ -335,7 +410,7 @@
         blending: THREE.CustomBlending, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor, toneMapped: false });
     }
     const volBox = new THREE.BoxGeometry(W, H, D);
-    const smokeVol = new THREE.Mesh(volBox, volumeMaterial(0x232426, 2.2, 1.0)); smokeVol.position.set(W / 2, H / 2, D / 2); smokeVol.renderOrder = 5; smokeVol.visible = false; scene.add(smokeVol);
+    const smokeVol = new THREE.Mesh(volBox, volumeMaterial(0x2e3033, 1.5, 1.0));   // display density slightly reduced so the fire stays readable smokeVol.position.set(W / 2, H / 2, D / 2); smokeVol.renderOrder = 5; smokeVol.visible = false; scene.add(smokeVol);
     const ghostVol = new THREE.Mesh(volBox, volumeMaterial(0x0c4f6e, 0.7, 0.0)); ghostVol.position.copy(smokeVol.position); ghostVol.renderOrder = 9; ghostVol.visible = false;
     ghostVol.material.blendDst = THREE.OneFactor; ghostVol.material.blendSrc = THREE.OneFactor; scene.add(ghostVol);   // additive cyan glow on top
     let vol = null, ghostV = null, dangerTex = null, dangerData = null, lastVolTime = -1, lastGhostTime = -1, lastDangerKey = "";
@@ -376,6 +451,36 @@
       return { glow, char, warn };
     }
 
+    const srcVis = [];
+    function makeSrcVisual(p) {
+      const g = new THREE.Group(), sz = p.x1 - p.x0, m = p.mat;
+      const std = (c, r) => new THREE.MeshStandardMaterial({ color: c, roughness: r === undefined ? 0.85 : r });
+      if (m === "bois") {
+        for (let k = 0; k < 6; k++) {
+          const L = sz * (0.85 + Math.random() * 0.3), log = new THREE.Mesh(new THREE.CylinderGeometry(0.05 + sz * 0.04, 0.06 + sz * 0.04, L, 10), std(0x6b4a2b));
+          log.rotation.z = Math.PI / 2; log.rotation.y = k * Math.PI / 3 + Math.random() * 0.3; log.position.y = 0.07 + Math.floor(k / 3) * (0.1 + sz * 0.06); g.add(log);
+        }
+      } else if (m === "friperie") {
+        const bale = new THREE.Mesh(new THREE.BoxGeometry(sz * 0.9, 0.7, sz * 0.8), std(0x5a6b8a, 1)); bale.position.y = 0.35; g.add(bale);
+        [0.2, 0.5].forEach(y => { const st = new THREE.Mesh(new THREE.BoxGeometry(sz * 0.92, 0.03, sz * 0.82), std(0x222222)); st.position.y = y; g.add(st); });
+      } else if (m === "plastique") {
+        for (let k = 0; k < 4; k++) { const c = new THREE.Mesh(new THREE.BoxGeometry(sz * 0.42, 0.3, sz * 0.42), std(k % 2 ? 0x2f6fd0 : 0xe2e2e2, 0.5)); c.position.set((k % 2 - 0.5) * sz * 0.45, 0.15 + Math.floor(k / 2) * 0.3, 0); g.add(c); }
+      } else if (m === "bougie") {
+        for (let k = 0; k < 4; k++) { const c = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.15, 12), std(0xf3efe2, 0.6)); c.position.set((k % 2 - 0.5) * 0.12, 0.075, (Math.floor(k / 2) - 0.5) * 0.12); g.add(c); }
+      } else if (m === "cigarette") {
+        const c = new THREE.Mesh(new THREE.CylinderGeometry(0.006, 0.006, 0.08, 8), std(0xf5f5f0)); c.rotation.z = Math.PI / 2; c.position.y = 0.008; g.add(c);
+      } else { const b = new THREE.Mesh(new THREE.BoxGeometry(sz * 0.8, 0.4, sz * 0.8), std(0x9a7a50)); b.position.y = 0.2; g.add(b); }
+      g.position.set(p.cx, 0, p.cz); g.traverse(o => { if (o.isMesh) o.castShadow = o.receiveShadow = true; });
+      scene.add(g);
+      const it = burnItem(g, p.cx, 0, p.cz, 0.5, true); it.own = p; it.src = true;
+      srcVis.push({ p, g, it });
+    }
+    function dropSrcVisual(v) { scene.remove(v.g); const k = burnItems.indexOf(v.it); if (k >= 0) burnItems.splice(k, 1); }
+    function resetBurn() {
+      srcVis.forEach(dropSrcVisual); srcVis.length = 0;
+      burnItems.forEach(it => { it.sim = null; setBurn(it, 0, 0); });
+    }
+
     let st = { nodes: {}, ssiZones: {}, smolder: null, cfd: null };
     const flameH = (q, D) => q <= 0 ? 0 : Math.max(0.3, 0.235 * Math.pow(q, 0.4) - 1.02 * D);
 
@@ -397,14 +502,31 @@
         sim.fuel.forEach(p => {
           const key = p.id + "@" + p.cx.toFixed(2) + "," + p.cz.toFixed(2) + "," + (p.x1 - p.x0).toFixed(2);
           const fx = fuelFx[key] || (fuelFx[key] = fuelMesh(p));
-          fx.glow.material.opacity = p.burning ? Math.min(0.35, 0.08 + p.q / 9000) * (0.8 + 0.2 * Math.sin(time * 9 + p.cx)) : 0;
-          fx.char.material.opacity = p.burnt ? 0.85 : p.burning ? Math.min(0.6, p.eBurnt / p.eLoad * 1.5) : 0;
+          fx.glow.material.opacity = 0; fx.char.material.opacity = 0;      // real objects char themselves (below)
           const willIgnite = C.showGhost && g && g.ignite.includes(p.id) && !p.burning;
           fx.warn.material.opacity = willIgnite ? 0.55 + 0.45 * Math.sin(time * 6) : 0;
+        });
+        // visible fuel for fires placed on the free-test bench, removed when the physics is reset
+        sim.fuel.forEach(p => { if (String(p.id || "").startsWith("src-") && !srcVis.some(v => v.p === p)) makeSrcVisual(p); });
+        for (let k = srcVis.length - 1; k >= 0; k--) if (!sim.fuel.includes(srcVis[k].p)) { dropSrcVisual(srcVis[k]); srcVis.splice(k, 1); }
+        burnItems.forEach(it => {
+          if (it.sim !== sim || it.nf !== sim.fuel.length) {
+            it.sim = sim; it.nf = sim.fuel.length;
+            it.p = it.own || sim.fuel.find(q => !String(q.id || "").startsWith("src-") && it.x >= q.x0 - 0.15 && it.x <= q.x1 + 0.15 && it.z >= q.z0 - 0.15 && it.z <= q.z1 + 0.15) || null;
+          }
+          const p = it.p; if (!p) { setBurn(it, 0, 0); return; }
+          const age = Math.max(0, sim.time - (p.tig || 0));
+          const front = p.burnt ? 99 : p.burning ? p.y0 + 0.4 + age * 0.06 : -1;       // flames climb a rack ~6 cm/s
+          const reached = it.y <= front;
+          let frac = p.burnt ? 1 : !p.burning ? 0 : it.src ? Math.min(0.9, 0.2 + age / 400) : Math.min(1, p.eBurnt / p.eLoad * 1.4 + 0.25);
+          const b = reached ? (p.burning && !it.src ? 0.45 + 0.55 * frac : frac) : 0;
+          const e = it.glow && p.burning && reached && frac < 0.97 ? (0.35 + 0.25 * Math.sin(time * 11 + it.x * 3 + it.y * 5)) * Math.min(1, p.q / 300 + 0.4) : 0;
+          setBurn(it, b, e);
         });
       } else {
         smokeVol.visible = ghostVol.visible = dangerPlane.visible = false;
         for (const id in fuelFx) { const fx = fuelFx[id]; fx.glow.material.opacity = fx.char.material.opacity = fx.warn.material.opacity = 0; }
+        resetBurn();
       }
 
       // --- flames on every burning package (Heskestad flame height per package) ---
@@ -412,21 +534,28 @@
       if (sim) for (const p of sim.fuel) {
         if (p.burning && p.q > 0.02 && p.q < 15) {            // candle / cigarette: tiny flame or glowing tip
           p._acc = (p._acc || 0) + (p.q < 0.1 ? 6 : 20) * dt;
-          while (p._acc >= 1) { p._acc--; flames.spawn(p.cx + (Math.random() - 0.5) * (p.x1 - p.x0) * 0.6, p.y1 + 0.02, p.cz + (Math.random() - 0.5) * (p.z1 - p.z0) * 0.6, 0, p.q < 0.1 ? 0.15 : 0.5, 0, 0.35, p.q < 0.1 ? 0.06 : 0.16, 0.5); }
+          const yTip = p.mat === "bougie" ? 0.17 : p.mat === "cigarette" ? 0.015 : p.y1 + 0.02;
+          while (p._acc >= 1) { p._acc--; flames.spawn(p.cx + (Math.random() - 0.5) * (p.x1 - p.x0) * (p.mat === "bougie" ? 0.4 : 0.1), yTip, p.cz + (Math.random() - 0.5) * (p.z1 - p.z0) * 0.6, 0, p.q < 0.1 ? 0.15 : 0.5, 0, 0.35, p.q < 0.1 ? 0.06 : 0.16, 0.5); }
           continue;
         }
         if (!p.burning || p.q < 15) continue;
-        const Lf = Math.min(H - 0.4, flameH(p.q, p.dEq)), top = Math.max(p.y1 * 0.9, Lf);
+        const Lf = Math.min(H - 0.4, flameH(p.q, p.dEq));
+        const vertical = p.y1 - p.y0 > 2;                     // racks: the flame front climbs the faces (~6 cm/s)
+        const front = vertical ? Math.min(p.y1, p.y0 + 0.4 + Math.max(0, sim.time - (p.tig || 0)) * 0.06) : p.y1;
+        const top = Math.min(H - 0.3, vertical ? Math.max(front + 0.6, front + Lf * 0.5) : Math.max(p.y1 + 0.3, Lf));
         qTot += p.q; lx += p.cx * p.q; lz += p.cz * p.q; Hmax = Math.max(Hmax, top);
-        const rate = Math.min(260, 25 + p.q / 18);
+        const rate = Math.min(420, 40 + p.q / 10);
         p._acc = (p._acc || 0) + rate * dt;
-        const vertical = p.y1 - p.y0 > 2;                     // racks burn on their whole face
         while (p._acc >= 1) {
           p._acc--;
-          const x = p.x0 + Math.random() * (p.x1 - p.x0), z = p.z0 + Math.random() * (p.z1 - p.z0);
-          const y0 = vertical ? Math.random() * Math.min(p.y1, top) * 0.85 : p.y0 + p.y1 * 0.6;
-          const life = 0.4 + Math.random() * 0.45, rise = Math.max(0.4, top - y0);
-          flames.spawn(x, y0, z, (Math.random() - 0.5) * 0.3, rise / life * (0.55 + Math.random() * 0.6), (Math.random() - 0.5) * 0.3, life, 0.5 + Math.min(1.4, p.q / 2500) + Math.random() * 0.45, Math.random());
+          let x, z;
+          if (vertical && Math.random() < 0.75) {             // most flames lick the outer faces of the rack
+            if (Math.random() < 0.7) { x = p.x0 + Math.random() * (p.x1 - p.x0); z = Math.random() < 0.5 ? p.z0 : p.z1; }
+            else { z = p.z0 + Math.random() * (p.z1 - p.z0); x = Math.random() < 0.5 ? p.x0 : p.x1; }
+          } else { x = p.x0 + Math.random() * (p.x1 - p.x0); z = p.z0 + Math.random() * (p.z1 - p.z0); }
+          const y0 = vertical ? Math.random() * front * 0.95 : p.y0 + (p.y1 - p.y0) * 0.6;
+          const life = 0.35 + Math.random() * 0.4, rise = Math.max(0.3, (vertical ? Math.min(top, y0 + 1.0 + Math.random() * 1.2) : top) - y0);
+          flames.spawn(x, y0, z, (Math.random() - 0.5) * 0.25, rise / life * (0.5 + Math.random() * 0.5), (Math.random() - 0.5) * 0.25, life, 0.55 + Math.min(1.1, p.q / 2000) + Math.random() * 0.4, Math.random());
         }
         p._em = (p._em || 0) + (5 + p.q / 400) * dt;
         while (p._em >= 1) { p._em--; embers.spawn(p.cx + (Math.random() - 0.5) * (p.x1 - p.x0), top * 0.6, p.cz + (Math.random() - 0.5) * (p.z1 - p.z0), (Math.random() - 0.5) * 1.2, 2 + Math.random() * 2.5, (Math.random() - 0.5) * 1.2, 1.6 + Math.random() * 1.4, 0.07, 0); }
@@ -445,7 +574,7 @@
         flames.pos[p] += flames.vel[p] * dt; flames.pos[p + 1] += flames.vel[p + 1] * dt; flames.pos[p + 2] += flames.vel[p + 2] * dt;
         let r, g, b;
         if (t < 0.2) { r = 1; g = 0.9 - t; b = 0.5 - t * 2; } else if (t < 0.55) { r = 1; g = 0.7 - (t - 0.2) * 1.15; b = 0.06; } else { r = 0.95 - (t - 0.55) * 1.3; g = 0.3 - (t - 0.55) * 0.55; b = 0.04; }
-        flames.col.set([r, Math.max(0, g) * (0.85 + flames.k[i] * 0.15), Math.max(0, b), Math.pow(1 - t, 1.5) * 0.4], 4 * i);
+        flames.col.set([r, Math.max(0, g) * (0.85 + flames.k[i] * 0.15), Math.max(0, b), Math.pow(1 - t, 1.3) * 0.85], 4 * i);
         flames.size[i] = flames.s0[i] * (1.0 - t * 0.45); flames.rot[i] = Math.sin(time * 3 + i) * 0.25;
       }
       for (let i = 0; i < embers.n; i++) {
@@ -581,9 +710,10 @@
       lastVolTime = -1; lastGhostTime = -1; lastDangerKey = "";
       for (const id in fuelFx) { const fx = fuelFx[id]; fx.glow.material.opacity = fx.char.material.opacity = fx.warn.material.opacity = 0; }
       fireLight.intensity = 0; floorGlow.material.opacity = 0;
-      setMarkers([]);
+      setMarkers([]); resetBurn();
     }
-    return { update, resize, renderer, pickFloor, setMarkers, clearFx, setView: (a, e, d) => { az = a; el = e; dist = d; } };
+    const debug = { scene, burnItems, srcVis, roof, flamesAlive: () => { let n = 0; for (let i = 0; i < flames.n; i++) if (flames.life[i] < flames.max[i]) n++; return n; } };
+    return { update, resize, renderer, pickFloor, setMarkers, clearFx, debug, setView: (a, e, d, tgt) => { az = a; el = e; dist = d; if (tgt) center.set(tgt[0], tgt[1], tgt[2]); else center.set(W / 2, 2.6, D / 2); } };
   }
 
   root.AFDT_Twin3D = Twin3D;

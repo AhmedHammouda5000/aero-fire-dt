@@ -85,6 +85,8 @@ Variables les plus utiles (importance par permutation) : hausse des COV, ratio C
 
 **Alerte précoce « FEU COUVANT POSSIBLE »** (consultative, jamais une confirmation) : score IA ≥ 0,70 pendant 30 s + un signal (fumée, CO ou H₂) encore en hausse sur 60 s. Évaluée sur les mêmes essais jamais vus : **17 / 17 feux** signalés, **10 / 17 avant le détecteur classique**, en moyenne 29 s (jusqu'à 250 s) avant la confirmation ; déclenchée sur **2 / 15 nuisances** seulement (machine à fumée) → simple levée de doute. Détails : `docs/results/early_warning.json`.
 
+**Modèle général + apprentissage local (prouvé sur NIST, données jamais vues)** : modèle général seul 7/8 feux, **6/33** fausses alarmes de cuisine écartées → après apprentissage local **8/8 feux, 29/33** ; l'usine d'origine n'est pas abîmée (17/17 feux conservés). Un modèle général partagé + un modèle local par usine pendant le pilote de 90 jours. Détails : `docs/results/site_adaptation.md`.
+
 ### 5 bis. Robustesse (audit des données, `docs/results/data_audit.md`)
 
 - **Petits échantillons** : 11 / 15 nuisances rejetées = 73 %, intervalle de confiance à 95 % (Wilson) **≈ 48 – 89 %** ; 17 / 17 feux = intervalle ≈ 82 – 100 %. Les chiffres sont prometteurs, pas définitifs.
