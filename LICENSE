@@ -1,0 +1,31 @@
+MIT License
+
+Copyright (c) 2026 Aero-Fire DT team (Tunisian Aeroday — Aero-Entrepreneur challenge)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+Third-party components and data:
+- three.js r149 (app/vendor/three.min.js) — MIT License, Copyright 2010-2023 three.js authors.
+- Datasets (not redistributed, downloaded by scripts/download_data.py) — CC BY 4.0:
+  "Indoor Fire Dataset with Distributed Multi-Sensor Nodes" (Industrial Hall), Mendeley Data,
+  DOI 10.17632/yghykzm4km.1, and its EN54 test-room counterpart, DOI 10.17632/npk2zcm85h.
+  Attribution to the dataset authors is required when reusing the data or derived results.
+- This prototype is NOT a certified fire detection system. It is an advisory, read-only layer
+  for demonstration; the certified fire alarm system (EN 54 / NFPA 72) remains the safety barrier.

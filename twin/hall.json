@@ -1,0 +1,168 @@
+{
+ "name": "Hall d'essai (jumeau du jeu de données Industrial Hall)",
+ "size": {
+  "width": 10.0,
+  "length": 22.0,
+  "height": 8.0
+ },
+ "zones": [
+  {
+   "id": "A",
+   "name": "Zone A — Stockage textile (balles)",
+   "x0": 0.0,
+   "x1": 7.0
+  },
+  {
+   "id": "B",
+   "name": "Zone B — Préparation / expédition",
+   "x0": 7.0,
+   "x1": 15.0
+  },
+  {
+   "id": "C",
+   "name": "Zone C — Atelier maintenance",
+   "x0": 15.0,
+   "x1": 22.0
+  }
+ ],
+ "doors": [
+  {
+   "id": "P1",
+   "name": "Porte sectionnelle",
+   "x": 3.0,
+   "y": 0.0,
+   "width": 4.0,
+   "height": 4.0
+  },
+  {
+   "id": "P2",
+   "name": "Issue de secours",
+   "x": 20.0,
+   "y": 10.0,
+   "width": 1.0,
+   "height": 2.2
+  }
+ ],
+ "racks": [
+  {
+   "x0": 1.0,
+   "x1": 6.0,
+   "y0": 3.0,
+   "y1": 4.2,
+   "h": 4.0
+  },
+  {
+   "x0": 1.0,
+   "x1": 6.0,
+   "y0": 6.0,
+   "y1": 7.2,
+   "h": 4.0
+  },
+  {
+   "x0": 9.0,
+   "x1": 13.0,
+   "y0": 6.5,
+   "y1": 7.5,
+   "h": 1.5
+  }
+ ],
+ "nodes": [
+  {
+   "id": 6,
+   "x": 8.5,
+   "y": 1.0,
+   "z": 3.0,
+   "zone": "B"
+  },
+  {
+   "id": 7,
+   "x": 17.5,
+   "y": 2.5,
+   "z": 3.0,
+   "zone": "C"
+  },
+  {
+   "id": 8,
+   "x": 3.5,
+   "y": 1.5,
+   "z": 3.0,
+   "zone": "A"
+  },
+  {
+   "id": 9,
+   "x": 11.0,
+   "y": 9.0,
+   "z": 3.0,
+   "zone": "B"
+  },
+  {
+   "id": 10,
+   "x": 13.5,
+   "y": 1.0,
+   "z": 3.0,
+   "zone": "B"
+  },
+  {
+   "id": 11,
+   "x": 11.0,
+   "y": 5.0,
+   "z": 3.0,
+   "zone": "B"
+  },
+  {
+   "id": 12,
+   "x": 5.5,
+   "y": 5.1,
+   "z": 3.0,
+   "zone": "A"
+  },
+  {
+   "id": 13,
+   "x": 3.5,
+   "y": 8.5,
+   "z": 3.0,
+   "zone": "A"
+  },
+  {
+   "id": 15,
+   "x": 20.0,
+   "y": 7.5,
+   "z": 3.0,
+   "zone": "C"
+  }
+ ],
+ "panel_detectors": [
+  {
+   "id": "DO-A1",
+   "zone": "A",
+   "x": 3.5,
+   "y": 5.0
+  },
+  {
+   "id": "DO-B1",
+   "zone": "B",
+   "x": 9.0,
+   "y": 5.0
+  },
+  {
+   "id": "DO-B2",
+   "zone": "B",
+   "x": 13.0,
+   "y": 5.0
+  },
+  {
+   "id": "DO-C1",
+   "zone": "C",
+   "x": 18.5,
+   "y": 5.0
+  }
+ ],
+ "ifc_counts": {
+  "IfcWall": 4,
+  "IfcSpace": 3,
+  "IfcDoor": 2,
+  "IfcSensor": 9,
+  "IfcAlarm": 4
+ },
+ "note": "Positions des nœuds plausibles (non publiées avec le jeu de données)."
+}

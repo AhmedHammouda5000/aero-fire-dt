@@ -1,0 +1,21 @@
+episode,scenario,label,duration_s,ai_fire,t_ai_fire_s,t_first_activity_s,optical_trip,t_optical_s,ai_nuisance_flag,max_p,scenario_fr
+Wood#1,Wood,fire,3677.840887,True,310.0,230.0,True,250.0,False,0.9967860838010989,Bois
+Candles#1,Candles,fire,3959.847828,True,1350.0,700.0,True,970.0,True,0.9954129592616099,Bougies
+Cable#1,Cable,fire,3287.76422,False,,200.0,True,270.0,True,0.9834894864023491,Câble
+Wood#2,Wood,fire,3408.159598,True,310.0,200.0,True,240.0,False,0.9992452887363856,Bois
+Ethanol#1,Ethanol,nuisance,2386.720413,False,,90.0,False,,True,0.18953825213949596,Éthanol
+Lunts#1,Lunts,fire,3511.644356,True,320.0,30.0,True,40.0,True,0.9882351511906233,Mèches (lunts)
+Lunts#2,Lunts,fire,3286.523342,True,80.0,50.0,True,50.0,False,0.9859239722546244,Mèches (lunts)
+Ethanol#2,Ethanol,nuisance,1755.86679,False,,280.0,False,,True,0.09475097312603774,Éthanol
+Ethanol#3,Ethanol,nuisance,2743.186424,False,,10.0,False,,True,0.15950776502896485,Éthanol
+Candles#2,Candles,fire,2883.376445,True,1070.0,190.0,True,260.0,False,0.9983832893092935,Bougies
+Cable#2,Cable,fire,3239.961065,True,360.0,120.0,True,150.0,False,0.9870427631471204,Câble
+Wood#3,Wood,fire,3157.754716,True,170.0,110.0,True,130.0,False,0.9898391552924732,Bois
+Ethanol#4,Ethanol,nuisance,3219.670348,False,,90.0,False,,True,0.12759791379282906,Éthanol
+Candles#3,Candles,fire,2790.183544,True,760.0,560.0,True,610.0,False,0.9978653960718253,Bougies
+Cable#3,Cable,fire,2383.112799,True,150.0,120.0,True,120.0,False,0.9923493938888561,Câble
+Cable#4,Cable,fire,2923.96893,True,170.0,60.0,True,90.0,True,0.9895404987758107,Câble
+Lunts#3,Lunts,fire,3869.967491,True,70.0,40.0,True,40.0,False,0.9956409634960249,Mèches (lunts)
+Deodorant#1,Deodorant,nuisance,1847.256674,False,,40.0,False,,True,0.5851983513192711,Déodorant
+Hairspray#1,Hairspray,nuisance,1757.318561,False,,70.0,False,,True,0.49532416731394013,Laque
+Deodorant#2,Deodorant,nuisance,1877.484919,False,,0.0,True,30.0,True,0.48764600281864573,Déodorant

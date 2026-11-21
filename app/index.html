@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aero-Fire DT — Poste de sécurité</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">AERO-FIRE DT</span>
+    <span class="tag">copilote incendie · couche consultative en lecture seule</span>
+  </div>
+  <div class="heartbeat" id="heartbeat" title="Indicateur de vie permanent (cockpit sombre)">
+    <span class="dot"></span><span id="hb-text">SSI LINK OK (LECTURE SEULE) · 9/9 NŒUDS · IA v1.0</span>
+  </div>
+  <div class="clock"><span id="clock-scn">—</span><span id="clock-t">T+00:00</span></div>
+  <button class="master warn" id="btn-mw" title="Acquitter l'alerte IA (n'agit PAS sur le SSI)">MASTER<br>WARN</button>
+  <button class="master caut" id="btn-mc" title="Acquitter l'alerte IA (n'agit PAS sur le SSI)">MASTER<br>CAUT</button>
+  <button class="small" id="btn-sound" title="Activer les signaux sonores">🔇 SON</button>
+  <button class="small" id="btn-results">RÉSULTATS</button>
+</header>
+
+<main class="grid">
+  <section class="panel" id="ewd">
+    <div class="panel-title">E/WD — ALERTES &amp; PROCÉDURES</div>
+    <div id="alerts"></div>
+    <div id="memo"></div>
+    <div class="vote" id="vote"></div>
+  </section>
+
+  <section class="panel" id="sd">
+    <nav class="tabs" id="tabs">
+      <button data-page="zone" class="active">ZONE</button>
+      <button data-page="sensors">CAPTEURS</button>
+      <button data-page="forecast">PRÉVISION</button>
+      <button data-page="why">POURQUOI</button>
+      <button data-page="ssi">SSI</button>
+      <span class="auto" id="auto-page" title="Appel automatique de la page système (comme l'ECAM)">AUTO</span>
+    </nav>
+
+    <div class="page active" id="page-zone">
+      <div id="three"></div>
+      <div class="legend">
+        <span><i class="c-green"></i>nœud normal</span><span><i class="c-amber"></i>1 canal actif</span>
+        <span><i class="c-red"></i>2 canaux + score feu élevé</span><span><i class="c-grey"></i>nœud exclu (dérive)</span>
+        <span><i class="c-det"></i>détecteur SSI</span><span class="hint">glisser pour tourner · molette pour zoomer</span>
+      </div>
+      <div class="zone-note" id="zone-note"></div>
+    </div>
+
+    <div class="page" id="page-sensors">
+      <div class="charts4">
+        <canvas id="ch-pm"></canvas><canvas id="ch-co"></canvas>
+        <canvas id="ch-gas"></canvas><canvas id="ch-temp"></canvas>
+      </div>
+      <canvas id="ch-ai" class="wide"></canvas>
+      <div class="node-legend" id="node-legend"></div>
+    </div>
+
+    <div class="page" id="page-forecast">
+      <div class="fc-top">
+        <div class="fc-gauge"><canvas id="fc-gauge"></canvas></div>
+        <div class="fc-main">
+          <div class="fc-status" id="fc-status"></div>
+          <div class="fc-countdown" id="fc-countdown"></div>
+          <table class="fc-table" id="fc-table"></table>
+          <canvas id="fc-chart"></canvas>
+        </div>
+        <div class="fc-params">
+          <div class="pt">HYPOTHÈSES DU JUMEAU</div>
+          <label>Stock / classe de croissance
+            <select id="p-alpha">
+              <option value="moyen">carton — moyen</option>
+              <option value="rapide" selected>textile / friperie — rapide</option>
+              <option value="ultra-rapide">plastiques — ultra-rapide</option>
+              <option value="lent">lent</option>
+            </select></label>
+          <label>Puissance max. du feu <b id="v-qmax">5 MW</b>
+            <input type="range" id="p-qmax" min="1000" max="20000" step="500" value="5000"></label>
+          <label>Porte sectionnelle (4 m)
+            <select id="p-door"><option value="0">fermée</option><option value="4">ouverte</option></select></label>
+          <label>Exutoires de toiture <b id="v-vent">0 m²</b>
+            <input type="range" id="p-vent" min="0" max="20" step="1" value="0"></label>
+          <label>Température ambiante <b id="v-tamb">30 °C</b>
+            <input type="range" id="p-tamb" min="15" max="45" step="1" value="30"></label>
+          <button class="small wide" id="btn-whatif">SIMULER UN DÉPART DE FEU MAINTENANT</button>
+          <label class="chk"><input type="checkbox" id="p-ref"> afficher la référence physique</label>
+          <div class="fc-note">Prévision : IA de substitution (0,1 ms) entraînée sur 5 000 feux simulés
+            (modèle de zones). Le développement du feu est une <b>hypothèse</b> : les mesures réelles
+            correspondent à un feu naissant.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page" id="page-why">
+      <div class="why-grid">
+        <div class="why-box">
+          <div class="pt">CANAUX PHYSIQUES INDÉPENDANTS (inspiré de la double boucle moteur)</div>
+          <div id="why-channels"></div>
+        </div>
+        <div class="why-box">
+          <div class="pt">SCORE IA (FEU / NUISANCE)</div>
+          <canvas id="why-gauge"></canvas>
+          <div id="why-profile"></div>
+        </div>
+        <div class="why-box">
+          <div class="pt">LOGIQUE DE VOTE — ALERTE ROUGE</div>
+          <div id="why-vote"></div>
+        </div>
+        <div class="why-box">
+          <div class="pt">CE QUI COMPTE LE PLUS POUR LE MODÈLE (importance globale)</div>
+          <canvas id="why-imp"></canvas>
+        </div>
+      </div>
+      <div class="why-foot">L'IA propose, l'opérateur décide (assistance à l'humain — niveau 1 du Concept Paper IA de l'EASA, transposé).</div>
+    </div>
+
+    <div class="page" id="page-ssi">
+      <div class="ssi-grid">
+        <div class="ecs">
+          <div class="pt">ECS / SSI CERTIFIÉ (SIMULÉ) — RESTE LA BARRIÈRE DE SÉCURITÉ</div>
+          <div id="ecs-leds"></div>
+        </div>
+        <div class="link">
+          <div class="pt">RACCORDEMENT EN LECTURE SEULE</div>
+          <svg id="link-svg" viewBox="0 0 520 210"></svg>
+        </div>
+        <div class="log">
+          <div class="pt">JOURNAL DE LA PASSERELLE (lecture Modbus FC 03 uniquement)</div>
+          <pre id="modbus-log"></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="controls">
+  <div class="scn-buttons" id="scn-buttons"></div>
+  <button class="small" id="btn-play">▶</button>
+  <select id="speed" title="Vitesse de rejeu">
+    <option value="1">×1</option><option value="5">×5</option>
+    <option value="10" selected>×10</option><option value="30">×30</option>
+  </select>
+  <input type="range" id="scrub" min="0" max="100" value="0">
+  <button class="small" id="btn-hotwork" title="Permis de feu en zone C (soudure autorisée)">PERMIS DE FEU ZONE C : OFF</button>
+  <button class="small accent" id="btn-video">MODE VIDÉO</button>
+  <div class="source" id="source"></div>
+</footer>
+
+<div id="caption"></div>
+<div id="story" class="story"></div>
+
+<div id="results-modal" class="modal hidden">
+  <div class="modal-box">
+    <button class="close" id="btn-close-results">✕</button>
+    <h2>Résultats mesurés sur données réelles</h2>
+    <div id="results-body"></div>
+  </div>
+</div>
+
+<script src="vendor/three.min.js"></script>
+<script src="data/hall_data.js"></script>
+<script src="data/scenarios_data.js"></script>
+<script src="data/surrogate_data.js"></script>
+<script src="data/results_data.js"></script>
+<script src="js/zonemodel.js"></script>
+<script src="js/surrogate.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/twin3d.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

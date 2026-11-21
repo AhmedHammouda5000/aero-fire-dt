@@ -1,0 +1,9 @@
+data_raw/
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+.ipynb_checkpoints/
+*.log
+ai/**/cache/
+tools/node_modules/

@@ -1,0 +1,19 @@
+{
+  "scenarios": 5000,
+  "train_rows": 40000,
+  "test_rows": 10000,
+  "split": "by scenario (test scenarios never seen in training)",
+  "rmse_layer_height_t30_m": 0.04494876779499733,
+  "rmse_layer_height_t60_m": 0.05769573643557496,
+  "rmse_temperature_t30_C": 5.176996570247971,
+  "rmse_temperature_t60_C": 6.824366715054598,
+  "mae_time_to_untenable_s": 35.78569802590166,
+  "persistence_baseline_rmse_layer_height_t60_m": 0.4138323865794078,
+  "persistence_baseline_rmse_temperature_t60_C": 34.449157988394056,
+  "zone_model_ms_per_900s_run": 8.378231070018956,
+  "surrogate_ms_per_forecast": 0.13768000004347414,
+  "untenable_within_60s_accuracy": 0.9624,
+  "untenable_within_60s_missed": 276,
+  "untenable_within_60s_cases": 5305,
+  "runtime_s": 66.8
+}

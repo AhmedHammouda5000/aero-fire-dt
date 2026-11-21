@@ -1,0 +1,33 @@
+episode,scenario,label,duration_s,ai_fire,t_ai_fire_s,t_first_activity_s,optical_trip,t_optical_s,ai_nuisance_flag,max_p,scenario_fr
+Smoke#1,Smoke,nuisance,849.0,True,460.0,40.0,False,,True,0.9891514475335041,Machine à fumée
+Lunts#1,Lunts,fire,2275.0,True,110.0,100.0,True,170.0,False,0.9997850102514642,Mèches (lunts)
+Deodorant#1,Deodorant,nuisance,1023.0,False,,70.0,True,140.0,True,0.06597138193070577,Déodorant
+Wood#1,Wood,fire,1734.0,True,300.0,290.0,True,450.0,False,0.9981535690847807,Bois
+Ethanol#1,Ethanol,nuisance,1576.0,False,,90.0,False,,True,0.48102283681765634,Éthanol
+CO#1,CO,nuisance,687.0,False,,40.0,False,,True,0.1654422952509133,Rejet de CO
+Exhaust#1,Exhaust,nuisance,1150.0,False,,10.0,False,,True,0.010800097834033597,Gaz d'échappement
+Candles#1,Candles,fire,2260.0,True,460.0,450.0,True,1730.0,False,0.9978401393040517,Bougies
+Candles#2,Candles,fire,1698.0,True,480.0,440.0,True,1160.0,False,0.9983828149990548,Bougies
+Deodorant#2,Deodorant,nuisance,630.0,False,,40.0,True,80.0,True,0.11869646509190558,Déodorant
+Wood#2,Wood,fire,2398.0,True,0.0,0.0,True,610.0,False,0.9991845205262139,Bois
+Cable#2,Cable,fire,396.0,True,150.0,0.0,True,90.0,True,0.8352476013419567,Câble
+Cable#3,Cable,fire,612.0,True,110.0,100.0,True,120.0,False,0.9894507855771144,Câble
+Candles#3,Candles,fire,1798.0,True,1060.0,0.0,True,1060.0,True,0.9507786126883656,Bougies
+Smoke#2,Smoke,nuisance,550.0,True,0.0,0.0,True,70.0,False,0.9996171284543952,Machine à fumée
+CO#2,CO,nuisance,830.0,False,,40.0,False,,True,0.2304753318702975,Rejet de CO
+Lunts#2,Lunts,fire,1912.0,True,0.0,0.0,True,40.0,False,0.9994576189874178,Mèches (lunts)
+Deodorant#3,Deodorant,nuisance,689.0,False,,20.0,True,20.0,True,0.2787808194213549,Déodorant
+Wood#3,Wood,fire,1875.0,True,350.0,250.0,True,470.0,False,0.99967562055239,Bois
+Ethanol#2,Ethanol,nuisance,1388.0,True,0.0,0.0,False,,False,0.9849330610859497,Éthanol
+Green_Waste#1,Green_Waste,nuisance,3118.0,True,2590.0,0.0,False,,True,0.9182549121386021,Déchets verts
+Candles#4,Candles,fire,1633.0,True,0.0,20.0,True,1050.0,False,0.9984883025842246,Bougies
+Wood#4,Wood,fire,2534.0,True,930.0,0.0,True,1060.0,False,0.9994364462603991,Bois
+Cable#4,Cable,fire,1297.0,True,140.0,0.0,True,80.0,True,0.9982778812158082,Câble
+Wood#5,Wood,fire,1940.0,True,80.0,0.0,True,480.0,False,0.9995732080295808,Bois
+Exhaust#2,Exhaust,nuisance,587.0,True,390.0,20.0,False,,True,0.8822652750179849,Gaz d'échappement
+Wood#6,Wood,fire,2410.0,True,560.0,530.0,True,1390.0,False,0.9992498863047202,Bois
+Exhaust#3,Exhaust,nuisance,531.0,False,,40.0,False,,True,0.0050044476696139584,Gaz d'échappement
+Lunts#3,Lunts,fire,1898.0,True,130.0,60.0,True,120.0,True,0.9997860539596278,Mèches (lunts)
+Wood#7,Wood,fire,1892.0,True,400.0,50.0,True,410.0,True,0.9997223726269773,Bois
+Welding#1,Welding,nuisance,599.0,True,0.0,0.0,True,40.0,False,0.9904546949780813,Soudure
+Abrasive_Cutting#1,Abrasive_Cutting,nuisance,295.0,True,260.0,40.0,False,,True,0.8309613621798446,Découpe abrasive
