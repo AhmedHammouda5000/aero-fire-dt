@@ -16,8 +16,8 @@ PAGES = [
      "Vérificateur d'alarme (feu / nuisance), vote de sécurité à deux canaux, alerte précoce, prévision à 60 s, apprentissage local."),
 ]
 
-COVER = """<div class="cover"><div class="lamp"><i style="background:#22c55e"></i><i style="background:#ffb000"></i><i style="background:#ff3b30"></i></div>
-<div class="tag">{tag} · AERO-FIRE DT</div><h1>{title}</h1><div class="sub">{sub}</div>
+COVER = """<div class="cover"><img class="cflame" src="img/flame.png" alt="">
+<div class="tag">{tag} · AERO-FIRE DT</div><h1>{title}</h1><div class="slogan">PRÉDICTION · PRÉVENTION · PROTECTION</div><div class="sub">{sub}</div>
 <div class="meta"><span>Challenge <b>Aero-Entrepreneur</b> · Tunisian Aeroday 2026</span><span>Partenaire du challenge : <b>Protection Civile</b></span>
 <span><b>22 novembre 2026</b></span><span>Code : <b>github.com/AhmedHammouda5000/aero-fire-dt</b></span></div></div>"""
 

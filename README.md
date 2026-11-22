@@ -1,4 +1,8 @@
+<p align="center"><img src="docs/logo.png" alt="Aero-Fire DT" height="180"></p>
+
 # Aero-Fire DT — copilote incendie pour les usines
+
+**Prédiction · Prévention · Protection**
 
 > **Un copilote qui lit le système de sécurité incendie (SSI) d'une usine sans jamais pouvoir le toucher, et qui dit à l'agent de sécurité : « vrai feu ou fausse alarme ? que faire ? que va-t-il se passer dans 60 s ? »**
 > Prototype du challenge *Aero-Entrepreneur* — Tunisian Aeroday 2026, en partenariat avec la Protection Civile.

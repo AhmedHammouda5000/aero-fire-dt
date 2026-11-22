@@ -117,3 +117,8 @@ figcaption { font-size: 8pt; color: var(--mute); margin-top: 3px; }
 .diagram .box .d { font-size: 15px; color: #b9c8d4; margin-top: 5px; line-height: 1.35; }
 .diagram .arr { width: 46px; text-align: center; font-size: 30px; color: var(--amber); font-weight: 800; }
 .backup .pg { color: var(--cyan); }
+
+/* logo */
+.cover .cflame { position: absolute; right: 22px; top: 50%; transform: translateY(-50%); height: 96px; }
+.cover .slogan { font-family: var(--mono); color: var(--amber); font-size: 9.5pt; letter-spacing: .12em; margin-top: 4px; }
+.cover .sub { max-width: 140mm; }

@@ -12,7 +12,9 @@ button, select, input { font-family: var(--mono); }
 
 .topbar { height: 64px; display: flex; align-items: center; gap: 14px; padding: 0 14px;
   border-bottom: 1px solid var(--line); background: #070b0f; }
-.brand { display: flex; flex-direction: column; min-width: 250px; }
+.brand-wrap { display: flex; align-items: center; gap: 10px; }
+.brand-flame { height: 40px; width: auto; }
+.brand { display: flex; flex-direction: column; min-width: 230px; }
 .logo { font-weight: 700; font-size: 20px; letter-spacing: 3px; color: var(--white); }
 .tag { color: var(--dim); font-size: 11px; }
 .heartbeat { flex: 1; display: flex; align-items: center; gap: 8px; color: var(--green); font-size: 13px; }
