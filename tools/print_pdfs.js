@@ -9,7 +9,7 @@ const outs = [path.join(root, "docs", "livrables", "pdf"), path.resolve(root, ".
 const DOCS = [
   { html: "01_recapitulatif.html", pdf: "01_Fichier_Recapitulatif_Aero-Fire-DT.pdf", a4: true },
   { html: "02_pitch.html", pdf: "02_Presentation_Pitch_Aero-Fire-DT.pdf", a4: false },
-  { html: "03_bmc.html", pdf: "03_BMC_Aero-Fire-DT.pdf", a4: true, landscape: true },
+  { html: "03_bmc.html", pdf: "03_BMC_Aero-Fire-DT.pdf", a4: false, w: "1440px", h: "810px", single: true },
   { html: "04_empathie.html", pdf: "04_Carte_Empathie_Aero-Fire-DT.pdf", a4: true, landscape: true },
   { html: "05_compte_rendu.html", pdf: "05_Compte_Rendu_Equipe_Aero-Fire-DT.pdf", a4: true },
   { html: "06_rapport_ia.html", pdf: "06_Rapport_Modele_IA_Aero-Fire-DT.pdf", a4: true },
@@ -32,7 +32,7 @@ const footer = `<div style="width:100%;font-family:Consolas,monospace;font-size:
     const opt = d.a4
       ? { format: "A4", landscape: !!d.landscape, printBackground: true, displayHeaderFooter: true, headerTemplate: "<span></span>", footerTemplate: footer,
           margin: d.landscape ? { top: "9mm", bottom: "11mm", left: "9mm", right: "9mm" } : { top: "12mm", bottom: "14mm", left: "14mm", right: "14mm" } }
-      : { width: "1280px", height: "720px", printBackground: true, margin: { top: 0, bottom: 0, left: 0, right: 0 } };
+      : { width: d.w || "1280px", height: d.h || "720px", printBackground: true, margin: { top: 0, bottom: 0, left: 0, right: 0 }, ...(d.single ? { pageRanges: "1" } : {}) };
     const buf = await p.pdf(opt);
     for (const o of outs) fs.writeFileSync(path.join(o, d.pdf), buf);
     const pages = (buf.toString("latin1").match(/\/Type\s*\/Page[^s]/g) || []).length;
