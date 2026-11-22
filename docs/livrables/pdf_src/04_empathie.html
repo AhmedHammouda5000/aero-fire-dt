@@ -2,77 +2,86 @@
 <html lang="fr"><head><meta charset="utf-8"><title>Aero-Fire DT — Carte d'empathie</title>
 <style>
 @font-face { font-family: "Inter"; src: url("fonts/Inter.ttf") format("truetype"); font-weight: 100 900; }
-@page { size: 1280px 960px; margin: 0; }
+@font-face { font-family: "Poppins"; src: url("fonts/Poppins-ExtraBold.ttf"); font-weight: 800; }
+@font-face { font-family: "Poppins"; src: url("fonts/Poppins-Bold.ttf"); font-weight: 700; }
+@page { size: 1440px 1080px; margin: 0; }
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
-body { width: 1280px; height: 950px; background: #fff; color: #111; font-family: "Inter", "Segoe UI", Arial, sans-serif; position: relative; overflow: hidden; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-.corner { position: absolute; width: 140px; height: 140px; }
-.corner.tl { left: -8px; top: -8px; } .corner.br { right: -8px; bottom: -8px; transform: rotate(180deg); }
-h1 { text-align: center; font-size: 44px; font-weight: 900; letter-spacing: -.01em; margin: 30px 0 22px; }
-h1 span { font-weight: 300; margin: 0 10px; }
-
-.map { position: relative; margin: 0 70px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; height: 500px; border: 3px solid #111; }
-.q { padding: 20px 24px; font-size: 16px; line-height: 1.45; }
-.q:nth-child(1) { border-right: 3px solid #111; border-bottom: 3px solid #111; padding-right: 86px; }
-.q:nth-child(2) { border-bottom: 3px solid #111; padding-left: 86px; }
-.q:nth-child(3) { border-right: 3px solid #111; padding-right: 86px; padding-top: 26px; }
-.q:nth-child(4) { padding-left: 86px; padding-top: 26px; }
-.q h2 { font-size: 20px; font-weight: 800; margin: 0 0 8px; }
-.q ul { margin: 0; padding-left: 18px; } .q li { margin: 3px 0; }
-.q .k { font-weight: 700; }
-.who { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 128px; height: 128px; border-radius: 50%; background: #fff; border: 3px solid #111; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.who .lbl { position: absolute; top: 132px; left: 50%; transform: translateX(-50%); white-space: nowrap; font-weight: 800; font-size: 13px; background: #111; color: #fff; padding: 4px 12px; border-radius: 3px; }
-
-.bottom { display: grid; grid-template-columns: 1fr 1fr; margin: 30px 70px 0; }
-.bottom > div { padding: 0 26px; }
-.bottom > div:first-child { border-right: 3px solid #111; padding-left: 0; }
-.bottom h3 { font-size: 22px; font-weight: 800; margin: 0 0 10px; }
-.item { font-size: 15.5px; line-height: 1.42; margin-bottom: 9px; }
+body { width: 1440px; height: 1070px; background: #fff; color: #111; font-family: "Inter", Arial, sans-serif; overflow: hidden; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.map { position: absolute; left: 30px; top: 40px; width: 1380px; height: 680px; border: 3px solid #111; }
+.map svg.x { position: absolute; inset: 0; }
+.tab { position: absolute; left: 50%; top: -3px; transform: translateX(-50%); background: #fff; border: 3px solid #111; border-top: 0; padding: 6px 26px 8px; font-family: "Poppins", Arial; font-weight: 800; font-size: 24px; white-space: nowrap; display: flex; align-items: center; gap: 12px; z-index: 2; }
+.tab img { height: 32px; filter: grayscale(1) contrast(1.4); }
+.z { position: absolute; font-size: 15px; line-height: 1.42; }
+.z h2 { font-family: "Poppins", Arial; font-weight: 800; font-size: 21px; margin: 0 0 4px; text-align: center; letter-spacing: .02em; }
+.z .q { font-size: 12px; color: #555; text-align: center; margin-bottom: 6px; }
+.z ul { margin: 0; padding-left: 17px; } .z li { margin: 3px 0; }
+.z .k { font-weight: 700; }
+.top { left: 445px; width: 490px; top: 50px; }
+.bot { left: 440px; width: 500px; top: 492px; }
+.left { left: 26px; width: 292px; top: 196px; }
+.right { right: 26px; width: 292px; top: 196px; }
+.face { position: absolute; left: 690px; top: 340px; transform: translate(-50%, -50%); }
+.who { position: absolute; left: 690px; top: 448px; transform: translateX(-50%); font-family: "Poppins", Arial; font-weight: 700; font-size: 13px; background: #111; color: #fff; padding: 3px 12px; border-radius: 3px; white-space: nowrap; }
+.bottom { position: absolute; left: 30px; right: 30px; top: 748px; display: grid; grid-template-columns: 1fr 1fr; }
+.bottom > div { padding: 0 28px; }
+.bottom > div:first-child { border-right: 3px solid #111; padding-left: 4px; }
+.bottom h3 { font-family: "Poppins", Arial; font-weight: 800; font-size: 23px; margin: 0 0 10px; }
+.item { font-size: 15px; line-height: 1.42; margin-bottom: 8px; }
 .item b { font-weight: 800; }
 </style></head>
 <body>
-<svg class="corner tl" viewBox="0 0 140 140"><path d="M0 0 L90 0 L55 20 Z M0 0 L0 90 L20 55 Z M0 0 L112 66 L98 80 Z" fill="#111"/></svg>
-<svg class="corner br" viewBox="0 0 140 140"><path d="M0 0 L90 0 L55 20 Z M0 0 L0 90 L20 55 Z M0 0 L112 66 L98 80 Z" fill="#111"/></svg>
-
-<h1><img src="img/flame.png" alt="" style="height:52px;vertical-align:-10px;margin-right:12px">CARTE D'EMPATHIE<span>|</span>AERO-FIRE DT TUNISIE</h1>
-
 <div class="map">
-  <div class="q"><h2>Que pense-t-il et que ressent-il&nbsp;?</h2><ul>
-    <li><span class="k">Pense&nbsp;:</span> «&nbsp;Je dois protéger les personnes sans arrêter la production pour rien.&nbsp;»</li>
+  <svg class="x" viewBox="0 0 1374 674" preserveAspectRatio="none">
+    <line x1="0" y1="0" x2="1374" y2="674" stroke="#111" stroke-width="2"/>
+    <line x1="1374" y1="0" x2="0" y2="674" stroke="#111" stroke-width="2"/>
+  </svg>
+  <div class="tab"><img src="img/flame.png" alt="">CARTE D'EMPATHIE · AERO-FIRE DT TUNISIE</div>
+
+  <svg class="face" width="250" height="210" viewBox="0 0 250 210">
+    <ellipse cx="22" cy="105" rx="13" ry="20" fill="#fff" stroke="#111" stroke-width="3"/>
+    <ellipse cx="228" cy="105" rx="13" ry="20" fill="#fff" stroke="#111" stroke-width="3"/>
+    <circle cx="125" cy="105" r="96" fill="#fff" stroke="#111" stroke-width="3.5"/>
+    <circle cx="92" cy="88" r="13" fill="#111"/><circle cx="96" cy="84" r="4" fill="#fff"/>
+    <circle cx="158" cy="88" r="13" fill="#111"/><circle cx="162" cy="84" r="4" fill="#fff"/>
+    <path d="M88 138 Q125 168 162 138" fill="none" stroke="#111" stroke-width="4" stroke-linecap="round"/>
+  </svg>
+  <div class="who">RESPONSABLE HSE</div>
+
+  <div class="z top"><h2>PENSE ET RESSENT ?</h2><div class="q">Qu'est-ce qui compte vraiment pour lui ? Ses inquiétudes ?</div><ul>
+    <li><span class="k">Pense :</span> «&nbsp;Protéger les gens sans arrêter la production pour rien.&nbsp;»</li>
     <li>«&nbsp;Si l'IA se trompe ou touche au SSI, c'est ma responsabilité.&nbsp;»</li>
-    <li><span class="k">Ressent&nbsp;:</span> pression des règles et du budget, lassitude des fausses alarmes, besoin de confiance.</li></ul></div>
-  <div class="q"><h2>Que voit-il&nbsp;?</h2><ul>
+    <li><span class="k">Ressent :</span> pression du budget, lassitude, besoin de confiance.</li></ul></div>
+
+  <div class="z left"><h2>ENTEND ?</h2><div class="q">Ce que disent les autres</div><ul>
+    <li>La direction : «&nbsp;Réduisez les arrêts et les coûts.&nbsp;»</li>
+    <li>Assureurs et bureaux de contrôle : «&nbsp;Il nous faut des preuves.&nbsp;»</li>
+    <li>Les opérateurs : «&nbsp;Encore une alarme&nbsp;!&nbsp;»</li>
+    <li>L'installateur SSI : «&nbsp;Attention à la garantie.&nbsp;»</li></ul></div>
+
+  <div class="z right"><h2>VOIT ?</h2><div class="q">Son environnement de travail</div><ul>
     <li>Des arrêts de ligne causés par la poussière, la vapeur ou la chaleur des machines.</li>
     <li>Des incidents notés dans des registres et outils différents.</li>
-    <li>Des capteurs et équipements de générations différentes.</li></ul></div>
-  <div class="q"><h2>Qu'entend-il&nbsp;?</h2><ul>
-    <li>La direction&nbsp;: «&nbsp;Réduisez les arrêts et les coûts.&nbsp;»</li>
-    <li>Assureurs et bureaux de contrôle&nbsp;: «&nbsp;Il nous faut des preuves.&nbsp;»</li>
-    <li>Les opérateurs&nbsp;: «&nbsp;Encore une alarme !&nbsp;»</li>
-    <li>L'installateur SSI&nbsp;: «&nbsp;Attention à la maintenance et à la garantie.&nbsp;»</li></ul></div>
-  <div class="q"><h2>Que dit-il et que fait-il&nbsp;?</h2><ul>
-    <li><span class="k">Dit&nbsp;:</span> «&nbsp;Cette alerte est-elle un vrai feu ou une nuisance&nbsp;?&nbsp;»</li>
-    <li>«&nbsp;Je dois prouver que le SSI n'a pas été modifié.&nbsp;»</li>
-    <li><span class="k">Fait&nbsp;:</span> analyse les incidents, coordonne l'installateur, suit les indicateurs HSE, prépare les plans d'urgence.</li></ul></div>
-  <div class="who">
-    <svg width="74" height="68" viewBox="0 0 86 78"><rect x="8" y="6" width="70" height="46" rx="4" fill="none" stroke="#111" stroke-width="4"/><circle cx="43" cy="26" r="11" fill="#111"/><path d="M22 52 Q43 32 64 52 Z" fill="#111"/><rect x="34" y="54" width="18" height="8" fill="#111"/><rect x="22" y="62" width="42" height="5" rx="2" fill="#111"/></svg>
-    <div class="lbl">RESPONSABLE HSE</div>
-  </div>
+    <li>Des capteurs de générations différentes.</li></ul></div>
+
+  <div class="z bot"><h2>DIT ET FAIT ?</h2><div class="q">Son attitude, son comportement</div><ul>
+    <li><span class="k">Dit :</span> «&nbsp;Cette alerte est-elle un vrai feu ou une nuisance&nbsp;?&nbsp;» · «&nbsp;Je dois prouver que le SSI n'a pas été modifié.&nbsp;»</li>
+    <li><span class="k">Fait :</span> analyse les incidents, coordonne l'installateur, suit les indicateurs HSE, prépare les plans d'urgence.</li></ul></div>
 </div>
 
 <div class="bottom">
   <div><h3>Problématique</h3>
-    <div class="item"><b>Qui&nbsp;?</b> Les responsables HSE chargés de la prévention et de la gestion des risques.</div>
-    <div class="item"><b>Impact&nbsp;?</b> Humain&nbsp;: risques de blessures et de pertes humaines. Économique&nbsp;: dégâts, pertes de production, coût des fausses alarmes et des interventions.</div>
-    <div class="item"><b>Échelle&nbsp;?</b> Régionale (zones industrielles des gouvernorats tunisiens) et nationale (tous les sites industriels exposés au feu).</div>
-    <div class="item"><b>Causes&nbsp;?</b> Fausses alarmes dues à des nuisances (poussière, vapeur, spray) ; pas d'outil pour anticiper le danger et aider à décider.</div>
+    <div class="item"><b>Qui ?</b> Les responsables HSE chargés de la prévention et de la gestion des risques.</div>
+    <div class="item"><b>Impact ?</b> Humain : risques de blessures et de pertes humaines. Économique : dégâts, pertes de production, coût des fausses alarmes et des interventions.</div>
+    <div class="item"><b>Échelle ?</b> Régionale (zones industrielles des gouvernorats tunisiens) et nationale (tous les sites industriels exposés au feu).</div>
+    <div class="item"><b>Causes ?</b> Fausses alarmes dues à des nuisances (poussière, vapeur, spray) ; pas d'outil pour anticiper le danger et aider à décider.</div>
   </div>
   <div><h3>Analyse de besoins</h3>
-    <div class="item"><b>1 · Sécurité&nbsp;:</b> protéger les vies et les installations ; garder le SSI réglementaire intact.</div>
-    <div class="item"><b>2 · Opérationnel&nbsp;:</b> réunir les informations des équipements ; voir comment le danger va évoluer.</div>
-    <div class="item"><b>3 · Technologique&nbsp;:</b> une analyse intelligente de plusieurs capteurs (fumée, gaz, chaleur).</div>
-    <div class="item"><b>4 · Économique&nbsp;:</b> moins d'arrêts inutiles ; une solution évolutive, adaptée au budget des entreprises tunisiennes.</div>
-    <div class="item"><b>5 · Humain et environnement&nbsp;:</b> aider les responsables et les agents à décider ; réduire l'impact des incendies industriels.</div>
+    <div class="item"><b>1 · Sécurité :</b> protéger les vies et les installations ; garder le SSI réglementaire intact.</div>
+    <div class="item"><b>2 · Opérationnel :</b> réunir les informations des équipements ; voir comment le danger va évoluer.</div>
+    <div class="item"><b>3 · Technologique :</b> une analyse intelligente de plusieurs capteurs (fumée, gaz, chaleur).</div>
+    <div class="item"><b>4 · Économique :</b> moins d'arrêts inutiles ; une solution évolutive, adaptée au budget des entreprises tunisiennes.</div>
+    <div class="item"><b>5 · Humain et environnement :</b> aider les responsables et les agents à décider ; réduire l'impact des incendies industriels.</div>
   </div>
 </div>
 </body></html>
