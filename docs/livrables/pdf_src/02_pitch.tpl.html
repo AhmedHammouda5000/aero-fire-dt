@@ -53,6 +53,10 @@ table.bk td { padding: 14px; border-bottom: 1px solid var(--line); color: var(--
 table.bk td b { color: var(--ink); }
 table.bk tr:nth-child(even) td { background: var(--bg2); }
 .tag-r { position: absolute; top: 28px; right: 80px; font-family: var(--head); font-weight: 700; font-size: 14px; color: #fff; background: var(--orange); padding: 3px 10px; border-radius: 3px; }
+.aero { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.aero div { background: var(--bg2); border-radius: 10px; padding: 28px 24px; display: flex; flex-direction: column; gap: 8px; border-top: 5px solid var(--blue); }
+.aero b { font-family: var(--head); font-weight: 700; font-size: 25px; color: var(--ink); }
+.aero span { font-size: 21px; color: var(--ink2); line-height: 1.35; }
 </style></head>
 <body>
 
@@ -112,9 +116,25 @@ table.bk tr:nth-child(even) td { background: var(--bg2); }
   <div class="ft" style="left:auto;width:620px;border:0;justify-content:flex-end"><span>03</span></div>
 </section>
 
+<!-- 3b aero methods -->
+<section class="slide" style="padding-top:64px">
+  <div class="pg">03 · CE QUE NOUS PRENONS À L'AÉRONAUTIQUE</div>
+  <h1 style="font-size:46px;margin-bottom:26px">Des <em>méthodes d'avion</em>, appliquées à l'usine.</h1>
+  <div class="aero">
+    <div>[[icon:git-merge:#3a5bff:40]]<b>Double boucle moteur</b><span>« Feu » seulement si 2 signes physiques sont d'accord</span></div>
+    <div>[[icon:timer:#3a5bff:40]]<b>CS / 14 CFR 25.858</b><span>alerte en moins de 60 s, chaque voie testable</span></div>
+    <div>[[icon:test-tubes:#3a5bff:40]]<b>FAA AC 25-9A</b><span>essais avec sources de fumée, pires cas → notre banc d'essai</span></div>
+    <div>[[icon:shield-check:#3a5bff:40]]<b>ARP4761A</b><span>analyse de sécurité : l'IA ne peut jamais couper l'alarme</span></div>
+    <div>[[icon:layout-dashboard:#3a5bff:40]]<b>ECAM Airbus</b><span>écran sombre, 3 niveaux d'alerte, procédure affichée</span></div>
+    <div>[[icon:user-check:#3a5bff:40]]<b>EASA IA niveau 1</b><span>l'IA assiste, l'humain décide</span></div>
+  </div>
+  <p style="font-size:18px;margin-top:18px;color:var(--mute)">Méthodes « inspirées de » : aucune certification aéronautique n'est revendiquée.</p>
+  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>04</span></div>
+</section>
+
 <!-- 4 solution -->
 <section class="slide">
-  <div class="pg">03 · NOTRE SOLUTION</div>
+  <div class="pg">04 · NOTRE SOLUTION</div>
   <h1>Un <em>deuxième avis</em> à côté de l'alarme.</h1>
   <div class="row">
     <div class="card">[[icon:radar:#3a5bff:84]]<div class="t">Capteurs</div><div class="d">fumée, gaz, chaleur</div></div>
@@ -124,58 +144,58 @@ table.bk tr:nth-child(even) td { background: var(--bg2); }
     <div class="card">[[icon:monitor:#3a5bff:84]]<div class="t">Écran du gardien</div><div class="d">zone + quoi faire</div></div>
   </div>
   <div class="band">[[icon:lock:#ffffff:40]] <span>Lecture seule : <b>on ne peut jamais couper l'alarme officielle.</b></span></div>
-  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>04</span></div>
+  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>05</span></div>
 </section>
 
 <!-- 5 demo fire -->
 <section class="slide" style="padding-top:64px">
-  <div class="pg">04 · DÉMO · VRAI FEU (MESURES RÉELLES)</div>
+  <div class="pg">05 · DÉMO · VRAI FEU (MESURES RÉELLES)</div>
   <div class="shot"><img src="img/A_fire.png"></div>
   <div class="chips">
     <div style="background:var(--sun)"><b>3:30</b>feu couvant possible</div>
     <div style="background:var(--orange-l)"><b style="color:var(--orange)">6:30</b>pré-alarme</div>
     <div style="background:var(--bg2)"><b>10:10</b>l'alarme classique sonne</div>
   </div>
-  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>05</span></div>
+  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>06</span></div>
 </section>
 
 <!-- 6 demo nuisance + bench -->
 <section class="slide">
-  <div class="pg">05 · DÉMO · FAUSSE ALARME ET BANC D'ESSAI</div>
+  <div class="pg">06 · DÉMO · FAUSSE ALARME ET BANC D'ESSAI</div>
   <div class="row" style="align-items:flex-start;gap:26px">
     <div style="flex:1"><div class="shot"><img src="img/B_procedure.png"></div><p style="font-size:24px;margin-top:16px;display:flex;gap:12px;align-items:flex-start">[[icon:wind:#3a5bff:34]]<span>Un spray déclenche l'alarme → <b>on vérifie</b> au lieu d'évacuer tout le site.</span></p></div>
     <div style="flex:1"><div class="shot"><img src="img/F_spread.png"></div><p style="font-size:24px;margin-top:16px;display:flex;gap:12px;align-items:flex-start">[[icon:mouse-pointer-click:#3a5bff:34]]<span>Banc d'essai : <b>posez un feu</b>, la physique 3D fait le reste.</span></p></div>
   </div>
-  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>06</span></div>
+  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>07</span></div>
 </section>
 
 <!-- 7 results -->
 <section class="slide">
-  <div class="pg">06 · RÉSULTATS · ESSAIS RÉELS JAMAIS VUS PAR L'IA</div>
+  <div class="pg">07 · RÉSULTATS · ESSAIS RÉELS JAMAIS VUS PAR L'IA</div>
   <h1>Testé sur de <em>vrais feux</em>.</h1>
   <div class="row" style="gap:20px">
     <div class="num"><div class="huge">17/17</div><div class="l">feux détectés</div></div>
     <div class="num"><div class="huge" style="color:var(--orange)">10</div><div class="l">feux signalés avant<br>l'alarme classique</div></div>
     <div class="num"><div class="huge">7/7</div><div class="l">fausses alarmes rejetées<br>dans une autre salle</div></div>
   </div>
-  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>07</span></div>
+  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>08</span></div>
 </section>
 
 <!-- 8 Tunisia -->
 <section class="slide">
-  <div class="pg">07 · PARTOUT EN TUNISIE</div>
+  <div class="pg">08 · PARTOUT EN TUNISIE</div>
   <h1>Il apprend <em>chaque usine</em>.<br>Il marche <span class="o">sans courant</span>.</h1>
   <div class="row">
     <div class="card" style="text-align:left">[[icon:trending-down:#3a5bff:52]]<div class="huge" style="font-size:76px;margin-top:14px">27 → 4</div><div class="d">fausses alarmes après 90 jours sur le site</div></div>
     <div class="card hot" style="text-align:left">[[icon:battery-charging:#f26b1d:52]]<div class="huge" style="font-size:76px;margin-top:14px;color:var(--orange)">55 h</div><div class="d">sur batterie pendant une coupure STEG</div></div>
     <div class="card" style="text-align:left">[[icon:wifi-off:#3a5bff:52]]<div class="huge" style="font-size:76px;margin-top:14px">0</div><div class="d">besoin d'Internet</div></div>
   </div>
-  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>08</span></div>
+  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>09</span></div>
 </section>
 
 <!-- 9 business -->
 <section class="slide">
-  <div class="pg">08 · MODÈLE ÉCONOMIQUE</div>
+  <div class="pg">09 · MODÈLE ÉCONOMIQUE</div>
   <h1>Un pilote de 90 jours, puis un <em>abonnement</em>.</h1>
   <div class="row">
     <div class="tier" style="background:var(--sky)"><div class="n">A · PME</div><div class="p">7 000 TND</div><div class="m">+ 450 TND / mois</div></div>
@@ -186,7 +206,7 @@ table.bk tr:nth-child(even) td { background: var(--bg2); }
     <div><div class="huge" style="font-size:60px;color:var(--orange)">9 700 TND</div><p style="font-size:22px">pour démarrer (matériel seul)</p></div>
     <div><div class="huge" style="font-size:60px">Année 2</div><p style="font-size:22px">rentable</p></div>
   </div>
-  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>09</span></div>
+  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>10</span></div>
 </section>
 
 <!-- 10 next + PC -->
@@ -194,7 +214,7 @@ table.bk tr:nth-child(even) td { background: var(--bg2); }
   <div class="split" style="grid-template-columns:.85fr 1.15fr">
     <div class="ph" style="background-image:url('photo/intervention.jpg');background-position:78% 40%"></div>
     <div class="tx" style="padding:70px 70px 80px 60px">
-      <div class="pg" style="left:auto;right:80px">09 · LA SUITE, AVEC LA PROTECTION CIVILE</div>
+      <div class="pg" style="left:auto;right:80px">10 · LA SUITE, AVEC LA PROTECTION CIVILE</div>
       <h1 style="font-size:46px;margin-bottom:26px">En 18 mois : <em>10 sites</em>, puis 20+.</h1>
       <div class="tl">
         <div><b>M1–M3</b><span>vrais boîtiers</span></div>

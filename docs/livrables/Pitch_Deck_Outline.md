@@ -7,6 +7,7 @@
 | 0 | Titre | AERO-FIRE DT · « Le copilote incendie qui lit votre alarme sans jamais la toucher » | 0:15 |
 | 1 | Le problème | spray / poussière / échappement → évacuation pour rien · 39 % · 47,9 MDT | 0:30 |
 | 2 | L'idée vient de l'aviation | soutes d'avion : 200 fausses alarmes pour 1 feu · fumée + (gaz ou chaleur) = feu | 0:30 |
+| 2b | Ce que nous prenons à l'aéronautique | double boucle moteur · CS/14 CFR 25.858 (alerte < 60 s) · FAA AC 25-9A (essais de fumée → banc d'essai) · ARP4761A (analyse de sécurité) · ECAM Airbus · EASA IA niveau 1 — méthodes « inspirées de », sans certification revendiquée | 0:30 |
 | 3 | Notre solution | capteurs → IA + vote → écran du gardien · lecture seule, on ne coupe jamais l'alarme | 0:25 |
 | 4 | Démo : vrai feu | capture du scénario A · 3:30 feu couvant · 6:30 pré-alarme · 10:10 alarme classique | 0:40 |
 | 5 | Démo : spray + banc d'essai | on vérifie au lieu d'évacuer · on pose un feu, la physique 3D fait le reste | 0:35 |
@@ -15,11 +16,12 @@
 | 8 | Modèle économique | 7 000 / 22 000 / 45 000 TND + abonnement · 9 700 TND pour démarrer · rentable année 2 | 0:30 |
 | 9 | La suite | M1–M18 · 1 usine pilote, 1 installateur agréé, un test avec la Protection Civile · « Un copilote, pas un pilote. » | 0:25 |
 
-**Total ≈ 5:00.** Pendant les slides 4–5, montrer l'application en direct si possible (scénario A, B, puis un feu dans le banc d'essai F).
+**Total ≈ 5:20** : raccourcir les slides 1 et 6 de 10 s chacune pour tenir 5:00. Pendant les slides 4–5, montrer l'application en direct si possible (scénario A, B, puis un feu dans le banc d'essai F).
 
 ## Phrases clés (à dire)
 
 - Slide 2 : « Dans les avions, il y avait 200 fausses alarmes pour un vrai feu. L'aviation a mis deux boucles qui doivent être d'accord. Nous faisons pareil dans les usines. »
+- Slide 2b : « Nous n'inventons pas la sécurité : nous reprenons des méthodes éprouvées de l'aviation, la double boucle, l'alerte en 60 secondes, les essais de fumée, l'analyse de sécurité et l'écran ECAM. »
 - Slide 3 : « On lit l'alarme, on ne la touche jamais. Pendant une alarme, l'écran dit simplement : appliquer la procédure. »
 - Slide 6 : « Testé sur de vrais feux que l'IA n'avait jamais vus : 17 sur 17. »
 - Slide 7 : « Chaque usine est différente : en 90 jours, l'IA apprend la sienne. »
