@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>Aero-Fire DT — Guide du présentateur</title>
+<link rel="stylesheet" href="brand.css">
+<style>
+.doc { font-size: 10.6pt; }
+.sl { display: grid; grid-template-columns: 62mm 1fr; gap: 12px; border: 1px solid var(--line); border-left: 6px solid var(--blue); padding: 10px 12px; margin: 10px 0; break-inside: avoid; }
+.sl img { width: 100%; border: 1px solid var(--line); display: block; }
+.sl .meta { font-family: var(--head); font-weight: 700; font-size: 9pt; color: var(--blue); margin-top: 5px; }
+.sl .time { display: inline-block; background: var(--orange); color: #fff; font-family: var(--head); font-weight: 700; font-size: 9pt; padding: 1px 8px; border-radius: 3px; margin-top: 4px; }
+.sl h3 { margin: 0 0 4px; font-size: 12.5pt; }
+.lab { font-family: var(--head); font-weight: 700; font-size: 8.4pt; letter-spacing: .1em; color: var(--mute); margin-top: 6px; display: block; }
+.say { background: var(--blue-l); border-left: 4px solid var(--blue); padding: 6px 10px; margin-top: 3px; font-size: 10.8pt; line-height: 1.45; }
+.say p { margin: 0 0 4px; }
+.why { font-size: 9.8pt; color: var(--ink2); }
+.qa { font-size: 9.6pt; color: var(--ink2); background: var(--bg2); padding: 4px 8px; margin-top: 4px; }
+.words td:first-child { width: 30%; font-weight: 700; }
+.big30 { font-size: 12pt; line-height: 1.5; background: var(--orange-l); border-left: 6px solid var(--orange); padding: 10px 14px; }
+.rules li { margin: 4px 0; }
+</style></head>
+<body class="doc">
+
+<div class="cover"><img class="cflame" src="img/flame.png" alt="">
+  <div class="tag">GUIDE DU PRÉSENTATEUR · DOCUMENT INTERNE (NE PAS DÉPOSER SUR LE DRIVE)</div>
+  <h1>Comment présenter Aero-Fire DT</h1>
+  <div class="slogan">PRÉDICTION · PRÉVENTION · PROTECTION</div>
+  <div class="sub">À lire avant de passer. Pour chaque slide : pourquoi elle est là, ce qu'on voit, ce que tu dis, et ce qu'on peut te demander.</div>
+</div>
+
+<h2><span class="n">1</span>La situation</h2>
+<ul>
+<li><b>L'événement :</b> Tunisian Aeroday 2026, challenge « Aero-Entrepreneur », avec la <b>Protection Civile</b> comme partenaire. Thème : utiliser des <b>technologies de l'aviation + l'IA</b> pour mieux prévenir, détecter et gérer les incendies dans les usines.</li>
+<li><b>Le format :</b> <b>5 minutes de pitch</b>, puis des questions du jury. Tu présentes avec le fichier <b>02_Presentation_Pitch_Aero-Fire-DT.pdf</b>, exactement celui déposé sur le Drive (si on change la présentation : −10 points).</li>
+<li><b>Le jury note :</b> la présentation (15), la façon de parler et de convaincre (10), les réponses aux questions (10). Il a déjà lu nos documents (BMC, rapport IA, vidéo…).</li>
+<li><b>Ce que nous avons construit :</b> une <b>application qui marche</b> (un fichier, sans Internet), une <b>IA testée sur de vrais feux</b>, une <b>simulation 3D</b> de la fumée, et un plan d'entreprise.</li>
+</ul>
+
+<h2><span class="n">2</span>Le projet en 30 secondes (à connaître par cœur)</h2>
+<div class="big30">Dans les usines, l'alarme incendie ne voit que la fumée : un spray ou de la poussière la font sonner pour rien, et toute l'usine s'arrête. <b>Aero-Fire DT</b> ajoute des capteurs qui voient aussi les <b>gaz</b> et la <b>chaleur</b>. Une petite IA dit « vrai feu ou fausse alarme ». Et comme dans un moteur d'avion, on ne dit « feu » que si <b>deux signes différents</b> sont d'accord. On <b>lit</b> l'alarme officielle, on ne peut <b>jamais</b> l'éteindre. Testé sur de vrais feux : <b>17 sur 17</b>.</div>
+
+<h2><span class="n">3</span>Les mots à connaître</h2>
+<table class="words">
+<tr><th>Mot</th><th>Ce que ça veut dire</th></tr>
+<tr><td>SSI</td><td>le système de sécurité incendie officiel de l'usine (l'alarme certifiée, obligatoire)</td></tr>
+<tr><td>Fausse alarme / nuisance</td><td>l'alarme sonne sans feu : spray, poussière, vapeur, échappement d'un chariot</td></tr>
+<tr><td>Lecture seule</td><td>on lit l'état de l'alarme, mais on ne peut rien lui envoyer : impossible de l'éteindre</td></tr>
+<tr><td>Levée de doute</td><td>un agent va vérifier sur place si c'est un vrai feu</td></tr>
+<tr><td>Double boucle</td><td>dans un moteur d'avion, 2 circuits de détection doivent être d'accord pour dire « feu »</td></tr>
+<tr><td>ECAM</td><td>l'écran d'alertes du cockpit Airbus : sombre quand tout va bien, rouge / orange quand il faut agir</td></tr>
+<tr><td>Feu couvant</td><td>un feu qui démarre lentement, avec du gaz et peu de flamme</td></tr>
+<tr><td>CFD / jumeau 3D</td><td>simulation de l'air et de la fumée dans une copie 3D de l'usine</td></tr>
+<tr><td>Pilote de 90 jours</td><td>on installe le système dans une usine pendant 3 mois : l'IA apprend cette usine</td></tr>
+<tr><td>Kit option 1</td><td>notre boîtier capteur à bas coût : 4 capteurs + 1 puce, ≈ 300–475 TND, pas de caméra</td></tr>
+</table>
+
+<h2 class="pb"><span class="n">4</span>Slide par slide (≈ 5 minutes)</h2>
+
+<div class="sl"><div><img src="thumbs/s00.png"><div class="meta">SLIDE 0 · TITRE</div><span class="time">15 s</span></div><div>
+<h3>Le titre</h3>
+<span class="lab">POURQUOI</span><div class="why">Se présenter et donner l'idée en une phrase.</div>
+<span class="lab">CE QUE TU DIS</span><div class="say"><p>« Bonjour, nous sommes l'équipe Aero-Fire DT. Notre slogan : prédiction, prévention, protection. Nous avons créé un copilote incendie pour les usines : il lit l'alarme… sans jamais la toucher. »</p></div>
+</div></div>
+
+<div class="sl"><div><img src="thumbs/s01.png"><div class="meta">SLIDE 1 · LE PROBLÈME</div><span class="time">30 s</span></div><div>
+<h3>L'alarme ne voit que la fumée</h3>
+<span class="lab">POURQUOI</span><div class="why">Montrer que le problème est réel et coûte cher. L'image « fausse alarme / vraie alarme » résume tout.</div>
+<span class="lab">CE QUE TU DIS</span><div class="say"><p>« Aujourd'hui, l'alarme d'une usine ne voit que la fumée. Un spray, de la poussière, un chariot qui tourne… et elle sonne. Toute l'usine évacue, la production s'arrête, pour rien. »</p><p>« En Angleterre, 39 % des sorties des pompiers sont des fausses alarmes. En Tunisie, les indemnités incendie ont atteint 47,9 millions de dinars en six mois. »</p></div>
+<span class="lab">SI ON TE DEMANDE</span><div class="qa">« Et en Tunisie, combien de fausses alarmes ? » → « Il n'y a pas de statistique publiée ; c'est justement ce que le pilote va mesurer. »</div>
+</div></div>
+
+<div class="sl"><div><img src="thumbs/s02.png"><div class="meta">SLIDE 2 · L'AVIATION</div><span class="time">25 s</span></div><div>
+<h3>200 fausses alarmes pour 1 vrai feu</h3>
+<span class="lab">POURQUOI</span><div class="why">C'est le <b>lien avec l'aéronautique</b>, très important pour ce challenge.</div>
+<span class="lab">CE QUE TU DIS</span><div class="say"><p>« Les avions ont connu ce problème : dans les soutes, il y avait environ 200 fausses alarmes pour un vrai feu. L'aviation l'a réglé avec deux boucles de détection qui doivent être d'accord. »</p><p>« Nous faisons pareil : fumée, plus gaz ou chaleur, égale feu. Un seul signe ne suffit pas. »</p></div>
+</div></div>
+
+<div class="sl"><div><img src="thumbs/s03.png"><div class="meta">SLIDE 3 · MÉTHODES D'AVION</div><span class="time">30 s</span></div><div>
+<h3>Ce que nous prenons à l'aéronautique</h3>
+<span class="lab">POURQUOI</span><div class="why">Prouver qu'on n'invente pas la sécurité : on reprend des méthodes reconnues de l'aviation.</div>
+<span class="lab">CE QUE TU DIS</span><div class="say"><p>« Nous n'inventons pas la sécurité, nous reprenons des méthodes de l'aviation : la double boucle des moteurs ; la règle des soutes d'avion, une alerte en moins de 60 secondes ; les essais de fumée de la FAA, devenus notre banc d'essai ; l'analyse de sécurité ARP4761 ; et l'écran ECAM d'Airbus. L'IA assiste, c'est toujours l'humain qui décide. »</p></div>
+<span class="lab">SI ON TE DEMANDE</span><div class="qa">« Vous êtes certifiés aviation ? » → « Non, et nous ne le prétendons pas : ce sont des méthodes inspirées de l'aviation. L'alarme certifiée de l'usine reste la sécurité principale. »</div>
+</div></div>
+
+<div class="sl"><div><img src="thumbs/s04.png"><div class="meta">SLIDE 4 · NOTRE SOLUTION</div><span class="time">25 s</span></div><div>
+<h3>Un deuxième avis à côté de l'alarme</h3>
+<span class="lab">POURQUOI</span><div class="why">Expliquer simplement comment ça marche, et rassurer sur la sécurité (bande bleue).</div>
+<span class="lab">CE QUE TU DIS</span><div class="say"><p>« Des boîtiers au plafond mesurent la fumée, les gaz et la chaleur toutes les 10 secondes. L'IA et le vote décident : vrai feu ou fausse alarme. Le gardien voit la zone et quoi faire. »</p><p>« Et le plus important : on est branché en lecture seule. On ne peut jamais couper l'alarme officielle. »</p></div>
+<span class="lab">SI ON TE DEMANDE</span><div class="qa">« Si l'IA se trompe ? » → « L'alarme officielle sonne quand même. Pendant une alarme, notre écran dit seulement « appliquez la procédure », jamais un score. »</div>
+</div></div>
+
+<div class="sl"><div><img src="thumbs/s05.png"><div class="meta">SLIDE 5 · DÉMO VRAI FEU</div><span class="time">30 s</span></div><div>
+<h3>Un vrai feu, mesuré</h3>
+<span class="lab">POURQUOI</span><div class="why">Montrer que ça marche sur de <b>vraies mesures</b> d'un feu de bois. (Si possible, ouvrir l'application à la place : scénario A.)</div>
+<span class="lab">CE QUE TU DIS</span><div class="say"><p>« Voici un vrai feu enregistré dans un hall industriel. À 3 minutes 30, notre système dit déjà : feu couvant possible, envoyez quelqu'un. À 6 minutes 30 : pré-alarme. L'alarme classique, elle, ne sonne qu'à 10 minutes 10. »</p></div>
+</div></div>
+
+<div class="sl"><div><img src="thumbs/s06.png"><div class="meta">SLIDE 6 · DÉMO FAUSSE ALARME</div><span class="time">25 s</span></div><div>
+<h3>Un spray, et le banc d'essai</h3>
+<span class="lab">POURQUOI</span><div class="why">Montrer l'autre cas : la fausse alarme. Et l'interactivité : on peut poser un feu soi-même.</div>
+<span class="lab">CE QUE TU DIS</span><div class="say"><p>« À gauche, un spray déclenche l'alarme. Au lieu d'évacuer toute l'usine, on envoie un agent vérifier la zone. »</p><p>« À droite, notre banc d'essai : on pose un feu n'importe où, la physique 3D déplace la fumée jusqu'aux capteurs, et la même IA décide. »</p></div>
+</div></div>
+
+<div class="sl"><div><img src="thumbs/s07.png"><div class="meta">SLIDE 7 · RÉSULTATS</div><span class="time">25 s</span></div><div>
+<h3>Testé sur de vrais feux</h3>
+<span class="lab">POURQUOI</span><div class="why">Les chiffres qui comptent. Tous viennent d'essais que l'IA <b>n'avait jamais vus</b>.</div>
+<span class="lab">CE QUE TU DIS</span><div class="say"><p>« Sur 32 essais réels que l'IA n'avait jamais vus : 17 feux sur 17 détectés. Dans 10 cas, on a alerté avant l'alarme classique. Et dans une autre salle jamais vue, 7 fausses alarmes sur 7 rejetées. »</p></div>
+<span class="lab">SI ON TE DEMANDE</span><div class="qa">« D'où viennent les données ? » → « D'un jeu de données public allemand : 9 boîtiers, 77 heures, de vrais feux et de vraies fausses alarmes. Chaque essai est testé par une IA qui ne l'a jamais vu. »</div>
+</div></div>
+
+<div class="sl"><div><img src="thumbs/s08.png"><div class="meta">SLIDE 8 · EN TUNISIE</div><span class="time">25 s</span></div><div>
+<h3>Chaque usine, sans courant</h3>
+<span class="lab">POURQUOI</span><div class="why">Répondre aux deux soucis tunisiens : chaque usine est différente, et les coupures STEG.</div>
+<span class="lab">CE QUE TU DIS</span><div class="say"><p>« Chaque usine a son air normal. Pendant 90 jours, l'IA apprend la sienne : sur un nouveau site, les fausses alarmes sont passées de 27 à 4. »</p><p>« Et l'été, quand la STEG coupe : 55 heures sur batterie, sans Internet. »</p></div>
+</div></div>
+
+<div class="sl"><div><img src="thumbs/s09.png"><div class="meta">SLIDE 9 · MODÈLE ÉCONOMIQUE</div><span class="time">25 s</span></div><div>
+<h3>Pilote, puis abonnement</h3>
+<span class="lab">POURQUOI</span><div class="why">Montrer qu'on peut vivre de ce projet, à un prix tunisien.</div>
+<span class="lab">CE QUE TU DIS</span><div class="say"><p>« Trois offres : 7 000 dinars pour une PME, 22 000 pour un site classé, 45 000 pour un grand compte, plus un abonnement mensuel. »</p><p>« Pour démarrer, il nous faut seulement 9 700 dinars de matériel : l'ingénierie, c'est nous. Rentable dès l'année 2. »</p></div>
+<span class="lab">SI ON TE DEMANDE</span><div class="qa">« Pourquoi un abonnement ? » → « Il paie l'apprentissage continu de l'IA sur le site, la maintenance des capteurs et le support 7 jours sur 7. »</div>
+</div></div>
+
+<div class="sl"><div><img src="thumbs/s10.png"><div class="meta">SLIDE 10 · FEUILLE DE ROUTE</div><span class="time">30 s</span></div><div>
+<h3>18 mois, 6 phases</h3>
+<span class="lab">POURQUOI</span><div class="why">Montrer les étapes concrètes et le délai (le jury le demande).</div>
+<span class="lab">CE QUE TU DIS</span><div class="say"><p>« Le premier mois : le label Startup et la marque. Mois 1 à 3 : de vrais boîtiers testés avec une vraie centrale. Mois 3 à 6 : le pilote de 90 jours dans une usine, avec la Protection Civile. Puis 3 sites payants, 10 sites à un an, et 20 sites à 18 mois. »</p></div>
+</div></div>
+
+<div class="sl"><div><img src="thumbs/s11.png"><div class="meta">SLIDE 11 · CONCLUSION</div><span class="time">15 s</span></div><div>
+<h3>Avançons ensemble</h3>
+<span class="lab">POURQUOI</span><div class="why">Faire la demande et finir sur une phrase forte.</div>
+<span class="lab">CE QUE TU DIS</span><div class="say"><p>« Avec la Protection Civile, nous voulons faire des plans numériques des sites et former les agents. Nous cherchons une usine pilote, un installateur agréé et un test avec la Protection Civile. »</p><p>« Aero-Fire DT : un copilote, pas un pilote. Merci. »</p></div>
+</div></div>
+
+<h2 class="pb"><span class="n">5</span>Pendant les questions</h2>
+<p>Les 4 slides <b>« Réserve »</b> (après la conclusion) servent seulement si on te pose la question :</p>
+<table>
+<tr><th>Si on te demande…</th><th>Montre</th><th>Réponse courte</th></tr>
+<tr><td>Quels capteurs ? combien ça coûte ?</td><td>Réserve 1</td><td>4 capteurs + 1 puce, ≈ 300–475 TND, 0,68 W, 55 h sur batterie</td></tr>
+<tr><td>Les résultats en détail ?</td><td>Réserve 2</td><td>17/17 feux, 11/15 fausses alarmes rejetées (alarme classique : 10/15), autre salle 7/7</td></tr>
+<tr><td>Chaque usine est différente ?</td><td>Réserve 3</td><td>jour 1 : modèle général ; après 90 jours : modèle de l'usine, fausses alarmes 27 → 4</td></tr>
+<tr><td>C'est dangereux de se brancher ?</td><td>Réserve 4</td><td>isolation électrique, lecture seule, posé par l'installateur agréé ; l'alarme reste maître</td></tr>
+</table>
+
+<h3>Questions difficiles</h3>
+<table>
+<tr><th style="width:38%">Question</th><th>Réponse</th></tr>
+<tr><td>« Vous faites à peine mieux qu'un détecteur classique sur les fausses alarmes ? »</td><td>« Sur ce hall, oui, une de plus. Notre vraie force : l'alerte précoce, la règle des deux signes, et l'apprentissage de chaque usine : 27 → 4 fausses alarmes. Le pilote mesurera le gain réel. »</td></tr>
+<tr><td>« Si votre écran dit nuisance, le gardien va attendre ? »</td><td>« Non : pendant une alarme, notre écran affiche seulement « appliquez la procédure », sans score. L'IA conseille, la centrale décide. »</td></tr>
+<tr><td>« Vous avez testé dans une usine tunisienne ? »</td><td>« Pas encore : c'est la phase 2, le pilote de 90 jours, avec un installateur agréé et la Protection Civile. »</td></tr>
+<tr><td>« Quel est le lien avec l'aéronautique ? »</td><td>« La double boucle des moteurs, la règle des 60 secondes des soutes, les essais de fumée de la FAA, l'analyse de sécurité ARP4761 et l'écran ECAM d'Airbus. »</td></tr>
+<tr><td>« Pourquoi pas une caméra / YOLO ? »</td><td>« Nos données sont des mesures de capteurs, pas des images. Et sans caméra : moins cher, et pas de problème de vie privée. »</td></tr>
+</table>
+
+<h3>5 règles d'or</h3>
+<ul class="rules">
+<li>Parle <b>lentement</b>, regarde le jury, pas l'écran.</li>
+<li>Dis toujours <b>« inspiré de l'aviation »</b>, jamais « certifié ».</li>
+<li>Si tu ne sais pas : « Bonne question, c'est exactement ce que notre pilote de 90 jours va mesurer. »</li>
+<li>Répète la phrase clé : <b>« On lit l'alarme, on ne peut jamais l'éteindre. »</b></li>
+<li>Finis toujours à l'heure : <b>5 minutes</b>, pas plus.</li>
+</ul>
+</body></html>
