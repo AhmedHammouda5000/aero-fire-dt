@@ -75,19 +75,11 @@
   <div class="b"><svg class="ico lucide lucide-monitor" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect width="20" height="14" x="2" y="3" rx="2" /> <line x1="8" x2="16" y1="21" y2="21" /> <line x1="12" x2="12" y1="17" y2="21" /> </svg><div class="t">ÉCRAN DU GARDIEN</div><div class="d">zone, alerte rouge / ambre, quoi faire</div></div>
 </div>
 <div class="callout"><span class="k">SÉCURITÉ</span><svg class="ico lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect width="18" height="11" x="3" y="11" rx="2" ry="2" /> <path d="M7 11V7a5 5 0 0 1 10 0v4" /> </svg> Branché en <b>lecture seule</b> sur l'alarme officielle, par l'installateur agréé : on ne peut <b>jamais</b> l'éteindre. Pendant une alarme, l'écran dit simplement « <b>appliquer la procédure</b> ».</div>
+<p><b>Chaque usine a son modèle :</b> pendant un pilote de 90 jours, le gardien confirme chaque alerte et l'IA apprend <b>son</b> usine. Le système marche <b>sans Internet</b> et <b>sur batterie</b> pendant les coupures STEG.</p>
 
-<h2><span class="n">04</span>Résultats (essais réels jamais vus par l'IA)</h2>
-<div class="kpis">
-  <div class="kpi"><div class="v">17/17</div><div class="l">feux détectés</div></div>
-  <div class="kpi a"><div class="v">10</div><div class="l">feux signalés avant l'alarme classique</div></div>
-  <div class="kpi"><div class="v">11/15</div><div class="l">fausses alarmes rejetées</div></div>
-  <div class="kpi"><div class="v">7/7</div><div class="l">fausses alarmes rejetées dans une autre salle</div></div>
-</div>
-<p class="small">Données réelles publiques : 32 essais de feu et de fausses alarmes enregistrés dans un hall industriel (Mendeley, Allemagne). Chaque essai est jugé par une IA qui ne l'a jamais vu.</p>
-
-<h2><span class="n">05</span>Le prototype</h2>
+<h2><span class="n">04</span>Le prototype</h2>
 <div class="grid2">
-<figure><img src="img/A_fire.png"><figcaption><b>Vrai feu</b> : alerte « feu couvant » à 3 min 30, pré-alarme à 6 min 30, l'alarme classique ne sonne qu'à 10 min 10.</figcaption></figure>
+<figure><img src="img/A_fire.png"><figcaption><b>Vrai feu</b> : alerte « feu couvant », puis pré-alarme, avant l'alarme classique ; la zone et les actions sont affichées.</figcaption></figure>
 <figure><img src="img/B_procedure.png"><figcaption><b>Spray</b> : l'alarme sonne pour rien → on vérifie la zone au lieu d'évacuer tout le site.</figcaption></figure>
 </div>
 <ul>
@@ -97,15 +89,7 @@
 <li><b>Écran inspiré du cockpit Airbus</b> : sombre quand tout va bien, rouge / ambre quand il faut agir.</li>
 </ul>
 
-<h2><span class="n">06</span>Partout en Tunisie</h2>
-<div class="kpis" style="grid-template-columns:repeat(3,1fr)">
-  <div class="kpi"><div class="v">27 → 4</div><div class="l">fausses alarmes après 90 jours d'apprentissage sur un nouveau site</div></div>
-  <div class="kpi a"><div class="v">55 h</div><div class="l">sur batterie pendant une coupure STEG</div></div>
-  <div class="kpi"><div class="v">0</div><div class="l">besoin d'Internet : tout tourne sur place</div></div>
-</div>
-<p><b>Chaque usine a son modèle :</b> le jour 1, un modèle général ; puis, pendant un pilote de 90 jours, le gardien confirme chaque alerte et l'IA apprend <b>son</b> usine.</p>
-
-<h2><span class="n">07</span>Le matériel (kit option 1)</h2>
+<h2><span class="n">05</span>Le matériel (kit option 1)</h2>
 <table>
 <tr><th>Pièce</th><th>Ce qu'elle mesure</th></tr>
 <tr><td>Sensirion SPS30</td><td>fumée + taille des particules</td></tr>
@@ -116,20 +100,19 @@
 </table>
 <p><b>≈ 300–475 TND par boîtier</b> rendu en Tunisie · 0,68 W · passerelle Raspberry Pi · pas de caméra.</p>
 
-<h2><span class="n">08</span>Modèle économique</h2>
+<h2><span class="n">06</span>Modèle économique</h2>
 <table>
 <tr><th>Offre</th><th>Mise en service</th><th>Abonnement</th></tr>
 <tr><td>A · PME</td><td><b>7 000 TND</b></td><td>450 TND / mois</td></tr>
 <tr><td>B · sites classés</td><td>22 000 TND</td><td>1 200 TND / mois</td></tr>
 <tr><td>C · grands comptes</td><td>45 000 TND</td><td>3 000 TND / mois</td></tr>
 </table>
-<div class="kpis" style="grid-template-columns:repeat(3,1fr)">
+<div class="kpis" style="grid-template-columns:repeat(2,1fr)">
   <div class="kpi a"><div class="v">9 700 TND</div><div class="l">pour démarrer : matériel seul (l'ingénierie, c'est nous)</div></div>
   <div class="kpi"><div class="v">≈ 4 400 TND</div><div class="l">coût d'un site A (matériel + pose), vendu 7 000 TND</div></div>
-  <div class="kpi"><div class="v">Année 2</div><div class="l">rentable (10 sites en année 1)</div></div>
 </div>
 
-<h2><span class="n">09</span>La suite, avec la Protection Civile</h2>
+<h2><span class="n">07</span>La suite, avec la Protection Civile</h2>
 <div class="flow">
   <div class="st"><b>M1–M3</b>vrais boîtiers + banc d'essai</div><div class="ar">▶</div>
   <div class="st" style="border-top-color:var(--orange)"><b>M3–M6</b>pilote de 90 jours dans une usine</div><div class="ar">▶</div>
@@ -141,7 +124,7 @@
 <div><b>Ce que nous demandons</b><ul><li>1 usine pilote</li><li>1 installateur agréé partenaire</li><li>un test avec la Protection Civile</li></ul></div>
 </div>
 
-<h2><span class="n">10</span>Les livrables</h2>
+<h2><span class="n">08</span>Les livrables</h2>
 <table>
 <tr><th>Livrable</th><th>Fichier</th></tr>
 <tr><td>Fichier récapitulatif</td><td>01_Fichier_Recapitulatif (ce document)</td></tr>

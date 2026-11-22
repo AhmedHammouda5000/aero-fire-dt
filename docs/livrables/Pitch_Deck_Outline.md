@@ -11,8 +11,8 @@
 | 4 | Notre solution | capteurs → IA + vote → écran du gardien · lecture seule | 0:25 |
 | 5 | Le jumeau numérique 3D | fumée en direct (CFD) + prévision à +60 s · zone du danger, carte à hauteur de tête, plan numérique pour la Protection Civile | 0:30 |
 | 6 | L'IA qui vérifie | fumée, gaz, chaleur toutes les 10 s · alerte feu couvant · montre pourquoi · apprend chaque usine en 90 jours | 0:25 |
-| 7 | L'écran du gardien | style cockpit Airbus : rouge / orange / sombre · sans Internet, 55 h sur batterie | 0:25 |
-| 8 | Modèle économique | 7 000 / 22 000 / 45 000 TND + abonnement · 9 700 TND pour démarrer · rentable année 2 | 0:25 |
+| 7 | L'écran du gardien | style cockpit Airbus : rouge / orange / sombre · sans Internet, sur batterie | 0:25 |
+| 8 | Modèle économique | 7 000 / 22 000 / 45 000 TND + abonnement · 9 700 TND pour démarrer | 0:25 |
 | 9 | Feuille de route 18 mois | 6 phases : cadrage · banc « iron bird » · pilote 90 jours · produit v1 · 10 sites · 20 sites | 0:30 |
 | 10 | Avec la Protection Civile | plans numériques, formation, retours d'expérience · 1 usine pilote, 1 installateur, 1 test · « Un copilote, pas un pilote. » | 0:15 |
 
