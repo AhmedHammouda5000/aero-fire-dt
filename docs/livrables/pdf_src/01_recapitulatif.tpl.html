@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>Aero-Fire DT — Fichier récapitulatif</title>
+<link rel="stylesheet" href="brand.css">
+<style>
+.icorow { display: flex; align-items: stretch; gap: 6px; margin: 8px 0; break-inside: avoid; }
+.icorow .b { flex: 1; text-align: center; background: var(--bg2); border-radius: 6px; padding: 10px 6px; }
+.icorow .b.hot { background: var(--orange-l); }
+.icorow .b .t { font-family: var(--head); font-weight: 700; font-size: 9.5pt; margin-top: 4px; color: var(--ink); }
+.icorow .b.hot .t { color: var(--orange); }
+.icorow .b .d { font-size: 8.8pt; color: var(--ink2); margin-top: 1px; }
+.icorow .a { display: flex; align-items: center; font-family: var(--head); font-size: 18pt; color: var(--orange); font-weight: 800; }
+.hero { display: grid; grid-template-columns: 1fr 1.1fr; gap: 0; margin-bottom: 12px; background: var(--bg2); border-left: 8px solid var(--blue); }
+.hero .l { padding: 14px 18px; }
+.hero .l img { height: 118px; }
+.hero .r { background: url("photo/industrie.jpg") center / cover; min-height: 190px; }
+.hero .slogan { font-family: var(--head); font-weight: 700; color: var(--orange); font-size: 10pt; letter-spacing: .1em; margin: 8px 0 4px; }
+.hero .sub { font-size: 10.5pt; color: var(--ink); }
+.hero .meta { font-size: 8.2pt; color: var(--mute); margin-top: 6px; line-height: 1.5; }
+.hero .meta b { color: var(--ink); }
+.hero .tag { font-family: var(--head); font-weight: 600; font-size: 8.5pt; letter-spacing: .14em; color: var(--blue); margin-bottom: 4px; }
+</style></head>
+<body class="doc">
+
+<div class="hero">
+  <div class="l">
+    <div class="tag">FICHIER RÉCAPITULATIF</div>
+    <img src="img/logo.png" alt="Aero Fire DT">
+    <div class="slogan">PRÉDICTION · PRÉVENTION · PROTECTION</div>
+    <div class="sub">Le copilote incendie qui <b>lit</b> l'alarme d'une usine <b>sans jamais la toucher</b>, et qui dit au gardien : vrai feu ou fausse alarme ? que faire ?</div>
+    <div class="meta">Challenge <b>Aero-Entrepreneur</b> · Tunisian Aeroday 2026 · Partenaire : <b>Protection Civile</b><br>Code et application : <b>github.com/AhmedHammouda5000/aero-fire-dt</b></div>
+  </div>
+  <div class="r"></div>
+</div>
+
+<h2><span class="n">01</span>Le problème</h2>
+<div class="icorow">
+  <div class="b">[[icon:wind:#3a5bff:30]]<div class="t">SPRAY</div></div>
+  <div class="b">[[icon:cloud-fog:#3a5bff:30]]<div class="t">POUSSIÈRE</div></div>
+  <div class="b">[[icon:truck:#3a5bff:30]]<div class="t">ÉCHAPPEMENT</div></div>
+  <div class="a">→</div>
+  <div class="b hot" style="flex:1.3">[[icon:bell-ring:#f26b1d:30]]<div class="t">ÉVACUATION POUR RIEN</div><div class="d">production arrêtée, secours déplacés</div></div>
+</div>
+<p>L'alarme des usines ne voit que <b>la fumée</b> : elle ne fait pas la différence entre un spray et un feu. Au Royaume-Uni, <b>39 %</b> des sorties des pompiers sont des fausses alarmes. En Tunisie, les indemnités incendie ont atteint <b>47,9 MDT</b> au 1<sup>er</sup> semestre 2026.</p>
+<p><b>Nos clients :</b> les usines et entrepôts qui ont déjà une alarme incendie (4 519 entreprises industrielles), d'abord les sites classés à risque.</p>
+
+<h2><span class="n">02</span>L'idée vient de l'aviation</h2>
+<p>Dans les soutes d'avion, il y avait <b>200 fausses alarmes pour 1 vrai feu</b>. L'aviation a réglé ça avec <b>deux boucles de détection qui doivent être d'accord</b>. Nous faisons pareil :</p>
+<div class="icorow">
+  <div class="b">[[icon:cloud-fog:#3a5bff:30]]<div class="t">FUMÉE</div></div>
+  <div class="a">+</div>
+  <div class="b">[[icon:flask-conical:#3a5bff:30]] [[icon:thermometer:#3a5bff:30]]<div class="t">GAZ ou CHALEUR</div></div>
+  <div class="a">=</div>
+  <div class="b hot">[[icon:flame:#f26b1d:30]]<div class="t">FEU</div></div>
+</div>
+<p>Un spray, de la poussière ou un échappement n'ont pas cette « empreinte » : ils ne sont jamais appelés « feu ».</p>
+
+<h2><span class="n">03</span>Notre solution</h2>
+<div class="icorow">
+  <div class="b">[[icon:radar:#3a5bff:30]]<div class="t">BOÎTIERS CAPTEURS</div><div class="d">fumée, gaz (CO, H₂, COV), chaleur · toutes les 10 s</div></div>
+  <div class="a">→</div>
+  <div class="b">[[icon:cpu:#3a5bff:30]]<div class="t">IA + VOTE</div><div class="d">score feu / fausse alarme + règle des 2 signes</div></div>
+  <div class="a">→</div>
+  <div class="b">[[icon:monitor:#3a5bff:30]]<div class="t">ÉCRAN DU GARDIEN</div><div class="d">zone, alerte rouge / ambre, quoi faire</div></div>
+</div>
+<div class="callout"><span class="k">SÉCURITÉ</span>[[icon:lock:#3a5bff:16]] Branché en <b>lecture seule</b> sur l'alarme officielle, par l'installateur agréé : on ne peut <b>jamais</b> l'éteindre. Pendant une alarme, l'écran dit simplement « <b>appliquer la procédure</b> ».</div>
+
+<h2><span class="n">04</span>Résultats (essais réels jamais vus par l'IA)</h2>
+<div class="kpis">
+  <div class="kpi"><div class="v">17/17</div><div class="l">feux détectés</div></div>
+  <div class="kpi a"><div class="v">10</div><div class="l">feux signalés avant l'alarme classique</div></div>
+  <div class="kpi"><div class="v">11/15</div><div class="l">fausses alarmes rejetées</div></div>
+  <div class="kpi"><div class="v">7/7</div><div class="l">fausses alarmes rejetées dans une autre salle</div></div>
+</div>
+<p class="small">Données réelles publiques : 32 essais de feu et de fausses alarmes enregistrés dans un hall industriel (Mendeley, Allemagne). Chaque essai est jugé par une IA qui ne l'a jamais vu.</p>
+
+<h2><span class="n">05</span>Le prototype</h2>
+<div class="grid2">
+<figure><img src="img/A_fire.png"><figcaption><b>Vrai feu</b> : alerte « feu couvant » à 3 min 30, pré-alarme à 6 min 30, l'alarme classique ne sonne qu'à 10 min 10.</figcaption></figure>
+<figure><img src="img/B_procedure.png"><figcaption><b>Spray</b> : l'alarme sonne pour rien → on vérifie la zone au lieu d'évacuer tout le site.</figcaption></figure>
+</div>
+<ul>
+<li><b>Ouvrir :</b> télécharger le dépôt GitHub, double-cliquer sur <code>app/index.html</code>. Pas d'installation, pas d'Internet.</li>
+<li><b>5 scénarios réels</b> rejoués (feu, spray, échappement, capteur en panne, soudure).</li>
+<li><b>Banc d'essai libre :</b> on pose un feu en cliquant ; la <b>physique 3D</b> déplace la fumée jusqu'aux capteurs et la même IA décide.</li>
+<li><b>Écran inspiré du cockpit Airbus</b> : sombre quand tout va bien, rouge / ambre quand il faut agir.</li>
+</ul>
+
+<h2><span class="n">06</span>Partout en Tunisie</h2>
+<div class="kpis" style="grid-template-columns:repeat(3,1fr)">
+  <div class="kpi"><div class="v">27 → 4</div><div class="l">fausses alarmes après 90 jours d'apprentissage sur un nouveau site</div></div>
+  <div class="kpi a"><div class="v">55 h</div><div class="l">sur batterie pendant une coupure STEG</div></div>
+  <div class="kpi"><div class="v">0</div><div class="l">besoin d'Internet : tout tourne sur place</div></div>
+</div>
+<p><b>Chaque usine a son modèle :</b> le jour 1, un modèle général ; puis, pendant un pilote de 90 jours, le gardien confirme chaque alerte et l'IA apprend <b>son</b> usine.</p>
+
+<h2><span class="n">07</span>Le matériel (kit option 1)</h2>
+<table>
+<tr><th>Pièce</th><th>Ce qu'elle mesure</th></tr>
+<tr><td>Sensirion SPS30</td><td>fumée + taille des particules</td></tr>
+<tr><td>Sensirion SGP30</td><td>hydrogène + vapeurs (COV)</td></tr>
+<tr><td>Sensirion SCD40</td><td>CO₂ + température + humidité</td></tr>
+<tr><td>Winsen ZE07-CO</td><td>monoxyde de carbone</td></tr>
+<tr><td>ESP32-C3</td><td>calcule le score IA et l'envoie par radio</td></tr>
+</table>
+<p><b>≈ 300–475 TND par boîtier</b> rendu en Tunisie · 0,68 W · passerelle Raspberry Pi · pas de caméra.</p>
+
+<h2><span class="n">08</span>Modèle économique</h2>
+<table>
+<tr><th>Offre</th><th>Mise en service</th><th>Abonnement</th></tr>
+<tr><td>A · PME</td><td><b>7 000 TND</b></td><td>450 TND / mois</td></tr>
+<tr><td>B · sites classés</td><td>22 000 TND</td><td>1 200 TND / mois</td></tr>
+<tr><td>C · grands comptes</td><td>45 000 TND</td><td>3 000 TND / mois</td></tr>
+</table>
+<div class="kpis" style="grid-template-columns:repeat(3,1fr)">
+  <div class="kpi a"><div class="v">9 700 TND</div><div class="l">pour démarrer : matériel seul (l'ingénierie, c'est nous)</div></div>
+  <div class="kpi"><div class="v">≈ 4 400 TND</div><div class="l">coût d'un site A (matériel + pose), vendu 7 000 TND</div></div>
+  <div class="kpi"><div class="v">Année 2</div><div class="l">rentable (10 sites en année 1)</div></div>
+</div>
+
+<h2><span class="n">09</span>La suite, avec la Protection Civile</h2>
+<div class="flow">
+  <div class="st"><b>M1–M3</b>vrais boîtiers + banc d'essai</div><div class="ar">▶</div>
+  <div class="st" style="border-top-color:var(--orange)"><b>M3–M6</b>pilote de 90 jours dans une usine</div><div class="ar">▶</div>
+  <div class="st"><b>M6–M12</b>10 sites</div><div class="ar">▶</div>
+  <div class="st"><b>M12–M18</b>20+ sites</div>
+</div>
+<div class="grid2">
+<div><b>Avec la Protection Civile</b><ul><li>plans numériques des sites</li><li>formation des agents</li><li>retours d'expérience partagés</li></ul></div>
+<div><b>Ce que nous demandons</b><ul><li>1 usine pilote</li><li>1 installateur agréé partenaire</li><li>un test avec la Protection Civile</li></ul></div>
+</div>
+
+<h2><span class="n">10</span>Les livrables</h2>
+<table>
+<tr><th>Livrable</th><th>Fichier</th></tr>
+<tr><td>Fichier récapitulatif</td><td>01_Fichier_Recapitulatif (ce document)</td></tr>
+<tr><td>Présentation</td><td>02_Presentation_Pitch</td></tr>
+<tr><td>BMC · carte d'empathie · compte rendu d'équipe</td><td>03_BMC · 04_Carte_Empathie · 05_Compte_Rendu_Equipe</td></tr>
+<tr><td>Rapport du modèle IA</td><td>06_Rapport_Modele_IA</td></tr>
+<tr><td>Vidéo explicative (1 min)</td><td>07_Video_Explicative_Aero-Fire-DT.mp4</td></tr>
+<tr><td>Dépôt GitHub (code, données, tests, application)</td><td><a href="https://github.com/AhmedHammouda5000/aero-fire-dt">github.com/AhmedHammouda5000/aero-fire-dt</a></td></tr>
+</table>
+</body></html>

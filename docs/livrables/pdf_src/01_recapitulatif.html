@@ -2,32 +2,43 @@
 <html lang="fr"><head><meta charset="utf-8"><title>Aero-Fire DT — Fichier récapitulatif</title>
 <link rel="stylesheet" href="brand.css">
 <style>
-.doc { font-size: 10.5pt; }
 .icorow { display: flex; align-items: stretch; gap: 6px; margin: 8px 0; break-inside: avoid; }
-.icorow .b { flex: 1; text-align: center; background: var(--paper2); border: 1px solid var(--paper3); border-top: 4px solid var(--cyan); padding: 10px 6px; }
-.icorow .b .i { font-size: 26pt; line-height: 1; }
-.icorow .b .t { font-family: var(--mono); font-weight: 700; font-size: 9.5pt; margin-top: 6px; color: var(--navy); }
-.icorow .b .d { font-size: 9pt; color: var(--ink2); margin-top: 2px; }
-.icorow .a { display: flex; align-items: center; font-size: 18pt; color: var(--amber-d); font-weight: 800; }
-.kpi .v { font-size: 20pt; }
+.icorow .b { flex: 1; text-align: center; background: var(--bg2); border-radius: 6px; padding: 10px 6px; }
+.icorow .b.hot { background: var(--orange-l); }
+.icorow .b .t { font-family: var(--head); font-weight: 700; font-size: 9.5pt; margin-top: 4px; color: var(--ink); }
+.icorow .b.hot .t { color: var(--orange); }
+.icorow .b .d { font-size: 8.8pt; color: var(--ink2); margin-top: 1px; }
+.icorow .a { display: flex; align-items: center; font-family: var(--head); font-size: 18pt; color: var(--orange); font-weight: 800; }
+.hero { display: grid; grid-template-columns: 1fr 1.1fr; gap: 0; margin-bottom: 12px; background: var(--bg2); border-left: 8px solid var(--blue); }
+.hero .l { padding: 14px 18px; }
+.hero .l img { height: 118px; }
+.hero .r { background: url("photo/industrie.jpg") center / cover; min-height: 190px; }
+.hero .slogan { font-family: var(--head); font-weight: 700; color: var(--orange); font-size: 10pt; letter-spacing: .1em; margin: 8px 0 4px; }
+.hero .sub { font-size: 10.5pt; color: var(--ink); }
+.hero .meta { font-size: 8.2pt; color: var(--mute); margin-top: 6px; line-height: 1.5; }
+.hero .meta b { color: var(--ink); }
+.hero .tag { font-family: var(--head); font-weight: 600; font-size: 8.5pt; letter-spacing: .14em; color: var(--blue); margin-bottom: 4px; }
 </style></head>
 <body class="doc">
 
-<div class="cover">
-  <img class="cflame" src="img/flame.png" alt="">
-  <div class="tag">FICHIER RÉCAPITULATIF</div>
-  <h1>AERO-FIRE DT</h1><div class="slogan">PRÉDICTION · PRÉVENTION · PROTECTION</div>
-  <div class="sub">Le copilote incendie qui <b>lit</b> l'alarme d'une usine <b>sans jamais la toucher</b>, et qui dit au gardien : vrai feu ou fausse alarme ? que faire ?</div>
-  <div class="meta"><span>Challenge <b>Aero-Entrepreneur</b> · Tunisian Aeroday 2026</span><span>Partenaire : <b>Protection Civile</b></span><span>Code et application : <b>github.com/AhmedHammouda5000/aero-fire-dt</b></span></div>
+<div class="hero">
+  <div class="l">
+    <div class="tag">FICHIER RÉCAPITULATIF</div>
+    <img src="img/logo.png" alt="Aero Fire DT">
+    <div class="slogan">PRÉDICTION · PRÉVENTION · PROTECTION</div>
+    <div class="sub">Le copilote incendie qui <b>lit</b> l'alarme d'une usine <b>sans jamais la toucher</b>, et qui dit au gardien : vrai feu ou fausse alarme ? que faire ?</div>
+    <div class="meta">Challenge <b>Aero-Entrepreneur</b> · Tunisian Aeroday 2026 · Partenaire : <b>Protection Civile</b><br>Code et application : <b>github.com/AhmedHammouda5000/aero-fire-dt</b></div>
+  </div>
+  <div class="r"></div>
 </div>
 
 <h2><span class="n">01</span>Le problème</h2>
 <div class="icorow">
-  <div class="b"><div class="i">💨</div><div class="t">SPRAY</div></div>
-  <div class="b"><div class="i">🌫️</div><div class="t">POUSSIÈRE</div></div>
-  <div class="b"><div class="i">🚜</div><div class="t">ÉCHAPPEMENT</div></div>
+  <div class="b"><svg class="ico lucide lucide-wind" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M12.8 19.6A2 2 0 1 0 14 16H2" /> <path d="M17.5 8a2.5 2.5 0 1 1 2 4H2" /> <path d="M9.8 4.4A2 2 0 1 1 11 8H2" /> </svg><div class="t">SPRAY</div></div>
+  <div class="b"><svg class="ico lucide lucide-cloud-fog" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" /> <path d="M16 17H7" /> <path d="M17 21H9" /> </svg><div class="t">POUSSIÈRE</div></div>
+  <div class="b"><svg class="ico lucide lucide-truck" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" /> <path d="M15 18H9" /> <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14" /> <circle cx="17" cy="18" r="2" /> <circle cx="7" cy="18" r="2" /> </svg><div class="t">ÉCHAPPEMENT</div></div>
   <div class="a">→</div>
-  <div class="b" style="border-top-color:var(--red);flex:1.3"><div class="i">🔔</div><div class="t" style="color:var(--red-d)">ÉVACUATION POUR RIEN</div><div class="d">production arrêtée, secours déplacés</div></div>
+  <div class="b hot" style="flex:1.3"><svg class="ico lucide lucide-bell-ring" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#f26b1d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" /> <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" /> <path d="M4 2C2.8 3.7 2 5.7 2 8" /> <path d="M22 8c0-2.3-.8-4.3-2-6" /> </svg><div class="t">ÉVACUATION POUR RIEN</div><div class="d">production arrêtée, secours déplacés</div></div>
 </div>
 <p>L'alarme des usines ne voit que <b>la fumée</b> : elle ne fait pas la différence entre un spray et un feu. Au Royaume-Uni, <b>39 %</b> des sorties des pompiers sont des fausses alarmes. En Tunisie, les indemnités incendie ont atteint <b>47,9 MDT</b> au 1<sup>er</sup> semestre 2026.</p>
 <p><b>Nos clients :</b> les usines et entrepôts qui ont déjà une alarme incendie (4 519 entreprises industrielles), d'abord les sites classés à risque.</p>
@@ -35,29 +46,29 @@
 <h2><span class="n">02</span>L'idée vient de l'aviation</h2>
 <p>Dans les soutes d'avion, il y avait <b>200 fausses alarmes pour 1 vrai feu</b>. L'aviation a réglé ça avec <b>deux boucles de détection qui doivent être d'accord</b>. Nous faisons pareil :</p>
 <div class="icorow">
-  <div class="b"><div class="i">🌫️</div><div class="t">FUMÉE</div></div>
+  <div class="b"><svg class="ico lucide lucide-cloud-fog" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" /> <path d="M16 17H7" /> <path d="M17 21H9" /> </svg><div class="t">FUMÉE</div></div>
   <div class="a">+</div>
-  <div class="b"><div class="i">🧪🌡️</div><div class="t">GAZ ou CHALEUR</div></div>
+  <div class="b"><svg class="ico lucide lucide-flask-conical" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2" /> <path d="M8.5 2h7" /> <path d="M7 16h10" /> </svg> <svg class="ico lucide lucide-thermometer" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z" /> </svg><div class="t">GAZ ou CHALEUR</div></div>
   <div class="a">=</div>
-  <div class="b" style="border-top-color:var(--red)"><div class="i">🔥</div><div class="t" style="color:var(--red-d)">FEU</div></div>
+  <div class="b hot"><svg class="ico lucide lucide-flame" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#f26b1d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" /> </svg><div class="t">FEU</div></div>
 </div>
 <p>Un spray, de la poussière ou un échappement n'ont pas cette « empreinte » : ils ne sont jamais appelés « feu ».</p>
 
 <h2><span class="n">03</span>Notre solution</h2>
 <div class="icorow">
-  <div class="b"><div class="i">📡</div><div class="t">BOÎTIERS CAPTEURS</div><div class="d">fumée, gaz (CO, H₂, COV), chaleur · toutes les 10 s</div></div>
+  <div class="b"><svg class="ico lucide lucide-radar" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M19.07 4.93A10 10 0 0 0 6.99 3.34" /> <path d="M4 6h.01" /> <path d="M2.29 9.62A10 10 0 1 0 21.31 8.35" /> <path d="M16.24 7.76A6 6 0 1 0 8.23 16.67" /> <path d="M12 18h.01" /> <path d="M17.99 11.66A6 6 0 0 1 15.77 16.67" /> <circle cx="12" cy="12" r="2" /> <path d="m13.41 10.59 5.66-5.66" /> </svg><div class="t">BOÎTIERS CAPTEURS</div><div class="d">fumée, gaz (CO, H₂, COV), chaleur · toutes les 10 s</div></div>
   <div class="a">→</div>
-  <div class="b"><div class="i">🧠</div><div class="t">IA + VOTE</div><div class="d">score feu / fausse alarme + règle des 2 signes</div></div>
+  <div class="b"><svg class="ico lucide lucide-cpu" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect width="16" height="16" x="4" y="4" rx="2" /> <rect width="6" height="6" x="9" y="9" rx="1" /> <path d="M15 2v2" /> <path d="M15 20v2" /> <path d="M2 15h2" /> <path d="M2 9h2" /> <path d="M20 15h2" /> <path d="M20 9h2" /> <path d="M9 2v2" /> <path d="M9 20v2" /> </svg><div class="t">IA + VOTE</div><div class="d">score feu / fausse alarme + règle des 2 signes</div></div>
   <div class="a">→</div>
-  <div class="b"><div class="i">🖥️</div><div class="t">ÉCRAN DU GARDIEN</div><div class="d">zone, alerte rouge / ambre, quoi faire</div></div>
+  <div class="b"><svg class="ico lucide lucide-monitor" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect width="20" height="14" x="2" y="3" rx="2" /> <line x1="8" x2="16" y1="21" y2="21" /> <line x1="12" x2="12" y1="17" y2="21" /> </svg><div class="t">ÉCRAN DU GARDIEN</div><div class="d">zone, alerte rouge / ambre, quoi faire</div></div>
 </div>
-<div class="callout red"><span class="k">SÉCURITÉ</span>🔒 Branché en <b>lecture seule</b> sur l'alarme officielle, par l'installateur agréé : on ne peut <b>jamais</b> l'éteindre. Pendant une alarme, l'écran dit simplement « <b>appliquer la procédure</b> ».</div>
+<div class="callout"><span class="k">SÉCURITÉ</span><svg class="ico lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect width="18" height="11" x="3" y="11" rx="2" ry="2" /> <path d="M7 11V7a5 5 0 0 1 10 0v4" /> </svg> Branché en <b>lecture seule</b> sur l'alarme officielle, par l'installateur agréé : on ne peut <b>jamais</b> l'éteindre. Pendant une alarme, l'écran dit simplement « <b>appliquer la procédure</b> ».</div>
 
 <h2><span class="n">04</span>Résultats (essais réels jamais vus par l'IA)</h2>
 <div class="kpis">
   <div class="kpi"><div class="v">17/17</div><div class="l">feux détectés</div></div>
   <div class="kpi a"><div class="v">10</div><div class="l">feux signalés avant l'alarme classique</div></div>
-  <div class="kpi c"><div class="v">11/15</div><div class="l">fausses alarmes rejetées</div></div>
+  <div class="kpi"><div class="v">11/15</div><div class="l">fausses alarmes rejetées</div></div>
   <div class="kpi"><div class="v">7/7</div><div class="l">fausses alarmes rejetées dans une autre salle</div></div>
 </div>
 <p class="small">Données réelles publiques : 32 essais de feu et de fausses alarmes enregistrés dans un hall industriel (Mendeley, Allemagne). Chaque essai est jugé par une IA qui ne l'a jamais vu.</p>
@@ -76,8 +87,8 @@
 
 <h2><span class="n">06</span>Partout en Tunisie</h2>
 <div class="kpis" style="grid-template-columns:repeat(3,1fr)">
-  <div class="kpi a"><div class="v">27 → 4</div><div class="l">fausses alarmes après 90 jours d'apprentissage sur un nouveau site</div></div>
-  <div class="kpi c"><div class="v">55 h</div><div class="l">sur batterie pendant une coupure STEG</div></div>
+  <div class="kpi"><div class="v">27 → 4</div><div class="l">fausses alarmes après 90 jours d'apprentissage sur un nouveau site</div></div>
+  <div class="kpi a"><div class="v">55 h</div><div class="l">sur batterie pendant une coupure STEG</div></div>
   <div class="kpi"><div class="v">0</div><div class="l">besoin d'Internet : tout tourne sur place</div></div>
 </div>
 <p><b>Chaque usine a son modèle :</b> le jour 1, un modèle général ; puis, pendant un pilote de 90 jours, le gardien confirme chaque alerte et l'IA apprend <b>son</b> usine.</p>
@@ -102,14 +113,14 @@
 </table>
 <div class="kpis" style="grid-template-columns:repeat(3,1fr)">
   <div class="kpi a"><div class="v">9 700 TND</div><div class="l">pour démarrer : matériel seul (l'ingénierie, c'est nous)</div></div>
-  <div class="kpi c"><div class="v">≈ 4 400 TND</div><div class="l">coût d'un site A (matériel + pose), vendu 7 000 TND</div></div>
+  <div class="kpi"><div class="v">≈ 4 400 TND</div><div class="l">coût d'un site A (matériel + pose), vendu 7 000 TND</div></div>
   <div class="kpi"><div class="v">Année 2</div><div class="l">rentable (10 sites en année 1)</div></div>
 </div>
 
 <h2><span class="n">09</span>La suite, avec la Protection Civile</h2>
 <div class="flow">
   <div class="st"><b>M1–M3</b>vrais boîtiers + banc d'essai</div><div class="ar">▶</div>
-  <div class="st" style="border-top-color:var(--amber)"><b>M3–M6</b>pilote de 90 jours dans une usine</div><div class="ar">▶</div>
+  <div class="st" style="border-top-color:var(--orange)"><b>M3–M6</b>pilote de 90 jours dans une usine</div><div class="ar">▶</div>
   <div class="st"><b>M6–M12</b>10 sites</div><div class="ar">▶</div>
   <div class="st"><b>M12–M18</b>20+ sites</div>
 </div>

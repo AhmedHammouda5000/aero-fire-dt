@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>Aero-Fire DT — Pitch</title>
+<link rel="stylesheet" href="brand.css">
+<style>
+@page { size: 1280px 720px; margin: 0; }
+body { background: #fff; }
+.slide { width: 1280px; height: 720px; position: relative; overflow: hidden; background: #fff; break-after: page; display: flex; flex-direction: column; justify-content: center; padding: 70px 80px 76px; }
+.slide:last-child { break-after: auto; }
+.pg { position: absolute; top: 28px; left: 80px; font-family: var(--head); font-weight: 700; font-size: 15px; letter-spacing: .14em; color: var(--blue); }
+.pg i { font-style: normal; color: var(--mute); font-weight: 500; }
+.ft { position: absolute; left: 80px; right: 80px; bottom: 22px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--mute); border-top: 1px solid var(--line); padding-top: 10px; }
+.ft img { height: 22px; vertical-align: middle; margin-right: 8px; }
+h1 { font-family: var(--head); font-weight: 800; font-size: 56px; line-height: 1.1; margin: 0 0 36px; color: var(--ink); letter-spacing: -.01em; }
+h1 em { font-style: normal; color: var(--blue); }
+h1 .o { color: var(--orange); }
+p { font-size: 26px; line-height: 1.4; color: var(--ink2); margin: 0; }
+.row { display: flex; align-items: stretch; gap: 22px; }
+.card { flex: 1; background: var(--bg2); border-radius: 12px; padding: 34px 24px; text-align: center; }
+.card .t { font-family: var(--head); font-weight: 700; font-size: 26px; color: var(--ink); margin-top: 16px; }
+.card .d { font-size: 21px; color: var(--ink2); margin-top: 6px; }
+.card.hot { background: var(--orange-l); } .card.hot .t { color: var(--orange); }
+.card.blue { background: var(--blue-l); }
+.op { align-self: center; font-family: var(--head); font-weight: 800; font-size: 60px; color: var(--orange); }
+.split { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; }
+.split .ph { background-size: cover; background-position: center; }
+.split .tx { padding: 80px 70px 80px 80px; display: flex; flex-direction: column; justify-content: center; }
+.huge { font-family: var(--head); font-weight: 900; line-height: .95; color: var(--blue-d); }
+.num { flex: 1; text-align: center; }
+.num .huge { font-size: 140px; }
+.num .l { font-size: 26px; color: var(--ink2); margin-top: 14px; line-height: 1.3; }
+.band { margin-top: 40px; background: var(--blue); color: #fff; border-radius: 10px; padding: 22px 28px; font-size: 28px; display: flex; align-items: center; gap: 18px; }
+.band b { color: #fff; }
+.shot { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; box-shadow: 0 6px 18px rgba(29,36,51,.12); }
+.shot img { display: block; width: 100%; }
+.chips { display: flex; gap: 14px; margin-top: 18px; }
+.chips div { flex: 1; border-radius: 8px; padding: 12px 16px; font-size: 21px; color: var(--ink); }
+.chips b { font-family: var(--head); font-weight: 800; font-size: 30px; display: block; }
+.tier { flex: 1; border-radius: 10px; padding: 30px 26px; box-shadow: 0 2px 4px rgba(20,30,60,.14); }
+.tier .n { font-family: var(--head); font-weight: 600; font-size: 21px; color: var(--ink2); }
+.tier .p { font-family: var(--head); font-weight: 800; font-size: 44px; color: var(--ink); margin-top: 6px; white-space: nowrap; }
+.tier .m { font-size: 24px; color: var(--ink); margin-top: 4px; }
+.tl { display: flex; margin: 0 0 30px; }
+.tl div { flex: 1; border-top: 6px solid var(--blue); padding: 12px 10px 0 0; }
+.tl div.a { border-top-color: var(--orange); }
+.tl b { font-family: var(--head); font-weight: 800; font-size: 26px; color: var(--ink); display: block; }
+.tl span { font-size: 20px; color: var(--ink2); }
+.ask { display: flex; flex-direction: column; gap: 12px; }
+.ask div { display: flex; align-items: center; gap: 16px; background: var(--bg2); border-radius: 8px; padding: 14px 18px; font-size: 24px; color: var(--ink); }
+.slogan { font-family: var(--head); font-weight: 700; color: var(--orange); letter-spacing: .12em; }
+table.bk { width: 100%; border-collapse: collapse; font-size: 25px; }
+table.bk th { font-family: var(--head); font-weight: 600; font-size: 18px; background: var(--blue); color: #fff; text-align: left; padding: 12px 14px; }
+table.bk td { padding: 14px; border-bottom: 1px solid var(--line); color: var(--ink2); }
+table.bk td b { color: var(--ink); }
+table.bk tr:nth-child(even) td { background: var(--bg2); }
+.tag-r { position: absolute; top: 28px; right: 80px; font-family: var(--head); font-weight: 700; font-size: 14px; color: #fff; background: var(--orange); padding: 3px 10px; border-radius: 3px; }
+</style></head>
+<body>
+
+<!-- 1 cover -->
+<section class="slide" style="padding:0">
+  <div class="split" style="grid-template-columns:1.05fr .95fr">
+    <div class="tx">
+      <div class="pg" style="position:static;margin-bottom:26px">TUNISIAN AERODAY 2026 · AERO-ENTREPRENEUR</div>
+      <img src="img/logo.png" alt="Aero Fire DT" style="height:290px;width:auto;align-self:flex-start">
+      <div class="slogan" style="font-size:19px;margin-top:22px;white-space:nowrap">PRÉDICTION · PRÉVENTION · PROTECTION</div>
+      <p style="font-size:27px;margin-top:16px;color:var(--ink)">Le copilote incendie qui <b>lit</b> votre alarme <b>sans jamais la toucher</b>.</p>
+    </div>
+    <div class="ph" style="background-image:url('photo/industrie.jpg')"></div>
+  </div>
+  <div class="ft" style="right:auto;width:560px;border:0"><span>Partenaires du challenge : Protection Civile &amp; INJAZ Tunisia</span></div>
+</section>
+
+<!-- 2 problem -->
+<section class="slide" style="padding:0">
+  <div class="split">
+    <div class="tx">
+      <div class="pg">01 · LE PROBLÈME</div>
+      <h1 style="font-size:48px;margin-bottom:22px">L'alarme ne voit que <em>la fumée</em>.</h1>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:center;gap:18px;font-size:24px">[[icon:wind:#3a5bff:38]] un spray</div>
+        <div style="display:flex;align-items:center;gap:18px;font-size:24px">[[icon:cloud-fog:#3a5bff:38]] de la poussière</div>
+        <div style="display:flex;align-items:center;gap:18px;font-size:24px">[[icon:truck:#3a5bff:38]] un chariot qui tourne</div>
+        <div style="display:flex;align-items:center;gap:18px;font-size:28px;color:var(--orange);font-weight:700;margin-top:6px">[[icon:bell-ring:#f26b1d:48]] → évacuation pour rien</div>
+      </div>
+      <div style="display:flex;gap:40px;margin-top:22px">
+        <div><div class="huge" style="font-size:46px;color:var(--red)">39 %</div><p style="font-size:18px">des sorties des pompiers<br>= fausses alarmes (UK)</p></div>
+        <div><div class="huge" style="font-size:46px;color:var(--orange)">47,9 MDT</div><p style="font-size:18px">indemnités incendie<br>Tunisie, S1 2026</p></div>
+      </div>
+    </div>
+    <div class="ph" style="background:#dfe7f1 url('photo/alarme.jpg') center / contain no-repeat"></div>
+  </div>
+  <div class="ft" style="left:auto;right:80px;width:520px;border:0;justify-content:flex-end"><span>02</span></div>
+</section>
+
+<!-- 3 aviation -->
+<section class="slide" style="padding:0">
+  <div class="split" style="grid-template-columns:.8fr 1.2fr">
+    <div class="ph" style="background-image:url('photo/cockpit.jpg');background-position:40% 50%"></div>
+    <div class="tx">
+      <div class="pg" style="left:auto;right:80px">02 · L'IDÉE VIENT DE L'AVIATION</div>
+      <h1 style="font-size:50px">Avions : <span class="o">200 fausses alarmes</span> pour 1 vrai feu.</h1>
+      <p style="margin:-14px 0 34px">L'aviation a réglé ça avec <b>deux boucles</b> qui doivent être d'accord.</p>
+      <div class="row" style="gap:14px">
+        <div class="card" style="padding:26px 12px">[[icon:cloud-fog:#3a5bff:58]]<div class="t" style="font-size:22px">FUMÉE</div></div>
+        <div class="op" style="font-size:44px">+</div>
+        <div class="card" style="padding:26px 12px">[[icon:flask-conical:#3a5bff:58]] [[icon:thermometer:#3a5bff:58]]<div class="t" style="font-size:22px">GAZ ou CHALEUR</div></div>
+        <div class="op" style="font-size:44px">=</div>
+        <div class="card hot" style="padding:26px 12px">[[icon:flame:#f26b1d:58]]<div class="t" style="font-size:22px">FEU</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="ft" style="left:auto;width:620px;border:0;justify-content:flex-end"><span>03</span></div>
+</section>
+
+<!-- 4 solution -->
+<section class="slide">
+  <div class="pg">03 · NOTRE SOLUTION</div>
+  <h1>Un <em>deuxième avis</em> à côté de l'alarme.</h1>
+  <div class="row">
+    <div class="card">[[icon:radar:#3a5bff:84]]<div class="t">Capteurs</div><div class="d">fumée, gaz, chaleur</div></div>
+    <div class="op">→</div>
+    <div class="card">[[icon:cpu:#3a5bff:84]]<div class="t">IA + vote</div><div class="d">feu ou fausse alarme ?</div></div>
+    <div class="op">→</div>
+    <div class="card">[[icon:monitor:#3a5bff:84]]<div class="t">Écran du gardien</div><div class="d">zone + quoi faire</div></div>
+  </div>
+  <div class="band">[[icon:lock:#ffffff:40]] <span>Lecture seule : <b>on ne peut jamais couper l'alarme officielle.</b></span></div>
+  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>04</span></div>
+</section>
+
+<!-- 5 demo fire -->
+<section class="slide" style="padding-top:64px">
+  <div class="pg">04 · DÉMO · VRAI FEU (MESURES RÉELLES)</div>
+  <div class="shot"><img src="img/A_fire.png"></div>
+  <div class="chips">
+    <div style="background:var(--sun)"><b>3:30</b>feu couvant possible</div>
+    <div style="background:var(--orange-l)"><b style="color:var(--orange)">6:30</b>pré-alarme</div>
+    <div style="background:var(--bg2)"><b>10:10</b>l'alarme classique sonne</div>
+  </div>
+  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>05</span></div>
+</section>
+
+<!-- 6 demo nuisance + bench -->
+<section class="slide">
+  <div class="pg">05 · DÉMO · FAUSSE ALARME ET BANC D'ESSAI</div>
+  <div class="row" style="align-items:flex-start;gap:26px">
+    <div style="flex:1"><div class="shot"><img src="img/B_procedure.png"></div><p style="font-size:24px;margin-top:16px;display:flex;gap:12px;align-items:flex-start">[[icon:wind:#3a5bff:34]]<span>Un spray déclenche l'alarme → <b>on vérifie</b> au lieu d'évacuer tout le site.</span></p></div>
+    <div style="flex:1"><div class="shot"><img src="img/F_spread.png"></div><p style="font-size:24px;margin-top:16px;display:flex;gap:12px;align-items:flex-start">[[icon:mouse-pointer-click:#3a5bff:34]]<span>Banc d'essai : <b>posez un feu</b>, la physique 3D fait le reste.</span></p></div>
+  </div>
+  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>06</span></div>
+</section>
+
+<!-- 7 results -->
+<section class="slide">
+  <div class="pg">06 · RÉSULTATS · ESSAIS RÉELS JAMAIS VUS PAR L'IA</div>
+  <h1>Testé sur de <em>vrais feux</em>.</h1>
+  <div class="row" style="gap:20px">
+    <div class="num"><div class="huge">17/17</div><div class="l">feux détectés</div></div>
+    <div class="num"><div class="huge" style="color:var(--orange)">10</div><div class="l">feux signalés avant<br>l'alarme classique</div></div>
+    <div class="num"><div class="huge">7/7</div><div class="l">fausses alarmes rejetées<br>dans une autre salle</div></div>
+  </div>
+  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>07</span></div>
+</section>
+
+<!-- 8 Tunisia -->
+<section class="slide">
+  <div class="pg">07 · PARTOUT EN TUNISIE</div>
+  <h1>Il apprend <em>chaque usine</em>.<br>Il marche <span class="o">sans courant</span>.</h1>
+  <div class="row">
+    <div class="card" style="text-align:left">[[icon:trending-down:#3a5bff:52]]<div class="huge" style="font-size:76px;margin-top:14px">27 → 4</div><div class="d">fausses alarmes après 90 jours sur le site</div></div>
+    <div class="card hot" style="text-align:left">[[icon:battery-charging:#f26b1d:52]]<div class="huge" style="font-size:76px;margin-top:14px;color:var(--orange)">55 h</div><div class="d">sur batterie pendant une coupure STEG</div></div>
+    <div class="card" style="text-align:left">[[icon:wifi-off:#3a5bff:52]]<div class="huge" style="font-size:76px;margin-top:14px">0</div><div class="d">besoin d'Internet</div></div>
+  </div>
+  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>08</span></div>
+</section>
+
+<!-- 9 business -->
+<section class="slide">
+  <div class="pg">08 · MODÈLE ÉCONOMIQUE</div>
+  <h1>Un pilote de 90 jours, puis un <em>abonnement</em>.</h1>
+  <div class="row">
+    <div class="tier" style="background:var(--sky)"><div class="n">A · PME</div><div class="p">7 000 TND</div><div class="m">+ 450 TND / mois</div></div>
+    <div class="tier" style="background:var(--sun)"><div class="n">B · Sites classés</div><div class="p">22 000 TND</div><div class="m">+ 1 200 TND / mois</div></div>
+    <div class="tier" style="background:var(--leaf)"><div class="n">C · Grands comptes</div><div class="p">45 000 TND</div><div class="m">+ 3 000 TND / mois</div></div>
+  </div>
+  <div style="display:flex;gap:70px;margin-top:40px">
+    <div><div class="huge" style="font-size:60px;color:var(--orange)">9 700 TND</div><p style="font-size:22px">pour démarrer (matériel seul)</p></div>
+    <div><div class="huge" style="font-size:60px">Année 2</div><p style="font-size:22px">rentable</p></div>
+  </div>
+  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>09</span></div>
+</section>
+
+<!-- 10 next + PC -->
+<section class="slide" style="padding:0">
+  <div class="split" style="grid-template-columns:.85fr 1.15fr">
+    <div class="ph" style="background-image:url('photo/intervention.jpg');background-position:78% 40%"></div>
+    <div class="tx" style="padding:70px 70px 80px 60px">
+      <div class="pg" style="left:auto;right:80px">09 · LA SUITE, AVEC LA PROTECTION CIVILE</div>
+      <h1 style="font-size:46px;margin-bottom:26px">En 18 mois : <em>10 sites</em>, puis 20+.</h1>
+      <div class="tl">
+        <div><b>M1–M3</b><span>vrais boîtiers</span></div>
+        <div class="a"><b>M3–M6</b><span>pilote 90 jours</span></div>
+        <div><b>M6–M12</b><span>10 sites</span></div>
+        <div><b>M18</b><span>20+ sites</span></div>
+      </div>
+      <div class="ask">
+        <div>[[icon:factory:#3a5bff:36]] 1 usine pilote</div>
+        <div>[[icon:wrench:#3a5bff:36]] 1 installateur agréé</div>
+        <div>[[icon:siren:#f26b1d:36]] un test avec la Protection Civile</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:18px;margin-top:26px"><img src="img/flame.png" alt="" style="height:64px"><div><p style="font-size:26px;color:var(--ink)"><b>Un copilote, pas un pilote.</b> Merci.</p><div class="slogan" style="font-size:17px;margin-top:4px">PRÉDICTION · PRÉVENTION · PROTECTION</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BACKUP -->
+<section class="slide">
+  <div class="pg">RÉSERVE 1 · LE BOÎTIER CAPTEUR (KIT OPTION 1)</div><div class="tag-r">Q&amp;R</div>
+  <h1 style="font-size:44px">4 capteurs + 1 puce · <span class="o">≈ 300–475 TND</span></h1>
+  <table class="bk">
+    <tr><th>Pièce</th><th>Ce qu'elle mesure</th></tr>
+    <tr><td><b>Sensirion SPS30</b></td><td>fumée + taille des particules</td></tr>
+    <tr><td><b>Sensirion SGP30</b></td><td>hydrogène + vapeurs (COV)</td></tr>
+    <tr><td><b>Sensirion SCD40</b></td><td>CO₂ + température + humidité</td></tr>
+    <tr><td><b>Winsen ZE07-CO</b></td><td>monoxyde de carbone</td></tr>
+    <tr><td><b>ESP32-C3</b></td><td>calcule le score IA, envoie par radio</td></tr>
+  </table>
+  <p style="font-size:22px;margin-top:16px">0,68 W par boîtier · 55 h sur une batterie LiFePO4 100 Ah</p>
+  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT · RÉSERVE</span><span>R1</span></div>
+</section>
+
+<section class="slide">
+  <div class="pg">RÉSERVE 2 · RÉSULTATS DÉTAILLÉS</div><div class="tag-r">Q&amp;R</div>
+  <h1 style="font-size:44px">32 essais réels · <em>un essai caché à la fois</em></h1>
+  <table class="bk">
+    <tr><th></th><th>Aero-Fire DT</th><th>Alarme fumée seule</th></tr>
+    <tr><td>Feux détectés</td><td><b>17 / 17</b></td><td>17 / 17</td></tr>
+    <tr><td>Fausses alarmes rejetées</td><td><b>11 / 15</b></td><td>10 / 15</td></tr>
+    <tr><td>Alerte « feu couvant possible »</td><td><b>17 / 17</b> (10 avant l'alarme)</td><td>—</td></tr>
+    <tr><td>Autre salle jamais vue</td><td><b>12 / 13 feux · 7 / 7</b></td><td>13 / 13 · 6 / 7</td></tr>
+    <tr><td>Prévision de la fumée à +60 s</td><td colspan="2"><b>± 6 cm</b> de hauteur · ± 6,8 °C</td></tr>
+  </table>
+  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT · RÉSERVE</span><span>R2</span></div>
+</section>
+
+<section class="slide">
+  <div class="pg">RÉSERVE 3 · CHAQUE USINE A SON PROPRE MODÈLE</div><div class="tag-r">Q&amp;R</div>
+  <h1 style="font-size:44px">Jour 1 : modèle général · après 90 jours : <em>modèle local</em></h1>
+  <table class="bk">
+    <tr><th>Nouveau site (NIST, USA)</th><th>Feux (8)</th><th>Fausses alarmes rejetées (33)</th></tr>
+    <tr><td>Jour 1</td><td>7 / 8</td><td>6 / 33</td></tr>
+    <tr><td><b>Après apprentissage sur le site</b></td><td><b>8 / 8</b></td><td><b>29 / 33</b></td></tr>
+  </table>
+  <p style="font-size:24px;margin-top:24px">Le gardien confirme chaque alerte → <b>l'IA apprend son usine</b>. Une usine n'influence jamais une autre.</p>
+  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT · RÉSERVE</span><span>R3</span></div>
+</section>
+
+<section class="slide">
+  <div class="pg">RÉSERVE 4 · SÉCURITÉ ET CADRE LÉGAL</div><div class="tag-r">Q&amp;R</div>
+  <h1 style="font-size:44px">Branché <em>sans risque</em> sur l'alarme</h1>
+  <table class="bk">
+    <tr><td><b>Raccordement</b></td><td>isolé électriquement (optocoupleurs), lecture seule, posé par l'installateur agréé</td></tr>
+    <tr><td><b>Pendant une alarme</b></td><td>l'écran dit « appliquer la procédure », jamais un score</td></tr>
+    <tr><td><b>Loi 2009-11</b></td><td>raccordement inscrit dans le dossier de sécurité</td></tr>
+    <tr><td><b>Décret 2006-2687</b></td><td>sites classés : nos premiers clients</td></tr>
+    <tr><td><b>EN 54-13 · NFPA 72</b></td><td>système complémentaire : l'alarme certifiée reste maître</td></tr>
+  </table>
+  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT · RÉSERVE</span><span>R4</span></div>
+</section>
+
+</body></html>
