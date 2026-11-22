@@ -25,6 +25,7 @@ for md_name, html_name, tag, title, sub in PAGES:
     text = (LIV / md_name).read_text(encoding="utf-8")
     text = re.sub(r"^# .*\n", "", text, count=1)                    # title -> cover
     text = re.sub(r"^\*Livrable[^\n]*\*\n", "", text, flags=re.M)  # internal note line
+    text = re.sub(r"^## \d+\.\s*Limites[^\n]*\n.*?(?=^## |\Z)", "", text, flags=re.M | re.S)  # no limits section in the PDF
     body = markdown.markdown(text, extensions=["tables", "fenced_code", "sane_lists"])
     body = re.sub(r"<h2>(\d+)\.\s*", r'<h2><span class="n">\1</span>', body)  # numbered headings
     html = (f'<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Aero-Fire DT — {tag.title()}</title>'

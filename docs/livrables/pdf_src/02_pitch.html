@@ -3,320 +3,261 @@
 <link rel="stylesheet" href="brand.css">
 <style>
 @page { size: 1280px 720px; margin: 0; }
-.cover-bg { position: absolute; right: 0; top: 0; bottom: 0; width: 58%; background: url("img/F_spread.png") 62% 50% / cover no-repeat; }
-.cover-bg::after { content: ""; position: absolute; inset: 0; background:
-  linear-gradient(180deg, #0a1118 0%, rgba(10,17,24,0) 16%, rgba(10,17,24,0) 80%, #0a1118 100%),
-  linear-gradient(90deg, #0a1118 0%, rgba(10,17,24,.92) 22%, rgba(10,17,24,.35) 60%, rgba(10,17,24,.15) 100%); }
-.cover-txt { position: relative; z-index: 1; width: 62%; }
-.kpi3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-.tl { display: flex; gap: 0; margin-top: 8px; }
-.tl .s { flex: 1; border-top: 4px solid var(--cyan); padding: 10px 12px 0 0; }
-.tl .s.a { border-top-color: var(--amber); }
-.tl .s .w { font-family: var(--mono); font-size: 18px; color: #fff; font-weight: 700; }
-.tl .s .d { font-size: 16px; color: #b9c8d4; margin-top: 4px; line-height: 1.35; }
-.shots3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-.shots3 .cap b { color: #fff; }
-.vs td:first-child { width: 26%; }
-/* projector sizes */
-.slide { padding: 64px 64px 60px; }
-.slide .pg { top: 26px; font-size: 15px; }
-.slide h1 { font-size: 48px; margin: 10px 0 26px; }
-.slide h2 { font-size: 23px; margin-bottom: 12px; }
-.slide p, .slide li { font-size: 25px; }
-.slide li { margin: 9px 0; }
-.slide .lead { font-size: 28px; }
-.slide .note { font-size: 18px; }
-.slide .panel { padding: 20px 22px; }
-.slide .panel h3 { font-size: 17px; margin-bottom: 10px; }
-.slide .panel p, .slide .panel li { font-size: 22px; }
-.slide .big { font-size: 66px; }
-.slide .cap { font-size: 19px; margin-top: 10px; }
-.slide table { font-size: 21px; }
-.slide th { font-size: 15px; padding: 10px 12px; }
-.slide td { padding: 12px 12px; }
-.slide .say { font-size: 21px; bottom: 56px; }
-.slide .ft { font-size: 13px; }
-.diagram .box { padding: 20px 18px; }
-.diagram .box .t { font-size: 18px; }
-.diagram .box .d { font-size: 19px; }
-.tl .s .w { font-size: 22px; } .tl .s .d { font-size: 19px; }
-.shots3 .cap { font-size: 17px; }
-.chip { font-size: 15px !important; }
-.cover-bg { background-size: 210% auto; background-position: 78% 62%; }
+.slide { padding: 60px 70px; }
+.slide .pg { top: 26px; left: 70px; font-size: 15px; }
+.slide .ft { left: 70px; right: 70px; font-size: 13px; }
+.slide h1 { font-size: 54px; margin: 18px 0 28px; line-height: 1.1; }
+.slide p { font-size: 28px; }
+.bleed { position: absolute; inset: 0; background-size: cover; background-position: center; }
+.bleed::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10,17,24,.97) 0%, rgba(10,17,24,.85) 38%, rgba(10,17,24,.2) 75%, rgba(10,17,24,.1) 100%), linear-gradient(180deg, rgba(10,17,24,.9) 0%, transparent 18%, transparent 80%, rgba(10,17,24,.95) 100%); }
+.over { position: relative; z-index: 1; }
+.huge { font-family: var(--mono); font-weight: 800; line-height: .95; color: #fff; }
+.row { display: flex; align-items: center; gap: 22px; }
+.ico { font-size: 70px; line-height: 1; }
+.tile { background: var(--navy2); border: 1px solid var(--line); border-radius: 10px; padding: 26px 22px; text-align: center; flex: 1; }
+.tile .ico { font-size: 64px; margin-bottom: 12px; }
+.tile .t { font-family: var(--mono); font-size: 22px; font-weight: 700; color: #fff; letter-spacing: .04em; }
+.tile .d { font-size: 20px; color: #9fb2c1; margin-top: 6px; }
+.op { font-family: var(--mono); font-size: 54px; color: var(--amber); font-weight: 800; }
+.shot { border: 2px solid var(--line); border-radius: 10px; overflow: hidden; }
+.shot img { display: block; width: 100%; }
+.stepchips { display: flex; gap: 14px; margin-top: 18px; }
+.stepchips div { flex: 1; border-radius: 8px; padding: 12px 16px; font-size: 20px; color: #fff; }
+.stepchips b { font-family: var(--mono); font-size: 26px; display: block; }
+.num { text-align: center; }
+.num .huge { font-size: 96px; }
+.num .l { font-size: 22px; color: #b9c8d4; margin-top: 10px; line-height: 1.3; }
+.red-line { border: 2px solid var(--red); background: rgba(255,59,48,.08); border-radius: 10px; padding: 16px 22px; font-size: 26px; color: #fff; text-align: center; margin-top: 30px; }
+.tier { flex: 1; background: var(--navy2); border: 1px solid var(--line); border-top: 6px solid var(--cyan); border-radius: 10px; padding: 22px; }
+.tier .n { font-family: var(--mono); font-size: 20px; color: #9fb2c1; letter-spacing: .1em; }
+.tier .p { font-family: var(--mono); font-size: 40px; font-weight: 800; color: #fff; margin-top: 8px; }
+.tier .m { font-size: 22px; color: var(--amber); margin-top: 4px; }
+.tl { display: flex; margin-top: 10px; }
+.tl div { flex: 1; border-top: 6px solid var(--cyan); padding: 12px 10px 0 0; }
+.tl div.a { border-top-color: var(--amber); }
+.tl b { font-family: var(--mono); font-size: 24px; color: #fff; display: block; }
+.tl span { font-size: 20px; color: #b9c8d4; }
+.ask { display: flex; gap: 18px; margin-top: 34px; }
+.ask div { flex: 1; background: var(--navy2); border: 1px solid var(--line); border-left: 6px solid var(--amber); border-radius: 8px; padding: 18px 20px; font-size: 23px; color: #fff; }
+.ask div .ico { font-size: 40px; display: block; margin-bottom: 8px; }
+table.bk { width: 100%; border-collapse: collapse; font-size: 22px; }
+table.bk th { font-family: var(--mono); font-size: 15px; color: #8fa3b3; text-align: left; padding: 10px; border-bottom: 2px solid var(--line); letter-spacing: .1em; }
+table.bk td { padding: 12px 10px; border-bottom: 1px solid var(--line); color: #d5e0e8; }
+table.bk td b { color: #fff; }
+/* fill the slide: centre vertically, larger elements */
+.slide { display: flex; flex-direction: column; justify-content: center; padding: 70px 80px 80px; }
+.slide h1 { font-size: 62px; margin: 0 0 40px; }
+.tile { padding: 42px 26px; }
+.tile .ico { font-size: 92px; margin-bottom: 18px; }
+.tile .t { font-size: 27px; }
+.tile .d { font-size: 23px; }
+.op { font-size: 64px; }
+.num .huge { font-size: 140px; }
+.num .l { font-size: 27px; }
+.tier { padding: 32px 26px; }
+.tier .n { font-size: 22px; } .tier .p { font-size: 42px; white-space: nowrap; } .tier .m { font-size: 26px; }
+.red-line { font-size: 30px; padding: 22px; margin-top: 44px; }
+.tl b { font-size: 30px; } .tl span { font-size: 24px; }
+.ask div { font-size: 28px; padding: 26px 24px; } .ask div .ico { font-size: 54px; }
+table.bk { font-size: 26px; } table.bk td { padding: 16px 12px; } table.bk th { font-size: 17px; }
+.stepchips div { font-size: 22px; } .stepchips b { font-size: 30px; }
+.shots-demo p { font-size: 26px !important; }
 </style></head>
 <body class="deck">
 
 <!-- 1 -->
 <section class="slide">
-  <div class="cover-bg"></div>
-  <div class="pg">01 <span class="s">/ 10 · AERO-FIRE DT</span></div>
-  <div class="cover-txt">
-    <div class="chip a" style="margin-top:30px">CHALLENGE AERO-ENTREPRENEUR · TUNISIAN AERODAY 2026</div>
-    <h1 style="font-size:64px;margin-top:22px;letter-spacing:.06em">AERO-FIRE DT</h1>
-    <p class="lead" style="margin-top:-6px">Le copilote incendie qui <b>lit</b> le SSI de votre usine <b>sans jamais pouvoir le toucher</b>.</p>
-    <div class="panel a" style="margin-top:28px;width:92%">
-      <h3>D'OÙ VIENT L'IDÉE</h3>
-      <p style="margin:0">Dans les soutes d'avion, on comptait <b>≈ 200 fausses alarmes pour 1 vrai feu</b> (NIST SP 965). L'aviation l'a réglé avec <b>deux boucles indépendantes qui doivent être d'accord</b> et une alerte équipage en moins de 60 s. <b>Nous apportons cette règle dans les usines tunisiennes.</b></p>
-    </div>
+  <div class="bleed" style="background-image:url('img/F_spread.png');background-size:200% auto;background-position:80% 62%"></div>
+  <div class="over">
+    <div class="pg" style="position:static;margin-bottom:60px">TUNISIAN AERODAY 2026 · CHALLENGE AERO-ENTREPRENEUR</div>
+    <div class="huge" style="font-size:96px;letter-spacing:.05em">AERO-FIRE DT</div>
+    <p style="font-size:34px;margin-top:26px;max-width:640px;color:#e8eef3">Le copilote incendie qui <b>lit</b> votre alarme<br><b>sans jamais la toucher</b>.</p>
   </div>
   <div class="ft"><span>Partenaires du challenge : Protection Civile &amp; INJAZ Tunisia</span><span>github.com/AhmedHammouda5000/aero-fire-dt</span></div>
 </section>
 
 <!-- 2 -->
 <section class="slide">
-  <div class="pg">02 <span class="s">/ 10 · LE BESOIN ET LA CIBLE</span></div>
-  <h1>Les alarmes ne voient que la fumée.<br><em>Elles sonnent souvent pour rien.</em></h1>
-  <div class="kpi3">
-    <div class="panel r"><div class="big r">39 %</div><div class="cap">des interventions des pompiers au Royaume-Uni sont des fausses alarmes (GOV.UK, sept. 2025). <b>Aucune statistique tunisienne publiée.</b></div></div>
-    <div class="panel a"><div class="big a">47,9 MDT</div><div class="cap">d'indemnités incendie en Tunisie au 1<sup>er</sup> semestre 2026 (+32,6 %).</div></div>
-    <div class="panel c"><div class="big c">4 519</div><div class="cap">entreprises industrielles de 10+ salariés : notre marché, déjà équipé d'un SSI.</div></div>
+  <div class="pg">01 · LE PROBLÈME</div>
+  <h1>L'alarme ne voit que <em>la fumée</em>.</h1>
+  <div class="row" style="gap:16px">
+    <div class="tile"><div class="ico">💨</div><div class="t">SPRAY</div></div>
+    <div class="tile"><div class="ico">🌫️</div><div class="t">POUSSIÈRE</div></div>
+    <div class="tile"><div class="ico">🚜</div><div class="t">ÉCHAPPEMENT</div></div>
+    <div class="op">→</div>
+    <div class="tile" style="border-color:var(--red);flex:1.4"><div class="ico">🔔</div><div class="t" style="color:var(--red)">ÉVACUATION<br>POUR RIEN</div></div>
   </div>
-  <div class="cols" style="margin-top:22px">
-    <div><h2>CE QUI SE PASSE AUJOURD'HUI</h2><ul style="margin:0"><li>Un spray, de la poussière ou un chariot → <b>évacuation</b>, ligne arrêtée</li><li>L'agent voit « ALARME ZONE B », <b>sans savoir</b> si c'est grave</li></ul></div>
-    <div><h2>NOTRE CIBLE</h2><ul style="margin:0"><li>Usines et entrepôts <b>déjà équipés d'un SSI</b></li><li>D'abord les <b>établissements classés</b> 1<sup>re</sup>/2<sup>e</sup> classe (étude de dangers, POI)</li></ul></div>
+  <div class="row" style="margin-top:44px;gap:60px">
+    <div><div class="huge" style="font-size:72px;color:var(--red)">39 %</div><p style="font-size:22px;color:#9fb2c1;margin:6px 0 0">des sorties des pompiers = fausses alarmes (UK)</p></div>
+    <div><div class="huge" style="font-size:72px;color:var(--amber)">47,9 MDT</div><p style="font-size:22px;color:#9fb2c1;margin:6px 0 0">indemnités incendie en Tunisie (S1 2026)</p></div>
   </div>
-  <div class="ft"><span>AERO-FIRE DT</span><span>02</span></div>
+  <div class="ft"><span>AERO-FIRE DT</span><span>01</span></div>
 </section>
 
 <!-- 3 -->
 <section class="slide">
-  <div class="pg">03 <span class="s">/ 10 · NOTRE RÉPONSE</span></div>
-  <h1>Un <em>deuxième avis</em> à côté du SSI,<br>jamais à sa place.</h1>
-  <div class="diagram" style="margin-top:14px">
-    <div class="box"><div class="t">BOÎTIERS CAPTEURS</div><div class="d">fumée + taille des particules, <b>CO, H₂, COV</b>, CO₂, chaleur · toutes les 10 s</div></div>
-    <div class="arr">▶</div>
-    <div class="box"><div class="t">PASSERELLE LOCALE</div><div class="d">IA « feu ou nuisance » + <b>vote à 2 canaux</b> + prévision 60 s · sans Internet</div></div>
-    <div class="arr">▶</div>
-    <div class="box" style="border-color:var(--amber)"><div class="t" style="color:var(--amber)">ÉCRAN DU GARDIEN</div><div class="d">alertes type cockpit, zone, actions, vue 3D</div></div>
+  <div class="pg">02 · L'IDÉE VIENT DE L'AVIATION</div>
+  <h1>Avions : <em>200 fausses alarmes</em> pour 1 vrai feu.</h1>
+  <p style="color:#b9c8d4;margin-top:-6px">L'aviation a réglé ça avec <b>deux boucles</b> qui doivent être d'accord.</p>
+  <div class="row" style="margin-top:34px">
+    <div class="tile"><div class="ico">🌫️</div><div class="t">FUMÉE</div></div>
+    <div class="op">+</div>
+    <div class="tile"><div class="ico" style="white-space:nowrap;font-size:80px">🧪🌡️</div><div class="t">GAZ ou CHALEUR</div></div>
+    <div class="op">=</div>
+    <div class="tile" style="border-color:var(--red)"><div class="ico">🔥</div><div class="t" style="color:var(--red)">FEU</div></div>
   </div>
-  <div class="diagram" style="margin-top:14px">
-    <div class="box" style="border-color:var(--red);flex:2.2"><div class="t" style="color:var(--red)">SSI CERTIFIÉ EXISTANT ▶ LECTURE SEULE</div><div class="d">isolation galvanique, posée par l'installateur agréé · <b>aucune flèche retour</b> : on lit, on ne commande jamais</div></div>
-    <div class="arr"> </div>
-    <div class="box" style="flex:1"><div class="t">SUR BATTERIE</div><div class="d">≈ 55 h pendant une coupure STEG</div></div>
-  </div>
-  <p class="lead" style="margin-top:26px">Une vraie flamme dégage <b>fumée + gaz + chaleur</b> ensemble. Un spray, de la poussière ou un échappement n'ont pas la même « empreinte ». Un détecteur de fumée ne peut pas faire la différence ; <b>nous, si</b>.</p>
-  <div class="ft"><span>AERO-FIRE DT</span><span>03</span></div>
+  <div class="ft"><span>AERO-FIRE DT</span><span>02</span></div>
 </section>
 
 <!-- 4 -->
 <section class="slide">
-  <div class="pg">04 <span class="s">/ 10 · CE QUI EXISTE / CE QUE NOUS AJOUTONS</span></div>
-  <h1>Ils vendent un nouveau détecteur.<br><em>Nous lisons celui que vous avez déjà.</em></h1>
-  <table class="vs">
-    <tr><th></th><th>GRANDS FABRICANTS (Bosch, Honeywell, Siemens, Hikvision…)</th><th>AERO-FIRE DT</th></tr>
-    <tr><td>Où est l'IA ?</td><td>dans <b>leur</b> détecteur, de <b>leur</b> marque</td><td>couche <b>neutre</b>, toutes marques de SSI</td></tr>
-    <tr><td>Remplacement du parc</td><td>oui, nouveaux détecteurs</td><td><b>non</b> : raccordement en lecture seule</td></tr>
-    <tr><td>Peut couper une alarme ?</td><td>logique interne au détecteur</td><td><b>impossible par construction</b></td></tr>
-    <tr><td>Adapté à chaque site</td><td>réglages génériques</td><td><b>apprend votre site</b> en 90 jours</td></tr>
-    <tr><td>Prix, données</td><td>catalogue international, souvent cloud</td><td>prix PME en <b>TND</b>, tout <b>en local</b></td></tr>
-  </table>
-  <div class="say">Ils vous vendent un nouveau détecteur de leur marque. Nous, on se branche en lecture seule sur la centrale que vous avez déjà. On ne peut pas la faire taire, et on apprend votre site en 90 jours.</div>
-  <div class="ft"><span>AERO-FIRE DT</span><span>04</span></div>
+  <div class="pg">03 · NOTRE SOLUTION</div>
+  <h1>Un <em>deuxième avis</em> à côté de l'alarme.</h1>
+  <div class="row">
+    <div class="tile"><div class="ico">📡</div><div class="t">CAPTEURS</div><div class="d">fumée, gaz, chaleur</div></div>
+    <div class="op">→</div>
+    <div class="tile"><div class="ico">🧠</div><div class="t">IA + VOTE</div><div class="d">feu ou fausse alarme ?</div></div>
+    <div class="op">→</div>
+    <div class="tile"><div class="ico">🖥️</div><div class="t">ÉCRAN DU GARDIEN</div><div class="d">zone + quoi faire</div></div>
+  </div>
+  <div class="red-line">🔒 Lecture seule : <b>on ne peut jamais couper l'alarme officielle.</b></div>
+  <div class="ft"><span>AERO-FIRE DT</span><span>03</span></div>
 </section>
 
 <!-- 5 -->
 <section class="slide">
-  <div class="pg">05 <span class="s">/ 10 · SÉCURITÉ : LA RÈGLE DES DEUX BOUCLES</span></div>
-  <h1>« FEU » seulement si <em>deux signes</em><br><em>physiques</em> sont d'accord.</h1>
-  <div class="cols3">
-    <div class="panel c"><h3>CANAL A · FUMÉE</h3><p style="margin:0">les particules montent fortement</p></div>
-    <div class="panel c"><h3>CANAL B · GAZ</h3><p style="margin:0">CO, H₂ ou COV montent</p></div>
-    <div class="panel c"><h3>CANAL C · CHALEUR</h3><p style="margin:0">+1,5 °C ou plus</p></div>
+  <div class="pg">04 · DÉMO · VRAI FEU (MESURES RÉELLES)</div>
+  <div class="shot" style="margin-top:6px"><img src="img/A_fire.png"></div>
+  <div class="stepchips">
+    <div style="background:#5a4300"><b>3:30</b>⚠️ feu couvant possible</div>
+    <div style="background:#6b1a14"><b>6:30</b>🔥 pré-alarme</div>
+    <div style="background:#2b3d4e"><b>10:10</b>🔔 l'alarme classique sonne</div>
   </div>
-  <div class="cols" style="margin-top:18px">
-    <div>
-      <ul style="margin:0">
-        <li><b>FEU</b> = score IA ≥ 0,70 <b>et</b> A + (B ou C), pendant <b>30 s</b> — verrouillé jusqu'à acquittement humain</li>
-        <li>La poussière n'allume que A : elle ne peut <b>jamais</b> être appelée feu</li>
-        <li>Inspiré de la détection moteur à <b>double boucle</b> : une boucle seule ne déclenche rien</li>
-      </ul>
-    </div>
-    <div class="panel r">
-      <h3>PENDANT UNE ALARME SSI</h3>
-      <p style="margin:0 0 6px"><span class="chip a">ALARME SSI : APPLIQUER LA PROCÉDURE</span></p>
-      <p style="margin:0">L'écran n'affiche <b>jamais</b> de score ni de verdict « nuisance ». L'IA ajoute seulement des indices → levée de doute ciblée. <b>L'IA conseille, la centrale décide.</b></p>
-    </div>
-  </div>
-  <div class="ft"><span>AERO-FIRE DT</span><span>05</span></div>
+  <div class="ft"><span>AERO-FIRE DT</span><span>04</span></div>
 </section>
 
 <!-- 6 -->
 <section class="slide">
-  <div class="pg">06 <span class="s">/ 10 · DÉMO LIVE</span></div>
-  <h1>Démo : <em>mesures réelles</em> + banc libre</h1>
-  <div class="shots3">
-    <div><div class="shot"><img src="img/A_fire.png"></div><div class="cap"><span class="chip r">A</span><b>Feu de bois réel</b> : « feu couvant possible » 3 min 30 → pré-alarme 6 min 30 → le détecteur classique sonne à 10 min 10 → <b>FEU CONFIRMÉ</b>, fumée prévue à +60 s.</div></div>
-    <div><div class="shot"><img src="img/B_procedure.png"></div><div class="cap"><span class="chip a">B</span><b>Aérosol</b> : le SSI sonne pour rien → « appliquer la procédure » + indices de nuisance → <b>1 agent vérifie</b> au lieu d'évacuer à l'aveugle.</div></div>
-    <div><div class="shot"><img src="img/F_spread.png"></div><div class="cap"><span class="chip c">F</span><b>Banc d'essai libre</b> : on pose un feu en cliquant ; la physique 3D transporte fumée et gaz jusqu'aux capteurs, le feu gagne les étagères, la <b>même IA</b> décide.</div></div>
+  <div class="pg">05 · DÉMO · FAUSSE ALARME ET BANC D'ESSAI</div>
+  <div class="row" style="align-items:flex-start;gap:24px;margin-top:20px">
+    <div style="flex:1"><div class="shot"><img src="img/B_procedure.png"></div><p style="font-size:24px;margin-top:14px">💨 Un spray déclenche l'alarme → <b>on vérifie</b> au lieu d'évacuer tout le site.</p></div>
+    <div style="flex:1"><div class="shot"><img src="img/F_spread.png"></div><p style="font-size:24px;margin-top:14px">🖱️ Banc d'essai : <b>posez un feu</b>, la physique 3D fait le reste.</p></div>
   </div>
-  <p class="note" style="margin-top:18px">Application hors ligne : un fichier <span class="mono">app/index.html</span>, aucune installation · scénarios rejoués à partir de mesures réelles, jugés par un modèle qui n'a jamais vu l'essai.</p>
-  <div class="ft"><span>AERO-FIRE DT</span><span>06</span></div>
+  <div class="ft"><span>AERO-FIRE DT</span><span>05</span></div>
 </section>
 
 <!-- 7 -->
 <section class="slide">
-  <div class="pg">07 <span class="s">/ 10 · RÉSULTATS HONNÊTES</span></div>
-  <h1>Testé sur des <em>essais réels jamais vus</em></h1>
-  <div class="cols3" style="grid-template-columns:repeat(4,1fr)">
-    <div class="panel g"><div class="big g">17/17</div><div class="cap">feux détectés</div></div>
-    <div class="panel c"><div class="big c">11/15</div><div class="cap">nuisances rejetées<br>(détecteur fumée seule : 10/15)</div></div>
-    <div class="panel a"><div class="big a">17/17</div><div class="cap">alerte « feu couvant possible », avant un seuil optique standard dans 10 cas</div></div>
-    <div class="panel g"><div class="big g">12/13</div><div class="cap">feux, et <b>7/7</b> nuisances rejetées, dans une autre salle jamais vue</div></div>
+  <div class="pg">06 · RÉSULTATS · ESSAIS RÉELS JAMAIS VUS PAR L'IA</div>
+  <h1>Testé sur de <em>vrais feux</em>.</h1>
+  <div class="row" style="gap:20px;margin-top:20px">
+    <div class="num" style="flex:1"><div class="huge" style="color:var(--green)">17/17</div><div class="l">feux détectés</div></div>
+    <div class="num" style="flex:1"><div class="huge" style="color:var(--amber)">10</div><div class="l">feux signalés avant<br>l'alarme classique</div></div>
+    <div class="num" style="flex:1"><div class="huge" style="color:var(--cyan)">7/7</div><div class="l">fausses alarmes rejetées<br>dans une autre salle</div></div>
   </div>
-  <div class="cols" style="margin-top:20px">
-    <div class="panel"><h3>CHAQUE USINE EST DIFFÉRENTE</h3><p style="margin:0">Sur un nouveau site (NIST, USA), <b>ses propres données</b> ont fait passer les fausses alarmes de cuisine de <b>27/33 à 4/33</b>. → chaque site commence par un <b>pilote de 90 jours</b>, sous la centrale certifiée.</p></div>
-    <div class="panel"><h3>MÉTHODE</h3><p style="margin:0">32 essais réels (Mendeley, CC BY 4.0) · un essai retiré à la fois · 3 fausses alarmes du détecteur classique sur 5 reconnues · <b>le gain réel sera mesuré au pilote</b>.</p></div>
-  </div>
-  <div class="ft"><span>AERO-FIRE DT</span><span>07</span></div>
+  <div class="ft"><span>AERO-FIRE DT</span><span>06</span></div>
 </section>
 
 <!-- 8 -->
 <section class="slide">
-  <div class="pg">08 <span class="s">/ 10 · MODÈLE ÉCONOMIQUE</span></div>
-  <h1>Un pilote payant, puis un <em>abonnement</em></h1>
-  <div class="cols" style="grid-template-columns:1.25fr 1fr">
-    <table>
-      <tr><th>OFFRE</th><th>MISE EN SERVICE</th><th>ABONNEMENT</th></tr>
-      <tr><td><b>A</b> · PME industrielles</td><td><b>7 000 TND</b></td><td><b>450 TND / mois</b></td></tr>
-      <tr><td><b>B</b> · établissements classés</td><td>22 000 TND</td><td>1 200 TND / mois</td></tr>
-      <tr><td><b>C</b> · grands comptes</td><td>45 000 TND</td><td>3 000 TND / mois</td></tr>
-      <tr><td colspan="3" style="color:#9fb2c1">+ formation des opérateurs : 2 500 TND / session</td></tr>
-    </table>
-    <div>
-      <div class="panel a" style="margin-bottom:12px"><h3>CE QUE LE CLIENT PAIE</h3><ul style="margin:0"><li><b>Pilote de 90 jours</b> = calibration sur son site</li><li><b>Abonnement</b> = réapprentissage local + support 7j/7</li></ul></div>
-      <div class="panel"><h3>CANAL</h3><p style="margin:0">installateurs SSI agréés (raccordement facturé) · prescripteurs : bureaux de contrôle, assureurs</p></div>
-    </div>
+  <div class="pg">07 · PARTOUT EN TUNISIE</div>
+  <h1>Il apprend <em>chaque usine</em>. Il marche <em>sans courant</em>.</h1>
+  <div class="row" style="gap:20px;align-items:stretch">
+    <div class="tile" style="text-align:left"><div class="t" style="color:#9fb2c1;font-size:18px">FAUSSES ALARMES APRÈS 90 JOURS SUR LE SITE</div><div class="huge" style="font-size:80px;margin-top:14px">27 <span style="color:var(--amber)">→</span> 4</div></div>
+    <div class="tile" style="text-align:left"><div class="t" style="color:#9fb2c1;font-size:18px">COUPURE STEG</div><div class="huge" style="font-size:80px;margin-top:14px;color:var(--amber)">55 h</div><div class="d">sur batterie</div></div>
+    <div class="tile" style="text-align:left"><div class="t" style="color:#9fb2c1;font-size:18px">INTERNET</div><div class="huge" style="font-size:80px;margin-top:14px;color:var(--green)">0</div><div class="d">tout tourne sur place</div></div>
   </div>
-  <p class="lead" style="margin-top:20px">Kit option 1 : un site A coûte <b>≈ 4 402 TND</b> (matériel + pose), vendu 7 000 TND · résultat positif dès l'<b>année 2</b>.</p>
-  <div class="ft"><span>AERO-FIRE DT</span><span>08</span></div>
+  <div class="ft"><span>AERO-FIRE DT</span><span>07</span></div>
 </section>
 
 <!-- 9 -->
 <section class="slide">
-  <div class="pg">09 <span class="s">/ 10 · RESSOURCES, ÉTAPES ET COÛT GLOBAL</span></div>
-  <h1>De l'idée au produit : <em>18 mois</em></h1>
-  <div class="tl">
-    <div class="s"><div class="w">M0–M1</div><div class="d">cadrage, label Startup Act</div></div>
-    <div class="s"><div class="w">M1–M3</div><div class="d">vrais boîtiers + banc avec une vraie centrale (« iron bird »)</div></div>
-    <div class="s a"><div class="w">M3–M6</div><div class="d">pilote de 90 jours en usine : gain <b style="color:#fff">mesuré</b></div></div>
-    <div class="s"><div class="w">M6–M12</div><div class="d">10 sites</div></div>
-    <div class="s"><div class="w">M12–M18</div><div class="d">consolidation, 20+ sites</div></div>
+  <div class="pg">08 · MODÈLE ÉCONOMIQUE</div>
+  <h1>Un pilote de 90 jours, puis un <em>abonnement</em>.</h1>
+  <div class="row" style="gap:18px;align-items:stretch">
+    <div class="tier"><div class="n">A · PME</div><div class="p">7 000 TND</div><div class="m">+ 450 TND / mois</div></div>
+    <div class="tier"><div class="n">B · SITES CLASSÉS</div><div class="p">22 000 TND</div><div class="m">+ 1 200 TND / mois</div></div>
+    <div class="tier"><div class="n">C · GRANDS COMPTES</div><div class="p">45 000 TND</div><div class="m">+ 3 000 TND / mois</div></div>
   </div>
-  <div class="cols3" style="margin-top:28px">
-    <div class="panel a"><h3>COÛT DE DÉMARRAGE</h3><div class="big a" style="font-size:44px">≈ 9 700 TND</div><div class="cap">matériel seul : 10 boîtiers, 2 passerelles, banc avec une vraie centrale</div></div>
-    <div class="panel c"><h3>RESSOURCES HUMAINES</h3><p style="margin:0"><b>3 ingénieurs</b> (IA, IoT, simulation) en année 1 · 5 à 7 en année 3 · 1 installateur SSI agréé partenaire</p></div>
-    <div class="panel g"><h3>MATÉRIEL PAR BOÎTIER</h3><p style="margin:0">SPS30 + SGP30 + SCD40 + capteur CO + ESP32-C3 : <b>≈ 300–475 TND</b> rendu en Tunisie</p></div>
+  <div class="row" style="gap:60px;margin-top:40px">
+    <div><div class="huge" style="font-size:60px;color:var(--amber)">9 700 TND</div><p style="font-size:22px;color:#9fb2c1;margin:6px 0 0">pour démarrer (matériel seul)</p></div>
+    <div><div class="huge" style="font-size:60px;color:var(--green)">Année 2</div><p style="font-size:22px;color:#9fb2c1;margin:6px 0 0">rentable</p></div>
   </div>
-  <p class="note" style="margin-top:16px">L'ingénierie est faite par l'équipe · le pilote est accueilli par une usine partenaire · trésorerie positive dès l'année 1 si 10 sites (avec la bourse Startup Act).</p>
-  <div class="ft"><span>AERO-FIRE DT</span><span>09</span></div>
+  <div class="ft"><span>AERO-FIRE DT</span><span>08</span></div>
 </section>
 
 <!-- 10 -->
 <section class="slide">
-  <div class="pg">10 <span class="s">/ 10 · AVEC LA PROTECTION CIVILE</span></div>
-  <h1>Déployer ensemble, <em>mesurer</em> ensemble</h1>
-  <div class="cols">
-    <div class="panel c"><h3>DÉPLOIEMENT AVEC LA PROTECTION CIVILE</h3>
-      <ul style="margin:0"><li><b>Pré-plans numériques</b> des sites : plan 3D, zones, capteurs</li><li><b>Formation</b> des agents : « l'IA conseille, la centrale décide »</li><li><b>Retours d'expérience</b> : journal d'événements partagé</li><li><b>Maintenance</b> planifiée des capteurs (dérive détectée)</li></ul></div>
-    <div class="panel a"><h3>NOTRE DEMANDE</h3>
-      <ul style="margin:0"><li><b>1 site pilote</b> volontaire</li><li><b>1 installateur SSI agréé</b> partenaire</li><li><b>Un cadre de test</b> avec la Protection Civile pour mesurer la baisse des fausses alarmes sur 90 jours</li></ul></div>
+  <div class="pg">09 · LA SUITE, AVEC LA PROTECTION CIVILE</div>
+  <h1>En 18 mois : <em>10 sites</em>, puis 20+.</h1>
+  <div class="tl">
+    <div><b>M1–M3</b><span>vrais boîtiers + banc</span></div>
+    <div class="a"><b>M3–M6</b><span>pilote 90 jours en usine</span></div>
+    <div><b>M6–M12</b><span>10 sites</span></div>
+    <div><b>M12–M18</b><span>20+ sites</span></div>
   </div>
-  <p class="lead" style="margin-top:26px;text-align:center">Lecture seule. Jamais d'inhibition. <b>Un copilote, pas un pilote.</b></p>
-  <p class="note" style="text-align:center;margin-top:4px">Code, données, tests et application : <span class="mono" style="color:var(--cyan)">github.com/AhmedHammouda5000/aero-fire-dt</span></p>
-  <div class="ft"><span>AERO-FIRE DT · MERCI</span><span>10</span></div>
+  <div class="ask">
+    <div><span class="ico">🏭</span>1 usine pilote</div>
+    <div><span class="ico">🔧</span>1 installateur agréé</div>
+    <div><span class="ico">🚒</span>un test avec la Protection Civile</div>
+  </div>
+  <p style="text-align:center;font-size:30px;margin-top:40px;color:#fff"><b>Un copilote, pas un pilote.</b> Merci.</p>
+  <div class="ft"><span>AERO-FIRE DT</span><span>github.com/AhmedHammouda5000/aero-fire-dt</span></div>
 </section>
 
-<!-- BACKUP SLIDES -->
+<!-- BACKUP -->
 <section class="slide backup">
-  <div class="pg">R1 <span class="s">· SLIDES DE RÉSERVE (Q&amp;R) · RÉEL, SIMULÉ, ANGLES MORTS</span></div>
-  <h1>Ce qui est <em>réel</em>, ce qui est simulé</h1>
-  <table>
-    <tr><th>RÉEL ET FONCTIONNEL</th><th>SIMULÉ</th><th>À VENIR</th></tr>
-    <tr><td>IA entraînée et testée sur <b>mesures réelles</b> · vote · alerte précoce · application hors ligne · physique 3D vérifiée · apprentissage local testé (NIST)</td><td>la centrale SSI (le jeu de données n'en a pas) · capteurs du banc d'essai libre · panne du capteur du scénario D · chiffres de batterie (fiches techniques)</td><td>boîtiers physiques et passerelle réelle · IA sur microcontrôleur · pilote de 90 jours en usine tunisienne</td></tr>
+  <div class="pg" style="color:var(--cyan)">RÉSERVE 1 · LE BOÎTIER CAPTEUR (KIT OPTION 1)</div>
+  <h1 style="font-size:44px">4 capteurs + 1 puce · <em>≈ 300–475 TND</em></h1>
+  <table class="bk">
+    <tr><th>PIÈCE</th><th>CE QU'ELLE MESURE</th></tr>
+    <tr><td><b>Sensirion SPS30</b></td><td>fumée + taille des particules</td></tr>
+    <tr><td><b>Sensirion SGP30</b></td><td>hydrogène + vapeurs (COV)</td></tr>
+    <tr><td><b>Sensirion SCD40</b></td><td>CO₂ + température + humidité</td></tr>
+    <tr><td><b>Winsen ZE07-CO</b></td><td>monoxyde de carbone</td></tr>
+    <tr><td><b>ESP32-C3</b></td><td>calcule le score IA, envoie par radio</td></tr>
   </table>
-  <h2 style="margin-top:22px">ANGLES MORTS ASSUMÉS</h2>
-  <ul><li>Marques de SSI dominantes en Tunisie : inconnues · coût du raccordement par l'installateur : à chiffrer</li><li>Pas de caméra : choix volontaire (coût, vie privée) · gain réel : mesuré au pilote</li></ul>
+  <p style="font-size:22px;color:#9fb2c1;margin-top:16px">0,68 W par boîtier · 55 h sur une batterie LiFePO4 100 Ah</p>
   <div class="ft"><span>AERO-FIRE DT · RÉSERVE</span><span>R1</span></div>
 </section>
 
 <section class="slide backup">
-  <div class="pg">R2 <span class="s">· SLIDES DE RÉSERVE (Q&amp;R) · MATÉRIEL ET ÉNERGIE</span></div>
-  <h1>Un boîtier : <em>4 capteurs + 1 puce</em></h1>
-  <div class="cols">
-    <table>
-      <tr><th>PIÈCE</th><th>MESURES</th><th>PRIX (USD)</th></tr>
-      <tr><td><b>Sensirion SPS30</b></td><td>particules + taille</td><td>21–37</td></tr>
-      <tr><td><b>Sensirion SGP30</b></td><td>H₂ + COV</td><td>7–9</td></tr>
-      <tr><td><b>Sensirion SCD40</b></td><td>CO₂ + temp. + humidité</td><td>13–26</td></tr>
-      <tr><td><b>Winsen ZE07-CO</b></td><td>CO électrochimique</td><td>17–21</td></tr>
-      <tr><td><b>ESP32-C3</b></td><td>19 indices + score IA</td><td>3–4</td></tr>
-      <tr><td colspan="2"><b>Total pièces</b> (+ boîtier ≈ 10–15)</td><td><b>≈ 215–340 TND</b></td></tr>
-    </table>
-    <div>
-      <div class="cols" style="gap:14px">
-        <div class="panel c"><div class="big c" style="font-size:40px">0,68 W</div><div class="cap">par boîtier · ≈ 21 W tout le hall</div></div>
-        <div class="panel a"><div class="big a" style="font-size:40px">≈ 55 h</div><div class="cap">LiFePO4 100 Ah · ≈ 27 coupures STEG de 2 h</div></div>
-      </div>
-      <ul style="margin-top:14px"><li>Aucun besoin d'Internet</li><li>Solaire 150 W en option</li><li>Le SSI garde sa propre batterie : deux chaînes indépendantes</li></ul>
-      <p class="note">Rendu en Tunisie ≈ 300–475 TND / boîtier · prix relevés le 21/11/2026, à confirmer à l'achat.</p>
-    </div>
-  </div>
+  <div class="pg" style="color:var(--cyan)">RÉSERVE 2 · RÉSULTATS DÉTAILLÉS</div>
+  <h1 style="font-size:44px">32 essais réels · <em>un essai caché à la fois</em></h1>
+  <table class="bk">
+    <tr><th></th><th>AERO-FIRE DT</th><th>ALARME FUMÉE SEULE</th></tr>
+    <tr><td>Feux détectés</td><td><b>17 / 17</b></td><td>17 / 17</td></tr>
+    <tr><td>Fausses alarmes rejetées</td><td><b>11 / 15</b></td><td>10 / 15</td></tr>
+    <tr><td>Alerte « feu couvant possible »</td><td><b>17 / 17</b> (10 avant l'alarme)</td><td>—</td></tr>
+    <tr><td>Autre salle jamais vue</td><td><b>12 / 13 feux · 7 / 7</b></td><td>13 / 13 · 6 / 7</td></tr>
+    <tr><td>Prévision de la fumée à +60 s</td><td colspan="2"><b>± 6 cm</b> de hauteur · ± 6,8 °C</td></tr>
+  </table>
   <div class="ft"><span>AERO-FIRE DT · RÉSERVE</span><span>R2</span></div>
 </section>
 
 <section class="slide backup">
-  <div class="pg">R3 <span class="s">· SLIDES DE RÉSERVE (Q&amp;R) · CADRE LÉGAL</span></div>
-  <h1>Cadre légal et normes</h1>
-  <table>
-    <tr><th>TEXTE</th><th>CONSÉQUENCE POUR AERO-FIRE DT</th></tr>
-    <tr><td><b>Loi 2009-11</b> (code de sécurité incendie)</td><td>raccordement consigné dans le dossier de sécurité examiné par l'ONPC</td></tr>
-    <tr><td><b>Décret 2006-2687</b> (établissements classés)</td><td>étude de dangers et POI : nos premiers clients</td></tr>
-    <tr><td><b>Arrêté du 14 août 2020</b></td><td>équipes de sécurité formées : utilisateurs du tableau de bord</td></tr>
-    <tr><td><b>Loi 2004-63 + Décret 2007-3004</b></td><td>autorisation INPDP avant toute caméra · pas de son</td></tr>
-    <tr><td><b>EN 54-13 · NFPA 72</b></td><td>« autre système » / équipement supplémentaire : le SSI certifié reste la barrière de sécurité</td></tr>
+  <div class="pg" style="color:var(--cyan)">RÉSERVE 3 · CHAQUE USINE A SON PROPRE MODÈLE</div>
+  <h1 style="font-size:44px">Jour 1 : modèle général · après 90 jours : <em>modèle local</em></h1>
+  <table class="bk">
+    <tr><th>NOUVEAU SITE (NIST, USA)</th><th>FEUX (8)</th><th>FAUSSES ALARMES REJETÉES (33)</th></tr>
+    <tr><td>Jour 1</td><td>7 / 8</td><td>6 / 33</td></tr>
+    <tr><td><b>Après apprentissage sur le site</b></td><td><b>8 / 8</b></td><td><b>29 / 33</b></td></tr>
   </table>
+  <p style="font-size:24px;margin-top:24px">Le gardien confirme chaque alerte → <b>l'IA apprend son usine</b>. Une usine n'influence jamais une autre.</p>
   <div class="ft"><span>AERO-FIRE DT · RÉSERVE</span><span>R3</span></div>
 </section>
 
 <section class="slide backup">
-  <div class="pg">R4 <span class="s">· SLIDES DE RÉSERVE (Q&amp;R) · APPRENTISSAGE LOCAL</span></div>
-  <h1>Modèle général (jour 1) + <em>modèle local</em> par usine</h1>
-  <div class="cols" style="grid-template-columns:1.2fr 1fr">
-    <table>
-      <tr><th>NIST (USA) · 41 ESSAIS</th><th>FEUX (8)</th><th>CUISINE NON APPELÉE FEU (33)</th></tr>
-      <tr><td>Modèle appris ailleurs (jour 1)</td><td>7 / 8</td><td>6 / 33</td></tr>
-      <tr><td><b>Après apprentissage sur le site</b></td><td><b>8 / 8</b></td><td><b>29 / 33</b></td></tr>
-      <tr><td>Données du site seules</td><td>8 / 8</td><td>29 / 33</td></tr>
-      <tr><td>Pilote trop court (30 % des données)</td><td>74 % en moy.</td><td>88 % en moy.</td></tr>
-    </table>
-    <div>
-      <ul style="margin:0"><li>Les réponses du gardien après chaque levée de doute = <b>étiquettes</b></li><li>Un modèle <b>par usine</b> : apprendre chez X ne change rien chez Y</li><li>Sur NIST, ce sont <b>les données du site</b> qui font le travail (capteurs NIST différents des nôtres)</li><li>Pilote <b>assez long</b> pour les feux</li></ul>
-    </div>
-  </div>
+  <div class="pg" style="color:var(--cyan)">RÉSERVE 4 · SÉCURITÉ ET CADRE LÉGAL</div>
+  <h1 style="font-size:44px">Branché <em>sans risque</em> sur l'alarme</h1>
+  <table class="bk">
+    <tr><td><b>Raccordement</b></td><td>isolé électriquement (optocoupleurs), lecture seule, posé par l'installateur agréé</td></tr>
+    <tr><td><b>Pendant une alarme</b></td><td>l'écran dit « appliquer la procédure », jamais un score</td></tr>
+    <tr><td><b>Loi 2009-11</b></td><td>raccordement inscrit dans le dossier de sécurité</td></tr>
+    <tr><td><b>Décret 2006-2687</b></td><td>sites classés : nos premiers clients</td></tr>
+    <tr><td><b>EN 54-13 · NFPA 72</b></td><td>système complémentaire : l'alarme certifiée reste maître</td></tr>
+  </table>
   <div class="ft"><span>AERO-FIRE DT · RÉSERVE</span><span>R4</span></div>
-</section>
-
-<section class="slide backup">
-  <div class="pg">R5 <span class="s">· SLIDES DE RÉSERVE (Q&amp;R) · DÉTAILS TECHNIQUES</span></div>
-  <h1>Détails techniques</h1>
-  <div class="cols">
-    <div class="panel c"><h3>RACCORDEMENT AU SSI</h3><ul style="margin:0"><li>Isolation galvanique : <b>optocoupleurs</b></li><li>Lecture <b>Modbus FC 1-4</b> / BACnet en lecture seule</li><li>Aucune écriture, aucune voie de retour</li><li>Posé par l'installateur agréé, consigné dans la matrice de mise en sécurité</li></ul></div>
-    <div class="panel a"><h3>MÉTHODES AÉRONAUTIQUES (INSPIRÉES)</h3><ul style="margin:0"><li>Analyse FHA / arbre de défaillance</li><li>Niveaux d'alerte type <b>ECAM</b></li><li>IA = assistance à l'humain (niveau 1, Concept Paper IA de l'EASA, transposé)</li><li><b>Aucune certification aéronautique revendiquée</b></li></ul></div>
-  </div>
-  <p class="note" style="margin-top:16px">Modèle : gradient boosting 300 arbres, 19 indices causaux / boîtier / 10 s · prévision : MLP 64×64 entraîné sur 5 000 feux simulés (modèle de zones) · CFD 3D 14 080 cellules vérifiée (Heskestad, Alpert).</p>
-  <div class="ft"><span>AERO-FIRE DT · RÉSERVE</span><span>R5</span></div>
-</section>
-
-<section class="slide backup">
-  <div class="pg">R6 <span class="s">· SLIDES DE RÉSERVE (Q&amp;R) · CE QUE NOUS NE SAVONS PAS ENCORE FAIRE</span></div>
-  <h1>Ce que nous ne savons <em>pas encore</em> faire</h1>
-  <ul>
-    <li><b>Soudure et machine à fumée</b> trompent encore l'IA (1 à 2 essais seulement) → l'humain tranche</li>
-    <li>« Avant le détecteur » est mesuré contre un <b>seuil optique standard</b>, pas une vraie centrale</li>
-    <li>Sur le hall, le gain sur le détecteur classique est <b>d'une nuisance</b> (11 contre 10) : notre valeur = règle des deux boucles, alerte précoce, apprentissage du site</li>
-    <li>Pas encore de test dans une <b>usine tunisienne</b> : c'est l'objet du pilote de 90 jours</li>
-  </ul>
-  <div class="ft"><span>AERO-FIRE DT · RÉSERVE</span><span>R6</span></div>
 </section>
 
 </body></html>

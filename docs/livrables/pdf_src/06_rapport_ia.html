@@ -243,19 +243,6 @@ Variables les plus utiles (importance par permutation) : hausse des COV, ratio C
 </tbody>
 </table>
 <p><strong>Honnêteté</strong> : les capteurs synthétiques sont une approximation physique calibrée sur les ordres de grandeur du jeu de données ; l'IA a été entraînée sur de vrais capteurs. Le banc est un <strong>test qualitatif</strong> (« que se passe-t-il si… ? »), pas une validation.</p>
-<h2><span class="n">7</span>Limites (dites honnêtement)</h2>
-<ul>
-<li>
-<p><strong>Test indépendant NIST (USA, données jamais vues, aucun réglage)</strong> : avec seulement 7 des 19 entrées disponibles (pas de capteur COV ni H₂, compteur de particules différent), l'IA confirme <strong>7 / 8 feux</strong> mais ne rejette que <strong>6 / 33 nuisances de cuisine</strong> (cigarettes : 2 / 2 rejetées ; bacon, hamburgers, pizza : non). Conclusion : les capteurs <strong>COV et H₂ sont indispensables</strong> (ce sont les entrées les plus utiles du modèle) et une cuisine ou cantine demande un apprentissage sur site pendant le pilote. Détails : <code>docs/results/nist_fr4019.md</code>.</p>
-</li>
-<li>
-<p><strong>1 à 3 répétitions par type de nuisance</strong> : la soudure (1 essai) et la machine à fumée (2 essais) trompent encore l'IA ; elles ne peuvent pas être apprises en validation croisée. Le pilote de 90 jours sert à collecter les nuisances propres à chaque usine.</p>
-</li>
-<li>Les feux d'essai sont <strong>naissants</strong> : la croissance d'un grand feu est une <strong>hypothèse</strong> du modèle de zones (prolongation simulée, affichée comme telle).</li>
-<li>Les positions des nœuds dans le hall ne sont pas publiées (disposition plausible), le <strong>SSI est simulé</strong>.</li>
-<li>La prévision est validée contre le modèle physique, <strong>pas encore contre des feux réels de grande taille</strong> (prochaine étape : CFAST/FDS, essai contrôlé).</li>
-<li>La règle double boucle rend la confirmation plus prudente donc parfois plus lente : c'est un choix de sécurité assumé, l'alarme SSI restant toujours prioritaire.</li>
-</ul>
 <h2><span class="n">8</span>Sûreté et cycle de vie</h2>
 <ul>
 <li>Architecture à double chaîne : SSI certifié indépendant (aucune alimentation, aucun réseau, aucun capteur partagés) ; la pire défaillance de l'IA est une perte d'information consultative, jamais une alarme manquée (voir <code>Safety_Case.md</code>).</li>
