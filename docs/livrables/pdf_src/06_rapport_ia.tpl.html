@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>Aero-Fire DT — Rapport du modèle IA</title>
+<link rel="stylesheet" href="brand.css">
+<style>
+.doc { font-size: 10.6pt; line-height: 1.55; }
+.coverpage { height: 255mm; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; break-after: page; position: relative; }
+.coverpage::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 10px; background: var(--blue); }
+.coverpage::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 10px; background: var(--orange); }
+.coverpage .k { font-family: var(--head); font-weight: 600; letter-spacing: .3em; color: var(--blue); font-size: 12pt; }
+.coverpage h1 { font-family: var(--head); font-weight: 900; font-size: 32pt; margin: 6px 0 26px; line-height: 1.1; }
+.coverpage img { height: 66mm; }
+.coverpage .slogan { font-family: var(--head); font-weight: 700; color: var(--orange); font-size: 15pt; letter-spacing: .06em; margin: 22px 0 8px; }
+.coverpage .sub { font-size: 12.5pt; color: var(--ink2); max-width: 140mm; }
+.coverpage .yr { font-family: var(--head); font-weight: 700; font-size: 12pt; margin-top: 26px; }
+.toc { break-after: page; }
+.toc h2 { border: 0; font-size: 20pt; }
+.toc ol { list-style: none; padding: 0; margin: 10px 0; }
+.toc li { display: flex; align-items: baseline; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 12pt; }
+.toc li .n { font-family: var(--head); font-weight: 800; color: #fff; background: var(--blue); border-radius: 3px; padding: 0 8px; font-size: 10pt; min-width: 26px; text-align: center; }
+.q { break-inside: avoid; background: var(--blue-l); border-left: 6px solid var(--blue); padding: 11px 15px; font-size: 11pt; margin: 8px 0; }
+.flow2 { display: flex; align-items: stretch; gap: 0; margin: 10px 0; break-inside: avoid; }
+.flow2 .s { flex: 1; background: var(--bg2); border-radius: 6px; padding: 10px 8px; text-align: center; font-size: 9.2pt; }
+.flow2 .s b { display: block; font-family: var(--head); font-weight: 700; font-size: 10pt; margin-top: 4px; color: var(--ink); }
+.flow2 .a { width: 20px; display: flex; align-items: center; justify-content: center; color: var(--orange); font-weight: 900; font-size: 15pt; }
+.fam { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 8px 0; }
+.fam > div { background: var(--bg2); border-radius: 6px; padding: 10px 12px; border-top: 5px solid var(--blue); break-inside: avoid; }
+.fam > div:nth-child(2) { border-top-color: var(--orange); } .fam > div:nth-child(3) { border-top-color: var(--ink); }
+.fam b { font-family: var(--head); font-weight: 700; font-size: 11pt; display: flex; align-items: center; gap: 8px; }
+.fam p { margin: 4px 0 0; font-size: 9.6pt; color: var(--ink2); }
+.ex { background: var(--orange-l); border-left: 5px solid var(--orange); padding: 9px 13px; margin: 8px 0; font-size: 10pt; break-inside: avoid; }
+.ex b { color: var(--orange); }
+table td.c { text-align: center; }
+.tree { font-family: Consolas, monospace; font-size: 9.3pt; background: var(--bg2); border-left: 4px solid var(--blue); padding: 10px 14px; white-space: pre; break-inside: avoid; line-height: 1.5; }
+.kp { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 8px 0; break-inside: avoid; }
+.kp div { border: 1px solid var(--line); border-top: 5px solid var(--blue); border-radius: 6px; padding: 9px 10px; }
+.kp .v { font-family: var(--head); font-weight: 800; font-size: 17pt; color: var(--blue-d); line-height: 1.1; }
+.kp .l { font-size: 9pt; color: var(--ink2); margin-top: 4px; }
+.steps { counter-reset: s; list-style: none; padding: 0; margin: 8px 0; }
+.steps li { counter-increment: s; position: relative; padding: 6px 0 6px 40px; border-bottom: 1px solid var(--line); }
+.steps li::before { content: counter(s); position: absolute; left: 0; top: 6px; width: 26px; height: 26px; border-radius: 50%; background: var(--blue); color: #fff; font-family: var(--head); font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 10pt; }
+.note { font-size: 9.5pt; color: var(--ink2); background: var(--bg2); border-left: 4px solid var(--orange); padding: 8px 12px; margin-top: 10px; }
+</style></head>
+<body class="doc">
+
+<div class="coverpage">
+  <div class="k">RAPPORT DU MODÈLE IA</div>
+  <h1>AERO-FIRE DT TUNISIE</h1>
+  <img src="img/logo.png" alt="Logo Aero-Fire DT">
+  <div class="slogan">« Prédiction, Prévention, Protection »</div>
+  <div class="sub">Comment nos capteurs et notre IA distinguent un vrai feu d'une fausse alarme</div>
+  <div class="yr">Tunisie – 2026</div>
+</div>
+
+<div class="toc">
+  <h2>Table des matières</h2>
+  <ol>
+    <li><span class="n">1</span>Le rôle du modèle</li>
+    <li><span class="n">2</span>Le chemin complet, en une image</li>
+    <li><span class="n">3</span>Les 11 mesures du boîtier</li>
+    <li><span class="n">4</span>« L'air normal » : on regarde ce qui monte</li>
+    <li><span class="n">5</span>Les 19 indices, avec des exemples</li>
+    <li><span class="n">6</span>Les empreintes : feu, spray, poussière, échappement</li>
+    <li><span class="n">7</span>Le modèle d'IA : 300 arbres de décision</li>
+    <li><span class="n">8</span>La règle de décision (sans IA)</li>
+    <li><span class="n">9</span>Les données et l'entraînement</li>
+    <li><span class="n">10</span>Le test honnête et les résultats</li>
+    <li><span class="n">11</span>Un modèle pour chaque usine</li>
+    <li><span class="n">12</span>La prévision à 60 secondes</li>
+    <li><span class="n">13</span>Embarqué, hors ligne et sûr</li>
+  </ol>
+</div>
+
+<h2><span class="n">1</span>Le rôle du modèle</h2>
+<div class="q">Le modèle répond à une seule question, toutes les 10 secondes : <b>« Est-ce un vrai feu, ou une fausse alarme (spray, poussière, échappement, soudure…) ? »</b></div>
+<ul>
+<li>Il donne un <b>score de 0 à 1</b> : 0 = sûrement une fausse alarme, 1 = sûrement un vrai feu.</li>
+<li>Il <b>conseille</b> le gardien ; il ne décide jamais seul et ne peut <b>jamais</b> couper l'alarme officielle (SSI), qu'il lit en lecture seule.</li>
+<li>Il est <b>explicable</b> : l'écran montre quels indices ont compté.</li>
+</ul>
+
+<h2><span class="n">2</span>Le chemin complet, en une image</h2>
+<div class="flow2">
+  <div class="s">[[icon:radar:#3a5bff:26]]<b>1 · Mesurer</b>11 mesures / 10 s</div><div class="a">›</div>
+  <div class="s">[[icon:activity:#3a5bff:26]]<b>2 · Comparer</b>à « l'air normal »</div><div class="a">›</div>
+  <div class="s">[[icon:split:#3a5bff:26]]<b>3 · Indices</b>19 indices</div><div class="a">›</div>
+  <div class="s">[[icon:cpu:#3a5bff:26]]<b>4 · Score IA</b>300 arbres, 0 à 1</div><div class="a">›</div>
+  <div class="s">[[icon:git-merge:#3a5bff:26]]<b>5 · Vote</b>2 signes d'accord</div><div class="a">›</div>
+  <div class="s" style="background:var(--orange-l)">[[icon:monitor:#f26b1d:26]]<b>6 · Écran</b>alerte + action</div>
+</div>
+<p>Les étapes 1 à 4 se font <b>dans chaque boîtier</b> (puce ESP32). Le vote et l'écran sont sur la <b>passerelle locale</b> (Raspberry Pi). Tout marche <b>sans Internet</b>.</p>
+
+<h2><span class="n">3</span>Les 11 mesures du boîtier</h2>
+<p>Chaque boîtier (kit option 1) contient 4 capteurs du commerce et donne <b>11 mesures toutes les 10 secondes</b>, en 3 familles :</p>
+<div class="fam">
+  <div><b>[[icon:cloud-fog:#3a5bff:20]] Fumée (5)</b><p>capteur Sensirion SPS30</p></div>
+  <div><b>[[icon:flask-conical:#f26b1d:20]] Gaz (4)</b><p>capteurs SGP30, ZE07-CO, SCD40</p></div>
+  <div><b>[[icon:thermometer:#1d2433:20]] Air (2)</b><p>capteur SCD40</p></div>
+</div>
+<table>
+<tr><th style="width:4%">#</th><th style="width:24%">Mesure</th><th style="width:32%">Ce qu'elle voit</th><th>Exemple</th></tr>
+<tr><td class="c">1</td><td><b>PM0.5</b> (très fines particules)</td><td>la fumée fine d'une combustion</td><td>un feu de bois en fait beaucoup</td></tr>
+<tr><td class="c">2</td><td><b>PM1.0</b> (fines particules)</td><td>fumée et brouillards fins</td><td>monte avec le feu et les sprays</td></tr>
+<tr><td class="c">3</td><td><b>PM2.5</b> (particules moyennes)</td><td>poussières, gouttelettes</td><td>monte fort avec la poussière de découpe</td></tr>
+<tr><td class="c">4</td><td><b>PM total</b></td><td>la quantité totale de « fumée »</td><td>c'est ce que voit un détecteur classique</td></tr>
+<tr><td class="c">5</td><td><b>Taille typique</b> des particules</td><td>grains fins ou gros ?</td><td>feu = fins · poussière = gros</td></tr>
+<tr><td class="c">6</td><td><b>CO</b> (monoxyde de carbone)</td><td>la combustion</td><td>feu, mais aussi chariot thermique</td></tr>
+<tr><td class="c">7</td><td><b>H₂</b> (hydrogène)</td><td>les feux qui couvent</td><td>monte tôt, avant les flammes</td></tr>
+<tr><td class="c">8</td><td><b>COV</b> (vapeurs chimiques)</td><td>sprays, solvants, plastique qui brûle</td><td>un déodorant le fait exploser</td></tr>
+<tr><td class="c">9</td><td><b>CO₂</b></td><td>combustion, moteurs, personnes</td><td>monte avec le feu et l'échappement</td></tr>
+<tr><td class="c">10</td><td><b>Température</b></td><td>la chaleur</td><td>un vrai feu chauffe, un spray non</td></tr>
+<tr><td class="c">11</td><td><b>Humidité</b></td><td>le contexte (vapeur, météo)</td><td>aide à ne pas confondre avec de la vapeur</td></tr>
+</table>
+
+<h2><span class="n">4</span>« L'air normal » : on regarde ce qui monte</h2>
+<p>Chaque usine a son air habituel (un peu de poussière, un peu de CO des chariots…). Le boîtier ne regarde donc pas les valeurs brutes, mais <b>ce qui monte par rapport à la normale</b> :</p>
+<ul class="steps">
+<li>il garde en mémoire les <b>30 dernières minutes</b> ;</li>
+<li>il calcule le <b>niveau bas habituel</b> (la « référence ») ;</li>
+<li>il calcule la <b>hausse = maintenant − référence</b>.</li>
+</ul>
+<div class="ex"><b>Exemple :</b> le CO est d'habitude à 2 ppm. Maintenant il est à 12 ppm → la hausse est de <b>+10 ppm</b>. C'est cette hausse qui compte, pas le « 12 ».</div>
+
+<h2><span class="n">5</span>Les 19 indices, avec des exemples</h2>
+<p>À partir des hausses, le boîtier calcule <b>19 indices</b> (toujours avec des mesures passées ou présentes, jamais futures : ils peuvent tourner en direct). Ils répondent à 4 questions simples :</p>
+<table>
+<tr><th style="width:26%">Question</th><th style="width:36%">Indices</th><th>Exemple</th></tr>
+<tr><td><b>1 · De combien ça monte ?</b><br><span class="small">(6 indices)</span></td><td>hausse du CO, H₂, COV, CO₂, température, humidité</td><td>CO +10 ppm et température +3 °C → ça sent la combustion</td></tr>
+<tr><td><b>2 · Combien de fumée, et quelle taille ?</b><br><span class="small">(5 indices)</span></td><td>hausse de la fumée totale, des particules très fines et moyennes, part des grosses particules, taille typique</td><td>beaucoup de grosses particules, pas de gaz → poussière</td></tr>
+<tr><td><b>3 · À quelle vitesse ça monte ?</b><br><span class="small">(6 indices)</span></td><td>pente sur 60 s du CO, H₂, COV, fumée, température, CO₂</td><td>un feu <b>grandit</b> ; un spray <b>retombe</b> vite</td></tr>
+<tr><td><b>4 · Quel mélange ?</b><br><span class="small">(2 indices)</span></td><td>gaz par rapport à la fumée · vapeurs (COV) par rapport à la fumée</td><td>beaucoup de COV pour peu de fumée → spray</td></tr>
+</table>
+
+<h2><span class="n">6</span>Les empreintes : feu, spray, poussière, échappement</h2>
+<p>Un détecteur classique ne voit que la ligne « fumée ». Avec les 11 mesures, chaque situation a <b>sa propre empreinte</b> :</p>
+<table>
+<tr><th>Situation</th><th class="c">Fumée</th><th class="c">Taille</th><th class="c">CO</th><th class="c">H₂</th><th class="c">COV</th><th class="c">Chaleur</th><th>Ce que l'IA conclut</th></tr>
+<tr><td><b>Feu de bois</b></td><td class="c">▲</td><td class="c">fine</td><td class="c">▲</td><td class="c">▲</td><td class="c">▲</td><td class="c">▲</td><td>tout monte ensemble → <b>feu</b></td></tr>
+<tr><td><b>Spray</b></td><td class="c">▲</td><td class="c">grosse</td><td class="c">—</td><td class="c">—</td><td class="c">▲▲</td><td class="c">—</td><td>beaucoup de vapeurs, pas de chaleur → <b>nuisance</b></td></tr>
+<tr><td><b>Poussière</b></td><td class="c">▲▲</td><td class="c">grosse</td><td class="c">—</td><td class="c">—</td><td class="c">—</td><td class="c">—</td><td>seulement des grains → <b>nuisance</b></td></tr>
+<tr><td><b>Échappement</b></td><td class="c">petit</td><td class="c">—</td><td class="c">▲▲</td><td class="c">▲</td><td class="c">—</td><td class="c">—</td><td>pas un feu, mais <b>CO dangereux</b> signalé</td></tr>
+</table>
+
+<h2><span class="n">7</span>Le modèle d'IA : 300 arbres de décision</h2>
+<p><b>Nom technique :</b> HistGradientBoostingClassifier (bibliothèque scikit-learn), avec 300 arbres. <b>En simple :</b> 300 petits arbres de décision qui travaillent en équipe.</p>
+<p><b>Un arbre de décision</b> est une suite de questions oui / non, comme un questionnaire de médecin :</p>
+<div class="tree">Les vapeurs (COV) montent beaucoup par rapport à la fumée ?
+  ├── OUI → ça ressemble à un SPRAY           (le score baisse)
+  └── NON → Le CO monte aussi ?
+             ├── OUI → ça ressemble à un FEU   (le score monte)
+             └── NON → ...</div>
+<p><b>Pourquoi 300 arbres ?</b> Un arbre seul se trompe souvent. Alors le 1<sup>er</sup> arbre donne une réponse, le 2<sup>e</sup> apprend à <b>corriger ses erreurs</b>, le 3<sup>e</sup> corrige celles qui restent… jusqu'à 300. On additionne leurs réponses : c'est le score final. C'est le principe du « boosting ».</p>
+<table>
+<tr><th style="width:30%">Pourquoi ce modèle</th><th>Explication</th></tr>
+<tr><td>Apprend bien avec <b>peu d'essais</b></td><td>on dispose de 32 essais réels : un gros réseau de neurones aurait besoin de beaucoup plus</td></tr>
+<tr><td><b>Rapide</b> et <b>léger</b></td><td>environ 2 ms par calcul ; il tient dans la petite puce du boîtier</td></tr>
+<tr><td><b>Explicable</b></td><td>on voit quels indices ont pesé (onglet « POURQUOI » de l'application)</td></tr>
+<tr><td>Pas de caméra, pas de YOLO</td><td>nos données sont des mesures de capteurs, pas des images</td></tr>
+</table>
+<p><b>Ce qu'il a appris de plus important</b> (dans l'ordre) : la hausse des vapeurs (COV), les vapeurs par rapport à la fumée, la hausse du CO, puis la taille des particules, la chaleur et l'hydrogène. C'est ce qu'un expert du feu dirait aussi.</p>
+
+<h2><span class="n">8</span>La règle de décision (sans IA)</h2>
+<p>Le score IA est <b>un avis</b>. Pour dire « FEU », une règle physique simple, inspirée de la <b>double boucle des moteurs d'avion</b>, vérifie que <b>deux signes différents</b> sont d'accord :</p>
+<table>
+<tr><th>Canal</th><th>Question</th><th>Feu</th><th>Spray</th><th>Poussière</th></tr>
+<tr><td><b>A · Fumée</b></td><td>les particules montent fortement ?</td><td class="c">✔</td><td class="c">✔</td><td class="c">✔</td></tr>
+<tr><td><b>B · Gaz</b></td><td>le CO, l'H₂ ou les COV montent ?</td><td class="c">✔</td><td class="c">✔</td><td class="c">—</td></tr>
+<tr><td><b>C · Chaleur</b></td><td>la température monte de plus de 1,5 °C ?</td><td class="c">✔</td><td class="c">—</td><td class="c">—</td></tr>
+</table>
+<p>La passerelle prend les <b>3 boîtiers les plus actifs</b>, fait la moyenne de leurs scores et la lisse dans le temps. Puis :</p>
+<table>
+<tr><th style="width:28%">Verdict</th><th>Condition</th></tr>
+<tr><td><span class="badge" style="background:var(--orange)">FEU COUVANT POSSIBLE</span></td><td>score ≥ 0,70 et fumée ou gaz encore en hausse, pendant 30 s → « envoyer un agent vérifier »</td></tr>
+<tr><td><span class="badge" style="background:var(--red)">FEU</span></td><td>score ≥ 0,70 <b>et</b> canal A + (canal B ou C), pendant 30 s → verrouillé jusqu'à confirmation humaine</td></tr>
+<tr><td><span class="badge" style="background:#2f9e44">NUISANCE</span></td><td>score ≤ 0,30 pendant 30 s</td></tr>
+</table>
+<div class="note">Pendant une alarme officielle (SSI), l'écran affiche « <b>appliquer la procédure</b> », jamais un score. Un capteur en panne (valeurs incohérentes) est exclu du vote.</div>
+
+<h2><span class="n">9</span>Les données et l'entraînement</h2>
+<table>
+<tr><th style="width:30%">Jeu de données</th><th>Contenu</th><th style="width:22%">Usage</th></tr>
+<tr><td><b>Mendeley « Industrial Hall »</b><br><span class="small">Allemagne, licence CC BY 4.0</span></td><td>9 boîtiers, 77 h, <b>32 essais réels</b> : 17 feux (bois, bougies, câbles, mèches) et 15 fausses alarmes (déodorant, échappement, machine à fumée, CO, éthanol, soudure, découpe, déchets verts) + environ 50 h d'activité normale</td><td>entraînement et test</td></tr>
+<tr><td><b>Salle d'essai EN 54</b><br><span class="small">Mendeley, CC BY 4.0</span></td><td>une autre salle, jamais vue par le modèle : feux et fausses alarmes</td><td>test sur un autre site</td></tr>
+<tr><td><b>NIST FR 4019</b><br><span class="small">États-Unis, domaine public</span></td><td>une maison d'essai : vrais feux et fausses alarmes de cuisine</td><td>test de l'apprentissage local</td></tr>
+</table>
+<ul class="steps">
+<li><b>Étiquettes :</b> pour chaque moment de 10 s, on indique la bonne réponse : « feu » ou « fausse alarme ».</li>
+<li><b>Apprentissage :</b> le modèle parcourt des milliers de moments et trouve seul les questions qui séparent le feu de la fausse alarme.</li>
+<li><b>Gel :</b> le modèle entraîné est enregistré et versionné ; il est copié dans l'application (JavaScript) avec un écart nul par rapport à Python.</li>
+</ul>
+
+<h2><span class="n">10</span>Le test honnête et les résultats</h2>
+<p>Le piège, c'est de tester une IA sur des données qu'elle a déjà vues. Nous avons fait <b>« un essai caché à la fois »</b> : on cache un essai, on entraîne sur les 31 autres, on teste sur l'essai caché, et on recommence pour les 32. Chaque essai est donc jugé par une IA qui <b>ne l'a jamais vu</b>.</p>
+<div class="kp">
+  <div><div class="v">17/17</div><div class="l">feux détectés</div></div>
+  <div><div class="v">11/15</div><div class="l">fausses alarmes rejetées (détecteur fumée seule : 10/15)</div></div>
+  <div><div class="v">17/17</div><div class="l">feux signalés « feu couvant possible »</div></div>
+  <div><div class="v">12/13 · 7/7</div><div class="l">autre salle jamais vue : feux · fausses alarmes</div></div>
+</div>
+
+<h2><span class="n">11</span>Un modèle pour chaque usine</h2>
+<div class="flow2">
+  <div class="s">[[icon:database:#3a5bff:26]]<b>Jour 1</b>modèle général (sites connus)</div><div class="a">›</div>
+  <div class="s">[[icon:user-check:#3a5bff:26]]<b>90 jours</b>le gardien confirme chaque alerte</div><div class="a">›</div>
+  <div class="s" style="background:var(--orange-l)">[[icon:factory:#f26b1d:26]]<b>Modèle local</b>propre à cette usine</div>
+</div>
+<p>Chaque usine a son air normal et ses fausses alarmes habituelles. Les réponses du gardien deviennent de nouvelles étiquettes, et un <b>modèle local</b> est entraîné pour cette usine seulement. Ce qui est appris dans l'usine X ne change rien dans l'usine Y.</p>
+
+<h2><span class="n">12</span>La prévision à 60 secondes</h2>
+<p>Un second modèle prévoit <b>où sera la fumée dans 30 à 60 secondes</b> : hauteur de la couche de fumée, température, temps avant que l'air devienne dangereux. C'est un petit réseau de neurones (64 × 64) entraîné sur <b>5 000 feux simulés</b> par un modèle physique de zones (même famille que l'outil CFAST du NIST). Dans le jumeau numérique 3D, la simulation des flux d'air (CFD) montre la fumée en direct et la prévision à +60 s.</p>
+
+<h2><span class="n">13</span>Embarqué, hors ligne et sûr</h2>
+<table>
+<tr><th style="width:30%">Point</th><th>Ce que ça veut dire</th></tr>
+<tr><td><b>Dans le boîtier</b></td><td>les indices et le score tournent sur la puce ESP32 (environ 2 ms)</td></tr>
+<tr><td><b>Hors ligne</b></td><td>aucune donnée ne part sur Internet ; tout tourne sur place</td></tr>
+<tr><td><b>Sur batterie</b></td><td>le système continue pendant les coupures STEG</td></tr>
+<tr><td><b>Sécurité</b></td><td>lecture seule ; l'IA assiste, l'humain décide (niveau 1 de l'EASA, méthode transposée) ; l'alarme certifiée reste maître</td></tr>
+<tr><td><b>Reproductible</b></td><td>code, données et tests sur GitHub : <code>python scripts/run_all.py</code> refait tout</td></tr>
+</table>
+</body></html>

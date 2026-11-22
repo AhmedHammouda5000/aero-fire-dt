@@ -11,8 +11,7 @@ SRC = LIV / "pdf_src"
 
 PAGES = [
     # 05_compte_rendu: written by the team (05_compte_rendu.tpl.html), not generated
-    ("AI_Model_Report.md", "06_rapport_ia.html", "RAPPORT DU MODÈLE IA", "Architecture, choix du modèle, données, résultats",
-     "Vérificateur d'alarme (feu / nuisance), vote de sécurité à deux canaux, alerte précoce, prévision à 60 s, apprentissage local."),
+    # 06_rapport_ia: written as 06_rapport_ia.tpl.html (team style), not generated
 ]
 
 COVER = """<div class="cover"><img class="cflame" src="img/flame.png" alt="">
