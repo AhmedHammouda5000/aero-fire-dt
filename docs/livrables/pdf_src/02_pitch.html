@@ -4,294 +4,176 @@
 <style>
 @page { size: 1280px 720px; margin: 0; }
 body { background: #fff; }
-.slide { width: 1280px; height: 720px; position: relative; overflow: hidden; background: #fff; break-after: page; display: flex; flex-direction: column; justify-content: center; padding: 70px 80px 76px; }
+.slide { width: 1280px; height: 720px; position: relative; overflow: hidden; background: #fff; break-after: page; }
 .slide:last-child { break-after: auto; }
-.pg { position: absolute; top: 28px; left: 80px; font-family: var(--head); font-weight: 700; font-size: 15px; letter-spacing: .14em; color: var(--blue); }
-.pg i { font-style: normal; color: var(--mute); font-weight: 500; }
-.ft { position: absolute; left: 80px; right: 80px; bottom: 22px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--mute); border-top: 1px solid var(--line); padding-top: 10px; }
-.ft img { height: 22px; vertical-align: middle; margin-right: 8px; }
-h1 { font-family: var(--head); font-weight: 800; font-size: 56px; line-height: 1.1; margin: 0 0 36px; color: var(--ink); letter-spacing: -.01em; }
+.split { position: absolute; inset: 0; display: grid; }
+.ph { background-size: cover; background-position: center; }
+.tx { padding: 70px 70px; display: flex; flex-direction: column; justify-content: center; }
+.kick { font-family: var(--head); font-weight: 700; font-size: 16px; letter-spacing: .16em; color: var(--blue); margin-bottom: 14px; }
+h1 { font-family: var(--head); font-weight: 800; font-size: 52px; line-height: 1.1; margin: 0 0 22px; color: var(--ink); letter-spacing: -.01em; }
 h1 em { font-style: normal; color: var(--blue); }
-h1 .o { color: var(--orange); }
-p { font-size: 26px; line-height: 1.4; color: var(--ink2); margin: 0; }
-.row { display: flex; align-items: stretch; gap: 22px; }
-.card { flex: 1; background: var(--bg2); border-radius: 12px; padding: 34px 24px; text-align: center; }
+p.lead { font-size: 25px; line-height: 1.45; color: var(--ink2); margin: 0; }
+.chips { display: flex; gap: 12px; margin-top: 26px; }
+.chips span { font-family: var(--head); font-weight: 700; font-size: 17px; letter-spacing: .08em; color: #fff; background: var(--orange); padding: 7px 16px; border-radius: 4px; }
+.ft { position: absolute; left: 70px; right: 70px; bottom: 22px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--mute); }
+.ft img { height: 22px; vertical-align: middle; margin-right: 8px; }
+.stat { background: #fff; border: 1px solid var(--line); border-left: 8px solid var(--orange); border-radius: 10px; padding: 24px 28px; box-shadow: 0 4px 14px rgba(29,36,51,.08); }
+.stat .v { font-family: var(--head); font-weight: 900; font-size: 64px; line-height: 1; color: var(--ink); }
+.stat .l { font-size: 21px; color: var(--ink2); margin-top: 8px; }
+.x { list-style: none; padding: 0; margin: 22px 0 0; }
+.x li { font-size: 23px; color: var(--ink); margin: 10px 0; display: flex; align-items: center; gap: 12px; }
+.item { margin: 11px 0; }
+.item b { font-family: var(--head); font-weight: 700; font-size: 22px; color: var(--blue); display: flex; align-items: center; gap: 12px; }
+.item span { font-size: 18px; color: var(--ink2); display: block; margin-top: 4px; padding-left: 44px; }
+.card { flex: 1; background: var(--bg2); border-radius: 14px; padding: 34px 28px; text-align: center; }
 .card .t { font-family: var(--head); font-weight: 700; font-size: 26px; color: var(--ink); margin-top: 16px; }
-.card .d { font-size: 21px; color: var(--ink2); margin-top: 6px; }
-.card.hot { background: var(--orange-l); } .card.hot .t { color: var(--orange); }
-.card.blue { background: var(--blue-l); }
-.op { align-self: center; font-family: var(--head); font-weight: 800; font-size: 60px; color: var(--orange); }
-.split { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; }
-.split .ph { background-size: cover; background-position: center; }
-.split .tx { padding: 80px 70px 80px 80px; display: flex; flex-direction: column; justify-content: center; }
-.huge { font-family: var(--head); font-weight: 900; line-height: .95; color: var(--blue-d); }
-.num { flex: 1; text-align: center; }
-.num .huge { font-size: 140px; }
-.num .l { font-size: 26px; color: var(--ink2); margin-top: 14px; line-height: 1.3; }
-.band { margin-top: 40px; background: var(--blue); color: #fff; border-radius: 10px; padding: 22px 28px; font-size: 28px; display: flex; align-items: center; gap: 18px; }
-.band b { color: #fff; }
-.shot { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; box-shadow: 0 6px 18px rgba(29,36,51,.12); }
+.card .d { font-size: 20px; color: var(--ink2); margin-top: 8px; line-height: 1.4; }
+.shot { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; box-shadow: 0 6px 18px rgba(29,36,51,.14); }
 .shot img { display: block; width: 100%; }
-.chips { display: flex; gap: 14px; margin-top: 18px; }
-.chips div { flex: 1; border-radius: 8px; padding: 12px 16px; font-size: 21px; color: var(--ink); }
-.chips b { font-family: var(--head); font-weight: 800; font-size: 30px; display: block; }
-.tier { flex: 1; border-radius: 10px; padding: 30px 26px; box-shadow: 0 2px 4px rgba(20,30,60,.14); }
-.tier .n { font-family: var(--head); font-weight: 600; font-size: 21px; color: var(--ink2); }
-.tier .p { font-family: var(--head); font-weight: 800; font-size: 44px; color: var(--ink); margin-top: 6px; white-space: nowrap; }
-.tier .m { font-size: 24px; color: var(--ink); margin-top: 4px; }
-.tl { display: flex; margin: 0 0 30px; }
-.tl div { flex: 1; border-top: 6px solid var(--blue); padding: 12px 10px 0 0; }
-.tl div.a { border-top-color: var(--orange); }
-.tl b { font-family: var(--head); font-weight: 800; font-size: 26px; color: var(--ink); display: block; }
-.tl span { font-size: 20px; color: var(--ink2); }
-.ask { display: flex; flex-direction: column; gap: 12px; }
-.ask div { display: flex; align-items: center; gap: 16px; background: var(--bg2); border-radius: 8px; padding: 14px 18px; font-size: 24px; color: var(--ink); }
-.slogan { font-family: var(--head); font-weight: 700; color: var(--orange); letter-spacing: .12em; }
-table.bk { width: 100%; border-collapse: collapse; font-size: 25px; }
-table.bk th { font-family: var(--head); font-weight: 600; font-size: 18px; background: var(--blue); color: #fff; text-align: left; padding: 12px 14px; }
-table.bk td { padding: 14px; border-bottom: 1px solid var(--line); color: var(--ink2); }
-table.bk td b { color: var(--ink); }
-table.bk tr:nth-child(even) td { background: var(--bg2); }
-.tag-r { position: absolute; top: 28px; right: 80px; font-family: var(--head); font-weight: 700; font-size: 14px; color: #fff; background: var(--orange); padding: 3px 10px; border-radius: 3px; }
-.aero { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-.aero div { background: var(--bg2); border-radius: 10px; padding: 28px 24px; display: flex; flex-direction: column; gap: 8px; border-top: 5px solid var(--blue); }
-.aero b { font-family: var(--head); font-weight: 700; font-size: 25px; color: var(--ink); }
-.aero span { font-size: 21px; color: var(--ink2); line-height: 1.35; }
-.gantt { display: flex; gap: 4px; margin-bottom: 14px; }
-.gantt div { color: #fff; font-family: var(--head); font-weight: 700; font-size: 15px; padding: 7px 8px; border-radius: 4px; text-align: center; white-space: nowrap; }
-.phases { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
-.phases > div { background: var(--bg2); border-top: 6px solid var(--blue); border-radius: 8px; padding: 14px 12px; }
-.phases i { font-style: normal; font-family: var(--head); font-weight: 600; font-size: 12.5px; color: var(--mute); letter-spacing: .04em; display: block; }
-.phases b { font-family: var(--head); font-weight: 800; font-size: 20px; color: var(--ink); display: block; margin: 4px 0 8px; line-height: 1.15; }
-.phases ul { margin: 0; padding-left: 16px; font-size: 15.5px; line-height: 1.35; color: var(--ink2); }
-.phases li { margin: 3px 0; } .phases li b { display: inline; font-size: 15.5px; margin: 0; font-family: var(--sans); }
-.mini { flex: 1; display: flex; align-items: center; gap: 12px; background: var(--bg2); border-radius: 8px; padding: 12px 16px; font-size: 20px; color: var(--ink); }
-.lvl { background: var(--bg2); border-left: 8px solid var(--blue); border-radius: 6px; padding: 14px 16px; font-size: 21px; color: var(--ink); display: flex; align-items: center; gap: 10px; }
-.lvl b { font-family: var(--head); font-weight: 800; margin-right: 6px; }
+.feat { background: var(--bg2); border-left: 6px solid var(--blue); border-radius: 8px; padding: 14px 18px; }
+.feat b { font-family: var(--head); font-weight: 700; font-size: 22px; color: var(--ink); display: block; }
+.feat span { font-size: 18px; color: var(--ink2); }
+.tier { flex: 1; border-radius: 14px; padding: 30px 28px; position: relative; border: 1px solid var(--line); background: #fff; }
+.tier.hot { background: var(--blue); border-color: var(--blue); color: #fff; box-shadow: 0 10px 26px rgba(58,91,255,.28); transform: translateY(-10px); }
+.tier .badge2 { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--orange); color: #fff; font-family: var(--head); font-weight: 700; font-size: 14px; letter-spacing: .08em; padding: 4px 14px; border-radius: 20px; white-space: nowrap; }
+.tier .n { font-family: var(--head); font-weight: 600; font-size: 22px; color: var(--ink2); }
+.tier.hot .n { color: #dfe6ff; }
+.tier .p { font-family: var(--head); font-weight: 900; font-size: 58px; color: var(--ink); margin-top: 8px; }
+.tier.hot .p { color: #fff; }
+.tier .p small { font-size: 20px; font-weight: 500; color: var(--mute); }
+.tier.hot .p small { color: #dfe6ff; }
+.tier ul { list-style: none; padding: 0; margin: 18px 0 0; }
+.tier li { font-size: 19px; padding: 10px 0; border-top: 1px solid var(--line); }
+.tier.hot li { border-top-color: rgba(255,255,255,.3); }
+.road { display: flex; position: relative; margin-top: 40px; }
+.road::before { content: ""; position: absolute; left: 6%; right: 6%; top: 26px; height: 4px; background: var(--line); }
+.road > div { flex: 1; text-align: center; position: relative; padding: 0 14px; }
+.road .dot { width: 54px; height: 54px; border-radius: 50%; background: var(--blue); color: #fff; font-family: var(--head); font-weight: 800; font-size: 22px; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; position: relative; }
+.road > div:nth-child(2) .dot { background: var(--orange); }
+.road b { font-family: var(--head); font-weight: 700; font-size: 23px; color: var(--ink); display: block; }
+.road span { font-size: 18px; color: var(--ink2); display: block; margin-top: 8px; line-height: 1.4; }
+.slogan { font-family: var(--head); font-weight: 700; color: var(--orange); letter-spacing: .14em; }
 </style></head>
 <body>
 
-<!-- 1 cover -->
-<section class="slide" style="padding:0">
+<!-- 1 · Cover -->
+<section class="slide">
   <div class="split" style="grid-template-columns:1.05fr .95fr">
     <div class="tx">
-      <div class="pg" style="position:static;margin-bottom:26px">TUNISIAN AERODAY 2026 · AERO-ENTREPRENEUR</div>
-      <img src="img/logo.png" alt="Aero Fire DT" style="height:290px;width:auto;align-self:flex-start">
-      <div class="slogan" style="font-size:19px;margin-top:22px;white-space:nowrap">PRÉDICTION · PRÉVENTION · PROTECTION</div>
-      <p style="font-size:27px;margin-top:16px;color:var(--ink)">Le copilote incendie qui <b>lit</b> votre alarme <b>sans jamais la toucher</b>.</p>
+      <div class="kick">TUNISIAN AERODAY 2026</div>
+      <img src="img/logo.png" alt="Aero Fire DT" style="height:250px;width:auto;align-self:flex-start;margin-bottom:10px">
+      <p class="lead" style="color:var(--ink)">Le copilote incendie qui lit votre alarme <b>sans jamais la toucher.</b></p>
+      <div class="chips"><span>PRÉDICTION</span><span>PRÉVENTION</span><span>PROTECTION</span></div>
     </div>
     <div class="ph" style="background-image:url('photo/industrie.jpg')"></div>
   </div>
-  <div class="ft" style="right:auto;width:560px;border:0"><span>Partenaires du challenge : Protection Civile &amp; INJAZ Tunisia</span></div>
 </section>
 
-<!-- 2 problem -->
-<section class="slide" style="padding:0">
-  <div class="split">
-    <div class="tx">
-      <div class="pg">01 · LE PROBLÈME</div>
-      <h1 style="font-size:48px;margin-bottom:22px">L'alarme ne voit que <em>la fumée</em>.</h1>
-      <div style="display:flex;flex-direction:column;gap:10px">
-        <div style="display:flex;align-items:center;gap:18px;font-size:24px"><svg class="ico lucide lucide-wind" xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M12.8 19.6A2 2 0 1 0 14 16H2" /> <path d="M17.5 8a2.5 2.5 0 1 1 2 4H2" /> <path d="M9.8 4.4A2 2 0 1 1 11 8H2" /> </svg> un spray</div>
-        <div style="display:flex;align-items:center;gap:18px;font-size:24px"><svg class="ico lucide lucide-cloud-fog" xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" /> <path d="M16 17H7" /> <path d="M17 21H9" /> </svg> de la poussière</div>
-        <div style="display:flex;align-items:center;gap:18px;font-size:24px"><svg class="ico lucide lucide-truck" xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" /> <path d="M15 18H9" /> <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14" /> <circle cx="17" cy="18" r="2" /> <circle cx="7" cy="18" r="2" /> </svg> un chariot qui tourne</div>
-        <div style="display:flex;align-items:center;gap:18px;font-size:28px;color:var(--orange);font-weight:700;margin-top:6px"><svg class="ico lucide lucide-bell-ring" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#f26b1d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" /> <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" /> <path d="M4 2C2.8 3.7 2 5.7 2 8" /> <path d="M22 8c0-2.3-.8-4.3-2-6" /> </svg> → évacuation pour rien</div>
-      </div>
-      <div style="display:flex;gap:40px;margin-top:22px">
-        <div><div class="huge" style="font-size:46px;color:var(--red)">39 %</div><p style="font-size:18px">des sorties des pompiers<br>= fausses alarmes (UK)</p></div>
-        <div><div class="huge" style="font-size:46px;color:var(--orange)">47,9 MDT</div><p style="font-size:18px">indemnités incendie<br>Tunisie, S1 2026</p></div>
-      </div>
+<!-- 2 · Problème -->
+<section class="slide">
+  <div class="split" style="grid-template-columns:1.1fr .9fr;padding:0 70px;gap:50px;align-items:center">
+    <div>
+      <div class="kick">LE PROBLÈME</div>
+      <h1>L'alarme actuelle est <em>aveugle</em>.</h1>
+      <p class="lead">Un détecteur classique ne voit que la fumée. Un spray, de la poussière ou une machine qui tourne déclenchent une évacuation pour rien.</p>
+      <ul class="x">
+        <li><svg class="ico lucide lucide-bell-ring" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#f26b1d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" /> <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" /> <path d="M4 2C2.8 3.7 2 5.7 2 8" /> <path d="M22 8c0-2.3-.8-4.3-2-6" /> </svg> Arrêts de production coûteux</li>
+        <li><svg class="ico lucide lucide-siren" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#f26b1d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M7 18v-6a5 5 0 1 1 10 0v6" /> <path d="M5 21a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-1a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2z" /> <path d="M21 12h1" /> <path d="M18.5 4.5 18 5" /> <path d="M2 12h1" /> <path d="M12 2v1" /> <path d="m4.929 4.929.707.707" /> <path d="M12 12v6" /> </svg> Interventions inutiles</li>
+      </ul>
     </div>
-    <div class="ph" style="background:#dfe7f1 url('photo/alarme.jpg') center / contain no-repeat"></div>
+    <div style="display:flex;flex-direction:column;gap:22px">
+      <div class="stat"><div class="v">39 %</div><div class="l">des sorties pompiers sont de fausses alarmes (UK).</div></div>
+      <div class="stat"><div class="v">47,9 MDT</div><div class="l">d'indemnités incendie en Tunisie (S1 2026).</div></div>
+    </div>
   </div>
-  <div class="ft" style="left:auto;right:80px;width:520px;border:0;justify-content:flex-end"><span>02</span></div>
+  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>02</span></div>
 </section>
 
-<!-- 3 aviation -->
-<section class="slide" style="padding:0">
-  <div class="split" style="grid-template-columns:.8fr 1.2fr">
+<!-- 3 · Aéronautique -->
+<section class="slide">
+  <div class="split" style="grid-template-columns:.85fr 1.15fr">
     <div class="ph" style="background-image:url('photo/cockpit.jpg');background-position:40% 50%"></div>
-    <div class="tx">
-      <div class="pg" style="left:auto;right:80px">02 · L'IDÉE VIENT DE L'AVIATION</div>
-      <h1 style="font-size:50px">Avions : <span class="o">200 fausses alarmes</span> pour 1 vrai feu.</h1>
-      <p style="margin:-14px 0 34px">L'aviation a réglé ça avec <b>deux boucles</b> qui doivent être d'accord.</p>
-      <div class="row" style="gap:14px">
-        <div class="card" style="padding:26px 12px"><svg class="ico lucide lucide-cloud-fog" xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" /> <path d="M16 17H7" /> <path d="M17 21H9" /> </svg><div class="t" style="font-size:22px">FUMÉE</div></div>
-        <div class="op" style="font-size:44px">+</div>
-        <div class="card" style="padding:26px 12px"><svg class="ico lucide lucide-flask-conical" xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2" /> <path d="M8.5 2h7" /> <path d="M7 16h10" /> </svg> <svg class="ico lucide lucide-thermometer" xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z" /> </svg><div class="t" style="font-size:22px">GAZ ou CHALEUR</div></div>
-        <div class="op" style="font-size:44px">=</div>
-        <div class="card hot" style="padding:26px 12px"><svg class="ico lucide lucide-flame" xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 24 24" fill="none" stroke="#f26b1d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" /> </svg><div class="t" style="font-size:22px">FEU</div></div>
-      </div>
+    <div class="tx" style="padding:60px 70px 60px 60px">
+      <div class="kick">L'AÉRONAUTIQUE</div>
+      <h1 style="font-size:40px;margin-bottom:14px">La rigueur aéronautique au service de l'<em>usine</em>.</h1>
+      <p class="lead" style="font-size:19px">En vol, une fausse alarme est inacceptable. Nous appliquons les méthodes de l'aviation civile pour fiabiliser la détection incendie industrielle.</p>
+      <div class="item"><b><svg class="ico lucide lucide-git-merge" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <circle cx="18" cy="18" r="3" /> <circle cx="6" cy="6" r="3" /> <path d="M6 21V9a9 9 0 0 0 9 9" /> </svg> Double boucle moteur</b><span>Déclaration de « feu » uniquement si 2 signes physiques indépendants concordent.</span></div>
+      <div class="item"><b><svg class="ico lucide lucide-shield-check" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /> <path d="m9 12 2 2 4-4" /> </svg> Normes ARP4761A &amp; EASA</b><span>L'IA assiste, l'humain décide. Le système ne coupe jamais l'alarme officielle.</span></div>
+      <div class="item"><b><svg class="ico lucide lucide-layout-dashboard" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect width="7" height="9" x="3" y="3" rx="1" /> <rect width="7" height="5" x="14" y="3" rx="1" /> <rect width="7" height="9" x="14" y="12" rx="1" /> <rect width="7" height="5" x="3" y="16" rx="1" /> </svg> Ergonomie ECAM</b><span>Écran sombre en temps normal. Affichage clair des procédures en cas d'alerte.</span></div>
     </div>
   </div>
-  <div class="ft" style="left:auto;width:620px;border:0;justify-content:flex-end"><span>03</span></div>
+  <div class="ft" style="left:auto;width:640px"><span></span><span>03</span></div>
 </section>
 
-<!-- 3b aero methods -->
-<section class="slide" style="padding-top:64px">
-  <div class="pg">03 · CE QUE NOUS PRENONS À L'AÉRONAUTIQUE</div>
-  <h1 style="font-size:46px;margin-bottom:26px">Des <em>méthodes d'avion</em>, appliquées à l'usine.</h1>
-  <div class="aero">
-    <div><svg class="ico lucide lucide-git-merge" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <circle cx="18" cy="18" r="3" /> <circle cx="6" cy="6" r="3" /> <path d="M6 21V9a9 9 0 0 0 9 9" /> </svg><b>Double boucle moteur</b><span>« Feu » seulement si 2 signes physiques sont d'accord</span></div>
-    <div><svg class="ico lucide lucide-timer" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <line x1="10" x2="14" y1="2" y2="2" /> <line x1="12" x2="15" y1="14" y2="11" /> <circle cx="12" cy="14" r="8" /> </svg><b>CS / 14 CFR 25.858</b><span>alerte en moins de 60 s, chaque voie testable</span></div>
-    <div><svg class="ico lucide lucide-test-tubes" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M9 2v17.5A2.5 2.5 0 0 1 6.5 22A2.5 2.5 0 0 1 4 19.5V2" /> <path d="M20 2v17.5a2.5 2.5 0 0 1-2.5 2.5a2.5 2.5 0 0 1-2.5-2.5V2" /> <path d="M3 2h7" /> <path d="M14 2h7" /> <path d="M9 16H4" /> <path d="M20 16h-5" /> </svg><b>FAA AC 25-9A</b><span>essais avec sources de fumée et pires cas pour tester nos boîtiers</span></div>
-    <div><svg class="ico lucide lucide-shield-check" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /> <path d="m9 12 2 2 4-4" /> </svg><b>ARP4761A</b><span>analyse de sécurité : l'IA ne peut jamais couper l'alarme</span></div>
-    <div><svg class="ico lucide lucide-layout-dashboard" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect width="7" height="9" x="3" y="3" rx="1" /> <rect width="7" height="5" x="14" y="3" rx="1" /> <rect width="7" height="9" x="14" y="12" rx="1" /> <rect width="7" height="5" x="3" y="16" rx="1" /> </svg><b>ECAM Airbus</b><span>écran sombre, 3 niveaux d'alerte, procédure affichée</span></div>
-    <div><svg class="ico lucide lucide-user-check" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /> <circle cx="9" cy="7" r="4" /> <polyline points="16 11 18 13 22 9" /> </svg><b>EASA IA niveau 1</b><span>l'IA assiste, l'humain décide</span></div>
+<!-- 4 · Solution -->
+<section class="slide">
+  <div class="tx" style="height:720px;padding:60px 80px 80px;text-align:center">
+    <div class="kick">NOTRE SOLUTION</div>
+    <h1>Un deuxième avis <em>fiable</em>.</h1>
+    <p class="lead">Le copilote IA s'installe en lecture seule, sans perturber l'existant.</p>
+    <div style="display:flex;gap:24px;margin-top:40px;text-align:center">
+      <div class="card"><svg class="ico lucide lucide-cpu" xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect width="16" height="16" x="4" y="4" rx="2" /> <rect width="6" height="6" x="9" y="9" rx="1" /> <path d="M15 2v2" /> <path d="M15 20v2" /> <path d="M2 15h2" /> <path d="M2 9h2" /> <path d="M20 15h2" /> <path d="M20 9h2" /> <path d="M9 2v2" /> <path d="M9 20v2" /> </svg><div class="t">Capteurs multisignes</div><div class="d">Analyse simultanée de la fumée, des gaz (CO, H₂, COV) et de la chaleur.</div></div>
+      <div class="card"><svg class="ico lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect width="18" height="11" x="3" y="11" rx="2" ry="2" /> <path d="M7 11V7a5 5 0 0 1 10 0v4" /> </svg><div class="t">Lecture seule</div><div class="d">Connexion sécurisée à l'alarme du site. Zéro risque de coupure accidentelle.</div></div>
+      <div class="card"><svg class="ico lucide lucide-factory" xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" /> <path d="M17 18h1" /> <path d="M12 18h1" /> <path d="M7 18h1" /> </svg><div class="t">Apprentissage IA</div><div class="d">Pilote de 90 jours pour cartographier les bruits et nuisances spécifiques de l'usine.</div></div>
+    </div>
   </div>
-  <p style="font-size:18px;margin-top:18px;color:var(--mute)">Méthodes « inspirées de » : aucune certification aéronautique n'est revendiquée.</p>
   <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>04</span></div>
 </section>
 
-<!-- 4 solution -->
+<!-- 5 · Jumeau 3D -->
 <section class="slide">
-  <div class="pg">04 · NOTRE SOLUTION</div>
-  <h1>Un <em>deuxième avis</em> à côté de l'alarme.</h1>
-  <div class="row">
-    <div class="card"><svg class="ico lucide lucide-radar" xmlns="http://www.w3.org/2000/svg" width="84" height="84" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M19.07 4.93A10 10 0 0 0 6.99 3.34" /> <path d="M4 6h.01" /> <path d="M2.29 9.62A10 10 0 1 0 21.31 8.35" /> <path d="M16.24 7.76A6 6 0 1 0 8.23 16.67" /> <path d="M12 18h.01" /> <path d="M17.99 11.66A6 6 0 0 1 15.77 16.67" /> <circle cx="12" cy="12" r="2" /> <path d="m13.41 10.59 5.66-5.66" /> </svg><div class="t">Capteurs</div><div class="d">fumée, gaz, chaleur</div></div>
-    <div class="op">→</div>
-    <div class="card"><svg class="ico lucide lucide-cpu" xmlns="http://www.w3.org/2000/svg" width="84" height="84" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect width="16" height="16" x="4" y="4" rx="2" /> <rect width="6" height="6" x="9" y="9" rx="1" /> <path d="M15 2v2" /> <path d="M15 20v2" /> <path d="M2 15h2" /> <path d="M2 9h2" /> <path d="M20 15h2" /> <path d="M20 9h2" /> <path d="M9 2v2" /> <path d="M9 20v2" /> </svg><div class="t">IA + vote</div><div class="d">feu ou fausse alarme ?</div></div>
-    <div class="op">→</div>
-    <div class="card"><svg class="ico lucide lucide-monitor" xmlns="http://www.w3.org/2000/svg" width="84" height="84" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect width="20" height="14" x="2" y="3" rx="2" /> <line x1="8" x2="16" y1="21" y2="21" /> <line x1="12" x2="12" y1="17" y2="21" /> </svg><div class="t">Écran du gardien</div><div class="d">zone + quoi faire</div></div>
+  <div class="tx" style="height:720px;padding:56px 70px 76px">
+    <div class="kick">LE JUMEAU NUMÉRIQUE 3D</div>
+    <h1 style="font-size:46px;margin-bottom:8px">La visibilité totale pour une intervention <em>chirurgicale</em>.</h1>
+    <div style="display:flex;gap:24px;margin-top:22px">
+      <div style="flex:1"><div class="shot"><img src="img/twin_smoke.png"></div>
+        <div class="feat" style="margin-top:14px"><b>Propagation en direct</b><span>Physique CFD affichant le volume exact de la fumée.</span></div></div>
+      <div style="flex:1"><div class="shot"><img src="img/twin_ghost.png"></div>
+        <div class="feat" style="margin-top:14px;border-left-color:var(--orange)"><b>Anticipation à +60 s</b><span>Prévision précoce des zones de danger critique.</span></div></div>
+    </div>
   </div>
-  <div class="band"><svg class="ico lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect width="18" height="11" x="3" y="11" rx="2" ry="2" /> <path d="M7 11V7a5 5 0 0 1 10 0v4" /> </svg> <span>Lecture seule : <b>on ne peut jamais couper l'alarme officielle.</b></span></div>
   <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>05</span></div>
 </section>
 
-<!-- 4b twin -->
-<section class="slide" style="padding-top:62px">
-  <div class="pg">05 · LE JUMEAU NUMÉRIQUE 3D</div>
-  <h1 style="font-size:46px;margin-bottom:22px">Une <em>copie 3D</em> de l'usine, en direct.</h1>
-  <div class="row" style="gap:22px;align-items:flex-start">
-    <div style="flex:1"><div class="shot"><img src="img/twin_smoke.png"></div><p style="font-size:21px;margin-top:10px"><b>La fumée en direct</b> : la physique 3D (CFD) montre où elle va.</p></div>
-    <div style="flex:1"><div class="shot"><img src="img/twin_ghost.png"></div><p style="font-size:21px;margin-top:10px"><b>Prévision à +60 s</b> : où sera la fumée dans une minute.</p></div>
-  </div>
-  <div class="row" style="gap:14px;margin-top:18px">
-    <div class="mini"><svg class="ico lucide lucide-map-pin" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" /> <circle cx="12" cy="10" r="3" /> </svg><span>zone exacte du danger</span></div>
-    <div class="mini"><svg class="ico lucide lucide-users" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /> <circle cx="9" cy="7" r="4" /> <path d="M22 21v-2a4 4 0 0 0-3-3.87" /> <path d="M16 3.13a4 4 0 0 1 0 7.75" /> </svg><span>carte de danger à hauteur de tête</span></div>
-    <div class="mini"><svg class="ico lucide lucide-building-2" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z" /> <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2" /> <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2" /> <path d="M10 6h4" /> <path d="M10 10h4" /> <path d="M10 14h4" /> <path d="M10 18h4" /> </svg><span>plan numérique pour la Protection Civile</span></div>
+<!-- 6 · Modèle économique -->
+<section class="slide">
+  <div class="tx" style="height:720px;padding:56px 80px 80px;text-align:center">
+    <div class="kick">MODÈLE ÉCONOMIQUE</div>
+    <h1 style="font-size:48px">Un pilote de 90 jours, puis l'<em>abonnement</em>.</h1>
+    <div style="display:flex;gap:26px;margin-top:34px;text-align:left;align-items:stretch">
+      <div class="tier"><div class="n">PME / APME</div><div class="p">450 <small>TND/mois</small></div><ul><li>Matériel initial : 7 000 TND</li><li>Maintenance incluse</li></ul></div>
+      <div class="tier hot"><div class="badge2">CŒUR DE CIBLE</div><div class="n">Sites classés (risque)</div><div class="p">1 200 <small>TND/mois</small></div><ul><li>Matériel initial : 22 000 TND</li><li>Support technique 7j/7</li><li>Rapports de performance</li></ul></div>
+      <div class="tier"><div class="n">Grands comptes</div><div class="p">3 000 <small>TND/mois</small></div><ul><li>Matériel initial : 45 000 TND</li><li>Formation des agents</li></ul></div>
+    </div>
   </div>
   <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>06</span></div>
 </section>
 
-<!-- 4c AI -->
-<section class="slide" style="padding:0">
-  <div class="split" style="grid-template-columns:1.1fr .9fr">
-    <div class="tx" style="padding:80px 50px 80px 80px">
-      <div class="pg">06 · L'IA QUI VÉRIFIE</div>
-      <h1 style="font-size:46px;margin-bottom:26px">Vrai feu ou <em>fausse alarme</em> ?</h1>
-      <div class="ask">
-        <div><svg class="ico lucide lucide-cpu" xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect width="16" height="16" x="4" y="4" rx="2" /> <rect width="6" height="6" x="9" y="9" rx="1" /> <path d="M15 2v2" /> <path d="M15 20v2" /> <path d="M2 15h2" /> <path d="M2 9h2" /> <path d="M20 15h2" /> <path d="M20 9h2" /> <path d="M9 2v2" /> <path d="M9 20v2" /> </svg> analyse fumée, gaz et chaleur toutes les 10 s</div>
-        <div><svg class="ico lucide lucide-flame" xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#f26b1d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" /> </svg> alerte « feu couvant » avant les flammes</div>
-        <div><svg class="ico lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /> <circle cx="12" cy="12" r="3" /> </svg> montre <b>&nbsp;pourquoi&nbsp;</b> elle pense que c'est un feu</div>
-        <div><svg class="ico lucide lucide-factory" xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" /> <path d="M17 18h1" /> <path d="M12 18h1" /> <path d="M7 18h1" /> </svg> apprend chaque usine en 90 jours</div>
-      </div>
-    </div>
-    <div class="ph" style="background:#0b1016 url('img/A_why.png') 72% 50% / auto 100% no-repeat"></div>
-  </div>
-  <div class="ft" style="right:auto;width:600px"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>07</span></div>
-</section>
-
-<!-- 4d screen -->
-<section class="slide" style="padding-top:62px">
-  <div class="pg">07 · L'ÉCRAN DU GARDIEN</div>
-  <h1 style="font-size:46px;margin-bottom:20px">Comme un <em>cockpit d'avion</em> : clair et rapide.</h1>
-  <div class="row" style="gap:24px;align-items:center">
-    <div style="flex:1.55"><div class="shot"><img src="img/A_fire.png"></div></div>
-    <div style="flex:1;display:flex;flex-direction:column;gap:12px">
-      <div class="lvl" style="border-left-color:#e5322d"><b style="color:#e5322d">ROUGE</b> feu confirmé : évacuer, appeler le 198</div>
-      <div class="lvl" style="border-left-color:#f26b1d"><b style="color:#f26b1d">ORANGE</b> pré-alarme : envoyer un agent</div>
-      <div class="lvl" style="border-left-color:#7a8499"><b>SOMBRE</b> tout va bien</div>
-      <div class="lvl" style="border-left-color:#3a5bff"><svg class="ico lucide lucide-battery-charging" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 7h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2" /> <path d="M6 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h1" /> <path d="m11 7-3 5h4l-3 5" /> <line x1="22" x2="22" y1="11" y2="13" /> </svg> sans Internet, sur batterie pendant les coupures</div>
+<!-- 7 · Feuille de route -->
+<section class="slide">
+  <div class="tx" style="height:720px;padding:60px 70px 80px;text-align:center">
+    <div class="kick">FEUILLE DE ROUTE · 18 MOIS</div>
+    <h1>De l'idée à <em>20 sites</em> industriels.</h1>
+    <div class="road">
+      <div><div class="dot">1</div><b>Mois 1–3 : Banc d'essai</b><span>Tests « iron bird » et alerte en moins de 60 s.</span></div>
+      <div><div class="dot">2</div><b>Mois 3–6 : Pilote 90&nbsp;jours</b><span>L'IA apprend l'usine. Raccordement lecture seule.</span></div>
+      <div><div class="dot">3</div><b>Mois 6–9 : Produit V1</b><span>Logiciel installé et premiers contrats de performance.</span></div>
+      <div><div class="dot">4</div><b>Mois 9–18 : Échelle</b><span>Objectif de 20 sites actifs et partenariat assureurs.</span></div>
     </div>
   </div>
-  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>08</span></div>
+  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>07</span></div>
 </section>
 
-
-<!-- 9 business -->
+<!-- 8 · Fin -->
 <section class="slide">
-  <div class="pg">08 · MODÈLE ÉCONOMIQUE</div>
-  <h1>Un pilote de 90 jours, puis un <em>abonnement</em>.</h1>
-  <div class="row">
-    <div class="tier" style="background:var(--sky)"><div class="n">A · PME</div><div class="p">7 000 TND</div><div class="m">+ 450 TND / mois</div></div>
-    <div class="tier" style="background:var(--sun)"><div class="n">B · Sites classés</div><div class="p">22 000 TND</div><div class="m">+ 1 200 TND / mois</div></div>
-    <div class="tier" style="background:var(--leaf)"><div class="n">C · Grands comptes</div><div class="p">45 000 TND</div><div class="m">+ 3 000 TND / mois</div></div>
+  <div class="ph" style="position:absolute;inset:0;background-image:url('photo/intervention.jpg');background-position:70% 40%"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(90deg, rgba(255,255,255,.97) 0%, rgba(255,255,255,.93) 46%, rgba(255,255,255,.15) 75%, rgba(255,255,255,0) 100%)"></div>
+  <div class="tx" style="position:absolute;left:0;top:0;bottom:0;width:640px">
+    <img src="img/flame.png" alt="" style="height:90px;width:auto;align-self:flex-start;margin-bottom:18px">
+    <h1 style="font-size:60px">Un copilote.<br><em>Pas un pilote.</em></h1>
+    <div class="slogan" style="font-size:19px;white-space:nowrap">PRÉDICTION · PRÉVENTION · PROTECTION</div>
+    <p class="lead" style="margin-top:26px">Merci de votre attention.</p>
   </div>
-  <div style="display:flex;gap:70px;margin-top:40px">
-    <div><div class="huge" style="font-size:60px;color:var(--orange)">9 700 TND</div><p style="font-size:22px">pour démarrer (matériel seul)</p></div>
-  </div>
-  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>09</span></div>
-</section>
-
-<!-- 9b roadmap -->
-<section class="slide" style="padding:58px 60px 70px">
-  <div class="pg" style="left:60px">09 · FEUILLE DE ROUTE · 18 MOIS</div>
-  <h1 style="font-size:44px;margin:4px 0 18px">De l'idée à <em>20 sites</em> en 18 mois.</h1>
-  <div class="gantt">
-    <div style="flex:1;background:#7a8499">M0–1</div>
-    <div style="flex:2;background:var(--blue)">M1–3</div>
-    <div style="flex:3;background:var(--orange)">M3–6</div>
-    <div style="flex:3;background:var(--blue)">M6–9</div>
-    <div style="flex:3;background:var(--blue-d)">M9–12</div>
-    <div style="flex:6;background:#1d2433">M12–18</div>
-  </div>
-  <div class="phases">
-    <div style="border-top-color:#7a8499"><i>PHASE 0 · M0–M1</i><b>Cadrage</b><ul><li>label Startup Act</li><li>marque INNORPI</li><li>accord : 1 installateur agréé + 1 usine pilote</li></ul></div>
-    <div style="border-top-color:var(--blue)"><i>PHASE 1 · M1–M3</i><b>Banc «&nbsp;iron&nbsp;bird&nbsp;»</b><ul><li>vrais boîtiers (kit option 1) + vraie centrale</li><li>essais de fumée (AC 25-9A)</li><li>objectif : alerte ≤ 60 s</li></ul></div>
-    <div style="border-top-color:var(--orange);background:var(--orange-l)"><i>PHASE 2 · M3–M6</i><b>Pilote 90 jours</b><ul><li>raccordement lecture seule par l'installateur</li><li>mesure des fausses alarmes et du délai</li><li>l'IA apprend l'usine</li><li>retour avec la Protection Civile</li></ul></div>
-    <div style="border-top-color:var(--blue)"><i>PHASE 3 · M6–M9</i><b>Produit v1</b><ul><li>logiciel v1 installé sur le site</li><li>contrat de performance, support 7j/7</li><li><b>3 sites payants</b></li></ul></div>
-    <div style="border-top-color:var(--blue-d)"><i>PHASE 4 · M9–M12</i><b>Passage à l'échelle</b><ul><li><b>10 sites</b></li><li>+1 ingénieur, +1 technicien</li><li>formation des agents</li></ul></div>
-    <div style="border-top-color:#1d2433"><i>PHASE 5 · M12–M18</i><b>Consolidation</b><ul><li><b>20 sites</b> (40 visés en année 3)</li><li>partenariat assureurs</li><li>mises à jour de l'IA suivies</li></ul></div>
-  </div>
-  <div class="ft" style="left:60px;right:60px"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>10</span></div>
-</section>
-
-<!-- 10 next + PC -->
-<section class="slide" style="padding:0">
-  <div class="split" style="grid-template-columns:.85fr 1.15fr">
-    <div class="ph" style="background-image:url('photo/intervention.jpg');background-position:78% 40%"></div>
-    <div class="tx" style="padding:70px 70px 80px 60px">
-      <div class="pg" style="left:auto;right:80px">10 · AVEC LA PROTECTION CIVILE</div>
-      <h1 style="font-size:46px;margin-bottom:26px">Avançons <em>ensemble</em>.</h1>
-      <p style="font-size:22px;margin:-10px 0 20px">Avec la Protection Civile : plans numériques des sites, formation des agents, retours d'expérience.</p>
-      <div class="ask">
-        <div><svg class="ico lucide lucide-factory" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" /> <path d="M17 18h1" /> <path d="M12 18h1" /> <path d="M7 18h1" /> </svg> 1 usine pilote</div>
-        <div><svg class="ico lucide lucide-wrench" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" /> </svg> 1 installateur agréé</div>
-        <div><svg class="ico lucide lucide-siren" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#f26b1d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M7 18v-6a5 5 0 1 1 10 0v6" /> <path d="M5 21a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-1a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2z" /> <path d="M21 12h1" /> <path d="M18.5 4.5 18 5" /> <path d="M2 12h1" /> <path d="M12 2v1" /> <path d="m4.929 4.929.707.707" /> <path d="M12 12v6" /> </svg> un test avec la Protection Civile</div>
-      </div>
-      <div style="display:flex;align-items:center;gap:18px;margin-top:26px"><img src="img/flame.png" alt="" style="height:64px"><div><p style="font-size:26px;color:var(--ink)"><b>Un copilote, pas un pilote.</b> Merci.</p><div class="slogan" style="font-size:17px;margin-top:4px">PRÉDICTION · PRÉVENTION · PROTECTION</div></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- BACKUP -->
-<section class="slide">
-  <div class="pg">RÉSERVE 1 · LE BOÎTIER CAPTEUR (KIT OPTION 1)</div><div class="tag-r">Q&amp;R</div>
-  <h1 style="font-size:44px">4 capteurs + 1 puce · <span class="o">≈ 300–475 TND</span></h1>
-  <table class="bk">
-    <tr><th>Pièce</th><th>Ce qu'elle mesure</th></tr>
-    <tr><td><b>Sensirion SPS30</b></td><td>fumée + taille des particules</td></tr>
-    <tr><td><b>Sensirion SGP30</b></td><td>hydrogène + vapeurs (COV)</td></tr>
-    <tr><td><b>Sensirion SCD40</b></td><td>CO₂ + température + humidité</td></tr>
-    <tr><td><b>Winsen ZE07-CO</b></td><td>monoxyde de carbone</td></tr>
-    <tr><td><b>ESP32-C3</b></td><td>calcule le score IA, envoie par radio</td></tr>
-  </table>
-  <p style="font-size:22px;margin-top:16px">0,68 W par boîtier · 55 h sur une batterie LiFePO4 100 Ah</p>
-  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT · RÉSERVE</span><span>R1</span></div>
-</section>
-
-<section class="slide">
-  <div class="pg">RÉSERVE 2 · SÉCURITÉ ET CADRE LÉGAL</div><div class="tag-r">Q&amp;R</div>
-  <h1 style="font-size:44px">Branché <em>sans risque</em> sur l'alarme</h1>
-  <table class="bk">
-    <tr><td><b>Raccordement</b></td><td>isolé électriquement (optocoupleurs), lecture seule, posé par l'installateur agréé</td></tr>
-    <tr><td><b>Pendant une alarme</b></td><td>l'écran dit « appliquer la procédure », jamais un score</td></tr>
-    <tr><td><b>Loi 2009-11</b></td><td>raccordement inscrit dans le dossier de sécurité</td></tr>
-    <tr><td><b>Décret 2006-2687</b></td><td>sites classés : nos premiers clients</td></tr>
-    <tr><td><b>EN 54-13 · NFPA 72</b></td><td>système complémentaire : l'alarme certifiée reste maître</td></tr>
-  </table>
-  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT · RÉSERVE</span><span>R2</span></div>
 </section>
 
 </body></html>
