@@ -65,6 +65,9 @@ table.bk tr:nth-child(even) td { background: var(--bg2); }
 .phases b { font-family: var(--head); font-weight: 800; font-size: 20px; color: var(--ink); display: block; margin: 4px 0 8px; line-height: 1.15; }
 .phases ul { margin: 0; padding-left: 16px; font-size: 15.5px; line-height: 1.35; color: var(--ink2); }
 .phases li { margin: 3px 0; } .phases li b { display: inline; font-size: 15.5px; margin: 0; font-family: var(--sans); }
+.mini { flex: 1; display: flex; align-items: center; gap: 12px; background: var(--bg2); border-radius: 8px; padding: 12px 16px; font-size: 20px; color: var(--ink); }
+.lvl { background: var(--bg2); border-left: 8px solid var(--blue); border-radius: 6px; padding: 14px 16px; font-size: 21px; color: var(--ink); display: flex; align-items: center; gap: 10px; }
+.lvl b { font-family: var(--head); font-weight: 800; margin-right: 6px; }
 </style></head>
 <body>
 
@@ -155,9 +158,60 @@ table.bk tr:nth-child(even) td { background: var(--bg2); }
   <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>05</span></div>
 </section>
 
+<!-- 4b twin -->
+<section class="slide" style="padding-top:62px">
+  <div class="pg">05 · LE JUMEAU NUMÉRIQUE 3D</div>
+  <h1 style="font-size:46px;margin-bottom:22px">Une <em>copie 3D</em> de l'usine, en direct.</h1>
+  <div class="row" style="gap:22px;align-items:flex-start">
+    <div style="flex:1"><div class="shot"><img src="img/twin_smoke.png"></div><p style="font-size:21px;margin-top:10px"><b>La fumée en direct</b> : la physique 3D (CFD) montre où elle va.</p></div>
+    <div style="flex:1"><div class="shot"><img src="img/twin_ghost.png"></div><p style="font-size:21px;margin-top:10px"><b>Prévision à +60 s</b> : où sera la fumée dans une minute.</p></div>
+  </div>
+  <div class="row" style="gap:14px;margin-top:18px">
+    <div class="mini">[[icon:map-pin:#3a5bff:30]]<span>zone exacte du danger</span></div>
+    <div class="mini">[[icon:users:#3a5bff:30]]<span>carte de danger à hauteur de tête</span></div>
+    <div class="mini">[[icon:building-2:#3a5bff:30]]<span>plan numérique pour la Protection Civile</span></div>
+  </div>
+  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>06</span></div>
+</section>
+
+<!-- 4c AI -->
+<section class="slide" style="padding:0">
+  <div class="split" style="grid-template-columns:1.1fr .9fr">
+    <div class="tx" style="padding:80px 50px 80px 80px">
+      <div class="pg">06 · L'IA QUI VÉRIFIE</div>
+      <h1 style="font-size:46px;margin-bottom:26px">Vrai feu ou <em>fausse alarme</em> ?</h1>
+      <div class="ask">
+        <div>[[icon:cpu:#3a5bff:34]] analyse fumée, gaz et chaleur toutes les 10 s</div>
+        <div>[[icon:flame:#f26b1d:34]] alerte « feu couvant » avant les flammes</div>
+        <div>[[icon:eye:#3a5bff:34]] montre <b>&nbsp;pourquoi&nbsp;</b> elle pense que c'est un feu</div>
+        <div>[[icon:factory:#3a5bff:34]] apprend chaque usine en 90 jours</div>
+      </div>
+    </div>
+    <div class="ph" style="background:#0b1016 url('img/A_why.png') 72% 50% / auto 100% no-repeat"></div>
+  </div>
+  <div class="ft" style="right:auto;width:600px"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>07</span></div>
+</section>
+
+<!-- 4d screen -->
+<section class="slide" style="padding-top:62px">
+  <div class="pg">07 · L'ÉCRAN DU GARDIEN</div>
+  <h1 style="font-size:46px;margin-bottom:20px">Comme un <em>cockpit d'avion</em> : clair et rapide.</h1>
+  <div class="row" style="gap:24px;align-items:center">
+    <div style="flex:1.55"><div class="shot"><img src="img/A_fire.png"></div></div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:12px">
+      <div class="lvl" style="border-left-color:#e5322d"><b style="color:#e5322d">ROUGE</b> feu confirmé : évacuer, appeler le 198</div>
+      <div class="lvl" style="border-left-color:#f26b1d"><b style="color:#f26b1d">ORANGE</b> pré-alarme : envoyer un agent</div>
+      <div class="lvl" style="border-left-color:#7a8499"><b>SOMBRE</b> tout va bien</div>
+      <div class="lvl" style="border-left-color:#3a5bff">[[icon:battery-charging:#3a5bff:26]] sans Internet, 55 h sur batterie</div>
+    </div>
+  </div>
+  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>08</span></div>
+</section>
+
+
 <!-- 9 business -->
 <section class="slide">
-  <div class="pg">05 · MODÈLE ÉCONOMIQUE</div>
+  <div class="pg">08 · MODÈLE ÉCONOMIQUE</div>
   <h1>Un pilote de 90 jours, puis un <em>abonnement</em>.</h1>
   <div class="row">
     <div class="tier" style="background:var(--sky)"><div class="n">A · PME</div><div class="p">7 000 TND</div><div class="m">+ 450 TND / mois</div></div>
@@ -168,12 +222,12 @@ table.bk tr:nth-child(even) td { background: var(--bg2); }
     <div><div class="huge" style="font-size:60px;color:var(--orange)">9 700 TND</div><p style="font-size:22px">pour démarrer (matériel seul)</p></div>
     <div><div class="huge" style="font-size:60px">Année 2</div><p style="font-size:22px">rentable</p></div>
   </div>
-  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>06</span></div>
+  <div class="ft"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>09</span></div>
 </section>
 
 <!-- 9b roadmap -->
 <section class="slide" style="padding:58px 60px 70px">
-  <div class="pg" style="left:60px">06 · FEUILLE DE ROUTE · 18 MOIS</div>
+  <div class="pg" style="left:60px">09 · FEUILLE DE ROUTE · 18 MOIS</div>
   <h1 style="font-size:44px;margin:4px 0 18px">De l'idée à <em>20 sites</em> en 18 mois.</h1>
   <div class="gantt">
     <div style="flex:1;background:#7a8499">M0–1</div>
@@ -191,7 +245,7 @@ table.bk tr:nth-child(even) td { background: var(--bg2); }
     <div style="border-top-color:var(--blue-d)"><i>PHASE 4 · M9–M12</i><b>Passage à l'échelle</b><ul><li><b>10 sites</b></li><li>+1 ingénieur, +1 technicien</li><li>formation des agents</li></ul></div>
     <div style="border-top-color:#1d2433"><i>PHASE 5 · M12–M18</i><b>Consolidation</b><ul><li><b>20 sites</b> (40 visés en année 3)</li><li>partenariat assureurs</li><li>mises à jour de l'IA suivies</li></ul></div>
   </div>
-  <div class="ft" style="left:60px;right:60px"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>07</span></div>
+  <div class="ft" style="left:60px;right:60px"><span><img src="img/flame.png" alt="">AERO-FIRE DT</span><span>10</span></div>
 </section>
 
 <!-- 10 next + PC -->
@@ -199,7 +253,7 @@ table.bk tr:nth-child(even) td { background: var(--bg2); }
   <div class="split" style="grid-template-columns:.85fr 1.15fr">
     <div class="ph" style="background-image:url('photo/intervention.jpg');background-position:78% 40%"></div>
     <div class="tx" style="padding:70px 70px 80px 60px">
-      <div class="pg" style="left:auto;right:80px">07 · AVEC LA PROTECTION CIVILE</div>
+      <div class="pg" style="left:auto;right:80px">10 · AVEC LA PROTECTION CIVILE</div>
       <h1 style="font-size:46px;margin-bottom:26px">Avançons <em>ensemble</em>.</h1>
       <p style="font-size:22px;margin:-10px 0 20px">Avec la Protection Civile : plans numériques des sites, formation des agents, retours d'expérience.</p>
       <div class="ask">
