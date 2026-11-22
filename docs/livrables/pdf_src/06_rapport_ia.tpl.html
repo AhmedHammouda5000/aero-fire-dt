@@ -198,15 +198,46 @@ table td.c { text-align: center; }
 </div>
 
 <h2><span class="n">11</span>Un modèle pour chaque usine</h2>
+<p><b>Le problème :</b> chaque usine a son propre « air normal » et ses propres fausses alarmes (une boulangerie a des vapeurs de four, un garage du CO, une usine textile de la poussière). Un modèle appris ailleurs peut donc se tromper sur un nouveau site.</p>
 <div class="flow2">
-  <div class="s">[[icon:database:#3a5bff:26]]<b>Jour 1</b>modèle général (sites connus)</div><div class="a">›</div>
-  <div class="s">[[icon:user-check:#3a5bff:26]]<b>90 jours</b>le gardien confirme chaque alerte</div><div class="a">›</div>
+  <div class="s">[[icon:database:#3a5bff:26]]<b>Jour 1 : modèle général</b>appris sur tous les sites déjà connus</div><div class="a">›</div>
+  <div class="s">[[icon:user-check:#3a5bff:26]]<b>Pilote de 90 jours</b>à chaque alerte, le gardien vérifie et note la réponse</div><div class="a">›</div>
+  <div class="s">[[icon:refresh-cw:#3a5bff:26]]<b>Réentraînement</b>données générales + données du site</div><div class="a">›</div>
   <div class="s" style="background:var(--orange-l)">[[icon:factory:#f26b1d:26]]<b>Modèle local</b>propre à cette usine</div>
 </div>
-<p>Chaque usine a son air normal et ses fausses alarmes habituelles. Les réponses du gardien deviennent de nouvelles étiquettes, et un <b>modèle local</b> est entraîné pour cette usine seulement. Ce qui est appris dans l'usine X ne change rien dans l'usine Y.</p>
+<ul class="steps">
+<li><b>Les étiquettes viennent du terrain :</b> après chaque levée de doute, le gardien indique « c'était un vrai feu » ou « c'était le chariot / la vapeur / un spray ».</li>
+<li><b>Un modèle par usine :</b> ce qui est appris dans l'usine X ne change rien dans l'usine Y.</li>
+<li><b>Hors de la chaîne de sécurité :</b> le réentraînement se fait à part ; le nouveau modèle est revérifié avant d'être utilisé.</li>
+</ul>
+<h3>Le test : un nouveau site que le modèle n'a jamais vu (NIST, États-Unis)</h3>
+<p>Pour vérifier l'idée, nous avons pris un site <b>complètement différent</b> : une maison d'essai du NIST avec <b>41 essais</b> (8 vrais feux et 33 fausses alarmes de cuisine : toast, bacon, friture, pizza…). <b>Protocole :</b> chaque essai est jugé par un modèle qui ne l'a jamais vu (un essai caché à la fois), avec les mêmes seuils et le même vote.</p>
+<table>
+<tr><th>Situation</th><th class="c">Feux détectés (sur 8)</th><th class="c">Fausses alarmes de cuisine rejetées (sur 33)</th></tr>
+<tr><td>Jour 1 : modèle appris ailleurs seulement</td><td class="c">7</td><td class="c">6</td></tr>
+<tr><td><b>Après apprentissage sur les données du site</b></td><td class="c"><b>8</b></td><td class="c"><b>29</b></td></tr>
+</table>
+<div class="ex"><b>Ce que ça montre :</b> grâce aux données du site, les fausses alarmes de cuisine passent de <b>27 à 4</b>, et tous les feux sont détectés. C'est la preuve que le <b>pilote de 90 jours</b> est nécessaire. Et le site d'origine n'est pas abîmé : il garde ses 17 feux sur 17.</div>
 
 <h2><span class="n">12</span>La prévision à 60 secondes</h2>
-<p>Un second modèle prévoit <b>où sera la fumée dans 30 à 60 secondes</b> : hauteur de la couche de fumée, température, temps avant que l'air devienne dangereux. C'est un petit réseau de neurones (64 × 64) entraîné sur <b>5 000 feux simulés</b> par un modèle physique de zones (même famille que l'outil CFAST du NIST). Dans le jumeau numérique 3D, la simulation des flux d'air (CFD) montre la fumée en direct et la prévision à +60 s.</p>
+<div class="q">Le deuxième modèle répond à une autre question : <b>« Si rien ne change, à quoi ressemblera la zone dans 30 à 60 secondes ? »</b></div>
+<p><b>Ce qu'il prévoit</b> pour chaque zone :</p>
+<ul>
+<li>la <b>hauteur de la couche de fumée</b> qui descend du plafond (est-elle encore au-dessus de la tête des gens ?) ;</li>
+<li>la <b>température</b> de cette fumée ;</li>
+<li>le <b>temps restant</b> avant que l'air devienne dangereux à hauteur de tête (1,8 m).</li>
+</ul>
+<h3>Comment il a été construit, étape par étape</h3>
+<ul class="steps">
+<li><b>Un modèle physique de l'incendie :</b> dans une pièce qui brûle, l'air se sépare en deux couches : une couche chaude de fumée sous le plafond, et l'air frais en dessous. Des formules d'ingénierie incendie reconnues décrivent le feu qui grandit, la colonne de fumée qui monte (Heskestad), la fumée qui s'étale sous le plafond (Alpert) et le bilan de matière et de chaleur. C'est la même famille que l'outil CFAST du NIST.</li>
+<li><b>5 000 feux simulés :</b> ce modèle physique a calculé 5 000 incendies différents : petits ou grands feux, lents ou rapides, halls de tailles différentes, portes ouvertes ou fermées.</li>
+<li><b>Une IA qui imite la physique :</b> un petit réseau de neurones (deux couches de 64 neurones) a appris à donner <b>la même réponse que le modèle physique, mais instantanément</b> (0,14 ms au lieu de plusieurs millisecondes). On l'appelle une « IA de substitution ».</li>
+<li><b>En entrée :</b> l'état actuel (hauteur et température de la fumée, puissance estimée du feu, dimensions de la zone, ouvertures). <b>En sortie :</b> l'état à +30 s et à +60 s, et le temps avant conditions dangereuses.</li>
+<li><b>Le test :</b> on l'a vérifié sur 1 000 feux simulés qu'il n'avait jamais vus, en comparant à la physique : erreur moyenne d'environ <b>6 cm</b> sur la hauteur de fumée et <b>7 °C</b> sur la température à +60 s, et l'alerte « dangereux dans 60 s » est juste dans <b>96 %</b> des cas.</li>
+</ul>
+<h3>Dans le jumeau numérique 3D</h3>
+<p>Dans l'application, une simulation 3D des flux d'air (CFD, l'outil de base de l'aéronautique) découpe le hall en 14 080 petits cubes et montre en direct où va la fumée. Une <b>prévision « fantôme » en bleu</b> montre où elle sera dans 60 secondes, avec une <b>carte de danger</b> à hauteur de tête. Le gardien et la Protection Civile voient donc <b>où le danger va arriver</b>, pas seulement où il est.</p>
+<div class="note">La prévision est une aide à la décision : elle est vérifiée contre notre modèle physique ; elle sera comparée à de vrais essais de feu pendant la phase de banc d'essai.</div>
 
 <h2><span class="n">13</span>Embarqué, hors ligne et sûr</h2>
 <table>
