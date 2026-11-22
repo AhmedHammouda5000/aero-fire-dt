@@ -10,7 +10,7 @@ const DOCS = [
   { html: "01_recapitulatif.html", pdf: "01_Fichier_Recapitulatif_Aero-Fire-DT.pdf", a4: true },
   { html: "02_pitch.html", pdf: "02_Presentation_Pitch_Aero-Fire-DT.pdf", a4: false },
   { html: "03_bmc.html", pdf: "03_BMC_Aero-Fire-DT.pdf", a4: false, w: "1440px", h: "810px", single: true },
-  { html: "04_empathie.html", pdf: "04_Carte_Empathie_Aero-Fire-DT.pdf", a4: true, landscape: true },
+  { html: "04_empathie.html", pdf: "04_Carte_Empathie_Aero-Fire-DT.pdf", a4: false, w: "1280px", h: "960px", single: true },
   { html: "05_compte_rendu.html", pdf: "05_Compte_Rendu_Equipe_Aero-Fire-DT.pdf", a4: true },
   { html: "06_rapport_ia.html", pdf: "06_Rapport_Modele_IA_Aero-Fire-DT.pdf", a4: true },
 ];

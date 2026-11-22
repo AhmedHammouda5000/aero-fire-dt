@@ -1,76 +1,105 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8"><title>Aero-Fire DT — Carte d'empathie</title>
-<link rel="stylesheet" href="brand.css">
 <style>
-.pers { break-after: page; height: 182mm; display: flex; flex-direction: column; }
-.pers:last-of-type { break-after: auto; }
-.top { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 3px solid var(--amber); padding-bottom: 4px; margin-bottom: 8px; }
-.top h1 { font-family: var(--mono); font-size: 15pt; margin: 0; color: var(--navy); }
-.top .s { font-family: var(--mono); font-size: 8pt; color: var(--mute); }
-.em { flex: 1; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 6px; position: relative; }
-.q { background: var(--paper2); border: 1px solid var(--paper3); padding: 14px 18px; font-size: 13.5pt; line-height: 1.45; }
-.q h3 { font-family: var(--mono); font-size: 11pt; letter-spacing: .12em; margin: 0 0 6px; color: var(--navy); }
-.q p { margin: 3px 0; }
-.q.tl { padding-right: 70px; } .q.tr { padding-left: 70px; } .q.bl { padding-right: 70px; } .q.br { padding-left: 70px; }
-.who { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 150px; height: 150px; border-radius: 50%; background: var(--navy); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border: 4px solid var(--amber); font-size: 10pt; padding: 12px; }
-.who b { font-family: var(--mono); font-size: 9pt; color: var(--amber); display: block; margin-bottom: 2px; }
-.pg2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 6px; }
-.pain { border-left: 5px solid var(--red); background: #fff4f3; padding: 10px 14px; font-size: 11.5pt; }
-.gain { border-left: 5px solid var(--green); background: #f0fdf4; padding: 10px 14px; font-size: 11.5pt; }
-.pain h3, .gain h3 { font-family: var(--mono); font-size: 9pt; margin: 0 0 4px; letter-spacing: .1em; }
+@font-face { font-family: "Inter"; src: url("fonts/Inter.ttf") format("truetype"); font-weight: 100 900; }
+@page { size: 1280px 960px; margin: 0; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { width: 1280px; height: 950px; background: #fff; color: #111; font-family: "Inter", "Segoe UI", Arial, sans-serif; position: relative; overflow: hidden; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.corner { position: absolute; width: 150px; height: 150px; }
+.corner.tl { left: -10px; top: -10px; } .corner.br { right: -10px; bottom: -10px; transform: rotate(180deg); }
+h1 { text-align: center; font-size: 44px; font-weight: 900; letter-spacing: -.01em; margin: 26px 0 6px; }
+h1 span { font-weight: 300; margin: 0 8px; }
+.map { position: relative; height: 430px; margin: 0 40px; }
+.map svg.x { position: absolute; inset: 0; }
+.q { position: absolute; font-size: 14.2px; line-height: 1.38; background: #fff; padding: 4px 10px; }
+.q h2 { font-size: 21px; font-weight: 800; margin: 0 0 6px; }
+.q ul { margin: 0; padding-left: 16px; } .q li { margin: 2px 0; }
+.q .k { font-weight: 700; }
+.q.top { left: 50%; transform: translateX(-50%); top: 6px; width: 470px; text-align: left; }
+.q.top h2, .q.bot h2 { text-align: center; }
+.q.bot { left: 50%; transform: translateX(-50%); bottom: -22px; width: 520px; }
+.q.left { left: 0; top: 140px; width: 330px; }
+.q.right { right: 0; top: 140px; width: 330px; }
+.q.left h2, .q.right h2 { text-align: center; }
+.who { position: absolute; left: 50%; top: 215px; transform: translate(-50%, -50%); width: 108px; height: 108px; border-radius: 50%; background: #fff; border: 3px solid #111; display: flex; align-items: center; justify-content: center; z-index: 2; }
+.tag { position: absolute; left: 50%; top: 276px; transform: translateX(-50%); text-align: center; z-index: 2; } .tag .lbl { font-weight: 800; font-size: 14px; background: #111; color: #fff; padding: 3px 12px; border-radius: 3px; display: inline-block; } .tag .sub { font-size: 12px; color: #444; background: #fff; padding: 1px 6px; display: block; }
+.band { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin: 14px 60px 0; }
+.pg { border: 2.5px solid #111; padding: 10px 16px; }
+.pg h3 { margin: 0 0 6px; font-size: 19px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+.pg h3 i { font-style: normal; display: inline-flex; width: 26px; height: 26px; border-radius: 50%; align-items: center; justify-content: center; font-size: 15px; color: #fff; background: #111; }
+.pg.gain { background: #111; color: #fff; } .pg.gain h3 i { background: #fff; color: #111; }
+.pg ul { margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.38; } .pg li { margin: 2px 0; }
+.rule { height: 0; border-top: 2px solid #111; margin: 16px 60px 10px; }
+.bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin: 0 60px; }
+.bottom > div { padding: 0 22px; }
+.bottom > div:first-child { border-right: 2px solid #111; padding-left: 0; }
+.bottom h3 { font-size: 21px; font-weight: 800; margin: 0 0 6px; }
+.item { font-size: 13.6px; line-height: 1.36; margin-bottom: 5px; }
+.item b { font-weight: 700; }
 </style></head>
-<body class="doc">
+<body>
+<svg class="corner tl" viewBox="0 0 150 150"><path d="M0 0 L95 0 L58 22 Z M0 0 L0 95 L22 58 Z M0 0 L120 70 L104 86 Z" fill="#111"/></svg>
+<svg class="corner br" viewBox="0 0 150 150"><path d="M0 0 L95 0 L58 22 Z M0 0 L0 95 L22 58 Z M0 0 L120 70 L104 86 Z" fill="#111"/></svg>
 
-<section class="pers">
-<div class="top"><h1>CARTE D'EMPATHIE · 1/4 · RESPONSABLE HSE</h1><div class="s">site industriel classé · Sfax / Gabès / Sousse</div></div>
-<div class="em">
-<div class="q tl"><h3>DIT</h3><p>« Encore une fausse alerte, on a arrêté la ligne pour rien. »</p><p>« Je dois prouver au bureau de contrôle que rien n'a été modifié sur le SSI. »</p></div>
-<div class="q tr"><h3>PENSE</h3><p>« Si l'IA se trompe, c'est ma responsabilité qui est engagée. »</p><p>« Mon budget est déjà absorbé par la maintenance. »</p></div>
-<div class="q bl"><h3>FAIT</h3><p>Relève les rapports d'incidents, relance l'intégrateur, tient l'étude de dangers et le POI, négocie la prime d'assurance.</p></div>
-<div class="q br"><h3>RESSENT</h3><p>Stress de la décision, lassitude des faux départs, pression du coût.</p></div>
-<div class="who"><b>HSE</b>responsable sécurité-environnement</div>
-</div>
-<div class="pg2"><div class="pain"><h3>DOULEURS</h3>Faux positifs ; aucune traçabilité ; données éparpillées ; assureur qui demande des preuves.</div>
-<div class="gain"><h3>GAINS ATTENDUS AVEC AERO-FIRE DT</h3>Moins de faux départs (gain <b>mesuré</b> au pilote de 90 jours) ; <b>preuve que le SSI n'a pas été modifié</b> (lecture seule, raccordement consigné) ; rapport d'événements horodaté ; prévision de fumée utilisable dans le POI.</div></div>
-</section>
+<h1>CARTE D'EMPATHIE<span>|</span>AERO-FIRE DT TUNISIE</h1>
 
-<section class="pers">
-<div class="top"><h1>CARTE D'EMPATHIE · 2/4 · OPÉRATEUR DU POSTE DE SÉCURITÉ</h1><div class="s">équipe de sécurité · souvent de nuit</div></div>
-<div class="em">
-<div class="q tl"><h3>DIT</h3><p>« Je vois une alerte mais je ne sais pas où ni si c'est grave. »</p><p>« J'appelle le responsable, puis j'attends. »</p></div>
-<div class="q tr"><h3>PENSE</h3><p>« Si j'évacue à tort, on me le reproche ; si j'attends trop, c'est pire. »</p></div>
-<div class="q bl"><h3>FAIT</h3><p>Surveille la centrale et les écrans, téléphone, consigne les interventions.</p></div>
-<div class="q br"><h3>RESSENT</h3><p>Surcharge, doute, fatigue de nuit.</p></div>
-<div class="who"><b>AGENT</b>poste de sécurité</div>
-</div>
-<div class="pg2"><div class="pain"><h3>DOULEURS</h3>Interfaces peu lisibles ; pas de hiérarchie des alertes ; levée de doute à l'aveugle.</div>
-<div class="gain"><h3>GAINS ATTENDUS AVEC AERO-FIRE DT</h3>Verdict en <b>&lt; 60 s</b>, zone et procédure affichées (ex. « ALARME SSI ZONE C : APPLIQUER LA PROCÉDURE · indices compatibles avec un aérosol · levée de doute zone C ») ; écran sombre quand tout va bien ; trois niveaux d'alerte clairs ; <b>c'est toujours lui qui décide</b> sur la centrale.</div></div>
-</section>
+<div class="map">
+  <svg class="x" viewBox="0 0 1200 430" preserveAspectRatio="none">
+    <line x1="0" y1="60" x2="1200" y2="370" stroke="#111" stroke-width="1.5"/>
+    <line x1="0" y1="370" x2="1200" y2="60" stroke="#111" stroke-width="1.5"/>
+  </svg>
+  <div class="who">
+    <svg width="70" height="64" viewBox="0 0 86 78"><rect x="8" y="6" width="70" height="46" rx="4" fill="none" stroke="#111" stroke-width="4"/><circle cx="43" cy="26" r="11" fill="#111"/><path d="M22 52 Q43 32 64 52 Z" fill="#111"/><rect x="34" y="54" width="18" height="8" fill="#111"/><rect x="22" y="62" width="42" height="5" rx="2" fill="#111"/></svg>
+    </div>
+  <div class="tag"><div class="lbl">RESPONSABLE HSE</div><div class="sub">site industriel tunisien</div></div>
 
-<section class="pers">
-<div class="top"><h1>CARTE D'EMPATHIE · 3/4 · OFFICIER DE LA PROTECTION CIVILE</h1><div class="s">prévention, intervention, retours d'expérience</div></div>
-<div class="em">
-<div class="q tl"><h3>DIT</h3><p>« On part souvent sur une fausse alerte. »</p><p>« Il me manque le plan et l'accès. »</p></div>
-<div class="q tr"><h3>PENSE</h3><p>« J'ai besoin d'une information fiable avant d'engager mes équipes. »</p></div>
-<div class="q bl"><h3>FAIT</h3><p>Pré-plans, exercices, interventions, retours d'expérience ; examine les dossiers de sécurité.</p></div>
-<div class="q br"><h3>RESSENT</h3><p>Urgence ; besoin de confiance dans l'information reçue.</p></div>
-<div class="who"><b>ONPC</b>officier Protection Civile</div>
-</div>
-<div class="pg2"><div class="pain"><h3>DOULEURS</h3>Pré-plans papier ; zones mal connues ; peu de retours d'expérience exploitables.</div>
-<div class="gain"><h3>GAINS ATTENDUS AVEC AERO-FIRE DT</h3><b>Pré-plan numérique</b> (plan 3D, zones, capteurs) et prévision de fumée à 60 s ; journal d'événements partagé pour les retours d'expérience ; escalade plus rapide quand deux signes physiques confirment un feu.</div></div>
-</section>
+  <div class="q top"><h2>Que pense-t-il et que ressent-il ?</h2><ul>
+    <li><span class="k">Pense :</span> « Je dois protéger les personnes sans arrêter la production pour rien. »</li>
+    <li>« Si l'IA se trompe ou touche au SSI, c'est ma responsabilité. »</li>
+    <li><span class="k">Ressent :</span> pression des règles et du budget, lassitude des fausses alarmes, besoin de confiance.</li></ul></div>
 
-<section class="pers">
-<div class="top"><h1>CARTE D'EMPATHIE · 4/4 · INSTALLATEUR SSI AGRÉÉ</h1><div class="s">pose et maintenance des centrales</div></div>
-<div class="em">
-<div class="q tl"><h3>DIT</h3><p>« Je ne touche pas à une centrale que j'ai mise en service sans savoir qui répondra en cas de problème. »</p></div>
-<div class="q tr"><h3>PENSE</h3><p>« Si un tiers se branche mal, c'est ma garantie et mon contrat de maintenance qui sautent. »</p></div>
-<div class="q bl"><h3>FAIT</h3><p>Programme les relais et passerelles, tient la matrice de mise en sécurité, assure la maintenance.</p></div>
-<div class="q br"><h3>RESSENT</h3><p>Méfiance envers les « boîtiers IA » ; intérêt pour un service facturable en plus.</p></div>
-<div class="who"><b>INSTALLATEUR</b>SSI agréé</div>
+  <div class="q left"><h2>Qu'entend-il ?</h2><ul>
+    <li>La direction : « Réduisez les arrêts et les coûts. »</li>
+    <li>Assureurs et bureaux de contrôle : « Il nous faut des preuves. »</li>
+    <li>Les opérateurs : « Encore une alarme ! »</li>
+    <li>L'installateur SSI : « Attention à la maintenance et à la garantie. »</li></ul></div>
+
+  <div class="q right"><h2>Que voit-il ?</h2><ul>
+    <li>Des arrêts de ligne causés par la poussière, la vapeur ou la chaleur des machines.</li>
+    <li>Des incidents notés dans des registres et outils différents.</li>
+    <li>Des capteurs et équipements de générations différentes.</li></ul></div>
+
+  <div class="q bot"><h2>Que dit-il et que fait-il ?</h2><ul>
+    <li><span class="k">Dit :</span> « Cette alerte est-elle un vrai feu ou une nuisance ? » · « Je dois prouver que le SSI n'a pas été modifié. »</li>
+    <li><span class="k">Fait :</span> analyse les incidents, coordonne l'installateur, suit les indicateurs HSE, prépare les plans d'urgence.</li></ul></div>
 </div>
-<div class="pg2"><div class="pain"><h3>DOULEURS</h3>Responsabilité sur la certification ; interventions non planifiées après les fausses alarmes.</div>
-<div class="gain"><h3>GAINS ATTENDUS AVEC AERO-FIRE DT</h3>Raccordement <b>qu'il réalise lui-même</b>, isolé et sans voie de retour ; spécification d'interface écrite ; prestation facturée ; détection de dérive des capteurs pour planifier la maintenance.</div></div>
-<div class="callout" style="margin-top:6px"><span class="k">SYNTHÈSE</span>Le fil commun est la <b>levée de doute</b> : le responsable HSE veut des preuves, l'opérateur de la clarté, la Protection Civile de la fiabilité, l'installateur la garantie que son SSI reste intact. Aero-Fire DT ne remplace aucun d'eux : il leur donne le même état de situation, en lecture seule, sans jamais pouvoir désactiver la protection réglementaire.</div>
-</section>
+
+<div class="band">
+  <div class="pg"><h3><i>✕</i>Douleurs</h3><ul>
+    <li>Fausses alarmes → évacuations et arrêts de production inutiles</li>
+    <li>Aucune preuve claire pour l'assureur et le bureau de contrôle</li>
+    <li>Données éparpillées, décisions prises à l'aveugle</li></ul></div>
+  <div class="pg gain"><h3><i>✓</i>Gains attendus</h3><ul>
+    <li>Moins de fausses alarmes, alerte claire en moins de 60 s</li>
+    <li>Preuve que le SSI n'est jamais modifié (lecture seule)</li>
+    <li>Prévision de la fumée pour les plans d'urgence</li></ul></div>
+</div>
+
+<div class="rule"></div>
+<div class="bottom">
+  <div><h3>Problématique</h3>
+    <div class="item"><b>Qui ?</b> Les responsables HSE chargés de la prévention et de la gestion des risques.</div>
+    <div class="item"><b>Impact ?</b> Humain : risques de blessures et de pertes humaines. Économique : dégâts, pertes de production, coût des fausses alarmes et des interventions.</div>
+    <div class="item"><b>Échelle ?</b> Régionale (zones industrielles des gouvernorats tunisiens) et nationale (tous les sites industriels exposés au feu).</div>
+    <div class="item"><b>Causes ?</b> Fausses alarmes dues à des nuisances (poussière, vapeur, spray) ; pas d'outil pour anticiper le danger et aider à décider.</div>
+  </div>
+  <div><h3>Analyse de besoins</h3>
+    <div class="item"><b>1 · Sécurité :</b> protéger les vies et les installations ; garder le SSI réglementaire intact.</div>
+    <div class="item"><b>2 · Opérationnel :</b> réunir les informations des équipements ; voir comment le danger va évoluer.</div>
+    <div class="item"><b>3 · Technologique :</b> une analyse intelligente de plusieurs capteurs (fumée, gaz, chaleur).</div>
+    <div class="item"><b>4 · Économique :</b> moins d'arrêts inutiles ; une solution évolutive, adaptée au budget des entreprises tunisiennes.</div>
+    <div class="item"><b>5 · Humain et environnement :</b> aider les responsables et les agents à décider ; réduire l'impact des incendies industriels.</div>
+  </div>
+</div>
 </body></html>
