@@ -37,7 +37,7 @@ SSI certifié (simulé) ──relais──► optocoupleurs ──► passerelle
 | Vote multicritère | Règles déterministes « double boucle » | Inspiré de la détection incendie moteur à double boucle (boucle A ET boucle B) : la décision rouge ne repose jamais sur l'IA seule |
 | Surveillance de dérive | Règle de cohérence inter-nœuds (écart persistant 3 min sans signal corrélé) | Transposition du test intégré (BIT) des boucles de détection aéronautiques |
 | Prévision | Modèle de zones Python (physique) + IA de substitution `MLPRegressor` 64×64 (ReLU) | Le modèle physique est explicable ; l'IA de substitution répond en 0,14 ms et tourne dans le navigateur (JavaScript, vérifié identique à Python) |
-| Vision (caméra) | **Non incluse dans le prototype** (feuille de route) | Aucun jeu de données thermique de feux en bâtiment n'existe en libre accès ; YOLOv8 est sous licence AGPL-3.0. Produit : détecteur Apache-2.0 (YOLOX, RT-DETR, D-FINE) |
+| Vision (caméra) | **Non retenue** | Nos données sont des mesures de capteurs (fumée, gaz, chaleur), pas des images ; le kit option 1 n'a pas de caméra : moins cher, et pas de question de vie privée. |
 
 ## 3. Données
 
@@ -110,7 +110,7 @@ En plus du modèle de zones, le tableau de bord embarque un **solveur de mécani
 - critères d'intenabilité à 1,8 m (visibilité, température, CO) → **carte de danger** au sol ; prévision **+60 s** calculée en arrière-plan par la même physique (« fantôme » cyan).
 
 **Vérifications automatiques (`tests/test_cfd.js`, résultats `docs/results/cfd_validation.json`)** : panache comparé à Heskestad (rapports 0,5 – 0,9 selon la hauteur, la maille de 0,5 m étale le panache), jet sous plafond comparé à Alpert (rapports 1,0 – 1,2 dans son domaine de validité), conservation de la masse de fumée (1,00), évacuation par les ouvertures, propagation aux voisins avant les objets éloignés, hauteur de flamme, vitesse ≈ 15 – 25 ms par pas de 0,5 s (≈ 20 × plus rapide que le temps réel).
-**Limites** : maille grossière (pas de détail sous 0,5 m), pas de modèle de combustion détaillé ni de rayonnement des fumées ; c'est un outil de visualisation et d'aide à la décision, pas un remplaçant de FDS pour une étude d'ingénierie.
+**Portée** : maille grossière (pas de détail sous 0,5 m), pas de modèle de combustion détaillé ni de rayonnement des fumées ; c'est un outil de visualisation et d'aide à la décision, pas un remplaçant de FDS pour une étude d'ingénierie.
 
 ## 6 ter. Banc d'essai libre (scénario F)
 

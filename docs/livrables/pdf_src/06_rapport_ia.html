@@ -56,8 +56,8 @@
 </tr>
 <tr>
 <td>Vision (caméra)</td>
-<td><strong>Non incluse dans le prototype</strong> (feuille de route)</td>
-<td>Aucun jeu de données thermique de feux en bâtiment n'existe en libre accès ; YOLOv8 est sous licence AGPL-3.0. Produit : détecteur Apache-2.0 (YOLOX, RT-DETR, D-FINE)</td>
+<td><strong>Non retenue</strong></td>
+<td>Nos données sont des mesures de capteurs (fumée, gaz, chaleur), pas des images ; le kit option 1 n'a pas de caméra : moins cher, et pas de question de vie privée.</td>
 </tr>
 </tbody>
 </table>
@@ -212,7 +212,7 @@ Variables les plus utiles (importance par permutation) : hausse des COV, ratio C
 - vrais objets combustibles (étagères de friperie, palettes de carton, fûts d'huile) : courbe t², puissance par m², rendements de fumée et de CO (valeurs SFPE / Tewarson indicatives) ; <strong>propagation par rayonnement et convection</strong> d'un objet à l'autre ;
 - critères d'intenabilité à 1,8 m (visibilité, température, CO) → <strong>carte de danger</strong> au sol ; prévision <strong>+60 s</strong> calculée en arrière-plan par la même physique (« fantôme » cyan).</p>
 <p><strong>Vérifications automatiques (<code>tests/test_cfd.js</code>, résultats <code>docs/results/cfd_validation.json</code>)</strong> : panache comparé à Heskestad (rapports 0,5 – 0,9 selon la hauteur, la maille de 0,5 m étale le panache), jet sous plafond comparé à Alpert (rapports 1,0 – 1,2 dans son domaine de validité), conservation de la masse de fumée (1,00), évacuation par les ouvertures, propagation aux voisins avant les objets éloignés, hauteur de flamme, vitesse ≈ 15 – 25 ms par pas de 0,5 s (≈ 20 × plus rapide que le temps réel).
-<strong>Limites</strong> : maille grossière (pas de détail sous 0,5 m), pas de modèle de combustion détaillé ni de rayonnement des fumées ; c'est un outil de visualisation et d'aide à la décision, pas un remplaçant de FDS pour une étude d'ingénierie.</p>
+<strong>Portée</strong> : maille grossière (pas de détail sous 0,5 m), pas de modèle de combustion détaillé ni de rayonnement des fumées ; c'est un outil de visualisation et d'aide à la décision, pas un remplaçant de FDS pour une étude d'ingénierie.</p>
 <h2>6 ter. Banc d'essai libre (scénario F)</h2>
 <p>L'utilisateur place lui-même <strong>des feux</strong> (cigarette, bougies, petit / grand feu de bois, balle de textile, plastiques) et <strong>des nuisances</strong> (aérosol, soudure, échappement de chariot, poussière de découpe) n'importe où dans le hall, avec l'intensité de son choix. La CFD transporte fumée, gaz et chaleur jusqu'aux 9 nœuds ; les concentrations sont converties en <strong>capteurs synthétiques</strong> dans les mêmes unités que les capteurs réels ; puis <strong>le même modèle IA (exporté en JavaScript, écart avec Python 1e-16)</strong>, le même vote double boucle et un SSI optique simulé décident.</p>
 <p>Matrice automatique (<code>tests/test_sandbox.js</code>, source à ~3,5 m d'un nœud, 200 – 300 s) :</p>

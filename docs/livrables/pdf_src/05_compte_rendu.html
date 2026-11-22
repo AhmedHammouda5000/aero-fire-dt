@@ -1,84 +1,162 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Aero-Fire DT — Compte Rendu D'Équipe</title><link rel="stylesheet" href="brand.css"></head><body class="doc"><div class="cover"><img class="cflame" src="img/flame.png" alt="">
-<div class="tag">COMPTE RENDU D'ÉQUIPE · AERO-FIRE DT</div><h1>ANALYSE DE LA PROBLÉMATIQUE</h1><div class="slogan">PRÉDICTION · PRÉVENTION · PROTECTION</div><div class="sub">Comment nous avons lu le besoin, analysé le problème et couvert les contraintes du cahier des charges.</div>
-<div class="meta"><span>Challenge <b>Aero-Entrepreneur</b> · Tunisian Aeroday 2026</span><span>Partenaire du challenge : <b>Protection Civile</b></span>
-<span><b>22 novembre 2026</b></span><span>Code : <b>github.com/AhmedHammouda5000/aero-fire-dt</b></span></div></div><h2><span class="n">1</span>Lecture du besoin</h2>
-<p>Le challenge demande de transposer des <strong>méthodes</strong> aéronautiques — et non des équipements certifiés « drop-in » — à la prévention, la détection et la gestion des incendies en Tunisie. Nous avons écarté deux pièges :</p>
-<ul>
-<li><strong>Piège technologique :</strong> remplacer un détecteur EN 54 par un réseau de caméras IA. Défendable en laboratoire, irrecevable pour un audit incendie et pour un assureur.</li>
-<li><strong>Piège économique :</strong> vendre un jumeau numérique coûteux là où le client tunisien n'a pas les moyens d'un sprinklage lourd. Les chiffres américains (ESFR 140-280 k$, crédit d'assurance 20-40 %) ne sont pas transposables.</li>
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>Aero-Fire DT — Compte rendu</title>
+<link rel="stylesheet" href="brand.css">
+<style>
+.doc { font-size: 10.8pt; line-height: 1.55; }
+.coverpage { height: 255mm; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; break-after: page; position: relative; }
+.coverpage::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 10px; background: var(--blue); }
+.coverpage::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 10px; background: var(--orange); }
+.coverpage .k { font-family: var(--head); font-weight: 600; letter-spacing: .3em; color: var(--blue); font-size: 12pt; }
+.coverpage h1 { font-family: var(--head); font-weight: 900; font-size: 34pt; margin: 6px 0 26px; line-height: 1.1; }
+.coverpage img { height: 70mm; }
+.coverpage .fig { font-size: 9pt; color: var(--mute); margin-top: 6px; }
+.coverpage .slogan { font-family: var(--head); font-weight: 700; color: var(--orange); font-size: 15pt; letter-spacing: .06em; margin: 22px 0 8px; }
+.coverpage .sub { font-size: 13pt; color: var(--ink2); }
+.coverpage .yr { font-family: var(--head); font-weight: 700; font-size: 12pt; margin-top: 30px; }
+.toc { break-after: page; }
+.toc h2 { border: 0; font-size: 20pt; }
+.toc ol { list-style: none; padding: 0; margin: 10px 0; }
+.toc li { display: flex; align-items: baseline; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 12pt; }
+.toc li .n { font-family: var(--head); font-weight: 800; color: #fff; background: var(--blue); border-radius: 3px; padding: 0 8px; font-size: 10pt; min-width: 26px; text-align: center; }
+.toc li.sub { padding-left: 38px; font-size: 11pt; color: var(--ink2); }
+.toc li.sub .n { background: var(--bg3); color: var(--ink); }
+.q { break-inside: avoid; background: var(--blue-l); border-left: 6px solid var(--blue); padding: 12px 16px; font-size: 12pt; font-weight: 600; margin: 8px 0 4px; }
+.pts { list-style: none; padding: 0; margin: 6px 0; }
+.pts li { margin: 7px 0; padding-left: 16px; border-left: 3px solid var(--line); }
+.pts li b { color: var(--ink); }
+.axes { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0; }
+.axes div { background: var(--bg2); border-radius: 6px; padding: 9px 12px; display: grid; grid-template-columns: 30px 1fr; gap: 8px; align-items: start; break-inside: avoid; }
+.axes b { font-family: var(--head); font-weight: 700; display: block; }
+.obj { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 8px 0; }
+.obj > div { background: #fff; border: 1px solid var(--line); border-top: 6px solid var(--blue); border-radius: 6px; padding: 10px 12px; break-inside: avoid; }
+.obj > div:nth-child(2) { border-top-color: var(--orange); }
+.obj > div:nth-child(3) { border-top-color: var(--ink); }
+.obj h3 { margin: 0 0 4px; font-size: 11pt; }
+.obj .t { font-size: 9pt; color: var(--mute); font-family: var(--head); font-weight: 600; }
+.obj ul { padding-left: 16px; margin: 4px 0 0; font-size: 10pt; } .obj li { margin: 4px 0; }
+.odd { display: grid; grid-template-columns: 1fr; gap: 6px; }
+.odd div { display: grid; grid-template-columns: 70px 1fr; gap: 10px; align-items: center; background: var(--bg2); border-radius: 6px; padding: 8px 10px; break-inside: avoid; }
+.odd .n { font-family: var(--head); font-weight: 900; font-size: 15pt; color: #fff; background: var(--orange); border-radius: 6px; text-align: center; padding: 4px 0; }
+.kp { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 8px 0; }
+.kp div { border: 1px solid var(--line); border-top: 5px solid var(--blue); border-radius: 6px; padding: 9px 10px; break-inside: avoid; }
+.kp .v { font-family: var(--head); font-weight: 800; font-size: 17pt; color: var(--blue-d); line-height: 1.1; }
+.kp .l { font-size: 9pt; color: var(--ink2); margin-top: 4px; }
+.note { font-size: 9.5pt; color: var(--ink2); background: var(--bg2); border-left: 4px solid var(--orange); padding: 8px 12px; margin-top: 12px; }
+</style></head>
+<body class="doc">
+
+<div class="coverpage">
+  <div class="k">COMPTE RENDU</div>
+  <h1>AERO-FIRE DT TUNISIE</h1>
+  <img src="img/logo.png" alt="Logo Aero-Fire DT">
+  <div class="fig">Figure 1 – Logo officiel d'Aero-Fire DT</div>
+  <div class="slogan">« Prédiction, Prévention, Protection »</div>
+  <div class="sub">Projet de prévention intelligente des risques d'incendie</div>
+  <div class="yr">Tunisie – 2026</div>
+</div>
+
+<div class="toc">
+  <h2>Table des matières</h2>
+  <ol>
+    <li><span class="n">1</span>Problématique</li>
+    <li><span class="n">2</span>Analyse de la problématique</li>
+    <li><span class="n">3</span>Solution proposée</li>
+    <li><span class="n">4</span>Présentation de la solution</li>
+    <li><span class="n">5</span>Vision</li>
+    <li><span class="n">6</span>Mission</li>
+    <li><span class="n">7</span>Valeurs de l'entreprise</li>
+    <li><span class="n">8</span>Objectifs</li>
+    <li class="sub"><span class="n">8.1</span>À court terme (0 à 3 mois)</li>
+    <li class="sub"><span class="n">8.2</span>À moyen terme (3 à 9 mois)</li>
+    <li class="sub"><span class="n">8.3</span>À long terme (9 à 18 mois)</li>
+    <li><span class="n">9</span>Contribution aux Objectifs de Développement Durable (ODD)</li>
+    <li><span class="n">10</span>Indicateurs de réussite</li>
+  </ol>
+</div>
+
+<h2><span class="n">1</span>Problématique</h2>
+<div class="q">Comment améliorer la détection, la prévention et la gestion des incendies dans les sites industriels tunisiens, tout en réduisant les fausses alarmes, les pertes économiques et les risques humains ?</div>
+
+<h2><span class="n">2</span>Analyse de la problématique</h2>
+<ul class="pts">
+<li><b>Détection :</b> certaines situations peuvent être difficiles à identifier ou à interpréter rapidement.</li>
+<li><b>Fausses alarmes :</b> les poussières, vapeurs et chaleurs industrielles peuvent provoquer des alertes non pertinentes et des interruptions d'activité.</li>
+<li><b>Localisation :</b> l'identification précise de la zone concernée peut prendre du temps et être parfois mal identifiée.</li>
+<li><b>Anticipation :</b> les responsables ne disposent pas toujours d'outils de visualisation et de simulation adaptés pour évaluer l'évolution possible d'un danger.</li>
+<li><b>Coordination :</b> les informations utiles peuvent être dispersées entre les équipements, les rapports et les équipes.</li>
+<li><b>Coût :</b> les solutions avancées peuvent être difficiles d'accès pour certaines PME tunisiennes.</li>
 </ul>
-<p>Notre lecture : la valeur ajoutée est d'<strong>éclairer l'opérateur pendant la levée de doute</strong> sans toucher à la fonction de sécurité réglementaire. Aucune statistique tunisienne de fausses alarmes n'est publiée ; au Royaume-Uni, ≈ 39 % des interventions des pompiers sont des fausses alarmes incendie (<a href="https://www.gov.uk/government/statistics/fire-and-rescue-incident-statistics-year-ending-september-2025/fire-and-rescue-incident-statistics-year-ending-september-2025">GOV.UK, 2025</a>).</p>
-<h2><span class="n">2</span>Méthode d'analyse</h2>
-<ol>
-<li>Décomposition en sous-questions (détection, capteurs, vision, prévision, jumeau, interface SSI, réglementation, économie, facteurs humains).</li>
-<li>Revue croisée des corpus de recherche, puis <strong>vérification</strong> des sources (jeux de données, licences, normes, prix).</li>
-<li>Grille de notation (innovation / viabilité / faisabilité Tunisie) et sélection de l'architecture.</li>
-<li>Contrôle de la couverture des contraintes C1-C6 (§4).</li>
-</ol>
-<h2><span class="n">3</span>Résultat</h2>
-<p>Une architecture en <strong>double chaîne</strong> : le SSI certifié (EN 54 / NFPA 72) garde la fonction de sécurité ; Aero-Fire DT s'y raccorde <strong>en lecture seule</strong>, par relais via optocoupleurs ou passerelle constructeur (Modbus fonctions 1-4, BACnet lecture/COV), à travers une isolation galvanique, <strong>sans voie de retour</strong>. Le raccordement est fait par l'installateur agréé et consigné dans la matrice de mise en sécurité et le dossier de sécurité. Les temporisations restent dans l'ECS certifié.</p>
-<p>Au-dessus : vérification multicritère (fusion capteurs, vision optionnelle), prévision t+30/t+60 s en local, tableau de bord inspiré de l'ECAM, et un <strong>dossier de sécurité</strong> (FHA, arbre de défaillances, modes communs, vote double boucle, matrice d'essais — <code>Safety_Case.md</code>). Modèle économique en 3 paliers TND.</p>
-<h2><span class="n">4</span>Couverture des contraintes du brief</h2>
-<table>
-<thead>
-<tr>
-<th>Contrainte</th>
-<th>Réponse apportée</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>C1 Réalisme / précision</td>
-<td>Méthodes <strong>transposées</strong>, sans certification revendiquée : objectif de performance inspiré de <strong>25.858</strong> (alerte &lt; 60 s, test de chaque voie, toutes configurations) ; <strong>ARP4761A</strong> (FHA / FTA / CCA, gravités qualitatives) ; <strong>double boucle</strong> des détecteurs moteurs ; <strong>ECAM</strong> ; <strong>Concept Paper IA de l'EASA, niveau 1</strong> pour l'IA (la DO-178C ne vaut que pour le logiciel classique)</td>
-</tr>
-<tr>
-<td>C2 Interactivité</td>
-<td>Tableau de bord ECAM (cockpit sombre, 3 niveaux, indicateur de vie permanent), page de prévision, panneau « pourquoi », banc d'essai virtuel « iron bird » rejouant des scénarios</td>
-</tr>
-<tr>
-<td>C3 Données réelles</td>
-<td>Industrial Hall et salle EN54 (Mendeley, CC BY 4.0) ; validation « essai jamais vu » et inter-sites ; données du site pilote ensuite</td>
-</tr>
-<tr>
-<td>C4 Simulation physique</td>
-<td>Modèle de zone Python (t², Alpert, deux couches, MQH, RTI) → 5 000 scénarios → IA de substitution (0,14 ms, ± 0,06 m à +60 s) ; CFAST et FDS comme références de validation futures</td>
-</tr>
-<tr>
-<td>C5 BMC obligatoire</td>
-<td><code>Adapted_BMC.md</code> + <code>Financial_Projections.csv</code> (TND au cours BCT, droits et TVA, embauches, formules)</td>
-</tr>
-<tr>
-<td>C6 Sécurité</td>
-<td>SSI inchangé ; l'IA ne peut ni acquitter, ni réarmer, ni inhiber ; elle peut seulement escalader plus vite. Vie privée : INPDP, pas de son, traitement local</td>
-</tr>
-</tbody>
-</table>
-<h2><span class="n">5</span>Ce qui existe déjà / ce que nous ajoutons</h2>
-<p>Bosch AVIOTEC, Honeywell Distinguish (nov. 2026), Siemens ASA, Hikvision/iThermAI et Dahua (MENA) intègrent l'IA <strong>dans leurs propres détecteurs</strong> ; PolyU SureFire prévoit le champ de température à 60 s (~92 %) <strong>via le cloud</strong> ; de nombreux projets de hackathon font « capteurs + IA ». Nous ne revendiquons pas ces briques. Nous ajoutons : <strong>une couche neutre multi-marques en lecture seule, incapable par construction d'inhiber le SSI</strong>, <strong>un dossier de sécurité de méthode aéronautique</strong>, <strong>un prix PME en TND</strong> et <strong>une prévision en local</strong> qui fonctionne sans internet.</p>
-<h2><span class="n">6</span>Base légale tunisienne</h2>
-<table>
-<thead>
-<tr>
-<th>Texte</th>
-<th>Conséquence</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Loi 2009-11 (code de sécurité incendie des bâtiments)</td>
-<td>Raccordement consigné dans le dossier de sécurité examiné par l'ONPC</td>
-</tr>
-<tr>
-<td>Décret 2006-2687 (établissements classés)</td>
-<td>Étude de dangers et POI pour la 1re/2e classe : premiers clients</td>
-</tr>
-<tr>
-<td>Arrêté du 14 août 2020</td>
-<td>Équipes de sécurité formées par l'ONPC : utilisateurs du tableau de bord</td>
-</tr>
-<tr>
-<td>Loi 2004-63 art. 69-74 + Décret 2007-3004</td>
-<td>Autorisation INPDP préalable aux caméras, pas de son, signalisation</td>
-</tr>
-</tbody>
-</table></body></html>
+
+<h2><span class="n">3</span>Solution proposée</h2>
+<ul class="pts">
+<li>Aero-Fire DT Tunisie propose une <b>sur-couche intelligente complémentaire aux SSI existants</b>. Elle associe l'analyse de plusieurs capteurs (fumée, gaz, chaleur) à un <b>tableau de bord centralisé</b> et à un <b>jumeau numérique</b>.</li>
+<li>La solution vise à faciliter la vérification des alertes, à localiser les zones concernées, à simuler des scénarios de risque et à fournir des informations utiles aux responsables du site et aux équipes d'intervention.</li>
+</ul>
+
+<h2><span class="n">4</span>Présentation de la solution</h2>
+<ul class="pts">
+<li>Aero-Fire DT Tunisie est une solution <b>intelligente et modulaire</b> dédiée à la prévention, à la supervision et à l'analyse des risques d'incendie dans les sites industriels.</li>
+<li>Elle combine des <b>capteurs connectés</b>, l'<b>intelligence artificielle</b> et un <b>jumeau numérique</b> afin d'améliorer la détection, la localisation des alertes et l'aide à la décision.</li>
+<li>Elle complète les systèmes de sécurité incendie (SSI) existants <b>sans les remplacer ni entraver leur fonctionnement réglementaire</b>.</li>
+</ul>
+
+<h2><span class="n">5</span>Vision</h2>
+<div class="q" style="font-weight:500">Devenir une référence en Tunisie dans la prévention intelligente des incendies et contribuer à rendre les sites industriels plus sûrs, mieux préparés et plus résilients grâce aux nouvelles technologies.</div>
+
+<h2><span class="n">6</span>Mission</h2>
+<p>La mission d'Aero-Fire DT Tunisie est de rendre les sites industriels plus sûrs grâce à des solutions technologiques intelligentes, accessibles et fiables, en s'appuyant sur les axes suivants :</p>
+<div class="axes">
+  <div><svg class="ico lucide lucide-sparkles" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" /> <path d="M20 3v4" /> <path d="M22 5h-4" /> <path d="M4 17v2" /> <path d="M5 18H3" /> </svg><span><b>Innover</b>intégrer l'intelligence artificielle, les capteurs connectés et les jumeaux numériques dans la prévention des incendies.</span></div>
+  <div><svg class="ico lucide lucide-shield-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /> <path d="m9 12 2 2 4-4" /> </svg><span><b>Protéger</b>améliorer la détection, la localisation et l'analyse des risques afin de mieux protéger les personnes et les infrastructures.</span></div>
+  <div><svg class="ico lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /> <circle cx="12" cy="12" r="3" /> </svg><span><b>Anticiper</b>exploiter les données et les simulations pour aider les entreprises à mieux prévoir les situations dangereuses.</span></div>
+  <div><svg class="ico lucide lucide-coins" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <circle cx="8" cy="8" r="6" /> <path d="M18.09 10.37A6 6 0 1 1 10.34 18" /> <path d="M7 6h1v4" /> <path d="m16.71 13.88.7.71-2.82 2.82" /> </svg><span><b>Rendre accessible</b>proposer des solutions modulaires et économiquement adaptées aux entreprises tunisiennes.</span></div>
+  <div><svg class="ico lucide lucide-handshake" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="m11 17 2 2a1 1 0 1 0 3-3" /> <path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4" /> <path d="m21 3 1 11h-2" /> <path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3" /> <path d="M3 4h8" /> </svg><span><b>Collaborer</b>développer des partenariats avec les industriels, les intégrateurs SSI et les acteurs de la sécurité civile.</span></div>
+  <div><svg class="ico lucide lucide-trending-up" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3a5bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" /> <polyline points="16 7 22 7 22 13" /> </svg><span><b>Évoluer</b>améliorer continuellement les performances de la solution et étendre progressivement son déploiement en Tunisie et à l'international.</span></div>
+</div>
+
+<h2><span class="n">7</span>Valeurs de l'entreprise</h2>
+<div class="axes">
+  <div><svg class="ico lucide lucide-shield-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f26b1d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /> <path d="m9 12 2 2 4-4" /> </svg><span><b>Sécurité</b>protéger les vies humaines et les infrastructures.</span></div>
+  <div><svg class="ico lucide lucide-cpu" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f26b1d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect width="16" height="16" x="4" y="4" rx="2" /> <rect width="6" height="6" x="9" y="9" rx="1" /> <path d="M15 2v2" /> <path d="M15 20v2" /> <path d="M2 15h2" /> <path d="M2 9h2" /> <path d="M20 15h2" /> <path d="M20 9h2" /> <path d="M9 2v2" /> <path d="M9 20v2" /> </svg><span><b>Innovation</b>exploiter l'intelligence artificielle et les technologies connectées.</span></div>
+  <div><svg class="ico lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f26b1d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M20 6 9 17l-5-5" /> </svg><span><b>Fiabilité</b>fournir des informations pertinentes, traçables et utiles à la décision.</span></div>
+  <div><svg class="ico lucide lucide-coins" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f26b1d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <circle cx="8" cy="8" r="6" /> <path d="M18.09 10.37A6 6 0 1 1 10.34 18" /> <path d="M7 6h1v4" /> <path d="m16.71 13.88.7.71-2.82 2.82" /> </svg><span><b>Accessibilité</b>proposer une solution évolutive adaptée aux capacités financières des entreprises tunisiennes.</span></div>
+  <div style="grid-column:1 / 3"><svg class="ico lucide lucide-leaf" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f26b1d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" /> <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" /> </svg><span><b>Responsabilité</b>limiter les impacts humains, matériels et environnementaux des incendies.</span></div>
+</div>
+
+<h2><span class="n">8</span>Objectifs</h2>
+<div class="obj">
+  <div><div class="t">8.1</div><h3>À court terme (0 à 3 mois)</h3><ul>
+    <li>Finaliser le cadrage juridique et les partenariats initiaux.</li>
+    <li>Développer un prototype fonctionnel combinant capteurs et intelligence artificielle.</li>
+    <li>Tester le prototype en laboratoire et évaluer sa fiabilité face à différentes nuisances.</li></ul></div>
+  <div><div class="t">8.2</div><h3>À moyen terme (3 à 9 mois)</h3><ul>
+    <li>Déployer un pilote sur un site industriel tunisien pendant 90 jours.</li>
+    <li>Viser une réduction de 40 % des fausses alarmes et de 50 % du délai de levée de doute, sous réserve de validation par les essais.</li>
+    <li>Développer le jumeau numérique et lancer la première version de la plateforme SaaS.</li>
+    <li>Obtenir les trois premiers sites clients payants.</li></ul></div>
+  <div><div class="t">8.3</div><h3>À long terme (9 à 18 mois)</h3><ul>
+    <li>Atteindre 10 sites actifs à 12 mois, puis 20 à 40 sites à 18 mois.</li>
+    <li>Étendre la solution à plusieurs secteurs industriels, notamment les sites à haut risque.</li>
+    <li>Renforcer les partenariats avec les intégrateurs SSI, la Protection Civile et les assureurs.</li>
+    <li>Améliorer la disponibilité, la fiabilité et les fonctionnalités de la plateforme, avec une cible de disponibilité de 99 %.</li>
+    <li>Préparer l'expansion vers des marchés internationaux.</li></ul></div>
+</div>
+
+<h2><span class="n">9</span>Contribution aux Objectifs de Développement Durable (ODD)</h2>
+<div class="odd">
+  <div><span class="n">ODD 3</span><span><b>Bonne santé et bien-être :</b> contribuer à la protection des travailleurs et des intervenants face aux risques d'incendie.</span></div>
+  <div><span class="n">ODD 9</span><span><b>Industrie, innovation et infrastructure :</b> favoriser l'innovation technologique et renforcer la résilience des infrastructures industrielles.</span></div>
+  <div><span class="n">ODD 11</span><span><b>Villes et communautés durables :</b> améliorer la préparation et la sécurité des bâtiments et infrastructures exposés aux risques.</span></div>
+  <div><span class="n">ODD 12</span><span><b>Consommation et production responsables :</b> limiter les pertes matérielles, les déchets et les interruptions de production liés aux incendies.</span></div>
+  <div><span class="n">ODD 13</span><span><b>Lutte contre les changements climatiques :</b> contribuer à la prévention des incendies et à la réduction de leurs impacts environnementaux.</span></div>
+</div>
+
+<h2><span class="n">10</span>Indicateurs de réussite</h2>
+<div class="kp">
+  <div><div class="v">−40 %</div><div class="l"><b>Fausses alarmes</b> : cible sur le site pilote après 90 jours</div></div>
+  <div><div class="v">−50 %</div><div class="l"><b>Délai de levée de doute</b> : cible de réduction</div></div>
+  <div><div class="v">30–60 s</div><div class="l"><b>Prévision du champ de danger</b> : objectif expérimental, à valider selon les scénarios et les données</div></div>
+  <div><div class="v">99 %</div><div class="l"><b>Disponibilité du service</b> : cible</div></div>
+</div>
+<div class="note"><b>Note :</b> les pourcentages et volumes commerciaux indiqués sont des objectifs prévisionnels à valider pendant les phases de test et de déploiement. Aero-Fire DT Tunisie est conçue comme une solution complémentaire : elle ne remplace pas les systèmes réglementaires de sécurité incendie (SSI) et ne doit jamais entraver leur fonctionnement.</div>
+</body></html>

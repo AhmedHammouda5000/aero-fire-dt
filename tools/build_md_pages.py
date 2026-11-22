@@ -10,8 +10,7 @@ LIV = ROOT / "docs" / "livrables"
 SRC = LIV / "pdf_src"
 
 PAGES = [
-    ("Team_Report.md", "05_compte_rendu.html", "COMPTE RENDU D'ÉQUIPE", "Analyse de la problématique",
-     "Comment nous avons lu le besoin, analysé le problème et couvert les contraintes du cahier des charges."),
+    # 05_compte_rendu: written by the team (05_compte_rendu.tpl.html), not generated
     ("AI_Model_Report.md", "06_rapport_ia.html", "RAPPORT DU MODÈLE IA", "Architecture, choix du modèle, données, résultats",
      "Vérificateur d'alarme (feu / nuisance), vote de sécurité à deux canaux, alerte précoce, prévision à 60 s, apprentissage local."),
 ]
