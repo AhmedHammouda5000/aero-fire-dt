@@ -37,7 +37,6 @@ SSI certifié (simulé) ──relais──► optocoupleurs ──► passerelle
 | Vote multicritère | Règles déterministes « double boucle » | Inspiré de la détection incendie moteur à double boucle (boucle A ET boucle B) : la décision rouge ne repose jamais sur l'IA seule |
 | Surveillance de dérive | Règle de cohérence inter-nœuds (écart persistant 3 min sans signal corrélé) | Transposition du test intégré (BIT) des boucles de détection aéronautiques |
 | Prévision | Modèle de zones Python (physique) + IA de substitution `MLPRegressor` 64×64 (ReLU) | Le modèle physique est explicable ; l'IA de substitution répond en 0,14 ms et tourne dans le navigateur (JavaScript, vérifié identique à Python) |
-| Vision (caméra) | **Non retenue** | Nos données sont des mesures de capteurs (fumée, gaz, chaleur), pas des images ; le kit option 1 n'a pas de caméra : moins cher, et pas de question de vie privée. |
 
 ## 3. Données
 
