@@ -14,7 +14,8 @@
 | 6 | Résultats | 17/17 feux · 10 avant l'alarme classique · 7/7 dans une autre salle | 0:25 |
 | 7 | Partout en Tunisie | 27 → 4 fausses alarmes après 90 jours · 55 h sur batterie · 0 Internet | 0:25 |
 | 8 | Modèle économique | 7 000 / 22 000 / 45 000 TND + abonnement · 9 700 TND pour démarrer · rentable année 2 | 0:30 |
-| 9 | La suite | M1–M18 · 1 usine pilote, 1 installateur agréé, un test avec la Protection Civile · « Un copilote, pas un pilote. » | 0:25 |
+| 9 | Feuille de route 18 mois | frise M0→M18 + 6 phases : 0 Cadrage (Startup Act, INNORPI, accords) · 1 Banc « iron bird » (vrais boîtiers + vraie centrale, essais AC 25-9A, alerte ≤ 60 s) · 2 Pilote 90 jours (raccordement lecture seule, mesures, apprentissage, retour Protection Civile) · 3 Produit v1 (jumeau 3D + prévision, 3 sites payants) · 4 Échelle (10 sites, +2 embauches) · 5 Consolidation (20 sites, assureurs) | 0:35 |
+| 10 | Avec la Protection Civile | plans numériques, formation, retours d'expérience · 1 usine pilote, 1 installateur agréé, un test avec la Protection Civile · « Un copilote, pas un pilote. » | 0:20 |
 
 **Total ≈ 5:20** : raccourcir les slides 1 et 6 de 10 s chacune pour tenir 5:00. Pendant les slides 4–5, montrer l'application en direct si possible (scénario A, B, puis un feu dans le banc d'essai F).
 
